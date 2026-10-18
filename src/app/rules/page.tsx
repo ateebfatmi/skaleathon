@@ -1,131 +1,125 @@
 import React from 'react';
 import Link from 'next/link';
-import { ShieldCheck, AlertCircle, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 export default function RulesPage() {
   return (
-    <div className="py-16 sm:py-24">
-      <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-12">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1 text-xs font-semibold text-slate-300 mb-4">
-            <ShieldCheck className="h-3.5 w-3.5 text-cyanAccent-400" />
-            <span>Official Competition Guidelines</span>
+    <div className="py-20 sm:py-28 bg-[#0B0B0B] min-h-screen relative overflow-hidden">
+      {/* Background ambient light */}
+      <div className="pointer-events-none absolute left-1/2 top-20 -translate-x-1/2 w-full max-w-7xl h-96 bg-[#805948]/10 rounded-full blur-[160px]" />
+
+      <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="mb-14">
+          <div className="flex items-center gap-2.5 mb-3">
+            <span className="h-px w-6 bg-[#c19a88]/70" />
+            <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
+              Competition Protocol
+            </p>
           </div>
-          <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
-            Rules & Eligibility
+          <h1 className="text-4xl sm:text-5xl font-medium text-white tracking-tight leading-tight">
+            Rules &{' '}
+            <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
+              eligibility
+            </span>
+            .
           </h1>
-          <p className="mt-4 text-base text-slate-300">
-            Please read these official rules carefully before registering your team. Compliance with all rules is mandatory for judging eligibility and prize conferral.
+          <p className="mt-4 text-base text-white/55 leading-relaxed font-light">
+            Please read these official rules carefully prior to team registration. Compliance with all requirements is mandatory for evaluation eligibility and credential conferral.
           </p>
         </div>
 
-        <div className="space-y-8 text-slate-300 text-sm leading-relaxed">
+        <div className="space-y-6 text-sm text-white/65 leading-relaxed font-light">
           {/* Section 1: Eligibility */}
-          <div className="rounded-2xl border border-white/10 bg-[#0c111e] p-6 space-y-4">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <span className="text-cyanAccent-400">1.</span> Eligibility Criteria
+          <div className="rounded-[24px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-7 sm:p-8 space-y-4 shadow-[0_15px_40px_rgba(0,0,0,0.3)]">
+            <h2 className="text-base font-semibold tracking-wide text-white flex items-center gap-2.5">
+              <span className="font-mono text-xs text-[#c19a88]">01.</span> Eligibility Standards
             </h2>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>Participation is open across India to undergraduate and graduate students, boot camp graduates, and early-career software developers.</span>
+            <ul className="space-y-2.5">
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
+                <span>Participation is open across India to undergraduate and graduate students, boot camp graduates, and independent software builders.</span>
               </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>There is no minimum age requirement; however, participants under 18 must have parental/guardian consent to participate and receive prizes.</span>
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
+                <span>There is no minimum age requirement; participants under 18 must have parental/guardian consent to receive official cash prizes.</span>
               </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>Members of the organizing committee or judging panel are disqualified from entering the competition as participants.</span>
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
+                <span>Members of the SkaleKraft core organizing team or judging panels are ineligible to enter the competition as participants.</span>
               </li>
             </ul>
           </div>
 
           {/* Section 2: Team Formation */}
-          <div className="rounded-2xl border border-white/10 bg-[#0c111e] p-6 space-y-4">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <span className="text-cyanAccent-400">2.</span> Team Composition & Registration
+          <div className="rounded-[24px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-7 sm:p-8 space-y-4 shadow-[0_15px_40px_rgba(0,0,0,0.3)]">
+            <h2 className="text-base font-semibold tracking-wide text-white flex items-center gap-2.5">
+              <span className="font-mono text-xs text-[#c19a88]">02.</span> Team Composition & Registration
             </h2>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>Teams must have between <strong>1 and 6 members</strong>. Solo developers may register as a 1-person team.</span>
+            <ul className="space-y-2.5">
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
+                <span>Teams must have between <strong className="text-white font-medium">1 and 6 members</strong>. Solo developers may register as a 1-person team.</span>
               </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>No duplicate memberships:</strong> An individual can only be a member of one registered team during Skaleathon 2027.</span>
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
+                <span><strong className="text-white font-medium">No duplicate memberships:</strong> An individual can only belong to one registered team in Skaleathon 2027.</span>
               </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>The registration fee is a flat <strong>₹99 per team</strong>, paid online via Razorpay before project submission.</span>
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
+                <span>The registration fee is a flat <strong className="text-white font-medium">₹99 per team</strong>, paid securely via Razorpay before project submission.</span>
               </li>
             </ul>
           </div>
 
           {/* Section 3: Originality & AI Tool Usage */}
-          <div className="rounded-2xl border border-white/10 bg-[#0c111e] p-6 space-y-4">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <span className="text-cyanAccent-400">3.</span> Code Originality & AI Disclosures
+          <div className="rounded-[24px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-7 sm:p-8 space-y-4 shadow-[0_15px_40px_rgba(0,0,0,0.3)]">
+            <h2 className="text-base font-semibold tracking-wide text-white flex items-center gap-2.5">
+              <span className="font-mono text-xs text-[#c19a88]">03.</span> Code Originality & AI Disclosures
             </h2>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>All core application logic must be original work created for this hackathon. Pre-existing full-stack templates or verbatim clones will be disqualified.</span>
+            <ul className="space-y-2.5">
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
+                <span>All core system logic must be original software created for this hackathon. Pre-existing turnkey templates or verbatim clones are strictly disqualified.</span>
               </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>Public open-source libraries, UI components (such as Tailwind or shadcn), and cloud services are permitted with proper attribution.</span>
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
+                <span>Public open-source libraries, UI component primitives (Tailwind, Radix, Lucide), and cloud platforms are permitted with proper attribution.</span>
               </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>AI Disclosure:</strong> The use of generative AI (ChatGPT, Claude, GitHub Copilot) is permitted; however, teams must explicitly disclose AI tools used in their submission form.</span>
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
+                <span><strong className="text-white font-medium">AI Disclosure:</strong> Generative AI coding tools (Claude, Cursor, GitHub Copilot) are welcomed; teams must disclose usage in their submission manifesto.</span>
               </li>
             </ul>
           </div>
 
           {/* Section 4: Submission Requirements */}
-          <div className="rounded-2xl border border-white/10 bg-[#0c111e] p-6 space-y-4">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <span className="text-cyanAccent-400">4.</span> Project Submission Deliverables
+          <div className="rounded-[24px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-7 sm:p-8 space-y-4 shadow-[0_15px_40px_rgba(0,0,0,0.3)]">
+            <h2 className="text-base font-semibold tracking-wide text-white flex items-center gap-2.5">
+              <span className="font-mono text-xs text-[#c19a88]">04.</span> Project Submission Deliverables
             </h2>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>A publicly accessible GitHub repository with an informative README, installation guide, and commit history.</span>
+            <ul className="space-y-2.5">
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
+                <span>A publicly accessible GitHub repository with an informative README, architecture overview, and commit history.</span>
               </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>A working deployed web URL or mobile application demo link/screencast.</span>
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
+                <span>A working deployed web URL or mobile application demo link/screencast demonstrating core user flows.</span>
               </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>A 2-3 minute demonstration video walkthrough (YouTube or Loom unlisted link).</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>Submissions past the official submission deadline will be automatically rejected by the submission gateway.</span>
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
+                <span>A concise 2–3 minute video presentation highlighting the technical architecture, problem statement, and live feature demo.</span>
               </li>
             </ul>
-          </div>
-
-          {/* Section 5: Disqualification */}
-          <div className="rounded-2xl border border-red-500/20 bg-red-950/20 p-6 space-y-3 text-red-200">
-            <h2 className="text-lg font-bold text-red-100 flex items-center gap-2">
-              <AlertCircle className="h-5 w-5 text-red-400" />
-              <span>5. Grounds for Disqualification</span>
-            </h2>
-            <p className="text-xs sm:text-sm leading-relaxed">
-              Plagiarism, submission of fraudulent repository links, harassment of participants or judges, falsified team credentials, or tampering with evaluation scoring will result in immediate disqualification and revocation of any awarded prizes or certificates.
-            </p>
           </div>
         </div>
 
         <div className="mt-12 text-center">
           <Link
             href="/register"
-            className="inline-flex items-center gap-2 rounded-xl bg-brand-600 px-8 py-3.5 text-sm font-bold text-white shadow-lg hover:bg-brand-500 transition-colors"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] px-8 py-3.5 text-xs font-semibold tracking-wide text-white shadow-[0_4px_25px_rgba(128,89,72,0.35)] hover:scale-105 transition-all"
           >
-            <span>Agree and Register Team — ₹99</span>
+            <span>Agree & Register Team — ₹99</span>
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>

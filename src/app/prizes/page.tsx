@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { EventRepository } from '@/lib/db/repository';
-import { Trophy, Award, Briefcase, Info, ArrowRight } from 'lucide-react';
+import { Trophy, Award, Briefcase, ArrowRight, ShieldCheck } from 'lucide-react';
 import { formatINR } from '@/lib/utils';
 
 export const revalidate = 0;
@@ -10,86 +10,95 @@ export default async function PrizesPage() {
   const event = await EventRepository.getEvent();
 
   return (
-    <div className="py-16 sm:py-24">
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="py-20 sm:py-28 bg-[#0B0B0B] min-h-screen relative overflow-hidden">
+      {/* Background ambient light */}
+      <div className="pointer-events-none absolute left-1/2 top-20 -translate-x-1/2 w-full max-w-7xl h-96 bg-[#805948]/10 rounded-full blur-[160px]" />
+
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-3xl mb-16">
-          <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-950/30 px-3.5 py-1 text-xs font-semibold text-amber-300 mb-4">
-            <Trophy className="h-3.5 w-3.5" />
-            <span>Official Rewards</span>
+          <div className="flex items-center gap-2.5 mb-3">
+            <span className="h-px w-6 bg-[#c19a88]/70" />
+            <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
+              Official Honors
+            </p>
           </div>
-          <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
-            Prizes & Recognitions
+          <h1 className="text-4xl sm:text-5xl font-medium text-white tracking-tight leading-tight">
+            Prizes &{' '}
+            <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
+              recognitions
+            </span>
+            .
           </h1>
-          <p className="mt-4 text-base text-slate-300">
-            SkaleKraft has allocated an official prize pool of {formatINR(event.prize_pool_inr || 35000)} alongside national merit certificates and technical internship interview pathways.
+          <p className="mt-4 text-base text-white/55 leading-relaxed font-light">
+            SkaleKraft has allocated an official prize pool of {formatINR(event.prize_pool_inr || 35000)} alongside tamper-proof digital merit credentials and technical internship interview pathways.
           </p>
         </div>
 
         {/* Podium Cash Rewards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-16">
           {/* 1st Place */}
-          <div className="rounded-3xl border border-amber-500/50 bg-gradient-to-b from-[#182035] to-[#0c111e] p-8 flex flex-col justify-between shadow-2xl shadow-amber-500/10">
+          <div className="rounded-[28px] border border-[#c19a88]/60 bg-[linear-gradient(145deg,rgba(193,154,136,0.08),rgba(17,14,13,0.96))] p-8 flex flex-col justify-between shadow-[0_25px_70px_rgba(128,89,72,0.3)] md:-translate-y-2">
             <div>
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-xs font-bold uppercase tracking-wider text-amber-400 bg-amber-950/80 border border-amber-500/30 px-3 py-1 rounded-md">
+              <div className="flex items-center justify-between mb-5">
+                <span className="font-mono text-[9px] uppercase tracking-[0.18em] px-3 py-1 rounded-full border border-white/10 bg-white/[0.04] text-[#c19a88]">
                   Grand Champion
                 </span>
-                <Trophy className="h-7 w-7 text-amber-400" />
+                <Trophy className="h-6 w-6 text-[#c19a88]" strokeWidth={1.8} />
               </div>
-              <h2 className="text-xl font-bold text-slate-200">First Prize</h2>
-              <div className="text-4xl sm:text-5xl font-black text-white my-3 tracking-tight">
+              <h2 className="text-sm font-semibold uppercase tracking-[0.14em] text-white/60">First Prize</h2>
+              <div className="text-4xl sm:text-5xl font-mono font-bold my-3 tracking-tight bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent">
                 {formatINR(event.first_prize_inr || 20000)}
               </div>
-              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                Awarded to the overall top-ranked team across all tracks for demonstrating supreme technical implementation, originality, and impact.
+              <p className="text-xs sm:text-sm text-white/50 leading-relaxed font-light">
+                Awarded to the overall highest scoring team across all arenas for supreme engineering rigor, originality, and impact.
               </p>
             </div>
-            <div className="mt-8 pt-6 border-t border-white/10 text-xs text-amber-300 font-semibold">
-              Cash Prize + Winner Certificate + SkaleKraft Interview Opportunity
+            <div className="mt-8 pt-6 border-t border-white/[0.08] text-xs text-[#c19a88] font-medium">
+              Cash Grant + Winner Credential + SkaleKraft Interview Opportunity
             </div>
           </div>
 
           {/* 2nd Place */}
-          <div className="rounded-3xl border border-slate-500/30 bg-[#0c111e] p-8 flex flex-col justify-between">
+          <div className="rounded-[28px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-8 flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
             <div>
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-300 bg-slate-800/80 border border-slate-500/30 px-3 py-1 rounded-md">
+              <div className="flex items-center justify-between mb-5">
+                <span className="font-mono text-[9px] uppercase tracking-[0.18em] px-3 py-1 rounded-full border border-white/10 bg-white/[0.04] text-white/70">
                   First Runner-Up
                 </span>
-                <Award className="h-7 w-7 text-slate-300" />
+                <Award className="h-6 w-6 text-white/60" strokeWidth={1.8} />
               </div>
-              <h2 className="text-xl font-bold text-slate-200">Second Prize</h2>
-              <div className="text-4xl font-black text-white my-3 tracking-tight">
+              <h2 className="text-sm font-semibold uppercase tracking-[0.14em] text-white/60">Second Prize</h2>
+              <div className="text-4xl font-mono font-bold text-white my-3 tracking-tight">
                 {formatINR(event.second_prize_inr || 10000)}
               </div>
-              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                Conferred to the second-highest scoring team for outstanding engineering rigor and product execution.
+              <p className="text-xs sm:text-sm text-white/50 leading-relaxed font-light">
+                Conferred to the second-highest scoring team for standout architectural cleanliness and product delivery.
               </p>
             </div>
-            <div className="mt-8 pt-6 border-t border-white/10 text-xs text-slate-300 font-semibold">
-              Cash Prize + Merit Certificate + SkaleKraft Interview Opportunity
+            <div className="mt-8 pt-6 border-t border-white/[0.08] text-xs text-white/60 font-light">
+              Cash Grant + Merit Credential + SkaleKraft Interview Opportunity
             </div>
           </div>
 
           {/* 3rd Place */}
-          <div className="rounded-3xl border border-orange-500/30 bg-[#0c111e] p-8 flex flex-col justify-between">
+          <div className="rounded-[28px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-8 flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
             <div>
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-xs font-bold uppercase tracking-wider text-orange-300 bg-orange-950/80 border border-orange-500/30 px-3 py-1 rounded-md">
+              <div className="flex items-center justify-between mb-5">
+                <span className="font-mono text-[9px] uppercase tracking-[0.18em] px-3 py-1 rounded-full border border-white/10 bg-white/[0.04] text-[#c19a88]">
                   Second Runner-Up
                 </span>
-                <Award className="h-7 w-7 text-orange-400" />
+                <Award className="h-6 w-6 text-[#c19a88]" strokeWidth={1.8} />
               </div>
-              <h2 className="text-xl font-bold text-slate-200">Third Prize</h2>
-              <div className="text-4xl font-black text-white my-3 tracking-tight">
+              <h2 className="text-sm font-semibold uppercase tracking-[0.14em] text-white/60">Third Prize</h2>
+              <div className="text-4xl font-mono font-bold text-white my-3 tracking-tight">
                 {formatINR(event.third_prize_inr || 5000)}
               </div>
-              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                Conferred to the third-highest scoring team for high-quality prototype delivery and problem solving.
+              <p className="text-xs sm:text-sm text-white/50 leading-relaxed font-light">
+                Conferred to the third-highest scoring team for high-quality prototype execution and creative problem solving.
               </p>
             </div>
-            <div className="mt-8 pt-6 border-t border-white/10 text-xs text-orange-300 font-semibold">
-              Cash Prize + Merit Certificate + SkaleKraft Interview Opportunity
+            <div className="mt-8 pt-6 border-t border-white/[0.08] text-xs text-white/60 font-light">
+              Cash Grant + Merit Credential + SkaleKraft Interview Opportunity
             </div>
           </div>
         </div>
@@ -97,56 +106,30 @@ export default async function PrizesPage() {
         {/* Certificates & Internship Opportunity Deep-Dive */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Top 25 Certificates */}
-          <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 space-y-4">
+          <div className="rounded-[28px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-8 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="p-3 rounded-xl bg-cyanAccent-500/10 border border-cyanAccent-500/20 text-cyanAccent-400">
-                <Award className="h-6 w-6" />
+              <div className="p-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88]">
+                <ShieldCheck className="h-5 w-5" strokeWidth={1.8} />
               </div>
-              <div>
-                <h3 className="text-xl font-bold text-white">Top 25 Teams Certificate Conferral</h3>
-                <span className="text-xs text-cyanAccent-300">Merit Recognized Nationally</span>
-              </div>
+              <h3 className="text-lg font-medium text-white">Top 25 Teams — Merit Credentials</h3>
             </div>
-            <p className="text-sm text-slate-300 leading-relaxed">
-              Every eligible member of the top 25 teams on the official finalized leaderboard will be issued an individual verified PDF certificate with an immutable verification QR code.
-            </p>
-            <p className="text-xs text-slate-400">
-              Certificates can be shared on LinkedIn, added to professional resumes, and verified instantaneously by third-party recruiters on our public registry.
+            <p className="text-sm text-white/55 leading-relaxed font-light">
+              Eligible members of the top 25 teams will receive an official, cryptographically verifiable digital certificate conferral from SkaleKraft with live QR validation and verifiable codes.
             </p>
           </div>
 
-          {/* SkaleKraft Internship Opportunity */}
-          <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 space-y-4">
+          {/* Internship Opportunity */}
+          <div className="rounded-[28px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-8 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="p-3 rounded-xl bg-brand-500/10 border border-brand-500/20 text-brand-400">
-                <Briefcase className="h-6 w-6" />
+              <div className="p-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88]">
+                <Briefcase className="h-5 w-5" strokeWidth={1.8} />
               </div>
-              <div>
-                <h3 className="text-xl font-bold text-white">Top 5 Teams: SkaleKraft Internship Pathway</h3>
-                <span className="text-xs text-brand-300">Fast-Track Technical Evaluation</span>
-              </div>
+              <h3 className="text-lg font-medium text-white">SkaleKraft Internship Gateway</h3>
             </div>
-            <p className="text-sm text-slate-300 leading-relaxed">
-              Candidates from the top five teams receive an opportunity to interview for internships at SkaleKraft.
+            <p className="text-sm text-white/55 leading-relaxed font-light">
+              Standout developers from top 5 teams receive direct fast-track interviews for technical internships at SkaleKraft, working alongside studio leads on client systems and AI products.
             </p>
-            <div className="flex items-start gap-2 rounded-xl border border-white/10 bg-white/5 p-4 text-xs text-slate-300">
-              <Info className="h-4 w-4 text-slate-400 shrink-0 mt-0.5" />
-              <span>
-                <strong>Official Notice:</strong> Candidates from the top five teams receive an opportunity to interview for internships at SkaleKraft. This is not a guarantee of an internship or employment.
-              </span>
-            </div>
           </div>
-        </div>
-
-        {/* CTA */}
-        <div className="mt-16 text-center">
-          <Link
-            href="/register"
-            className="inline-flex items-center gap-2 rounded-xl bg-brand-600 px-8 py-3.5 text-sm font-bold text-white shadow-xl shadow-brand-600/30 hover:bg-brand-500 transition-all"
-          >
-            <span>Register Your Team Now — ₹99</span>
-            <ArrowRight className="h-4 w-4" />
-          </Link>
         </div>
       </div>
     </div>

@@ -1,5 +1,4 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
-import { NextResponse } from 'next/server';
 
 const isPublicRoute = createRouteMatcher([
   '/',
@@ -22,23 +21,17 @@ const isPublicRoute = createRouteMatcher([
   '/api/auth/(.*)',
 ]);
 
-export default clerkMiddleware((auth, req) => {
-  const clerkKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
-  // If Clerk is not configured with live credentials, bypass to built-in session guard
-  if (!clerkKey || clerkKey.includes('placeholder')) {
-    return NextResponse.next();
-  }
-
+export default clerkMiddleware(async (auth, req) => {
   if (!isPublicRoute(req)) {
-    auth().protect();
+    await auth.protect();
   }
-  return NextResponse.next();
 });
 
 export const config = {
   matcher: [
-    // Strictly exclude Next.js internal static assets, images, and any file with an extension
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:css|js|map|png|jpg|jpeg|gif|svg|webp|ico|ttf|woff2?)).*)',
+    // Skip Next.js internals and all static files, unless found in search params
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Always run for API routes
     '/(api|trpc)(.*)',
   ],
 };

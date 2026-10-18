@@ -4,6 +4,8 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { ClerkProvider } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
+import { FluidParticlesBackground } from '@/components/ui/fluid-particles-background';
+import PremiumCursor from '@/components/layout/PremiumCursor';
 
 export const metadata: Metadata = {
   title: 'Skaleathon 2027 — National Online Hackathon | SkaleKraft',
@@ -49,26 +51,40 @@ export default function RootLayout({
       appearance={{
         baseTheme: dark,
         variables: {
-          colorPrimary: '#6366f1',
-          colorBackground: '#0a0e1a',
-          colorText: '#f1f5f9',
-          colorTextSecondary: '#94a3b8',
-          colorInputBackground: '#0c1220',
-          colorInputText: '#ffffff',
+          colorPrimary: '#c19a88',
+          colorBackground: '#0B0B0B',
+          colorText: '#EDEDED',
+          colorTextSecondary: '#A1A1A1',
+          colorInputBackground: '#141414',
+          colorInputText: '#EDEDED',
           borderRadius: '0.75rem',
         },
         elements: {
-          card: 'border border-white/10 shadow-2xl backdrop-blur-xl bg-[#0c1220]',
+          card: 'border border-white/10 shadow-2xl backdrop-blur-xl bg-[#0B0B0B]',
           formButtonPrimary:
-            'bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-semibold transition-all shadow-lg shadow-brand-500/20',
-          footerActionLink: 'text-cyanAccent-400 hover:text-white',
+            'bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] text-white font-medium transition-all shadow-lg shadow-[#805948]/20',
+          footerActionLink: 'text-[#c19a88] hover:text-[#e8c5b4]',
         },
       }}
     >
       <html lang="en" className="dark">
-        <body className="min-h-screen bg-[#060911] text-slate-100 flex flex-col antialiased selection:bg-brand-500/30 selection:text-white">
+        <body className="min-h-screen bg-[#0B0B0B] text-[#EDEDED] flex flex-col antialiased selection:bg-[#805948]/30 selection:text-white relative">
+          {/* Background Gradients & Fluid Particles (SkaleKraft ambient animation on EVERY page) */}
+          <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(128,89,72,0.18),transparent_40%),radial-gradient(circle_at_80%_100%,rgba(255,255,255,0.02),transparent_40%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.025)_1px,transparent_0)] [background-size:32px_32px] opacity-70" />
+          </div>
+          <FluidParticlesBackground
+            theme="dark"
+            particleCount={560}
+            noiseIntensity={0.0024}
+            particleSize={{ min: 0.45, max: 1.2 }}
+            className="pointer-events-none fixed inset-0 z-0 h-screen bg-transparent opacity-65 dark:bg-transparent"
+          />
+          <PremiumCursor />
+
           <Navbar />
-          <main className="flex-1">{children}</main>
+          <main className="relative z-10 flex-1">{children}</main>
           <Footer />
         </body>
       </html>

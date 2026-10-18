@@ -28,8 +28,8 @@
 }
 
 body {
-  background-color: #060911;
-  color: #f1f5f9;
+  background-color: #0B0B0B;
+  color: #EDEDED;
   font-feature-settings: "rlig" 1, "calt" 1;
   min-height: 100vh;
 }
@@ -97,5 +97,42 @@ body {
   }
   100% {
     transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html.premium-cursor-enabled,
+  html.premium-cursor-enabled * {
+    cursor: none;
+  }
+
+  .premium-cursor-dot,
+  .premium-cursor-ring {
+    pointer-events: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 2147483647;
+    will-change: transform, width, height, opacity, border-color;
+  }
+
+  .premium-cursor-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.24);
+    transition: opacity 180ms ease;
+  }
+
+  .premium-cursor-ring {
+    border: 1px solid rgba(255, 255, 255, 0.76);
+    border-radius: 999px;
+    box-shadow: 0 0 18px color-mix(in srgb, currentColor 24%, transparent);
+    transition:
+      width 160ms cubic-bezier(0.16, 1, 0.3, 1),
+      height 160ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 140ms ease,
+      border-color 200ms ease;
   }
 }

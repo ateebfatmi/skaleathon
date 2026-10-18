@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Users, Send, Award, FileCheck } from 'lucide-react';
+import { LayoutDashboard, Users, Send, Award } from 'lucide-react';
 
 export default function DashboardNav() {
   const pathname = usePathname();
@@ -16,7 +16,7 @@ export default function DashboardNav() {
   ];
 
   return (
-    <div className="flex items-center space-x-2 border-b border-white/10 pb-4 mb-8 overflow-x-auto">
+    <div className="flex items-center space-x-2 border-b border-white/10 pb-5 mb-8 overflow-x-auto">
       {links.map((link) => {
         const Icon = link.icon;
         const isActive = pathname === link.href;
@@ -25,13 +25,13 @@ export default function DashboardNav() {
           <Link
             key={link.name}
             href={link.href}
-            className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-semibold whitespace-nowrap transition-all ${
+            className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium whitespace-nowrap transition-all duration-200 ${
               isActive
-                ? 'bg-brand-600 text-white shadow-md shadow-brand-500/20'
-                : 'border border-white/5 bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white'
+                ? 'bg-white/[0.12] text-white border border-white/15 shadow-[inset_0_1px_0_rgba(255,255,255,0.16)]'
+                : 'border border-white/[0.08] bg-white/[0.03] text-white/60 hover:bg-white/[0.07] hover:text-white'
             }`}
           >
-            <Icon className="h-4 w-4" />
+            <Icon className={`h-3.5 w-3.5 ${isActive ? 'text-[#c19a88]' : 'text-white/40'}`} />
             <span>{link.name}</span>
           </Link>
         );
