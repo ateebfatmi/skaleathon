@@ -49,24 +49,24 @@ export default function RootLayout({
       appearance={{
         baseTheme: dark,
         variables: {
-          colorPrimary: '#c19a88',
-          colorBackground: '#0B0B0B',
-          colorText: '#ffffff',
-          colorTextSecondary: '#A1A1AA',
-          colorInputBackground: '#121212',
+          colorPrimary: '#6366f1',
+          colorBackground: '#0a0e1a',
+          colorText: '#f1f5f9',
+          colorTextSecondary: '#94a3b8',
+          colorInputBackground: '#0c1220',
           colorInputText: '#ffffff',
           borderRadius: '0.75rem',
         },
         elements: {
-          card: 'border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-xl',
+          card: 'border border-white/10 shadow-2xl backdrop-blur-xl bg-[#0c1220]',
           formButtonPrimary:
-            'bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#c19a88] hover:to-[#805948] text-white font-semibold transition-all shadow-[0_4px_20px_rgba(128,89,72,0.35)]',
-          footerActionLink: 'text-[#c19a88] hover:text-white',
+            'bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-semibold transition-all shadow-lg shadow-brand-500/20',
+          footerActionLink: 'text-cyanAccent-400 hover:text-white',
         },
       }}
     >
       <html lang="en" className="dark">
-        <body className="min-h-screen bg-[#0B0B0B] text-slate-100 flex flex-col antialiased selection:bg-[#805948]/30 selection:text-white">
+        <body className="min-h-screen bg-[#060911] text-slate-100 flex flex-col antialiased selection:bg-brand-500/30 selection:text-white">
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />

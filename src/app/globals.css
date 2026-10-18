@@ -4,55 +4,53 @@
 
 @layer base {
   :root {
-    --background: 0 0% 4.3%; /* #0B0B0B */
-    --foreground: 0 0% 100%; /* #ffffff */
-    --card: 0 0% 3.9%;       /* #0A0A0A */
-    --card-foreground: 0 0% 100%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 20 28% 39%;   /* #805948 */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 7.1%;  /* #121212 */
-    --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 10.2%;     /* #1A1A1A */
-    --muted-foreground: 240 5% 64.9%; /* #A1A1AA */
-    --accent: 20 28% 39%;    /* #805948 */
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 10.2%;    /* #1A1A1A */
-    --input: 0 0% 10.2%;     /* #1A1A1A */
-    --ring: 20 28% 39%;      /* #805948 */
-    --radius: 0.5rem;
+    --background: 224 71% 4%;
+    --foreground: 210 40% 98%;
+    --card: 222 47% 7%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 7%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 243 75% 59%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 217 33% 14%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 33% 14%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 199 89% 48%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 33% 18%;
+    --input: 217 33% 18%;
+    --ring: 243 75% 59%;
+    --radius: 0.75rem;
   }
 }
 
 body {
-  background-color: #0B0B0B;
-  color: #ffffff;
+  background-color: #060911;
+  color: #f1f5f9;
   font-feature-settings: "rlig" 1, "calt" 1;
   min-height: 100vh;
-  overflow-x: clip;
-  selection-background-color: rgba(128, 89, 72, 0.25);
 }
 
-/* Custom scrollbars matching SkaleKraft */
+/* Custom scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0B0B0B;
+  background: #090d16;
 }
 ::-webkit-scrollbar-thumb {
-  background: #262626;
-  border-radius: 9999px;
+  background: #1e293b;
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #404040;
+  background: #334155;
 }
 
-/* SkaleKraft copper & bronze typography gradients */
+/* SkaleKraft copper, bronze & luxury gradient utilities */
 .skalekraft-gradient-text {
   background: linear-gradient(135deg, #e8c5b4 0%, #c19a88 50%, #805948 100%);
   -webkit-background-clip: text;
@@ -69,14 +67,28 @@ body {
   border: 1px solid rgba(193, 154, 136, 0.25);
 }
 
-/* Animations for rotating shimmer and border beam */
-@keyframes rotate-gradient {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Gradient text utilities */
+.text-gradient-primary {
+  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-accent {
+  background: linear-gradient(135deg, #818cf8 0%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtle-border {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel {
+  background: rgba(13, 18, 30, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 @keyframes borderBeamRotation {

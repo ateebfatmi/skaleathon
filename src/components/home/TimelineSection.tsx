@@ -1,7 +1,10 @@
+'use client';
+
 import React from 'react';
 import { Calendar, Clock } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 import { EventData } from '@/lib/db/types';
+import { motion } from 'framer-motion';
 
 interface TimelineProps {
   event: EventData;
@@ -10,81 +13,92 @@ interface TimelineProps {
 export default function TimelineSection({ event }: TimelineProps) {
   const milestones = [
     {
+      num: '01',
       title: 'Team Registrations Open',
       date: formatDate(event.registration_start_at),
-      desc: 'Form teams of 1–6 members and complete payment of ₹99.',
-      status: event.registration_start_at ? 'scheduled' : 'tba',
+      desc: 'Form teams of 1–6 members and complete payment of ₹99 flat fee.',
     },
     {
-      title: 'Registration Deadline',
+      num: '02',
+      title: 'Registration Cutoff',
       date: formatDate(event.registration_end_at),
-      desc: 'Final cutoff to register or modify team composition.',
-      status: event.registration_end_at ? 'scheduled' : 'tba',
+      desc: 'Final deadline to register new teams or alter team member compositions.',
     },
     {
-      title: 'Project Submission Deadline',
+      num: '03',
+      title: 'Code & Build Submission Cutoff',
       date: formatDate(event.submission_deadline),
-      desc: 'All GitHub repositories, live demo links, and video URLs must be finalized.',
-      status: event.submission_deadline ? 'scheduled' : 'tba',
+      desc: 'Public GitHub repository, deployed live URL, and architecture walkthrough video finalized.',
     },
     {
-      title: 'Judging & Evaluation Period',
-      date: event.submission_deadline ? 'Following Submissions' : 'To be announced',
-      desc: 'Specialized evaluation panels score submissions across weighted criteria.',
-      status: 'tba',
+      num: '04',
+      title: 'Technical Evaluation Window',
+      date: event.submission_deadline ? 'Immediately Following Cutoff' : 'To be announced',
+      desc: 'Panels score project repositories across innovation, code architecture, and deployment.',
     },
     {
-      title: 'Official Results & Certificate Conferral',
+      num: '05',
+      title: 'Official Conferral & Leaderboard',
       date: formatDate(event.results_announced_at),
-      desc: 'Public leaderboard announcement and Top 25 certificate generation.',
-      status: event.results_announced_at ? 'scheduled' : 'tba',
+      desc: 'Official leaderboard reveal, cash prize dispersal, and Top 25 certificate generation.',
     },
   ];
 
   return (
-    <section className="py-20 lg:py-28 relative">
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1 text-xs font-semibold text-slate-300 mb-4">
-            <Calendar className="h-3.5 w-3.5 text-cyanAccent-400" />
-            <span>Event Milestones</span>
+    <section className="py-20 lg:py-28 relative bg-[#0B0B0B] border-t border-white/10">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5 }}
+          className="text-center max-w-2xl mx-auto mb-16"
+        >
+          <div className="inline-flex items-center gap-2.5 mb-3">
+            <span className="h-px w-6 bg-[#c19a88]/70" />
+            <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
+              Operational Schedule
+            </p>
+            <span className="h-px w-6 bg-[#c19a88]/70" />
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
-            Configurable Event Schedule
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-white tracking-tight">
+            Event{' '}
+            <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
+              milestones
+            </span>
+            .
           </h2>
-          <p className="mt-4 text-sm sm:text-base text-slate-300">
-            Dates and operational deadlines are set authoritatively by organizers. No fabricated timers.
+          <p className="mt-4 text-sm text-white/55 leading-relaxed font-light">
+            Authoritative dates and operational deadlines. No artificial countdown timers.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="max-w-4xl mx-auto space-y-4">
+        <div className="max-w-4xl mx-auto space-y-3.5">
           {milestones.map((m, idx) => (
-            <div
+            <motion.div
               key={idx}
-              className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-6 rounded-2xl border border-white/10 bg-[#0c111e] hover:border-white/20 transition-all gap-4"
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.45, delay: idx * 0.07 }}
+              className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-6 rounded-[20px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] hover:border-[#c19a88]/30 transition-all duration-300 gap-4"
             >
               <div className="flex items-start gap-4">
-                <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-cyanAccent-400 shrink-0 mt-1 sm:mt-0">
-                  <Clock className="h-5 w-5" />
-                </div>
+                <span className="font-mono text-xs font-semibold text-[#c19a88] tracking-[0.16em] mt-1 shrink-0">
+                  {m.num}
+                </span>
                 <div>
-                  <h3 className="text-base font-bold text-white">{m.title}</h3>
-                  <p className="text-xs text-slate-400 mt-1">{m.desc}</p>
+                  <h3 className="text-sm font-semibold tracking-wide text-white">{m.title}</h3>
+                  <p className="text-xs text-white/50 mt-1 font-light">{m.desc}</p>
                 </div>
               </div>
 
               <div className="sm:text-right shrink-0">
-                <span
-                  className={`inline-block text-xs font-semibold px-3 py-1 rounded-full border ${
-                    m.date === 'To be announced'
-                      ? 'border-yellow-500/30 bg-yellow-950/30 text-yellow-300'
-                      : 'border-brand-500/30 bg-brand-950/40 text-brand-300'
-                  }`}
-                >
+                <span className="inline-block text-[11px] font-mono tracking-wide px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] text-[#c19a88]">
                   {m.date}
                 </span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
