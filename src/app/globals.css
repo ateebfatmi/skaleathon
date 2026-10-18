@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 4.3%; /* #0B0B0B */
+    --foreground: 0 0% 100%; /* #ffffff */
+    --card: 0 0% 3.9%;       /* #0A0A0A */
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 20 28% 39%;   /* #805948 */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 7.1%;  /* #121212 */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 10.2%;     /* #1A1A1A */
+    --muted-foreground: 240 5% 64.9%; /* #A1A1AA */
+    --accent: 20 28% 39%;    /* #805948 */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 10.2%;    /* #1A1A1A */
+    --input: 0 0% 10.2%;     /* #1A1A1A */
+    --ring: 20 28% 39%;      /* #805948 */
+    --radius: 0.5rem;
+  }
+}
+
+body {
+  background-color: #0B0B0B;
+  color: #ffffff;
+  font-feature-settings: "rlig" 1, "calt" 1;
+  min-height: 100vh;
+  overflow-x: clip;
+  selection-background-color: rgba(128, 89, 72, 0.25);
+}
+
+/* Custom scrollbars matching SkaleKraft */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0B0B0B;
+}
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #404040;
+}
+
+/* SkaleKraft copper & bronze typography gradients */
+.skalekraft-gradient-text {
+  background: linear-gradient(135deg, #e8c5b4 0%, #c19a88 50%, #805948 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.skalekraft-glow-box {
+  box-shadow: 0 0 50px rgba(128, 89, 72, 0.15);
+}
+
+.skalekraft-copper-badge {
+  background: rgba(128, 89, 72, 0.12);
+  color: #c19a88;
+  border: 1px solid rgba(193, 154, 136, 0.25);
+}
+
+/* Animations for rotating shimmer and border beam */
+@keyframes rotate-gradient {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes borderBeamRotation {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
