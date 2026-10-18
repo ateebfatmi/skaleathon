@@ -6,6 +6,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
 import { FluidParticlesBackground } from '@/components/ui/fluid-particles-background';
 import PremiumCursor from '@/components/layout/PremiumCursor';
+import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 
 export const metadata: Metadata = {
   title: 'Skaleathon 2027 — National Online Hackathon | SkaleKraft',
@@ -38,6 +39,10 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+  },
+  icons: {
+    icon: '/icon.png',
+    apple: '/icon.png',
   },
 };
 
@@ -74,14 +79,19 @@ export default function RootLayout({
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(128,89,72,0.18),transparent_40%),radial-gradient(circle_at_80%_100%,rgba(255,255,255,0.02),transparent_40%)]" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.025)_1px,transparent_0)] [background-size:32px_32px] opacity-70" />
           </div>
-          <FluidParticlesBackground
-            theme="dark"
-            particleCount={560}
-            noiseIntensity={0.0024}
-            particleSize={{ min: 0.45, max: 1.2 }}
-            className="pointer-events-none fixed inset-0 z-0 h-screen bg-transparent opacity-65 dark:bg-transparent"
-          />
-          <PremiumCursor />
+          <ErrorBoundary fallback={null}>
+            <FluidParticlesBackground
+              theme="dark"
+              particleCount={560}
+              noiseIntensity={0.0024}
+              particleSize={{ min: 0.45, max: 1.2 }}
+              className="pointer-events-none fixed inset-0 z-0 h-screen bg-transparent opacity-65 dark:bg-transparent"
+            />
+          </ErrorBoundary>
+
+          <ErrorBoundary fallback={null}>
+            <PremiumCursor />
+          </ErrorBoundary>
 
           <Navbar />
           <main className="relative z-10 flex-1">{children}</main>

@@ -83,7 +83,10 @@ export default function GlassmorphismCta({
         <img
           src={avatarSrc}
           alt={avatarAlt}
-          className="relative z-10 h-6 w-6 rounded-full object-cover ring-1 ring-[#c19a88]/40 shadow-[0_0_12px_rgba(193,154,136,0.3)]"
+          width={24}
+          height={24}
+          className="relative z-10 h-6 w-6 rounded-full object-cover ring-1 ring-[#c19a88]/40 shadow-[0_0_12px_rgba(193,154,136,0.3)] shrink-0"
+          style={{ width: 24, height: 24, maxWidth: 24, maxHeight: 24 }}
         />
         <span className="relative z-10 whitespace-nowrap font-sans">{label}</span>
       </div>

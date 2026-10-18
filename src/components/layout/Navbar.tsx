@@ -12,11 +12,13 @@ import {
   SignInButton,
   UserButton,
 } from '@clerk/nextjs';
+import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 
 export default function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -26,6 +28,7 @@ export default function Navbar() {
   });
 
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 15);
     };
@@ -53,6 +56,23 @@ export default function Navbar() {
     { name: 'FAQ', href: '/faq' },
   ];
 
+  const defaultRegisterButton = (
+    <Link
+      href="/register"
+      className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-[#c19a88]/50 transition-transform duration-300 hover:scale-[1.03] active:scale-[0.98]"
+    >
+      <span className="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#805948_0%,#c19a88_50%,#805948_100%)] opacity-70 group-hover:opacity-100 transition-opacity" />
+      <span className="relative flex items-center gap-2 rounded-full bg-[#0D0B0A]/95 px-4 py-2 text-xs font-semibold text-white backdrop-blur-xl transition-colors duration-200 group-hover:bg-[#14100E]">
+        <Sparkles className="h-3.5 w-3.5 text-[#c19a88] group-hover:rotate-12 transition-transform duration-300" />
+        <span>Register Team</span>
+        <span className="rounded-full bg-[#c19a88]/20 border border-[#c19a88]/30 px-2 py-0.5 text-[10px] font-mono font-bold text-[#e8c5b4] shadow-sm">
+          ₹99
+        </span>
+        <ArrowRight className="h-3.5 w-3.5 text-neutral-400 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
+      </span>
+    </Link>
+  );
+
   return (
     <>
       {/* Top scroll progress bar */}
@@ -72,12 +92,17 @@ export default function Navbar() {
           
           {/* Logo & Brand Cluster */}
           <Link href="/" className="flex items-center gap-3 group shrink-0 select-none">
-            <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] p-0.5 shadow-[0_0_20px_rgba(193,154,136,0.2)] transition-all duration-300 group-hover:scale-105 group-hover:border-[#c19a88]/50 group-hover:shadow-[0_0_25px_rgba(193,154,136,0.35)]">
+            <div
+              className="relative h-10 w-10 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] p-0.5 shadow-[0_0_20px_rgba(193,154,136,0.2)] transition-all duration-300 group-hover:scale-105 group-hover:border-[#c19a88]/50 group-hover:shadow-[0_0_25px_rgba(193,154,136,0.35)]"
+              style={{ width: 40, height: 40, minWidth: 40, minHeight: 40 }}
+            >
               <Image
                 src="/images/skalekraft-logo.png"
                 alt="SkaleKraft logo"
-                fill
-                className="object-cover rounded-[10px]"
+                width={40}
+                height={40}
+                className="h-full w-full object-cover rounded-[10px]"
+                style={{ width: 40, height: 40, maxWidth: 40, maxHeight: 40 }}
                 priority
               />
             </div>
@@ -124,49 +149,59 @@ export default function Navbar() {
 
           {/* Right Action Cluster */}
           <div className="hidden md:flex items-center space-x-3">
-            <SignedIn>
-              <div className="flex items-center space-x-3">
-                <Link
-                  href="/dashboard"
-                  className="group flex items-center space-x-1.5 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs font-medium text-neutral-300 hover:border-[#c19a88]/40 hover:bg-white/[0.07] hover:text-white transition-all shadow-sm"
-                >
-                  <User className="h-3.5 w-3.5 text-[#c19a88] group-hover:scale-110 transition-transform" />
-                  <span>Dashboard</span>
-                </Link>
-                <div className="p-0.5 rounded-full ring-1 ring-[#c19a88]/50 shadow-[0_0_15px_rgba(193,154,136,0.25)] hover:ring-[#c19a88] transition-all">
-                  <UserButton afterSignOutUrl="/" />
-                </div>
-              </div>
-            </SignedIn>
-            
-            <SignedOut>
-              <div className="flex items-center space-x-3">
-                <SignInButton mode="modal">
-                  <button className="text-xs font-medium tracking-wide text-neutral-400 hover:text-white transition-colors px-3.5 py-2 rounded-full hover:bg-white/[0.04] cursor-pointer">
+            <ErrorBoundary
+              fallback={
+                <div className="flex items-center space-x-3">
+                  <Link
+                    href="/sign-in"
+                    className="text-xs font-medium tracking-wide text-neutral-400 hover:text-white transition-colors px-3.5 py-2 rounded-full hover:bg-white/[0.04]"
+                  >
                     Sign In
-                  </button>
-                </SignInButton>
-
-                {/* Refined Luxury Register CTA */}
-                <Link
-                  href="/register"
-                  className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-[#c19a88]/50 transition-transform duration-300 hover:scale-[1.03] active:scale-[0.98]"
-                >
-                  {/* Subtle animated border glow */}
-                  <span className="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#805948_0%,#c19a88_50%,#805948_100%)] opacity-70 group-hover:opacity-100 transition-opacity" />
+                  </Link>
+                  {defaultRegisterButton}
+                </div>
+              }
+            >
+              {mounted ? (
+                <>
+                  <SignedIn>
+                    <div className="flex items-center space-x-3">
+                      <Link
+                        href="/dashboard"
+                        className="group flex items-center space-x-1.5 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs font-medium text-neutral-300 hover:border-[#c19a88]/40 hover:bg-white/[0.07] hover:text-white transition-all shadow-sm"
+                      >
+                        <User className="h-3.5 w-3.5 text-[#c19a88] group-hover:scale-110 transition-transform" />
+                        <span>Dashboard</span>
+                      </Link>
+                      <div className="p-0.5 rounded-full ring-1 ring-[#c19a88]/50 shadow-[0_0_15px_rgba(193,154,136,0.25)] hover:ring-[#c19a88] transition-all">
+                        <UserButton afterSignOutUrl="/" />
+                      </div>
+                    </div>
+                  </SignedIn>
                   
-                  {/* Inner button surface */}
-                  <span className="relative flex items-center gap-2 rounded-full bg-[#0D0B0A]/95 px-4 py-2 text-xs font-semibold text-white backdrop-blur-xl transition-colors duration-200 group-hover:bg-[#14100E]">
-                    <Sparkles className="h-3.5 w-3.5 text-[#c19a88] group-hover:rotate-12 transition-transform duration-300" />
-                    <span>Register Team</span>
-                    <span className="rounded-full bg-[#c19a88]/20 border border-[#c19a88]/30 px-2 py-0.5 text-[10px] font-mono font-bold text-[#e8c5b4] shadow-sm">
-                      ₹99
-                    </span>
-                    <ArrowRight className="h-3.5 w-3.5 text-neutral-400 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
-                  </span>
-                </Link>
-              </div>
-            </SignedOut>
+                  <SignedOut>
+                    <div className="flex items-center space-x-3">
+                      <SignInButton mode="modal">
+                        <button className="text-xs font-medium tracking-wide text-neutral-400 hover:text-white transition-colors px-3.5 py-2 rounded-full hover:bg-white/[0.04] cursor-pointer">
+                          Sign In
+                        </button>
+                      </SignInButton>
+                      {defaultRegisterButton}
+                    </div>
+                  </SignedOut>
+                </>
+              ) : (
+                <div className="flex items-center space-x-3">
+                  <Link
+                    href="/sign-in"
+                    className="text-xs font-medium tracking-wide text-neutral-400 hover:text-white transition-colors px-3.5 py-2 rounded-full hover:bg-white/[0.04]"
+                  >
+                    Sign In
+                  </Link>
+                  {defaultRegisterButton}
+                </div>
+              )}
+            </ErrorBoundary>
           </div>
 
           {/* Mobile menu trigger */}
@@ -206,39 +241,85 @@ export default function Navbar() {
             </div>
 
             <div className="pt-4 border-t border-white/10 space-y-3">
-              <SignedIn>
-                <div className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/10">
-                  <span className="text-xs text-neutral-400 font-medium">Signed In Account</span>
-                  <UserButton afterSignOutUrl="/" />
-                </div>
-                <Link
-                  href="/dashboard"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block rounded-xl bg-white/[0.06] border border-white/10 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-white/[0.1] transition-colors"
-                >
-                  Go to Dashboard
-                </Link>
-              </SignedIn>
+              <ErrorBoundary
+                fallback={
+                  <>
+                    <Link
+                      href="/sign-in"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="w-full block rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-center text-sm font-medium text-neutral-300 hover:bg-white/[0.06] hover:text-white transition-colors"
+                    >
+                      Sign In
+                    </Link>
+                    <Link
+                      href="/register"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-4 py-3 text-center text-sm font-bold text-white shadow-[0_4px_25px_rgba(128,89,72,0.4)] active:scale-[0.99] transition-transform"
+                    >
+                      <Sparkles className="h-4 w-4" />
+                      <span>Register Team — ₹99</span>
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </>
+                }
+              >
+                {mounted ? (
+                  <>
+                    <SignedIn>
+                      <div className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/10">
+                        <span className="text-xs text-neutral-400 font-medium">Signed In Account</span>
+                        <UserButton afterSignOutUrl="/" />
+                      </div>
+                      <Link
+                        href="/dashboard"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="block rounded-xl bg-white/[0.06] border border-white/10 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-white/[0.1] transition-colors"
+                      >
+                        Go to Dashboard
+                      </Link>
+                    </SignedIn>
 
-              <SignedOut>
-                <SignInButton mode="modal">
-                  <button
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="w-full block rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-center text-sm font-medium text-neutral-300 hover:bg-white/[0.06] hover:text-white transition-colors cursor-pointer"
-                  >
-                    Sign In
-                  </button>
-                </SignInButton>
-                <Link
-                  href="/register"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-4 py-3 text-center text-sm font-bold text-white shadow-[0_4px_25px_rgba(128,89,72,0.4)] active:scale-[0.99] transition-transform"
-                >
-                  <Sparkles className="h-4 w-4" />
-                  <span>Register Team — ₹99</span>
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </SignedOut>
+                    <SignedOut>
+                      <SignInButton mode="modal">
+                        <button
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="w-full block rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-center text-sm font-medium text-neutral-300 hover:bg-white/[0.06] hover:text-white transition-colors cursor-pointer"
+                        >
+                          Sign In
+                        </button>
+                      </SignInButton>
+                      <Link
+                        href="/register"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-4 py-3 text-center text-sm font-bold text-white shadow-[0_4px_25px_rgba(128,89,72,0.4)] active:scale-[0.99] transition-transform"
+                      >
+                        <Sparkles className="h-4 w-4" />
+                        <span>Register Team — ₹99</span>
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </SignedOut>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/sign-in"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="w-full block rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-center text-sm font-medium text-neutral-300 hover:bg-white/[0.06] hover:text-white transition-colors"
+                    >
+                      Sign In
+                    </Link>
+                    <Link
+                      href="/register"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-4 py-3 text-center text-sm font-bold text-white shadow-[0_4px_25px_rgba(128,89,72,0.4)] active:scale-[0.99] transition-transform"
+                    >
+                      <Sparkles className="h-4 w-4" />
+                      <span>Register Team — ₹99</span>
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </>
+                )}
+              </ErrorBoundary>
             </div>
           </div>
         )}

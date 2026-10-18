@@ -91,12 +91,17 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-6 border-b border-white/[0.06]">
             <div className="flex items-center gap-3">
               <Link href="/" className="flex items-center gap-2 group">
-                <div className="relative h-8 w-8 overflow-hidden rounded-lg border border-white/10 bg-white/[0.03] p-0.5 shadow-sm">
+                <div
+                  className="relative h-8 w-8 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-white/[0.03] p-0.5 shadow-sm"
+                  style={{ width: 32, height: 32, minWidth: 32, minHeight: 32 }}
+                >
                   <Image
                     src="/images/skalekraft-logo.png"
                     alt="SkaleKraft logo"
-                    fill
-                    className="object-cover rounded-md"
+                    width={32}
+                    height={32}
+                    className="h-full w-full object-cover rounded-md"
+                    style={{ width: 32, height: 32, maxWidth: 32, maxHeight: 32 }}
                   />
                 </div>
                 <span className="text-sm font-bold tracking-wide text-white">
@@ -204,12 +209,17 @@ export default function Footer() {
           {/* Brand & Studio Information (Spans 2 columns) */}
           <div className="space-y-6 lg:col-span-2">
             <Link href="/" className="flex items-center gap-3 group select-none">
-              <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] p-0.5 shadow-[0_0_20px_rgba(193,154,136,0.2)] transition-all group-hover:scale-105 group-hover:border-[#c19a88]/50">
+              <div
+                className="relative h-10 w-10 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] p-0.5 shadow-[0_0_20px_rgba(193,154,136,0.2)] transition-all group-hover:scale-105 group-hover:border-[#c19a88]/50"
+                style={{ width: 40, height: 40, minWidth: 40, minHeight: 40 }}
+              >
                 <Image
                   src="/images/skalekraft-logo.png"
                   alt="SkaleKraft logo"
-                  fill
-                  className="object-cover rounded-[10px]"
+                  width={40}
+                  height={40}
+                  className="h-full w-full object-cover rounded-[10px]"
+                  style={{ width: 40, height: 40, maxWidth: 40, maxHeight: 40 }}
                 />
               </div>
               <div className="flex flex-col">
