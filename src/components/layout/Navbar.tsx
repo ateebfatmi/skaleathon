@@ -80,8 +80,8 @@ export default function Navbar() {
   };
 
   const navLinks = [
+    { name: 'Home', href: '/' },
     { name: 'Register', href: '/register' },
-    { name: 'Registered Candidates', href: '/candidates' },
     { name: 'Tracks', href: '/tracks' },
     { name: 'Prizes', href: '/prizes' },
     { name: 'Rules', href: '/rules' },
@@ -93,7 +93,6 @@ export default function Navbar() {
     { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Stages', href: '/dashboard/stages', icon: Layers },
     { name: 'My Team', href: '/dashboard/team', icon: Users },
-    { name: 'Candidates', href: '/candidates', icon: Users },
     { name: 'Project Submission', href: '/dashboard/submission', icon: Send },
     { name: 'Track & Specs', href: '/dashboard/track', icon: Code2 },
     { name: 'Announcements', href: '/dashboard/announcements', icon: Bell },
