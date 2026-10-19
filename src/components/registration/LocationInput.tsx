@@ -146,18 +146,25 @@ export function LocationInput({
           disabled={disabled}
           value={value}
           onChange={(e) => {
+            if (disabled) return;
             onChange(e.target.value);
             setIsOpen(true);
             setHighlightIndex(0);
           }}
           onFocus={() => {
-            setIsOpen(true);
-            setHighlightIndex(-1);
+            if (!disabled) {
+              setIsOpen(true);
+              setHighlightIndex(-1);
+            }
           }}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
           autoComplete="off"
-          className="w-full rounded-xl border border-white/10 bg-[#141414] pl-3.5 pr-10 py-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
+          className={`w-full rounded-xl border border-white/10 pl-3.5 pr-10 py-2.5 text-xs text-white placeholder-neutral-500 transition-colors ${
+            disabled
+              ? 'bg-[#101010]/90 opacity-50 cursor-not-allowed border-white/5 select-none text-neutral-500'
+              : 'bg-[#141414] focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none'
+          }`}
         />
 
         <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">

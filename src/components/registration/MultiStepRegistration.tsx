@@ -78,16 +78,29 @@ export default function MultiStepRegistration({
   const availableCities = useMemo(() => {
     if (state.trim()) {
       const matchState = state.trim().toLowerCase();
-      const inState = MAJOR_INDIAN_CITIES.filter(
+      return MAJOR_INDIAN_CITIES.filter(
         (c) => c.state.toLowerCase() === matchState
       );
-      const otherStates = MAJOR_INDIAN_CITIES.filter(
-        (c) => c.state.toLowerCase() !== matchState
-      );
-      return inState.length > 0 ? [...inState, ...otherStates] : MAJOR_INDIAN_CITIES;
     }
-    return MAJOR_INDIAN_CITIES;
+    return [];
   }, [state]);
+
+  const handleStateChange = (newState: string) => {
+    setState(newState);
+    if (city.trim() && newState.trim()) {
+      const matchState = newState.trim().toLowerCase();
+      const belongs = MAJOR_INDIAN_CITIES.some(
+        (c) =>
+          c.name.toLowerCase() === city.trim().toLowerCase() &&
+          c.state.toLowerCase() === matchState
+      );
+      if (!belongs) {
+        setCity('');
+      }
+    } else if (!newState.trim()) {
+      setCity('');
+    }
+  };
 
   // Leader details
   const [leaderName, setLeaderName] = useState('');
@@ -141,8 +154,12 @@ export default function MultiStepRegistration({
       setErrorMessage('Team name must have at least 3 characters.');
       return;
     }
-    if (!city.trim() || !state.trim()) {
-      setErrorMessage('Please provide both city and state.');
+    if (!state.trim()) {
+      setErrorMessage('Please select a state first.');
+      return;
+    }
+    if (!city.trim()) {
+      setErrorMessage(`Please select or enter a city for ${state}.`);
       return;
     }
     setStep(2);
@@ -574,28 +591,32 @@ export default function MultiStepRegistration({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <LocationInput
-                label="City"
-                required
-                value={city}
-                onChange={setCity}
-                options={availableCities}
-                placeholder="e.g. Bengaluru"
-                helperText={state ? `Prioritizing ${state}` : 'Select or search'}
-                onSelectOption={(item) => {
-                  if (typeof item !== 'string' && item.state) {
-                    setState(item.state);
-                  }
-                }}
-              />
-
-              <LocationInput
                 label="State"
                 required
                 value={state}
-                onChange={setState}
+                onChange={handleStateChange}
+                onSelectOption={(item) => {
+                  const stateVal = typeof item === 'string' ? item : item.value;
+                  handleStateChange(stateVal);
+                }}
                 options={INDIAN_STATES}
-                placeholder="e.g. Karnataka"
-                helperText="Select or search"
+                placeholder="Select or search state"
+                helperText="Select state first"
+              />
+
+              <LocationInput
+                label="City"
+                required
+                disabled={!state.trim()}
+                value={city}
+                onChange={setCity}
+                options={availableCities}
+                placeholder={state.trim() ? `Select city in ${state}` : 'Select a state first'}
+                helperText={
+                  state.trim()
+                    ? `${availableCities.length} cities in ${state}`
+                    : 'Requires state selection'
+                }
               />
             </div>
 
