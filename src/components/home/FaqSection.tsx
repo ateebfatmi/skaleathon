@@ -18,7 +18,11 @@ export default function FaqSection() {
     },
     {
       q: 'What are the technical tracks available?',
-      a: 'Skaleathon 2027 features three tracks: (1) AI & Machine Learning, (2) Web Architecture, and (3) Mobile Systems. Teams choose one track during registration and can adjust before the final submission deadline.',
+      a: 'Skaleathon features three tracks: (1) AI & Machine Learning, (2) Web Architecture, and (3) Mobile Systems. Teams choose one track during registration and can adjust before the final submission deadline.',
+    },
+    {
+      q: 'When are the competition rounds conducted?',
+      a: 'All 4 rounds are conducted throughout January 2028: Team Registration closes Jan 07; Round 1 (Online Technical Quiz) takes place on Saturday, Jan 08; Round 2 (Idea & Architecture PPT) runs Jan 10–14; Round 3 (Core Build Sprint) spans Jan 17–26 (Republic Day submission); and Round 4 (Grand Finale Live Q&A Defense & Award Ceremony) is held on Jan 29–30.',
     },
     {
       q: 'What are the prizes and certificate recognitions?',

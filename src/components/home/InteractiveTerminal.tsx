@@ -47,6 +47,7 @@ export default function InteractiveTerminal() {
           <div className="space-y-1.5 text-xs text-neutral-300">
             <div className="text-[#c19a88] font-semibold">Available Command Instructions:</div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+              <div><span className="text-[#e8c5b4] font-mono font-bold">schedule</span> — January 2028 operational dates & milestones</div>
               <div><span className="text-[#e8c5b4] font-mono font-bold">stages</span> — The 4 competition stages (Quiz, PPT, Build, Q&A)</div>
               <div><span className="text-[#e8c5b4] font-mono font-bold">tracks</span> — Inspect AI/ML, Web & Mobile arenas</div>
               <div><span className="text-[#e8c5b4] font-mono font-bold">prizes</span> — View ₹35,000 cash & interview tiers</div>
@@ -58,25 +59,72 @@ export default function InteractiveTerminal() {
         );
         break;
 
+      case 'schedule':
+      case 'timeline':
+        output = (
+          <div className="space-y-2 text-xs">
+            <div className="text-[#c19a88] font-bold">📅 January 2028 Master Schedule:</div>
+            <div className="space-y-1.5 text-[11px] font-mono">
+              <div className="flex items-center justify-between border-b border-white/10 pb-1">
+                <span className="text-white/70">Registration Closes:</span>
+                <span className="text-emerald-400 font-bold">Jan 07, 2028 (11:59 PM IST)</span>
+              </div>
+              <div className="flex items-center justify-between border-b border-white/10 pb-1">
+                <span className="text-white/70">Stage 1 — Technical Quiz:</span>
+                <span className="text-emerald-400 font-bold">Jan 08, 2028 (10 AM–8 PM)</span>
+              </div>
+              <div className="flex items-center justify-between border-b border-white/10 pb-1">
+                <span className="text-white/70">Stage 2 — Architecture PPT:</span>
+                <span className="text-[#c19a88] font-bold">Jan 10 – Jan 14, 2028</span>
+              </div>
+              <div className="flex items-center justify-between border-b border-white/10 pb-1">
+                <span className="text-white/70">Stage 3 — Build Sprint:</span>
+                <span className="text-[#e8c5b4] font-bold">Jan 17 – Jan 26, 2028</span>
+              </div>
+              <div className="flex items-center justify-between border-b border-white/10 pb-1">
+                <span className="text-white/70">Stage 4 — Grand Finale Live Q&A:</span>
+                <span className="text-amber-400 font-bold">Jan 29, 2028 (10:30 AM)</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-white/70">Award Ceremony & Certificates:</span>
+                <span className="text-amber-300 font-bold">Jan 30 – Jan 31, 2028</span>
+              </div>
+            </div>
+          </div>
+        );
+        break;
+
       case 'stages':
         output = (
           <div className="space-y-2 text-xs">
-            <div className="text-[#c19a88] font-bold">🎯 The 4 Competition Stages:</div>
+            <div className="text-[#c19a88] font-bold">🎯 The 4 Competition Stages (January 2028):</div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
               <div className="p-2 rounded-lg border border-emerald-500/20 bg-emerald-500/10">
-                <span className="text-emerald-400 font-bold block">Stage 1: Online Technical Quiz</span>
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-emerald-400 font-bold block">Stage 1: Online Quiz</span>
+                  <span className="text-[9px] font-mono text-emerald-400 bg-emerald-500/20 px-1 rounded">Jan 8</span>
+                </div>
                 <span className="text-white/60 text-[10px]">Timed screening round covering core CS logic and track concepts.</span>
               </div>
               <div className="p-2 rounded-lg border border-[#c19a88]/30 bg-[#c19a88]/10">
-                <span className="text-[#c19a88] font-bold block">Stage 2: Idea & Architecture PPT</span>
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-[#c19a88] font-bold block">Stage 2: Architecture PPT</span>
+                  <span className="text-[9px] font-mono text-[#c19a88] bg-[#c19a88]/20 px-1 rounded">Jan 10–14</span>
+                </div>
                 <span className="text-white/60 text-[10px]">Blueprint round submitting problem statement, schema, and tech stack.</span>
               </div>
               <div className="p-2 rounded-lg border border-[#c19a88]/30 bg-[#c19a88]/10">
-                <span className="text-[#e8c5b4] font-bold block">Stage 3: Project Submission</span>
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-[#e8c5b4] font-bold block">Stage 3: Build Sprint</span>
+                  <span className="text-[9px] font-mono text-[#e8c5b4] bg-[#c19a88]/20 px-1 rounded">Jan 17–26</span>
+                </div>
                 <span className="text-white/60 text-[10px]">Core build phase with public GitHub repo, live deployed URL, and video.</span>
               </div>
               <div className="p-2 rounded-lg border border-amber-500/20 bg-amber-500/10">
-                <span className="text-amber-400 font-bold block">Stage 4: Grand Finale Live Q&A</span>
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-amber-400 font-bold block">Stage 4: Grand Finale Q&A</span>
+                  <span className="text-[9px] font-mono text-amber-400 bg-amber-500/20 px-1 rounded">Jan 29–30</span>
+                </div>
                 <span className="text-white/60 text-[10px]">Live defense with judges determining top 3 cash awards and interviews.</span>
               </div>
             </div>
@@ -218,7 +266,7 @@ export default function InteractiveTerminal() {
     }
   }, [logs]);
 
-  const quickButtons = ['help', 'stages', 'tracks', 'prizes', 'register', 'verify', 'rules'];
+  const quickButtons = ['help', 'schedule', 'stages', 'tracks', 'prizes', 'register', 'verify', 'rules'];
 
   return (
     <div className="relative mx-auto max-w-4xl w-full rounded-[24px] border border-white/10 bg-[#07090E]/95 shadow-[0_30px_90px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.08)] backdrop-blur-2xl overflow-hidden">

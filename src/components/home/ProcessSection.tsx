@@ -12,6 +12,7 @@ export default function ProcessSection() {
       num: 'Stage 01',
       title: 'Online Technical Quiz',
       subtitle: 'Screening & Aptitude Round',
+      date: 'Jan 08, 2028',
       desc: 'A timed technical quiz evaluating core computer science fundamentals, algorithmic logic, and chosen track domain knowledge.',
       icon: HelpCircle,
       accent: 'rgba(52, 211, 153, 0.15)',
@@ -22,6 +23,7 @@ export default function ProcessSection() {
       num: 'Stage 02',
       title: 'Idea & Architecture PPT',
       subtitle: 'Ideation & Blueprint Submission',
+      date: 'Jan 10–14, 2028',
       desc: 'Shortlisted teams submit a structured presentation deck detailing their problem statement, system architecture, tech stack, and feasibility.',
       icon: Presentation,
       accent: 'rgba(193, 154, 136, 0.15)',
@@ -32,6 +34,7 @@ export default function ProcessSection() {
       num: 'Stage 03',
       title: 'Project Submission',
       subtitle: 'Core Engineering & Codebase',
+      date: 'Jan 17–26, 2028',
       desc: 'The primary building phase. Teams submit their public GitHub repository, live deployed URL, demo walkthrough video, and documentation.',
       icon: Code2,
       accent: 'rgba(232, 197, 180, 0.18)',
@@ -42,6 +45,7 @@ export default function ProcessSection() {
       num: 'Stage 04',
       title: 'Grand Finale Live Q&A',
       subtitle: 'Panel Defense & Interviews',
+      date: 'Jan 29–30, 2028',
       desc: 'Finalist teams present and defend their working system in a live technical Q&A session with industry judges and SkaleKraft leadership.',
       icon: MessagesSquare,
       accent: 'rgba(251, 191, 36, 0.15)',
@@ -123,10 +127,15 @@ export default function ProcessSection() {
                   </div>
 
                   <div className="mt-6 pt-4 border-t border-white/[0.07] flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-white/30">
-                      Step {idx + 1} of 4
+                    <span className="text-[10px] font-mono text-[#c19a88] font-medium tracking-wide">
+                      {stage.date}
                     </span>
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] opacity-50 group-hover:opacity-100 transition-opacity" />
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[10px] font-mono text-white/30">
+                        Round {idx + 1}
+                      </span>
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] opacity-50 group-hover:opacity-100 transition-opacity" />
+                    </div>
                   </div>
                 </SpotlightCard>
               </motion.div>

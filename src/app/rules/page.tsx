@@ -79,39 +79,51 @@ export default function RulesPage() {
             <p className="text-xs text-white/60">
               Skaleathon 2027 operates across four sequential stages designed to rigorously test technical aptitude, system design, software implementation, and live oral defense:
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
-              <div className="p-4 rounded-xl border border-white/10 bg-white/[0.02] space-y-1">
-                <span className="text-[10px] font-mono text-emerald-400 font-bold uppercase tracking-wider">Stage 1 • Quiz</span>
-                <h3 className="text-xs font-bold text-white">Online Technical Screening Quiz</h3>
-                <p className="text-[11px] text-white/50 leading-relaxed font-light">
-                  A timed technical quiz covering core CS logic, algorithmic reasoning, and domain-specific track fundamentals. High-scoring teams qualify for Stage 2.
-                </p>
-              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
+                <div className="p-4 rounded-xl border border-white/10 bg-white/[0.02] space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono text-emerald-400 font-bold uppercase tracking-wider">Stage 1 • Quiz</span>
+                    <span className="text-[10px] font-mono text-emerald-400/80">Jan 08, 2028</span>
+                  </div>
+                  <h3 className="text-xs font-bold text-white">Online Technical Screening Quiz</h3>
+                  <p className="text-[11px] text-white/50 leading-relaxed font-light">
+                    A timed technical quiz covering core CS logic, algorithmic reasoning, and domain-specific track fundamentals. High-scoring teams qualify for Stage 2.
+                  </p>
+                </div>
 
-              <div className="p-4 rounded-xl border border-white/10 bg-white/[0.02] space-y-1">
-                <span className="text-[10px] font-mono text-[#c19a88] font-bold uppercase tracking-wider">Stage 2 • PPT</span>
-                <h3 className="text-xs font-bold text-white">Idea & Architecture PPT</h3>
-                <p className="text-[11px] text-white/50 leading-relaxed font-light">
-                  Shortlisted teams submit a structured slide deck detailing their problem statement, system architecture, database schema, tech stack, and feasibility.
-                </p>
-              </div>
+                <div className="p-4 rounded-xl border border-white/10 bg-white/[0.02] space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono text-[#c19a88] font-bold uppercase tracking-wider">Stage 2 • PPT</span>
+                    <span className="text-[10px] font-mono text-[#c19a88]/80">Jan 10–14, 2028</span>
+                  </div>
+                  <h3 className="text-xs font-bold text-white">Idea & Architecture PPT</h3>
+                  <p className="text-[11px] text-white/50 leading-relaxed font-light">
+                    Shortlisted teams submit a structured slide deck detailing their problem statement, system architecture, database schema, tech stack, and feasibility.
+                  </p>
+                </div>
 
-              <div className="p-4 rounded-xl border border-white/10 bg-white/[0.02] space-y-1">
-                <span className="text-[10px] font-mono text-[#e8c5b4] font-bold uppercase tracking-wider">Stage 3 • Build</span>
-                <h3 className="text-xs font-bold text-white">Project Submission & Codebase</h3>
-                <p className="text-[11px] text-white/50 leading-relaxed font-light">
-                  The primary engineering phase. Teams build and submit a public GitHub repository, live deployed URL, walkthrough demo video, and AI tool disclosure.
-                </p>
-              </div>
+                <div className="p-4 rounded-xl border border-white/10 bg-white/[0.02] space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono text-[#e8c5b4] font-bold uppercase tracking-wider">Stage 3 • Build</span>
+                    <span className="text-[10px] font-mono text-[#e8c5b4]/80">Jan 17–26, 2028</span>
+                  </div>
+                  <h3 className="text-xs font-bold text-white">Project Submission & Codebase</h3>
+                  <p className="text-[11px] text-white/50 leading-relaxed font-light">
+                    The primary engineering phase. Teams build and submit a public GitHub repository, live deployed URL, walkthrough demo video, and AI tool disclosure.
+                  </p>
+                </div>
 
-              <div className="p-4 rounded-xl border border-white/10 bg-white/[0.02] space-y-1">
-                <span className="text-[10px] font-mono text-amber-400 font-bold uppercase tracking-wider">Stage 4 • Finale</span>
-                <h3 className="text-xs font-bold text-white">Grand Finale Live Q&A</h3>
-                <p className="text-[11px] text-white/50 leading-relaxed font-light">
-                  Top finalist teams defend their architecture and code in a live Q&A session with domain judges and SkaleKraft studio leadership to determine final rankings.
-                </p>
+                <div className="p-4 rounded-xl border border-white/10 bg-white/[0.02] space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono text-amber-400 font-bold uppercase tracking-wider">Stage 4 • Finale</span>
+                    <span className="text-[10px] font-mono text-amber-400/80">Jan 29–30, 2028</span>
+                  </div>
+                  <h3 className="text-xs font-bold text-white">Grand Finale Live Q&A</h3>
+                  <p className="text-[11px] text-white/50 leading-relaxed font-light">
+                    Top finalist teams defend their architecture and code in a live Q&A session with domain judges and SkaleKraft studio leadership to determine final rankings.
+                  </p>
+                </div>
               </div>
-            </div>
           </div>
 
           {/* Section 4: Originality & AI Tool Usage */}
