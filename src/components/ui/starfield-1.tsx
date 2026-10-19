@@ -95,6 +95,7 @@ const Starfield: React.FC<StarfieldProps> = ({
   });
   const mouse = useRef({ x: 0, y: 0 });
   const cursor = useRef({ x: 0, y: 0 });
+  const hasPointerMoved = useRef(false);
   const animationFrameRef = useRef<number | null>(null);
   const hyperspaceRef = useRef<boolean>(hyperspace);
 
@@ -127,11 +128,11 @@ const Starfield: React.FC<StarfieldProps> = ({
       sd.current.z = (sd.current.w + sd.current.h) / 2;
       sd.current.star.colorRatio = 1 / sd.current.z;
 
-      if (cursor.current.x === 0 || cursor.current.y === 0) {
+      if (!hasPointerMoved.current || cursor.current.x === 0 || cursor.current.y === 0) {
         cursor.current.x = sd.current.x;
         cursor.current.y = sd.current.y;
       }
-      if (mouse.current.x === 0 || mouse.current.y === 0) {
+      if (!hasPointerMoved.current || (mouse.current.x === 0 && mouse.current.y === 0)) {
         mouse.current.x = cursor.current.x - sd.current.x;
         mouse.current.y = cursor.current.y - sd.current.y;
       }
@@ -215,8 +216,13 @@ const Starfield: React.FC<StarfieldProps> = ({
   };
 
   const update = () => {
-    mouse.current.x = (cursor.current.x - sd.current.x) / easing;
-    mouse.current.y = (cursor.current.y - sd.current.y) / easing;
+    if (mouseAdjust && hasPointerMoved.current) {
+      mouse.current.x = (cursor.current.x - sd.current.x) / easing;
+      mouse.current.y = (cursor.current.y - sd.current.y) / easing;
+    } else {
+      mouse.current.x = 0;
+      mouse.current.y = 0;
+    }
     const currentSpeed = getCompSpeed();
 
     if (sd.current.star.arr.length > 0) {

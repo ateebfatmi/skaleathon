@@ -52,7 +52,7 @@ export default function InteractiveTerminal() {
               <div><span className="text-[#e8c5b4] font-mono font-bold">tracks</span> — Inspect AI/ML, Web & Mobile arenas</div>
               <div><span className="text-[#e8c5b4] font-mono font-bold">prizes</span> — View ₹35,000 cash & interview tiers</div>
               <div><span className="text-[#e8c5b4] font-mono font-bold">register</span> — Fast-track team registration link (₹99)</div>
-              <div><span className="text-[#e8c5b4] font-mono font-bold">verify</span> — Test SHA-256 certificate validation</div>
+              <div><span className="text-[#e8c5b4] font-mono font-bold">certificates</span> — View Top 25 merit certificate policy</div>
               <div><span className="text-[#e8c5b4] font-mono font-bold">rules</span> — Review team size & submission policies</div>
             </div>
           </div>
@@ -65,27 +65,27 @@ export default function InteractiveTerminal() {
           <div className="space-y-2 text-xs">
             <div className="text-[#c19a88] font-bold">📅 January 2028 Master Schedule:</div>
             <div className="space-y-1.5 text-[11px] font-mono">
-              <div className="flex items-center justify-between border-b border-white/10 pb-1">
+              <div className="flex flex-wrap items-center justify-between gap-1 border-b border-white/10 pb-1">
                 <span className="text-white/70">Registration Closes:</span>
                 <span className="text-emerald-400 font-bold">Jan 07, 2028 (11:59 PM IST)</span>
               </div>
-              <div className="flex items-center justify-between border-b border-white/10 pb-1">
+              <div className="flex flex-wrap items-center justify-between gap-1 border-b border-white/10 pb-1">
                 <span className="text-white/70">Stage 1 — Technical Quiz:</span>
                 <span className="text-emerald-400 font-bold">Jan 08, 2028 (10 AM–8 PM)</span>
               </div>
-              <div className="flex items-center justify-between border-b border-white/10 pb-1">
+              <div className="flex flex-wrap items-center justify-between gap-1 border-b border-white/10 pb-1">
                 <span className="text-white/70">Stage 2 — Architecture PPT:</span>
                 <span className="text-[#c19a88] font-bold">Jan 10 – Jan 14, 2028</span>
               </div>
-              <div className="flex items-center justify-between border-b border-white/10 pb-1">
+              <div className="flex flex-wrap items-center justify-between gap-1 border-b border-white/10 pb-1">
                 <span className="text-white/70">Stage 3 — Build Sprint:</span>
                 <span className="text-[#e8c5b4] font-bold">Jan 17 – Jan 26, 2028</span>
               </div>
-              <div className="flex items-center justify-between border-b border-white/10 pb-1">
+              <div className="flex flex-wrap items-center justify-between gap-1 border-b border-white/10 pb-1">
                 <span className="text-white/70">Stage 4 — Grand Finale Live Q&A:</span>
                 <span className="text-amber-400 font-bold">Jan 29, 2028 (10:30 AM)</span>
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex flex-wrap items-center justify-between gap-1">
                 <span className="text-white/70">Award Ceremony & Certificates:</span>
                 <span className="text-amber-300 font-bold">Jan 30 – Jan 31, 2028</span>
               </div>
@@ -205,12 +205,12 @@ export default function InteractiveTerminal() {
         break;
 
       case 'verify':
+      case 'certificates':
         output = (
           <div className="space-y-1.5 text-xs text-neutral-300 font-mono text-[11px]">
-            <div className="text-emerald-400">✓ Cryptographic verification engine status: LIVE</div>
-            <div className="text-white/60">Sample verification hash query: SK2028-TEST-HASH-99F2A</div>
-            <div className="text-white/40">Timestamp: {new Date().toISOString()}</div>
-            <div className="text-[#c19a88]">Validation confirmed: Official tamper-proof certificate format ready.</div>
+            <div className="text-emerald-400">✓ Certificate status: ACTIVE</div>
+            <div className="text-white/60">Eligibility: Confirmed members of Top 25 finalist teams</div>
+            <div className="text-[#c19a88]">Official digital certificates issued directly in participant dashboard.</div>
           </div>
         );
         break;
@@ -381,8 +381,8 @@ export default function InteractiveTerminal() {
         </div>
       ) : (
         /* Telemetry Status Grid */
-        <div className="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs font-mono">
-          <div className="p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
+        <div className="p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 text-xs font-mono">
+          <div className="p-3.5 sm:p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
             <div className="flex items-center justify-between text-white/50 text-[10px]">
               <span>NODE STATUS</span>
               <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
@@ -391,31 +391,31 @@ export default function InteractiveTerminal() {
             <p className="text-white/40 text-[10px]">National registration pipeline enabled</p>
           </div>
 
-          <div className="p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
+          <div className="p-3.5 sm:p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
             <div className="text-white/50 text-[10px]">TOTAL PRIZE ALLOCATION</div>
             <div className="text-[#c19a88] font-bold text-sm">₹35,000 INR</div>
             <p className="text-white/40 text-[10px]">1st: ₹20k | 2nd: ₹10k | 3rd: ₹5k</p>
           </div>
 
-          <div className="p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
+          <div className="p-3.5 sm:p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
             <div className="text-white/50 text-[10px]">ENTRY STIPULATION</div>
             <div className="text-white font-bold text-sm">₹99 FLAT / TEAM</div>
             <p className="text-white/40 text-[10px]">1 to 6 members inclusive</p>
           </div>
 
-          <div className="p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
-            <div className="text-white/50 text-[10px]">CRYPTOGRAPHIC VERIFICATION</div>
-            <div className="text-emerald-400 font-bold text-sm">SHA-256 + QR REGISTRY</div>
-            <p className="text-white/40 text-[10px]">Top 25 tamper-evident certificates</p>
+          <div className="p-3.5 sm:p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
+            <div className="text-white/50 text-[10px]">MERIT CERTIFICATES</div>
+            <div className="text-emerald-400 font-bold text-sm">TOP 25 TEAMS</div>
+            <p className="text-white/40 text-[10px]">Official digital certificates</p>
           </div>
 
-          <div className="p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
+          <div className="p-3.5 sm:p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
             <div className="text-white/50 text-[10px]">CAREER ACCELERATION</div>
             <div className="text-[#e8c5b4] font-bold text-sm">SELECTED CANDIDATES</div>
             <p className="text-white/40 text-[10px]">SkaleKraft internship opportunities</p>
           </div>
 
-          <div className="p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
+          <div className="p-3.5 sm:p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
             <div className="text-white/50 text-[10px]">ORGANIZER ECOSYSTEM</div>
             <div className="text-white font-bold text-sm">SKALEKRAFT</div>
             <p className="text-white/40 text-[10px]">Official portal: skalekraft.in</p>

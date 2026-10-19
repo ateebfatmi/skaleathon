@@ -163,34 +163,34 @@ export default function Footer() {
       {/* Pre-Footer Action Banner (Hidden on /register, /dashboard, and /tracks) */}
       {!isRegisterPage && !isDashboardPage && !isTracksPage && (
         <div className="border-b border-white/[0.06] bg-white/[0.01]">
-          <div className="container mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-            <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-r from-[#120F0D]/90 via-[#0B0C12]/90 to-[#120F0D]/90 p-8 sm:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-2xl">
+          <div className="container mx-auto max-w-7xl px-4 py-8 sm:py-12 sm:px-6 lg:px-8">
+            <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-gradient-to-r from-[#120F0D]/90 via-[#0B0C12]/90 to-[#120F0D]/90 p-5 sm:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-2xl">
               <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#c19a88]/15 blur-3xl" />
-              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 relative z-10">
-                <div className="space-y-3 max-w-2xl">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 px-3 py-1 text-xs font-medium text-[#e8c5b4]">
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 sm:gap-8 relative z-10">
+                <div className="space-y-2.5 sm:space-y-3 max-w-2xl">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 px-3 py-1 text-[11px] sm:text-xs font-medium text-[#e8c5b4]">
                     <Sparkles className="h-3.5 w-3.5" />
                     <span>National Hackathon</span>
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                  <h3 className="text-xl sm:text-3xl font-bold tracking-tight text-white leading-snug">
                     Ready to Build, Innovate, and Scale?
                   </h3>
-                  <p className="text-sm sm:text-base text-neutral-400 font-light leading-relaxed">
+                  <p className="text-xs sm:text-base text-neutral-400 font-light leading-relaxed">
                     Join hundreds of forward-thinking engineers across India. Register your team for ₹99 and compete for the ₹35,000 prize pool, certificates for Top 25 teams, and interview opportunities.
                   </p>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-4 shrink-0">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 shrink-0">
                   <Link
                     href="/register"
-                    className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-6 py-3.5 text-xs sm:text-sm font-bold text-white shadow-[0_4px_25px_rgba(128,89,72,0.4)] hover:scale-[1.03] transition-all"
+                    className="group flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-6 py-3 sm:py-3.5 text-xs sm:text-sm font-bold text-white shadow-[0_4px_25px_rgba(128,89,72,0.4)] hover:scale-[1.03] transition-all"
                   >
                     <span>Register Team — ₹99</span>
                     <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Link>
                   <Link
                     href="/tracks"
-                    className="rounded-full border border-white/10 bg-white/[0.04] px-6 py-3.5 text-xs sm:text-sm font-medium text-neutral-300 hover:border-white/25 hover:bg-white/[0.08] hover:text-white transition-all"
+                    className="rounded-full border border-white/10 bg-white/[0.04] px-6 py-3 sm:py-3.5 text-center text-xs sm:text-sm font-medium text-neutral-300 hover:border-white/25 hover:bg-white/[0.08] hover:text-white transition-all"
                   >
                     Explore Tracks
                   </Link>
@@ -202,11 +202,11 @@ export default function Footer() {
       )}
 
       {/* Main Footer Navigation Columns */}
-      <div className="container mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-5">
+      <div className="container mx-auto max-w-7xl px-4 py-10 sm:py-16 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 gap-8 sm:gap-12 md:grid-cols-2 lg:grid-cols-5">
           
           {/* Brand Information (Spans 2 columns) */}
-          <div className="space-y-6 lg:col-span-2">
+          <div className="space-y-5 sm:space-y-6 col-span-2 lg:col-span-2">
             <Link href="/" className="flex items-center gap-3 group select-none">
               <div
                 className="relative h-10 w-10 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-[#1c1b1a] shadow-[0_0_20px_rgba(193,154,136,0.18)] transition-all group-hover:scale-105 group-hover:border-[#c19a88]/50"

@@ -33,53 +33,53 @@ export default function FaqSection() {
       a: 'Yes, modern developer tooling is welcomed. However, all AI tool assistance must be transparently disclosed in your submission documentation. Turnkey clones or unattributed code will be disqualified.',
     },
     {
-      q: 'How does the digital certificate verification work?',
-      a: 'Every issued certificate carries a tamper-evident cryptographic code and QR identifier. Any employer or institution can instantly verify authenticity at /verify-certificate/[certificateId].',
+      q: 'How are digital certificates issued?',
+      a: 'Eligible members of the Top 25 teams receive an official digital certificate of merit directly in their participant dashboard after the Grand Finale.',
     },
   ];
 
   return (
-    <section id="faq" className="py-20 lg:py-28 relative bg-[#0B0B0B] border-t border-white/10 overflow-hidden">
-      <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="faq" className="py-6 sm:py-16 lg:py-24 relative bg-[#0B0B0B] border-t border-white/10 overflow-hidden">
+      <div className="container mx-auto max-w-4xl px-1 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.5 }}
-          className="text-center max-w-2xl mx-auto mb-16"
+          className="text-center max-w-2xl mx-auto mb-8 sm:mb-16"
         >
-          <div className="inline-flex items-center gap-2.5 mb-3">
+          <div className="inline-flex items-center gap-2.5 mb-2.5 sm:mb-3">
             <span className="h-px w-6 bg-[#c19a88]/70" />
             <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
               Clarity First
             </p>
             <span className="h-px w-6 bg-[#c19a88]/70" />
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-white tracking-tight">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-medium text-white tracking-tight">
             Frequently asked{' '}
             <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
               questions
             </span>
             .
           </h2>
-          <p className="mt-4 text-sm text-white/55 leading-relaxed font-light">
+          <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-white/55 leading-relaxed font-light">
             Clear, authoritative answers to ensure your team experiences a seamless competition.
           </p>
         </motion.div>
 
-        <div className="space-y-3">
+        <div className="space-y-2.5 sm:space-y-3">
           {faqs.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
               <div
                 key={idx}
-                className="rounded-[20px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] overflow-hidden transition-all duration-300 hover:border-white/15"
+                className="rounded-2xl sm:rounded-[20px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] overflow-hidden transition-all duration-300 hover:border-white/15"
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
-                  className="w-full flex items-center justify-between p-6 text-left cursor-pointer"
+                  className="w-full flex items-center justify-between p-4 sm:p-6 text-left cursor-pointer"
                 >
-                  <span className="text-sm sm:text-base font-medium text-white pr-4">{faq.q}</span>
+                  <span className="text-xs sm:text-base font-medium text-white pr-3 sm:pr-4 leading-snug">{faq.q}</span>
                   <ChevronDown
                     className={`h-4 w-4 text-[#c19a88] shrink-0 transition-transform duration-300 ${
                       isOpen ? 'rotate-180' : ''
@@ -95,7 +95,7 @@ export default function FaqSection() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="px-6 pb-6 text-xs sm:text-sm text-white/55 leading-relaxed font-light border-t border-white/[0.06] pt-4">
+                      <div className="px-4 pb-4 sm:px-6 sm:pb-6 text-xs sm:text-sm text-white/55 leading-relaxed font-light border-t border-white/[0.06] pt-3 sm:pt-4">
                         {faq.a}
                       </div>
                     </motion.div>
