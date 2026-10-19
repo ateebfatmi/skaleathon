@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { getCurrentSession } from '@/lib/auth/session';
 import { EventRepository } from '@/lib/db/repository';
-import { CheckCircle2, Github, Globe, Video, Clock, ArrowRight, ArrowLeft } from 'lucide-react';
+import { CheckCircle2, Github, Globe, Video, ArrowRight, ArrowLeft, ShieldCheck, Sparkles, ExternalLink } from 'lucide-react';
 
 export const revalidate = 0;
 
@@ -13,104 +13,119 @@ export default async function SubmissionStatusPage() {
 
   if (!submission) {
     return (
-      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-12 text-center space-y-4">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-12 text-center space-y-4 max-w-xl mx-auto shadow-2xl">
         <h2 className="text-xl font-bold text-white">No Submission Found</h2>
-        <p className="text-xs text-slate-400">
+        <p className="text-xs text-neutral-400 leading-relaxed">
           Your team has not yet recorded a project submission for Skaleathon 2027.
         </p>
         <Link
           href="/dashboard/submission"
-          className="inline-block rounded-xl bg-brand-600 px-6 py-2.5 text-xs font-bold text-white hover:bg-brand-500 transition-colors"
+          className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/30 hover:scale-105 transition-all"
         >
-          Create Submission
+          <span>Create Submission</span>
+          <ArrowRight className="h-4 w-4" />
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="max-w-3xl mx-auto space-y-8">
-      <div className="rounded-3xl border border-emerald-500/40 bg-gradient-to-b from-[#0e1628] to-[#0a0e19] p-8 sm:p-12 space-y-6">
-        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 mx-auto">
-          <CheckCircle2 className="h-6 w-6" />
+    <div className="max-w-2xl mx-auto space-y-8 py-4">
+      <div className="relative overflow-hidden rounded-3xl border border-emerald-500/40 bg-gradient-to-b from-[#131211] via-[#0E0E0E] to-[#0A0A0A] p-8 sm:p-12 space-y-6 shadow-2xl">
+        {/* Ambient Top Glow */}
+        <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 h-48 w-72 rounded-full bg-emerald-500/15 blur-3xl" />
+
+        <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 mx-auto shadow-lg shadow-emerald-500/20">
+          <CheckCircle2 className="h-7 w-7" />
         </div>
 
-        <div className="text-center space-y-2">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-400">
-            Authoritative Server Receipt
-          </span>
-          <h1 className="text-2xl sm:text-3xl font-black text-white">
-            Submission Received & Locked
+        <div className="text-center space-y-2 relative z-10">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-400">
+            <Sparkles className="h-3 w-3" />
+            <span>Official Deliverable Receipt</span>
+          </div>
+
+          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+            Submission Received & Queued
           </h1>
-          <p className="text-xs text-slate-300">
-            Project <strong>{submission.title}</strong> submitted for team <strong>{team?.name}</strong> has been logged for evaluation.
+          <p className="text-xs sm:text-sm text-neutral-300 max-w-md mx-auto leading-relaxed">
+            Project <strong className="text-white">{submission.title}</strong> by team <strong className="text-[#e8c5b4]">{team?.name}</strong> has been logged for technical jury review.
           </p>
         </div>
 
         {/* Receipt Details Card */}
-        <div className="rounded-2xl border border-white/10 bg-black/40 p-6 space-y-3 text-xs">
-          <div className="flex justify-between pb-2 border-b border-white/10">
-            <span className="text-slate-400">Submission Identifier</span>
-            <span className="font-mono font-bold text-white">{submission.id}</span>
+        <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 sm:p-6 space-y-3.5 text-xs backdrop-blur-md">
+          <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
+            <span className="text-neutral-400">Submission Identifier</span>
+            <span className="font-mono font-bold text-white tracking-wider">{submission.id}</span>
           </div>
 
-          <div className="flex justify-between pb-2 border-b border-white/10">
-            <span className="text-slate-400">Review Status</span>
-            <span className="font-bold text-emerald-400 uppercase">{submission.status}</span>
+          <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
+            <span className="text-neutral-400">Evaluation Status</span>
+            <span className="inline-flex items-center gap-1.5 font-mono font-bold text-emerald-400 uppercase tracking-wider">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>{submission.status}</span>
+            </span>
           </div>
 
-          <div className="flex justify-between pb-2 border-b border-white/10">
-            <span className="text-slate-400">Timestamp</span>
-            <span className="font-mono text-slate-200">
+          <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
+            <span className="text-neutral-400">Submission Timestamp</span>
+            <span className="font-mono text-neutral-300">
               {submission.submitted_at ? new Date(submission.submitted_at).toLocaleString() : 'Draft'}
             </span>
           </div>
 
-          <div className="flex justify-between pb-2 border-b border-white/10">
-            <span className="text-slate-400">Repository</span>
+          <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
+            <span className="text-neutral-400">Code Repository</span>
             <a
               href={submission.github_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-cyanAccent-400 hover:underline flex items-center gap-1"
+              className="font-mono text-[#e8c5b4] hover:text-white hover:underline flex items-center gap-1 max-w-[240px] truncate"
             >
-              <span>{submission.github_url}</span>
+              <Github className="h-3.5 w-3.5 shrink-0 text-[#c19a88]" />
+              <span className="truncate">{submission.github_url.replace('https://github.com/', '')}</span>
+              <ExternalLink className="h-3 w-3 shrink-0" />
             </a>
           </div>
 
           {submission.live_demo_url && (
-            <div className="flex justify-between pb-2 border-b border-white/10">
-              <span className="text-slate-400">Live Demo</span>
+            <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
+              <span className="text-neutral-400">Live Demo</span>
               <a
                 href={submission.live_demo_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-mono text-cyanAccent-400 hover:underline"
+                className="font-mono text-[#c19a88] hover:underline flex items-center gap-1 max-w-[240px] truncate"
               >
-                {submission.live_demo_url}
+                <Globe className="h-3.5 w-3.5 shrink-0" />
+                <span className="truncate">{submission.live_demo_url}</span>
+                <ExternalLink className="h-3 w-3 shrink-0" />
               </a>
             </div>
           )}
 
           {submission.demo_video_url && (
-            <div className="flex justify-between">
-              <span className="text-slate-400">Video Walkthrough</span>
+            <div className="flex items-center justify-between">
+              <span className="text-neutral-400">Walkthrough Video</span>
               <a
                 href={submission.demo_video_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-mono text-cyanAccent-400 hover:underline"
+                className="font-mono text-[#c19a88] hover:underline flex items-center gap-1 max-w-[240px] truncate"
               >
-                {submission.demo_video_url}
+                <Video className="h-3.5 w-3.5 shrink-0" />
+                <span className="truncate">{submission.demo_video_url}</span>
+                <ExternalLink className="h-3 w-3 shrink-0" />
               </a>
             </div>
           )}
         </div>
 
-        <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3">
           <Link
             href="/dashboard/submission"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-5 py-2.5 text-xs font-semibold text-slate-200 transition-colors"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] px-6 py-2.5 text-xs font-semibold text-neutral-200 transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Update Submission</span>
@@ -118,7 +133,7 @@ export default async function SubmissionStatusPage() {
 
           <Link
             href="/dashboard"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-2.5 text-xs font-bold text-white hover:bg-brand-500 transition-colors"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/30 hover:scale-105 transition-all"
           >
             <span>Return to Dashboard</span>
             <ArrowRight className="h-4 w-4" />
