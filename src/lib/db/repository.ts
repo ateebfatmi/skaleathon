@@ -1164,11 +1164,27 @@ export class EventRepository {
   }
 
   static async getCertificateByCode(code: string): Promise<Certificate | null> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const cert = await SupabaseStore.getCertificateByCode(code);
+        if (cert) return cert;
+      } catch (err) {
+        console.warn('SupabaseStore.getCertificateByCode error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     return state.certificates.find((c) => c.certificate_code.toUpperCase() === code.toUpperCase()) || null;
   }
 
   static async getCertificatesByTeam(teamId: string): Promise<Certificate[]> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const certs = await SupabaseStore.getCertificatesByTeam(teamId);
+        if (certs.length > 0) return certs;
+      } catch (err) {
+        console.warn('SupabaseStore.getCertificatesByTeam error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     return state.certificates.filter((c) => c.team_id === teamId && !c.is_revoked);
   }
@@ -1197,6 +1213,14 @@ export class EventRepository {
 
   // --- ANNOUNCEMENTS ---
   static async getAnnouncements(publishedOnly: boolean = true): Promise<Announcement[]> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const ann = await SupabaseStore.getAnnouncements();
+        if (ann.length > 0) return ann;
+      } catch (err) {
+        console.warn('SupabaseStore.getAnnouncements error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     if (publishedOnly) {
       return state.announcements.filter((a) => a.is_published);
@@ -1244,6 +1268,13 @@ export class EventRepository {
     details?: Record<string, unknown>;
     ip_address?: string;
   }): Promise<AuditLog> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        await SupabaseStore.logAudit(params);
+      } catch (err) {
+        console.warn('SupabaseStore.logAudit error:', err);
+      }
+    }
     const state = this.store.getState();
     const log: AuditLog = {
       id: 'audit_' + Math.random().toString(36).substring(2, 10),
@@ -1262,12 +1293,27 @@ export class EventRepository {
   }
 
   static async getAuditLogs(limit: number = 100): Promise<AuditLog[]> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const logs = await SupabaseStore.getAuditLogs(limit);
+        if (logs.length > 0) return logs;
+      } catch (err) {
+        console.warn('SupabaseStore.getAuditLogs error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     return state.auditLogs.slice(0, limit);
   }
 
   // --- OVERVIEW METRICS FOR ADMIN ---
   static async getAdminOverview() {
+    if (this.isSupabaseEnabled()) {
+      try {
+        return await SupabaseStore.getAdminOverview();
+      } catch (err) {
+        console.warn('SupabaseStore.getAdminOverview error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     const totalTeams = state.teams.length;
     const paidRegistrations = state.teams.filter((t) => t.status === 'paid').length;

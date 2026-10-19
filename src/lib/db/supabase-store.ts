@@ -221,12 +221,17 @@ export class SupabaseStore {
       .map((e) => e.trim().toLowerCase());
 
     const isExplicitAdmin = adminEmails.includes(data.email.toLowerCase());
-    const finalRole = isExplicitAdmin ? 'admin' : (data.role || 'participant');
+    let finalRole: 'participant' | 'judge' | 'admin' = 'participant';
+    if (isExplicitAdmin || data.role === 'admin') {
+      finalRole = 'admin';
+    } else if (data.role === 'judge') {
+      finalRole = 'judge';
+    }
 
     const dbProfile = {
       id: data.id,
       email: data.email.toLowerCase(),
-      full_name: data.full_name,
+      full_name: data.full_name || 'Participant',
       phone: data.phone || null,
       college_name: data.college_or_org || null,
       system_role: finalRole,
@@ -299,7 +304,7 @@ export class SupabaseStore {
       college_or_org: params.college_or_org || null,
       city: params.city || null,
       state: params.state || null,
-      role: 'team_leader',
+      role: 'participant',
     });
 
     // 2. Insert team into teams table
@@ -384,7 +389,7 @@ export class SupabaseStore {
       name: teamRes.team_name,
       track_id: teamRes.track_id,
       leader_id: teamRes.leader_id,
-      status: teamRes.status,
+      status: teamRes.status === 'confirmed' ? 'paid' : teamRes.status,
       created_at: teamRes.created_at,
       updated_at: teamRes.updated_at,
     };
@@ -445,7 +450,7 @@ export class SupabaseStore {
       name: teamData.team_name,
       track_id: teamData.track_id,
       leader_id: teamData.leader_id,
-      status: teamData.status,
+      status: teamData.status === 'confirmed' ? 'paid' : teamData.status,
       created_at: teamData.created_at,
       updated_at: teamData.updated_at,
       members,
@@ -482,9 +487,10 @@ export class SupabaseStore {
 
   static async updateTeamStatus(teamId: string, status: Team['status'], actorId: string): Promise<Team> {
     const client = this.getClient();
+    const dbStatus = status === 'paid' ? 'confirmed' : status;
     const { data, error } = await client
       .from('teams')
-      .update({ status, updated_at: new Date().toISOString() })
+      .update({ status: dbStatus, updated_at: new Date().toISOString() })
       .eq('id', teamId)
       .select()
       .single();
@@ -507,7 +513,7 @@ export class SupabaseStore {
       name: data.team_name,
       track_id: data.track_id,
       leader_id: data.leader_id,
-      status: data.status,
+      status: data.status === 'confirmed' ? 'paid' : data.status,
       created_at: data.created_at,
       updated_at: data.updated_at,
     };
@@ -565,12 +571,23 @@ export class SupabaseStore {
     amount_inr: number;
     currency: string;
     status: PaymentOrder['status'];
+    user_id?: string;
   }): Promise<PaymentOrder> {
     const client = this.getClient();
+    let userId = data.user_id;
+    if (!userId) {
+      const team = await this.getTeam(data.team_id);
+      userId = team?.leader_id;
+    }
+    if (!userId) {
+      throw new Error(`Cannot create payment order: team ${data.team_id} or leader not found`);
+    }
+
     const dbOrder = {
       id: data.id,
       order_id: data.id,
       team_id: data.team_id,
+      user_id: userId,
       amount_inr: data.amount_inr,
       currency: data.currency,
       status: data.status,
@@ -616,16 +633,17 @@ export class SupabaseStore {
     if (updates.razorpay_signature) dbUpdates.signature = updates.razorpay_signature;
     if (updates.error_reason) dbUpdates.error_reason = updates.error_reason;
 
-    const { data, error } = await client
+    const { data: list, error } = await client
       .from('payment_orders')
       .update(dbUpdates)
-      .eq('id', orderId)
-      .select()
-      .single();
+      .or(`id.eq.${orderId},order_id.eq.${orderId}`)
+      .select();
 
-    if (error || !data) {
-      throw new Error(`Failed to update payment order in Supabase: ${error?.message}`);
+    if (error || !list || list.length === 0) {
+      throw new Error(`Failed to update payment order in Supabase: ${error?.message || 'Order not found'}`);
     }
+
+    const data = list[0];
 
     return {
       id: data.id,
@@ -646,7 +664,7 @@ export class SupabaseStore {
     const { data, error } = await client
       .from('payment_orders')
       .select('*')
-      .eq('id', orderId)
+      .or(`id.eq.${orderId},order_id.eq.${orderId}`)
       .maybeSingle();
 
     if (error || !data) return null;
@@ -740,6 +758,24 @@ export class SupabaseStore {
     },
     actorId: string
   ): Promise<Submission> {
+    const existing = await this.getSubmissionByTeam(data.team_id);
+    if (existing) {
+      return await this.updateSubmission(
+        existing.id,
+        {
+          title: data.title,
+          problem_statement: data.problem_statement,
+          description: data.description,
+          solution_overview: data.solution_overview,
+          tech_stack: data.tech_stack,
+          github_url: data.github_url,
+          live_demo_url: data.live_demo_url,
+          presentation_url: data.presentation_url,
+        },
+        actorId
+      );
+    }
+
     const client = this.getClient();
     const submissionId = crypto.randomUUID();
 
