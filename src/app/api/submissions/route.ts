@@ -45,6 +45,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const SUBMISSION_WINDOW_OPEN = false;
+    if (!SUBMISSION_WINDOW_OPEN && session.role !== 'admin') {
+      return NextResponse.json(
+        { error: 'The project submission window has not officially opened yet. Deliverables unlock during Phase 03.' },
+        { status: 403 }
+      );
+    }
+
     const body = await req.json();
     const parsed = submissionSchema.safeParse(body);
     if (!parsed.success) {
