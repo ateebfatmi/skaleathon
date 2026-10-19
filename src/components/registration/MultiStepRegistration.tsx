@@ -652,10 +652,10 @@ export default function MultiStepRegistration({
                 value={city}
                 onChange={setCity}
                 options={availableCities}
-                placeholder={state.trim() ? `Select city in ${state}` : 'Select a state first'}
+                placeholder={state.trim() ? `Search or type city in ${state}` : 'Select a state first'}
                 helperText={
                   state.trim()
-                    ? `${availableCities.length} cities in ${state}`
+                    ? 'Select from list or type your city'
                     : 'Requires state selection'
                 }
               />
