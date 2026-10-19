@@ -18,7 +18,7 @@ export default function PrivacyPage() {
     },
     {
       heading: '4. Data Retention and Rights',
-      body: 'Participants may request the inspection or deletion of their personal records upon conclusion of the event, subject to statutory financial compliance obligations. Contact ateeb@skalekraft.in for privacy inquiries.',
+      body: 'Participants may request the inspection or deletion of their personal records upon conclusion of the event, subject to statutory financial compliance obligations. Contact skalekraft@gmail.com for privacy inquiries.',
     },
   ];
 
@@ -51,8 +51,8 @@ export default function PrivacyPage() {
         <div className="mt-14 rounded-[22px] border border-white/10 bg-[#101010] p-6">
           <p className="text-sm leading-6 text-white/55 font-light">
             Privacy inquiries? Email our compliance team at{' '}
-            <a href="mailto:ateeb@skalekraft.in" className="text-white transition hover:text-[#c19a88] font-medium">
-              ateeb@skalekraft.in
+            <a href="mailto:skalekraft@gmail.com" className="text-white transition hover:text-[#c19a88] font-medium">
+              skalekraft@gmail.com
             </a>
             .
           </p>

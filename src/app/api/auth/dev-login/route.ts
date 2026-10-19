@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
     }
 
     const cleanEmail = email.toLowerCase().trim();
-    const adminEmails = (process.env.ADMIN_EMAILS || 'admin@skalekraft.in')
+    const adminEmails = (process.env.ADMIN_EMAILS || 'skalekraft@gmail.com')
       .split(',')
       .map((e) => e.trim().toLowerCase());
 

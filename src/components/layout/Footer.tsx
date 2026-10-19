@@ -72,7 +72,7 @@ export default function Footer() {
               FAQ
             </Link>
             <a
-              href="mailto:ateeb@skalekraft.in"
+              href="mailto:skalekraft@gmail.com"
               className="hover:text-[#c19a88] transition-colors"
             >
               Contact Support
@@ -135,7 +135,7 @@ export default function Footer() {
                 Verify Credentials
               </Link>
               <a
-                href="mailto:ateeb@skalekraft.in"
+                href="mailto:skalekraft@gmail.com"
                 className="text-[#c19a88] hover:underline"
               >
                 Help Desk
@@ -264,7 +264,7 @@ export default function Footer() {
 
               <div className="flex items-center gap-3">
                 <a
-                  href="mailto:ateeb@skalekraft.in"
+                  href="mailto:skalekraft@gmail.com"
                   className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-400 hover:border-[#c19a88]/50 hover:bg-[#c19a88]/15 hover:text-white transition-all shadow-sm"
                   aria-label="Email SkaleKraft"
                 >

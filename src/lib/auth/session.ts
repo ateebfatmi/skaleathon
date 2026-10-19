@@ -58,7 +58,7 @@ export async function getCurrentSession(): Promise<AuthSession | null> {
   }
 
   // Double check admin allowlist
-  const adminEmails = (process.env.ADMIN_EMAILS || 'admin@skalekraft.in')
+  const adminEmails = (process.env.ADMIN_EMAILS || 'skalekraft@gmail.com')
     .split(',')
     .map((e) => e.trim().toLowerCase());
 

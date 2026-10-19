@@ -66,6 +66,19 @@ export default function Navbar() {
     };
   }, [mobileMenuOpen]);
 
+  const scrollToTop = () => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleHomeClick = (e: React.MouseEvent) => {
+    if (pathname === '/') {
+      e.preventDefault();
+      scrollToTop();
+    }
+  };
+
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Tracks', href: '/tracks' },

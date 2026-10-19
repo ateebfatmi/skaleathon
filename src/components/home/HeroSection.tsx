@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { Sparkles, ShieldCheck, Terminal, Award } from 'lucide-react';
 import { EventData } from '@/lib/db/types';
@@ -16,8 +16,14 @@ interface HeroProps {
 export default function HeroSection({ event }: HeroProps) {
   const isRegistrationOpen = event.status === 'registration_open';
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }
+  }, []);
+
   return (
-    <section className="relative overflow-hidden pt-20 pb-20 lg:pt-28 lg:pb-32 bg-[#0B0B0B]">
+    <section id="top" className="relative overflow-hidden pt-20 pb-20 lg:pt-28 lg:pb-32 bg-[#0B0B0B]">
       {/* Velaris WebGL Living Gradient Ambient Background */}
       <div className="absolute inset-0 pointer-events-none opacity-40 mix-blend-screen">
         <Velaris

@@ -56,7 +56,7 @@ export default async function RegisterPage() {
           <div className="max-w-xl mx-auto rounded-[28px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-10 text-center space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
             <h2 className="text-xl font-medium text-white">Registration is Currently Closed</h2>
             <p className="text-xs text-white/50 leading-relaxed font-light">
-              The portal is currently inactive ({event.status.replace(/_/g, ' ')}). Please monitor updates on the homepage or contact the studio at contact@skalekraft.in.
+              The portal is currently inactive ({event.status.replace(/_/g, ' ')}). Please monitor updates on the homepage or contact the studio at skalekraft@gmail.com.
             </p>
             <Link
               href="/"

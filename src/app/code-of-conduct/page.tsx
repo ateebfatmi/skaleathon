@@ -18,7 +18,7 @@ export default function CodeOfConductPage() {
     },
     {
       heading: '4. Reporting & Governance',
-      body: 'To report violations, reach out directly to the SkaleKraft organizer board at ateeb@skalekraft.in. All reports are investigated promptly and confidentially.',
+      body: 'To report violations, reach out directly to the SkaleKraft organizer board at skalekraft@gmail.com. All reports are investigated promptly and confidentially.',
     },
   ];
 
@@ -51,8 +51,8 @@ export default function CodeOfConductPage() {
         <div className="mt-14 rounded-[22px] border border-white/10 bg-[#101010] p-6">
           <p className="text-sm leading-6 text-white/55 font-light">
             Need support? Reach our incident response team at{' '}
-            <a href="mailto:ateeb@skalekraft.in" className="text-white transition hover:text-[#c19a88] font-medium">
-              ateeb@skalekraft.in
+            <a href="mailto:skalekraft@gmail.com" className="text-white transition hover:text-[#c19a88] font-medium">
+              skalekraft@gmail.com
             </a>
             .
           </p>

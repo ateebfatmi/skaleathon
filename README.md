@@ -112,7 +112,7 @@ Configure your credentials as needed:
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 
 # Admin Allowlist (Server-enforced role)
-ADMIN_EMAILS=admin@skalekraft.in
+ADMIN_EMAILS=skalekraft@gmail.com
 
 # Supabase (Optional for local eval; file-store handles persistence automatically)
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co

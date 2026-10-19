@@ -110,7 +110,7 @@ const INITIAL_STATE: DatabaseState = {
   profiles: [
     {
       id: 'admin_skalekraft',
-      email: 'admin@skalekraft.in',
+      email: 'skalekraft@gmail.com',
       full_name: 'SkaleKraft Organizer Admin',
       phone: '+919876543210',
       college_or_org: 'SkaleKraft',

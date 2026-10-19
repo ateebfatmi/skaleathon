@@ -169,7 +169,7 @@ export class EventRepository {
       (p) => p.id === data.id || p.email.toLowerCase() === data.email.toLowerCase()
     );
 
-    const adminEmails = (process.env.ADMIN_EMAILS || 'admin@skalekraft.in')
+    const adminEmails = (process.env.ADMIN_EMAILS || 'skalekraft@gmail.com')
       .split(',')
       .map((e) => e.trim().toLowerCase());
 

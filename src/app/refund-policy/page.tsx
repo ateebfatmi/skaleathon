@@ -18,7 +18,7 @@ export default function RefundPolicyPage() {
     },
     {
       heading: '4. Refund Processing Procedure',
-      body: 'For duplicate payment investigations, the Team Leader should email ateeb@skalekraft.in within 7 days of the charge with the Order ID and Razorpay reference. Confirmed duplicate charges are credited back to the original source within 5–7 business days.',
+      body: 'For duplicate payment investigations, the Team Leader should email skalekraft@gmail.com within 7 days of the charge with the Order ID and Razorpay reference. Confirmed duplicate charges are credited back to the original source within 5–7 business days.',
     },
   ];
 
@@ -51,8 +51,8 @@ export default function RefundPolicyPage() {
         <div className="mt-14 rounded-[22px] border border-white/10 bg-[#101010] p-6">
           <p className="text-sm leading-6 text-white/55 font-light">
             Billing inquiries? Email our finance desk at{' '}
-            <a href="mailto:ateeb@skalekraft.in" className="text-white transition hover:text-[#c19a88] font-medium">
-              ateeb@skalekraft.in
+            <a href="mailto:skalekraft@gmail.com" className="text-white transition hover:text-[#c19a88] font-medium">
+              skalekraft@gmail.com
             </a>
             .
           </p>

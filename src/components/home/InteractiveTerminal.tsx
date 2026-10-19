@@ -32,7 +32,7 @@ export default function InteractiveTerminal() {
     },
   ]);
 
-  const terminalEndRef = useRef<HTMLDivElement>(null);
+  const logsContainerRef = useRef<HTMLDivElement>(null);
 
   const handleCommand = (cmd: string) => {
     const cleaned = cmd.trim().toLowerCase();
@@ -211,8 +211,10 @@ export default function InteractiveTerminal() {
   };
 
   useEffect(() => {
-    if (terminalEndRef.current) {
-      terminalEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    // Only scroll the internal terminal container when user actually executes a new command (length > 1)
+    // NEVER scroll the browser window!
+    if (logs.length > 1 && logsContainerRef.current) {
+      logsContainerRef.current.scrollTop = logsContainerRef.current.scrollHeight;
     }
   }, [logs]);
 
@@ -267,7 +269,10 @@ export default function InteractiveTerminal() {
       {activeTab === 'cli' ? (
         <div className="p-4 sm:p-6 space-y-4 font-mono">
           {/* Scrollable logs area */}
-          <div className="max-h-72 overflow-y-auto space-y-3.5 pr-2 custom-scrollbar text-xs">
+          <div
+            ref={logsContainerRef}
+            className="max-h-72 overflow-y-auto space-y-3.5 pr-2 custom-scrollbar text-xs"
+          >
             {logs.map((log) => (
               <div key={log.id} className="space-y-1.5">
                 <div className="flex items-center gap-2 text-white/40 text-[11px]">
@@ -281,7 +286,6 @@ export default function InteractiveTerminal() {
                 <div className="pl-4 border-l border-white/10">{log.output}</div>
               </div>
             ))}
-            <div ref={terminalEndRef} />
           </div>
 
           {/* Quick-action pills */}

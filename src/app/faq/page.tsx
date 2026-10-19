@@ -21,10 +21,10 @@ export default function FaqPage() {
           </p>
           <div className="pt-2">
             <a
-              href="mailto:ateeb@skalekraft.in"
+              href="mailto:skalekraft@gmail.com"
               className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] px-6 py-3 text-xs font-semibold tracking-wide text-white shadow-[0_4px_25px_rgba(128,89,72,0.35)] hover:scale-105 transition-all"
             >
-              <span>Email: ateeb@skalekraft.in</span>
+              <span>Email: skalekraft@gmail.com</span>
               <ArrowRight className="h-3.5 w-3.5" />
             </a>
           </div>
