@@ -47,7 +47,7 @@ export default async function CertificatesDashboardPage() {
           <AlertCircle className="h-10 w-10 text-slate-500 mx-auto" />
           <h2 className="text-lg font-bold text-white">No Certificates Issued For This Team</h2>
           <p className="text-xs text-slate-400 max-w-md mx-auto leading-relaxed">
-            Merit certificates are reserved for teams finishing within the Top 25 national rankings. We sincerely thank your team for your dedication, innovative work, and participation in Skaleathon 2027.
+            Merit certificates are reserved for teams finishing within the Top 25 national rankings. We sincerely thank your team for your dedication, innovative work, and participation in Skaleathon 2028.
           </p>
           <Link
             href="/dashboard/leaderboard"

@@ -62,7 +62,7 @@ export default function RulesPage() {
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
-                <span><strong className="text-white font-medium">No duplicate memberships:</strong> An individual can only belong to one registered team in Skaleathon 2027.</span>
+                <span><strong className="text-white font-medium">No duplicate memberships:</strong> An individual can only belong to one registered team in Skaleathon 2028.</span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
@@ -77,7 +77,7 @@ export default function RulesPage() {
               <span className="font-mono text-xs text-[#c19a88]">03.</span> The 4 Progressive Competition Stages
             </h2>
             <p className="text-xs text-white/60">
-              Skaleathon 2027 operates across four sequential stages designed to rigorously test technical aptitude, system design, software implementation, and live oral defense:
+              Skaleathon 2028 operates across four sequential stages designed to rigorously test technical aptitude, system design, software implementation, and live oral defense:
             </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
                 <div className="p-4 rounded-xl border border-white/10 bg-white/[0.02] space-y-1">

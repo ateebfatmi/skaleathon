@@ -100,7 +100,7 @@ export default function RazorpayCheckoutButton({
         key: keyId,
         amount: orderData.amount,
         currency: orderData.currency || currency,
-        name: 'SkaleKraft — Skaleathon 2027',
+        name: 'SkaleKraft — Skaleathon 2028',
         description: 'Team Registration Fee',
         image: '/icon.png',
         order_id: orderData.order_id,
@@ -111,7 +111,7 @@ export default function RazorpayCheckoutButton({
         },
         notes: {
           ...notes,
-          platform: 'Skaleathon 2027 Web Checkout',
+          platform: 'Skaleathon 2028 Web Checkout',
         },
         theme: {
           color: '#805948',

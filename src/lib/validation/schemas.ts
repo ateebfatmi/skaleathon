@@ -35,8 +35,12 @@ export const submissionSchema = z.object({
   github_url: z
     .string()
     .trim()
-    .url('Must be a valid URL')
-    .refine((url) => url.toLowerCase().includes('github.com'), 'Must be a valid GitHub repository URL'),
+    .optional()
+    .or(z.literal(''))
+    .refine(
+      (url) => !url || url.toLowerCase().includes('github.com'),
+      'Must be a valid GitHub repository URL'
+    ),
   live_demo_url: z.string().trim().url('Must be a valid URL').optional().or(z.literal('')),
   demo_video_url: z.string().trim().url('Must be a valid URL').optional().or(z.literal('')),
   presentation_url: z.string().trim().url('Must be a valid URL').optional().or(z.literal('')),

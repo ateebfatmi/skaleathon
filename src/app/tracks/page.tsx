@@ -28,7 +28,7 @@ export default async function TracksPage() {
             .
           </h1>
           <p className="mt-4 text-base text-white/55 leading-relaxed font-light">
-            Skaleathon 2027 features three specialized technology arenas. Review the engineering standards, recommended stack, and deliverable expectations below.
+            Skaleathon 2028 features three specialized technology arenas. Review the engineering standards, recommended stack, and deliverable expectations below.
           </p>
         </div>
 

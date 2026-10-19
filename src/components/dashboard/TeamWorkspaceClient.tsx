@@ -15,7 +15,6 @@ import {
   Mail,
   Phone,
   ArrowRight,
-  Sparkles,
   Layers,
   Send,
   Code2,
@@ -23,8 +22,6 @@ import {
   BrainCircuit,
   Globe,
   Smartphone,
-  Shield,
-  Award,
 } from 'lucide-react';
 import { Team, TeamMember, EventTrack, PaymentOrder } from '@/lib/db/types';
 import { motion } from 'framer-motion';
@@ -48,10 +45,10 @@ export default function TeamWorkspaceClient({
 }: TeamWorkspaceClientProps) {
   const [copiedPassId, setCopiedPassId] = useState(false);
   const [copiedInvite, setCopiedInvite] = useState(false);
-  const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
 
   const leaderMember = members.find((m) => m.role === 'leader') || members[0];
   const regularMembers = members.filter((m) => m.id !== leaderMember?.id);
+  const openSlotsCount = Math.max(0, 6 - members.length);
 
   const formattedDate = team.created_at
     ? (() => {
@@ -70,41 +67,31 @@ export default function TeamWorkspaceClient({
       })()
     : 'Active';
 
-  const copyToClipboard = (text: string, type: 'pass' | 'invite' | 'email', emailVal?: string) => {
+  const copyToClipboard = (text: string, type: 'pass' | 'invite') => {
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
       navigator.clipboard.writeText(text);
       if (type === 'pass') {
         setCopiedPassId(true);
-        setTimeout(() => setCopiedPassId(false), 2200);
-      } else if (type === 'invite') {
+        setTimeout(() => setCopiedPassId(false), 2000);
+      } else {
         setCopiedInvite(true);
-        setTimeout(() => setCopiedInvite(false), 2200);
-      } else if (type === 'email' && emailVal) {
-        setCopiedEmail(emailVal);
-        setTimeout(() => setCopiedEmail(null), 2000);
+        setTimeout(() => setCopiedInvite(false), 2000);
       }
     }
   };
 
   const shareSquadPass = () => {
+    const inviteText = `Join my Skaleathon squad "${team.name}" (${track?.name || 'Technical Arena'}). Official Pass ID: ${team.id}`;
     if (typeof navigator !== 'undefined' && navigator.share) {
       navigator
         .share({
           title: `Skaleathon Squad: ${team.name}`,
-          text: `We are competing in Skaleathon under Team ${team.name} (${track?.name || 'Technical Track'}). Official Pass ID: ${team.id}`,
+          text: inviteText,
           url: window.location.href,
         })
-        .catch(() => {
-          copyToClipboard(
-            `Skaleathon Squad: ${team.name} | Pass ID: ${team.id} | Track: ${track?.name || 'General'}`,
-            'invite'
-          );
-        });
+        .catch(() => copyToClipboard(inviteText, 'invite'));
     } else {
-      copyToClipboard(
-        `Skaleathon Squad: ${team.name} | Pass ID: ${team.id} | Track: ${track?.name || 'General'}`,
-        'invite'
-      );
+      copyToClipboard(inviteText, 'invite');
     }
   };
 
@@ -122,187 +109,166 @@ export default function TeamWorkspaceClient({
   const TrackIcon = getTrackIcon(track?.name);
 
   return (
-    <div className="space-y-10 text-neutral-200">
-      {/* 1. Page Header & Live Status */}
-      <div className="space-y-4 pb-8 border-b border-white/[0.08] relative">
-        <div className="pointer-events-none absolute -top-10 right-0 h-64 w-64 rounded-full bg-[#c19a88]/10 blur-[100px]" />
-
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5 text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88]">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-            </span>
-            <span>Roster Management // Team Command Center</span>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => window.print()}
-              className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] px-3.5 py-1.5 text-xs font-medium text-neutral-300 hover:text-white transition-all shadow-sm"
-              title="Print official team credentials"
-            >
-              <Printer className="h-3.5 w-3.5 text-[#c19a88]" />
-              <span className="hidden sm:inline">Print Pass</span>
-            </button>
-
-            <button
-              onClick={shareSquadPass}
-              className="inline-flex items-center gap-1.5 rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 hover:bg-[#c19a88]/20 px-3.5 py-1.5 text-xs font-semibold text-[#e8c5b4] transition-all shadow-sm"
-              title="Share squad credentials"
-            >
-              {copiedInvite ? (
-                <>
-                  <Check className="h-3.5 w-3.5 text-emerald-400" />
-                  <span>Pass Copied!</span>
-                </>
-              ) : (
-                <>
-                  <Share2 className="h-3.5 w-3.5" />
-                  <span>Share Pass</span>
-                </>
-              )}
-            </button>
-          </div>
+    <div className="max-w-4xl mx-auto space-y-5 text-neutral-200">
+      {/* Top Utility Ribbon */}
+      <div className="flex items-center justify-between gap-3 text-xs">
+        <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.22em] text-[#c19a88]">
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+          </span>
+          <span>Official Team Pass • SKALEATHON</span>
         </div>
 
-        <div className="space-y-2">
-          <h1 className="text-3xl sm:text-5xl font-medium tracking-tight text-white leading-tight">
-            Team{' '}
-            <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block pr-3 sm:pr-4">
-              Workspace
-            </span>
-            .
-          </h1>
-          <p className="text-sm sm:text-base text-neutral-400 max-w-2xl font-light leading-relaxed">
-            Manage your official competition squad roster, view verified credentials, copy team pass identification, and track tournament deliverables.
-          </p>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => window.print()}
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] px-3 py-1 text-[11px] font-medium text-neutral-300 hover:text-white transition-all shadow-sm"
+            title="Print official team credentials"
+          >
+            <Printer className="h-3 w-3 text-[#c19a88]" />
+            <span>Print Pass</span>
+          </button>
+
+          <button
+            onClick={shareSquadPass}
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 hover:bg-[#c19a88]/20 px-3 py-1 text-[11px] font-semibold text-[#e8c5b4] transition-all shadow-sm"
+            title="Share squad credentials"
+          >
+            {copiedInvite ? (
+              <>
+                <Check className="h-3 w-3 text-emerald-400" />
+                <span>Copied!</span>
+              </>
+            ) : (
+              <>
+                <Share2 className="h-3 w-3" />
+                <span>Share Pass</span>
+              </>
+            )}
+          </button>
         </div>
       </div>
 
-      {/* 2. Master Digital Team Pass Card */}
+      {/* Main Digital Team Pass Card */}
       <motion.div
-        initial={{ opacity: 0, y: 15 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="rounded-[28px] border border-[#c19a88]/35 bg-[linear-gradient(145deg,rgba(193,154,136,0.07),rgba(14,14,14,0.98))] p-6 sm:p-9 shadow-[0_25px_60px_rgba(0,0,0,0.6)] backdrop-blur-2xl relative overflow-hidden"
+        transition={{ duration: 0.4 }}
+        className="rounded-[22px] border border-[#c19a88]/30 bg-[linear-gradient(145deg,rgba(193,154,136,0.06),rgba(14,14,14,0.98))] p-5 sm:p-6 shadow-[0_15px_40px_rgba(0,0,0,0.5)] backdrop-blur-xl relative overflow-hidden"
       >
         {/* Subtle radial ambient glow */}
-        <div className="pointer-events-none absolute -right-20 -top-20 w-80 h-80 bg-[#c19a88]/15 rounded-full blur-[100px]" />
-        <div className="pointer-events-none absolute -left-20 -bottom-20 w-72 h-72 bg-[#805948]/15 rounded-full blur-[90px]" />
+        <div className="pointer-events-none absolute -right-16 -top-16 w-64 h-64 bg-[#c19a88]/12 rounded-full blur-[80px]" />
+        <div className="pointer-events-none absolute -left-16 -bottom-16 w-60 h-60 bg-[#805948]/12 rounded-full blur-[70px]" />
 
         {/* Top Pass Ribbon */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10 relative z-10">
-          <div className="flex flex-wrap items-center gap-2.5">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/35 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.12)]">
-              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Official Registration Verified</span>
+        <div className="flex flex-wrap items-center justify-between gap-3 pb-3.5 border-b border-white/[0.08] relative z-10 text-xs">
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-400">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Status: PAID</span>
             </span>
-
-            <span className="text-white/30 text-xs hidden sm:inline">•</span>
 
             <button
               onClick={() => copyToClipboard(team.id, 'pass')}
-              className="group inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] hover:border-[#c19a88]/40 px-3 py-1 text-xs font-mono text-white/60 hover:text-white transition-all"
+              className="group inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] hover:border-[#c19a88]/40 px-2.5 py-0.5 text-[10px] font-mono text-white/60 hover:text-white transition-all"
               title="Click to copy full Pass ID"
             >
-              <span>PASS ID:</span>
-              <span className="text-white font-semibold">{team.id.slice(0, 14)}...</span>
+              <span>ID:</span>
+              <span className="text-white font-semibold">{team.id.slice(0, 12)}...</span>
               {copiedPassId ? (
-                <Check className="h-3 w-3 text-emerald-400" />
+                <Check className="h-2.5 w-2.5 text-emerald-400" />
               ) : (
-                <Copy className="h-3 w-3 text-neutral-400 group-hover:text-[#c19a88] transition-colors" />
+                <Copy className="h-2.5 w-2.5 text-neutral-400 group-hover:text-[#c19a88] transition-colors" />
               )}
             </button>
           </div>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2">
             {track && (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#c19a88]/30 bg-[#c19a88]/15 px-3 py-1 text-xs font-medium text-[#e8c5b4]">
-                <TrackIcon className="h-3.5 w-3.5" />
-                <span>{track.name}</span>
+              <span className="inline-flex items-center gap-1 rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 px-2.5 py-0.5 text-[11px] font-medium text-[#e8c5b4]">
+                <TrackIcon className="h-3 w-3" />
+                <span>Track: {track.name}</span>
               </span>
             )}
-            <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-mono font-bold text-white/90">
-              ₹99 Paid
+            <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 text-[10px] font-mono font-bold text-white/80">
+              ₹99 Verified
             </span>
           </div>
         </div>
 
         {/* Team Identity Banner */}
-        <div className="py-7 space-y-3 relative z-10">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="py-3.5 space-y-1 relative z-10">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
             <div>
-              <span className="text-[10px] uppercase font-bold tracking-[0.24em] text-[#c19a88]">
+              <span className="text-[9px] uppercase font-bold tracking-[0.22em] text-[#c19a88] block">
                 Registered Engineering Squad
               </span>
-              <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight mt-1">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-0.5">
                 {team.name}
               </h2>
             </div>
 
-            <div className="flex items-center gap-2">
-              <Link
-                href="/dashboard/track"
-                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] px-4 py-2 text-xs font-medium text-neutral-300 hover:text-white transition-all"
-              >
-                <Code2 className="h-3.5 w-3.5 text-[#c19a88]" />
-                <span>Track Specs</span>
-                <ArrowRight className="h-3 w-3 text-neutral-500" />
-              </Link>
-            </div>
+            <Link
+              href="/dashboard/track"
+              className="w-fit inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] px-3 py-1.5 text-[11px] font-medium text-neutral-300 hover:text-white transition-all"
+            >
+              <Code2 className="h-3 w-3 text-[#c19a88]" />
+              <span>Track Specs</span>
+              <ArrowRight className="h-2.5 w-2.5 text-neutral-500" />
+            </Link>
           </div>
 
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-white/60 font-light pt-1">
-            <span className="inline-flex items-center gap-1.5">
-              <MapPin className="h-3.5 w-3.5 text-[#c19a88]" />
+          <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1 text-[11px] text-white/55 font-light pt-0.5">
+            <span className="inline-flex items-center gap-1">
+              <MapPin className="h-3 w-3 text-[#c19a88]" />
               <span>{team.city ? `${team.city}, ` : ''}{team.state || 'India'}</span>
             </span>
-
-            <span className="inline-flex items-center gap-1.5">
-              <Building className="h-3.5 w-3.5 text-[#c19a88]" />
+            <span>•</span>
+            <span className="inline-flex items-center gap-1">
+              <Building className="h-3 w-3 text-[#c19a88]" />
               <span>{team.college_or_org || 'Independent Squad'}</span>
             </span>
-
-            <span className="inline-flex items-center gap-1.5">
-              <Calendar className="h-3.5 w-3.5 text-[#c19a88]" />
+            <span>•</span>
+            <span className="inline-flex items-center gap-1">
+              <Calendar className="h-3 w-3 text-[#c19a88]" />
               <span>Enrolled: {formattedDate}</span>
             </span>
           </div>
         </div>
 
         {/* 4 Details Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pt-3 pb-6 border-b border-white/10 relative z-10 text-xs">
-          <div className="p-4 rounded-2xl border border-white/[0.08] bg-black/40 space-y-1">
-            <span className="text-white/40 text-[10px] uppercase font-mono tracking-wider block">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 pt-2.5 pb-3.5 border-b border-white/[0.08] relative z-10 text-xs">
+          <div className="p-2.5 rounded-xl border border-white/[0.06] bg-black/40 space-y-0.5">
+            <span className="text-white/40 text-[9px] uppercase font-mono tracking-wider block">
               Team Leader
             </span>
-            <span className="font-semibold text-white block truncate text-sm">
+            <span className="font-semibold text-white block truncate text-xs">
               {leaderMember?.name || userName || 'Team Lead'}
             </span>
-            <span className="text-white/50 text-[11px] font-mono truncate block">
+            <span className="text-white/40 text-[10px] font-mono truncate block">
               {leaderMember?.email || userEmail}
             </span>
           </div>
 
-          <div className="p-4 rounded-2xl border border-white/[0.08] bg-black/40 space-y-1">
-            <span className="text-white/40 text-[10px] uppercase font-mono tracking-wider block">
+          <div className="p-2.5 rounded-xl border border-white/[0.06] bg-black/40 space-y-0.5">
+            <span className="text-white/40 text-[9px] uppercase font-mono tracking-wider block">
               Roster Capacity
             </span>
-            <span className="font-semibold text-white block text-sm">
+            <span className="font-semibold text-white block text-xs">
               {members.length} of 6 Engineers
             </span>
-            <span className="text-[#c19a88] text-[11px] block font-medium">
-              {6 - members.length > 0 ? `${6 - members.length} more slots eligible` : 'Full squad roster (6/6)'}
+            <span className="text-[#c19a88] text-[10px] block font-medium">
+              {openSlotsCount > 0 ? `${openSlotsCount} slots open` : 'Squad full (6/6)'}
             </span>
           </div>
 
-          <div className="p-4 rounded-2xl border border-white/[0.08] bg-black/40 space-y-1">
-            <span className="text-white/40 text-[10px] uppercase font-mono tracking-wider block">
+          <div className="p-2.5 rounded-xl border border-white/[0.06] bg-black/40 space-y-0.5">
+            <span className="text-white/40 text-[9px] uppercase font-mono tracking-wider block">
               Payment Verification
             </span>
-            <span className="font-semibold text-emerald-400 flex items-center gap-1.5 text-sm">
-              <CheckCircle2 className="h-3.5 w-3.5" />
+            <span className="font-semibold text-emerald-400 flex items-center gap-1 text-xs">
+              <CheckCircle2 className="h-3 w-3" />
               <span>₹99 Flat Verified</span>
             </span>
             <span className="text-white/40 text-[10px] font-mono truncate block">
@@ -310,64 +276,54 @@ export default function TeamWorkspaceClient({
             </span>
           </div>
 
-          <div className="p-4 rounded-2xl border border-white/[0.08] bg-black/40 space-y-1">
-            <span className="text-white/40 text-[10px] uppercase font-mono tracking-wider block">
+          <div className="p-2.5 rounded-xl border border-white/[0.06] bg-black/40 space-y-0.5">
+            <span className="text-white/40 text-[9px] uppercase font-mono tracking-wider block">
               Current Milestone
             </span>
-            <span className="font-semibold text-white block text-sm">Stage 1 Screening</span>
+            <span className="font-semibold text-white block text-xs">Stage 1 Screening</span>
             <span className="text-white/40 text-[10px] block">Saturday, Jan 08, 2028</span>
           </div>
         </div>
 
         {/* Squad Members Roster */}
-        <div className="pt-7 space-y-4 relative z-10">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <Users className="h-4 w-4 text-[#c19a88]" />
-              <h3 className="text-xs uppercase font-bold tracking-[0.2em] text-[#c19a88]">
+        <div className="pt-3.5 space-y-2.5 relative z-10">
+          <div className="flex items-center justify-between text-xs">
+            <div className="flex items-center gap-1.5">
+              <Users className="h-3.5 w-3.5 text-[#c19a88]" />
+              <h3 className="text-[11px] uppercase font-bold tracking-[0.16em] text-[#c19a88]">
                 Confirmed Squad Roster ({members.length}/6)
               </h3>
             </div>
-            <span className="text-[11px] text-neutral-400 font-mono">
-              Policy: 1 to 6 engineers per registered team
+            <span className="text-[10px] text-neutral-400 font-mono">
+              1–6 Members Policy
             </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {/* Leader Card */}
             {leaderMember && (
-              <div className="flex items-center justify-between p-4 rounded-2xl border border-[#c19a88]/35 bg-[#c19a88]/[0.08] relative group hover:border-[#c19a88]/60 transition-all shadow-sm">
-                <div className="flex items-center gap-3.5 min-w-0">
-                  <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#c19a88]/30 to-[#805948]/30 border border-[#c19a88]/50 flex items-center justify-center text-sm font-bold text-[#f5ded3] shrink-0 shadow-inner">
+              <div className="flex items-center justify-between p-2.5 rounded-xl border border-[#c19a88]/30 bg-[#c19a88]/[0.06] relative group hover:border-[#c19a88]/50 transition-all">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="h-7 w-7 rounded-lg bg-gradient-to-br from-[#c19a88]/30 to-[#805948]/30 border border-[#c19a88]/40 flex items-center justify-center text-xs font-bold text-[#f5ded3] shrink-0">
                     {leaderMember.name.charAt(0).toUpperCase()}
                   </div>
-                  <div className="min-w-0 space-y-1">
-                    <div className="flex items-center gap-2">
-                      <p className="text-sm font-bold text-white truncate">{leaderMember.name}</p>
-                      <span className="rounded-full bg-[#c19a88]/25 border border-[#c19a88]/40 px-2 py-0.5 text-[9px] font-mono font-bold text-[#f5ded3] shrink-0 uppercase tracking-wider">
+                  <div className="min-w-0 space-y-0.5">
+                    <div className="flex items-center gap-1.5">
+                      <p className="text-xs font-bold text-white truncate">{leaderMember.name}</p>
+                      <span className="rounded-full bg-[#c19a88]/20 border border-[#c19a88]/30 px-1.5 py-0.2 text-[8px] font-mono font-bold text-[#f5ded3] shrink-0 uppercase tracking-wider">
                         Lead
                       </span>
                     </div>
-
-                    <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-white/55 font-mono">
-                      <span className="inline-flex items-center gap-1 truncate">
-                        <Mail className="h-3 w-3 text-neutral-400" />
-                        <span className="truncate">{leaderMember.email}</span>
-                      </span>
-
-                      {leaderMember.phone && (
-                        <span className="inline-flex items-center gap-1">
-                          <Phone className="h-3 w-3 text-neutral-400" />
-                          <span>{leaderMember.phone}</span>
-                        </span>
-                      )}
+                    <div className="flex flex-wrap items-center gap-x-2 text-[10px] text-white/50 font-mono truncate">
+                      <span className="truncate">{leaderMember.email}</span>
+                      {leaderMember.phone && <span>• {leaderMember.phone}</span>}
                     </div>
                   </div>
                 </div>
 
-                <div className="text-[10px] font-mono font-bold text-[#c19a88]/70 shrink-0 self-start pt-1">
+                <span className="text-[9px] font-mono font-bold text-[#c19a88]/70 shrink-0 self-start">
                   #01
-                </div>
+                </span>
               </div>
             )}
 
@@ -375,145 +331,134 @@ export default function TeamWorkspaceClient({
             {regularMembers.map((member, idx) => (
               <div
                 key={member.id}
-                className="flex items-center justify-between p-4 rounded-2xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/20 transition-all relative group shadow-sm"
+                className="flex items-center justify-between p-2.5 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all"
               >
-                <div className="flex items-center gap-3.5 min-w-0">
-                  <div className="h-10 w-10 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center text-sm font-bold text-white/80 shrink-0">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="h-7 w-7 rounded-lg bg-white/[0.05] border border-white/10 flex items-center justify-center text-xs font-bold text-white/80 shrink-0">
                     {member.name.charAt(0).toUpperCase()}
                   </div>
-                  <div className="min-w-0 space-y-1">
-                    <div className="flex items-center gap-2">
-                      <p className="text-sm font-semibold text-white truncate">{member.name}</p>
-                      <span className="rounded-full bg-white/[0.05] border border-white/10 px-2 py-0.5 text-[9px] font-mono font-medium text-neutral-400 shrink-0 uppercase tracking-wider">
-                        Engineer
+                  <div className="min-w-0 space-y-0.5">
+                    <div className="flex items-center gap-1.5">
+                      <p className="text-xs font-semibold text-white truncate">{member.name}</p>
+                      <span className="rounded-full bg-white/[0.04] border border-white/10 px-1.5 py-0.2 text-[8px] font-mono text-neutral-400 shrink-0 uppercase tracking-wider">
+                        Member
                       </span>
                     </div>
-
-                    <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-white/55 font-mono">
-                      <span className="inline-flex items-center gap-1 truncate">
-                        <Mail className="h-3 w-3 text-neutral-400" />
-                        <span className="truncate">{member.email}</span>
-                      </span>
-
-                      {member.phone && (
-                        <span className="inline-flex items-center gap-1">
-                          <Phone className="h-3 w-3 text-neutral-400" />
-                          <span>{member.phone}</span>
-                        </span>
-                      )}
+                    <div className="flex flex-wrap items-center gap-x-2 text-[10px] text-white/50 font-mono truncate">
+                      <span className="truncate">{member.email}</span>
+                      {member.phone && <span>• {member.phone}</span>}
                     </div>
                   </div>
                 </div>
 
-                <div className="text-[10px] font-mono font-bold text-white/30 shrink-0 self-start pt-1">
+                <span className="text-[9px] font-mono text-white/30 shrink-0 self-start">
                   #{String(idx + 2).padStart(2, '0')}
-                </div>
+                </span>
               </div>
             ))}
 
-            {/* Open Slots if squad has fewer than 6 members */}
-            {Array.from({ length: Math.max(0, 6 - members.length) }).map((_, i) => (
-              <div
-                key={`empty-slot-${i}`}
-                className="flex items-center justify-between p-4 rounded-2xl border border-dashed border-white/15 bg-white/[0.01] hover:border-[#c19a88]/40 transition-all"
-              >
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className="h-9 w-9 rounded-xl border border-dashed border-white/20 flex items-center justify-center text-xs font-mono text-white/30 shrink-0">
-                    +{members.length + i + 1}
+            {/* Compact Single Open Slots Card */}
+            {openSlotsCount > 0 && (
+              <div className="flex items-center justify-between p-2.5 rounded-xl border border-dashed border-white/15 bg-white/[0.01] hover:border-[#c19a88]/40 transition-all">
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="h-7 w-7 rounded-lg border border-dashed border-white/20 flex items-center justify-center text-[10px] font-mono text-[#c19a88] shrink-0">
+                    +{openSlotsCount}
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60">Open Roster Slot</p>
-                    <p className="text-[11px] text-white/35 font-light">
-                      Can include up to 6 engineers per team
+                    <p className="text-xs font-medium text-white/75">
+                      {openSlotsCount} Open Roster {openSlotsCount === 1 ? 'Slot' : 'Slots'}
+                    </p>
+                    <p className="text-[10px] text-white/40 font-light">
+                      Add up to {6 - members.length} more teammates to squad
                     </p>
                   </div>
                 </div>
 
                 <button
                   onClick={shareSquadPass}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] px-3 py-1 text-[11px] font-medium text-[#e8c5b4] transition-all shrink-0"
+                  className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] px-2.5 py-1 text-[10px] font-medium text-[#e8c5b4] transition-all shrink-0"
                 >
-                  <Share2 className="h-3 w-3" />
+                  <Share2 className="h-2.5 w-2.5" />
                   <span>Share Pass</span>
                 </button>
               </div>
-            ))}
+            )}
           </div>
         </div>
 
         {/* Up Next: Stage 1 Milestone Alert */}
-        <div className="mt-8 rounded-2xl border border-emerald-500/25 bg-emerald-500/[0.06] p-4 sm:p-5 relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-400">
+        <div className="mt-4 rounded-xl border border-emerald-500/25 bg-emerald-500/[0.05] p-3 relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-xs">
+          <div className="space-y-0.5">
+            <div className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-[9px] font-mono font-bold uppercase tracking-wider text-emerald-400">
                 Up Next: Stage 1 — Online Screening Assessment
               </span>
             </div>
-            <p className="text-xs font-semibold text-white">
+            <p className="font-semibold text-white text-xs">
               Saturday, January 8, 2028 • 10:00 AM – 8:00 PM IST
             </p>
-            <p className="text-[11px] text-white/60 font-light">
-              Timed 45-minute technical evaluation covering core CS fundamentals, algorithms, and {track?.name || 'track'} topics.
+            <p className="text-[10px] text-white/50 font-light">
+              Timed 45-minute technical evaluation covering core CS fundamentals & {track?.name || 'track'} topics.
             </p>
           </div>
           <Link
             href="/dashboard/stages"
-            className="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/15 hover:bg-emerald-500/25 px-4 py-2 text-xs font-semibold text-emerald-300 transition-all"
+            className="shrink-0 inline-flex items-center gap-1 rounded-full border border-emerald-500/35 bg-emerald-500/15 hover:bg-emerald-500/25 px-3 py-1.5 text-[11px] font-semibold text-emerald-300 transition-all"
           >
             <span>View All 4 Stages</span>
-            <ArrowRight className="h-3 w-3" />
+            <ArrowRight className="h-2.5 w-2.5" />
           </Link>
         </div>
       </motion.div>
 
       {/* 3. Fast Navigation Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
         <Link
           href="/dashboard/stages"
-          className="group rounded-2xl border border-white/10 bg-white/[0.02] p-5 hover:border-[#c19a88]/40 hover:bg-[#c19a88]/[0.03] transition-all space-y-2 block"
+          className="group rounded-xl border border-white/10 bg-white/[0.02] p-3 hover:border-[#c19a88]/40 hover:bg-[#c19a88]/[0.03] transition-all space-y-1 block"
         >
           <div className="flex items-center justify-between">
-            <div className="h-8 w-8 rounded-lg bg-[#c19a88]/15 border border-[#c19a88]/30 flex items-center justify-center text-[#e8c5b4]">
-              <Layers className="h-4 w-4" />
+            <div className="h-6 w-6 rounded-md bg-[#c19a88]/15 border border-[#c19a88]/30 flex items-center justify-center text-[#e8c5b4]">
+              <Layers className="h-3 w-3" />
             </div>
-            <ArrowRight className="h-3.5 w-3.5 text-neutral-500 group-hover:text-white group-hover:translate-x-1 transition-all" />
+            <ArrowRight className="h-3 w-3 text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
           </div>
-          <h4 className="text-sm font-semibold text-white">Tournament Stages</h4>
-          <p className="text-xs text-neutral-400 font-light leading-relaxed">
-            Review detailed timeline, stage rubrics, scoring weights, and grand finale schedule.
+          <h4 className="text-xs font-semibold text-white">Tournament Stages</h4>
+          <p className="text-[10px] text-neutral-400 font-light leading-relaxed">
+            Review detailed timeline, rubrics, and final schedule.
           </p>
         </Link>
 
         <Link
           href="/dashboard/submission"
-          className="group rounded-2xl border border-white/10 bg-white/[0.02] p-5 hover:border-[#c19a88]/40 hover:bg-[#c19a88]/[0.03] transition-all space-y-2 block"
+          className="group rounded-xl border border-white/10 bg-white/[0.02] p-3 hover:border-[#c19a88]/40 hover:bg-[#c19a88]/[0.03] transition-all space-y-1 block"
         >
           <div className="flex items-center justify-between">
-            <div className="h-8 w-8 rounded-lg bg-[#c19a88]/15 border border-[#c19a88]/30 flex items-center justify-center text-[#e8c5b4]">
-              <Send className="h-4 w-4" />
+            <div className="h-6 w-6 rounded-md bg-[#c19a88]/15 border border-[#c19a88]/30 flex items-center justify-center text-[#e8c5b4]">
+              <Send className="h-3 w-3" />
             </div>
-            <ArrowRight className="h-3.5 w-3.5 text-neutral-500 group-hover:text-white group-hover:translate-x-1 transition-all" />
+            <ArrowRight className="h-3 w-3 text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
           </div>
-          <h4 className="text-sm font-semibold text-white">Deliverables Portal</h4>
-          <p className="text-xs text-neutral-400 font-light leading-relaxed">
-            Upload Stage 2 Architecture PDF and Stage 3 deployed URLs & GitHub repositories.
+          <h4 className="text-xs font-semibold text-white">Deliverables Portal</h4>
+          <p className="text-[10px] text-neutral-400 font-light leading-relaxed">
+            Upload Stage 2 Architecture PDF and Stage 3 Codebase.
           </p>
         </Link>
 
         <Link
           href="/dashboard/track"
-          className="group rounded-2xl border border-white/10 bg-white/[0.02] p-5 hover:border-[#c19a88]/40 hover:bg-[#c19a88]/[0.03] transition-all space-y-2 block"
+          className="group rounded-xl border border-white/10 bg-white/[0.02] p-3 hover:border-[#c19a88]/40 hover:bg-[#c19a88]/[0.03] transition-all space-y-1 block"
         >
           <div className="flex items-center justify-between">
-            <div className="h-8 w-8 rounded-lg bg-[#c19a88]/15 border border-[#c19a88]/30 flex items-center justify-center text-[#e8c5b4]">
-              <Code2 className="h-4 w-4" />
+            <div className="h-6 w-6 rounded-md bg-[#c19a88]/15 border border-[#c19a88]/30 flex items-center justify-center text-[#e8c5b4]">
+              <Code2 className="h-3 w-3" />
             </div>
-            <ArrowRight className="h-3.5 w-3.5 text-neutral-500 group-hover:text-white group-hover:translate-x-1 transition-all" />
+            <ArrowRight className="h-3 w-3 text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
           </div>
-          <h4 className="text-sm font-semibold text-white">Track Specifications</h4>
-          <p className="text-xs text-neutral-400 font-light leading-relaxed">
-            Read specific engineering criteria and recommended tech stack for {track?.name || 'your track'}.
+          <h4 className="text-xs font-semibold text-white">Track Specifications</h4>
+          <p className="text-[10px] text-neutral-400 font-light leading-relaxed">
+            Recommended stack & rubrics for {track?.name || 'your track'}.
           </p>
         </Link>
       </div>

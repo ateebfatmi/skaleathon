@@ -634,7 +634,7 @@ export class EventRepository {
       description: string;
       solution_overview: string;
       tech_stack: string[];
-      github_url: string;
+      github_url?: string | null;
       live_demo_url?: string | null;
       demo_video_url?: string | null;
       presentation_url?: string | null;
@@ -656,7 +656,7 @@ export class EventRepository {
             description: data.description,
             solution_overview: data.solution_overview,
             tech_stack: data.tech_stack,
-            github_url: data.github_url,
+            github_url: data.github_url || '',
             live_demo_url: data.live_demo_url,
             demo_video_url: data.demo_video_url,
             presentation_url: data.presentation_url,
@@ -681,7 +681,7 @@ export class EventRepository {
     const event = await this.getEvent();
     if (event.submission_deadline) {
       if (new Date() > new Date(event.submission_deadline)) {
-        throw new Error('Project submissions have officially closed for Skaleathon 2027.');
+        throw new Error('Project submissions have officially closed for Skaleathon 2028.');
       }
     }
 
@@ -697,10 +697,10 @@ export class EventRepository {
       description: data.description.trim(),
       solution_overview: data.solution_overview.trim(),
       tech_stack: data.tech_stack,
-      github_url: data.github_url.trim(),
-      live_demo_url: data.live_demo_url?.trim() || null,
-      demo_video_url: data.demo_video_url?.trim() || null,
-      presentation_url: data.presentation_url?.trim() || null,
+      github_url: data.github_url ? data.github_url.trim() : (existingIndex >= 0 ? state.submissions[existingIndex].github_url : ''),
+      live_demo_url: data.live_demo_url !== undefined ? (data.live_demo_url ? data.live_demo_url.trim() : null) : (existingIndex >= 0 ? state.submissions[existingIndex].live_demo_url : null),
+      demo_video_url: data.demo_video_url !== undefined ? (data.demo_video_url ? data.demo_video_url.trim() : null) : (existingIndex >= 0 ? state.submissions[existingIndex].demo_video_url : null),
+      presentation_url: data.presentation_url !== undefined ? (data.presentation_url ? data.presentation_url.trim() : null) : (existingIndex >= 0 ? state.submissions[existingIndex].presentation_url : null),
       member_contributions: data.member_contributions?.trim() || null,
       ai_tool_disclosure: data.ai_tool_disclosure?.trim() || null,
       file_attachments: data.file_attachments || [],

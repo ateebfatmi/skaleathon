@@ -16,7 +16,7 @@ export default async function SubmissionStatusPage() {
       <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-12 text-center space-y-4 max-w-xl mx-auto shadow-2xl">
         <h2 className="text-xl font-bold text-white">No Submission Found</h2>
         <p className="text-xs text-neutral-400 leading-relaxed">
-          Your team has not yet recorded a submission for Skaleathon 2027.
+          Your team has not yet recorded a submission for Skaleathon 2028.
         </p>
         <Link
           href="/dashboard/submission"
