@@ -1,7 +1,6 @@
 import React from 'react';
 import { getCurrentSession } from '@/lib/auth/session';
 import { redirect } from 'next/navigation';
-import DashboardNav from '@/components/layout/DashboardNav';
 
 export const revalidate = 0;
 
@@ -22,7 +21,6 @@ export default async function DashboardLayout({
       <div className="pointer-events-none absolute left-1/2 top-10 -translate-x-1/2 w-full max-w-7xl h-72 bg-[#805948]/10 rounded-full blur-[140px]" />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <DashboardNav />
         {children}
       </div>
     </div>

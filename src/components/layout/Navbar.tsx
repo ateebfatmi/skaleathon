@@ -12,6 +12,12 @@ import {
   ArrowRight,
   Sparkles,
   LayoutDashboard,
+  Layers,
+  Users,
+  Send,
+  Code2,
+  Bell,
+  Award,
 } from 'lucide-react';
 import {
   SignedIn,
@@ -74,12 +80,22 @@ export default function Navbar() {
 
   const navLinks = [
     { name: 'Home', href: '/' },
-    { name: 'Register', href: '/register' },
+    { name: 'Dashboard', href: '/dashboard' },
     { name: 'Tracks', href: '/tracks' },
     { name: 'Prizes', href: '/prizes' },
     { name: 'Rules', href: '/rules' },
     { name: 'Leaderboard', href: '/leaderboard' },
     { name: 'FAQ', href: '/faq' },
+  ];
+
+  const dashboardNavLinks = [
+    { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
+    { name: 'Stages', href: '/dashboard/stages', icon: Layers },
+    { name: 'My Team', href: '/dashboard/team', icon: Users },
+    { name: 'Project Submission', href: '/dashboard/submission', icon: Send },
+    { name: 'Track & Specs', href: '/dashboard/track', icon: Code2 },
+    { name: 'Announcements', href: '/dashboard/announcements', icon: Bell },
+    { name: 'Certificates', href: '/dashboard/certificates', icon: Award },
   ];
 
   const defaultRegisterButton = (
@@ -159,7 +175,10 @@ export default function Navbar() {
             className="hidden lg:flex items-center rounded-full border border-white/[0.08] bg-white/[0.02] p-1.5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.06),0_8px_24px_rgba(0,0,0,0.4)] backdrop-blur-2xl"
           >
             {navLinks.map((item) => {
-              const active = pathname === item.href;
+              const active =
+                item.href === '/'
+                  ? pathname === '/'
+                  : pathname.startsWith(item.href);
               return (
                 <Link
                   key={item.href}
@@ -308,12 +327,92 @@ export default function Navbar() {
           </div>
         </div>
 
+        {/* Dashboard Navigation in Navbar */}
+        {isDashboard && (
+          <div className="border-t border-white/[0.08] bg-[#07090E]/95 backdrop-blur-2xl">
+            <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <nav
+                aria-label="Dashboard Navigation"
+                className="flex items-center space-x-1 sm:space-x-2 py-2 overflow-x-auto scrollbar-none"
+              >
+                {dashboardNavLinks.map((link) => {
+                  const Icon = link.icon;
+                  const isActive =
+                    link.href === '/dashboard'
+                      ? pathname === '/dashboard'
+                      : pathname.startsWith(link.href);
+
+                  return (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      className={`relative flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-medium whitespace-nowrap transition-all duration-200 ${
+                        isActive
+                          ? 'bg-gradient-to-r from-white/[0.12] to-white/[0.07] text-white border border-[#c19a88]/40 shadow-[0_0_15px_rgba(193,154,136,0.18)] font-semibold'
+                          : 'text-neutral-400 hover:text-white hover:bg-white/[0.05] border border-transparent'
+                      }`}
+                    >
+                      <Icon
+                        className={`h-3.5 w-3.5 ${
+                          isActive ? 'text-[#c19a88]' : 'text-neutral-400'
+                        }`}
+                      />
+                      <span>{link.name}</span>
+                      {isActive && (
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] shadow-[0_0_8px_#c19a88] animate-pulse" />
+                      )}
+                    </Link>
+                  );
+                })}
+              </nav>
+            </div>
+          </div>
+        )}
+
         {/* Mobile Menu Dropdown */}
         {mobileMenuOpen && (
           <div className="md:hidden border-b border-white/10 bg-[#07090E]/98 px-5 pt-3 pb-8 space-y-4 backdrop-blur-2xl animate-in fade-in slide-in-from-top-3 duration-200">
+            {isDashboard && (
+              <div className="pb-3 border-b border-white/10 space-y-2">
+                <div className="px-1 text-[10px] uppercase tracking-[0.2em] text-[#c19a88] font-bold">
+                  Dashboard Sections
+                </div>
+                <div className="grid grid-cols-2 gap-1.5">
+                  {dashboardNavLinks.map((link) => {
+                    const Icon = link.icon;
+                    const isActive =
+                      link.href === '/dashboard'
+                        ? pathname === '/dashboard'
+                        : pathname.startsWith(link.href);
+                    return (
+                      <Link
+                        key={link.name}
+                        href={link.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={`flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium transition-all ${
+                          isActive
+                            ? 'bg-white/[0.08] text-[#e8c5b4] font-semibold border border-[#c19a88]/30'
+                            : 'text-neutral-400 hover:bg-white/[0.04] hover:text-white'
+                        }`}
+                      >
+                        <Icon
+                          className={`h-3.5 w-3.5 ${
+                            isActive ? 'text-[#c19a88]' : 'text-neutral-400'
+                          }`}
+                        />
+                        <span className="truncate">{link.name}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
             <div className="space-y-1">
               {navLinks.map((link) => {
-                const active = pathname === link.href;
+                const active =
+                  link.href === '/'
+                    ? pathname === '/'
+                    : pathname.startsWith(link.href);
                 return (
                   <Link
                     key={link.name}
