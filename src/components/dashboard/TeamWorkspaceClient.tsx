@@ -12,13 +12,12 @@ import {
   Building,
   Calendar,
   ArrowRight,
+  ArrowLeft,
+  ArrowUpRight,
   Layers,
   Send,
   Code2,
   Share2,
-  BrainCircuit,
-  Globe,
-  Smartphone,
 } from 'lucide-react';
 import { Team, TeamMember, EventTrack, PaymentOrder } from '@/lib/db/types';
 import { motion } from 'framer-motion';
@@ -92,60 +91,45 @@ export default function TeamWorkspaceClient({
     }
   };
 
-  const getTrackIcon = (trackName?: string) => {
-    const lower = (trackName || '').toLowerCase();
-    if (lower.includes('ai') || lower.includes('machine') || lower.includes('intelligent')) {
-      return BrainCircuit;
-    }
-    if (lower.includes('mobile') || lower.includes('app') || lower.includes('cross-platform')) {
-      return Smartphone;
-    }
-    return Globe;
-  };
-
-  const TrackIcon = getTrackIcon(track?.name);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="relative max-w-4xl mx-auto space-y-8 pb-12 text-neutral-200"
+      className="relative w-full space-y-14 pb-24 text-neutral-200"
     >
-      {/* Subtle Background Ambient Glows (Blended into background, no container box) */}
-      <div className="pointer-events-none absolute -top-12 right-0 h-72 w-72 rounded-full bg-[#c19a88]/10 blur-[130px]" />
-      <div className="pointer-events-none absolute top-40 -left-16 h-64 w-64 rounded-full bg-[#805948]/10 blur-[120px]" />
+      {/* Subtle Background Ambient Glows (Blended into background) */}
+      <div className="pointer-events-none absolute -top-20 right-10 h-96 w-96 rounded-full bg-[#c19a88]/15 blur-[160px]" />
+      <div className="pointer-events-none absolute top-40 -left-20 h-72 w-72 rounded-full bg-[#805948]/12 blur-[140px]" />
 
-      {/* 1. Open Editorial Header */}
-      <header className="relative z-10 border-b border-white/[0.08] pb-6 space-y-4">
-        {/* Top Status & Utility Row */}
-        <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
-          <div className="flex flex-wrap items-center gap-3">
-            <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.22em] text-[#c19a88]">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
-              </span>
-              <span>Official Squad Pass • SKALEATHON</span>
-            </div>
+      {/* 1. Open Luxury Editorial Hero */}
+      <header className="relative pt-1">
+        {/* Faint Oversized Architectural Watermark */}
+        <div className="pointer-events-none select-none absolute right-2 top-8 hidden xl:block overflow-hidden">
+          <span className="font-mono text-[110px] font-black tracking-tighter text-white/[0.02] leading-none uppercase">
+            SQUAD
+          </span>
+        </div>
 
-            <span className="text-white/15">•</span>
-
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-400">
-              <span>Status: PAID</span>
-              <span className="text-white/30 font-mono font-normal">(₹99 Verified)</span>
+        {/* Top Utility & Context Ribbon */}
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 pb-4 mb-7 border-b border-white/[0.07]">
+          <div className="flex flex-wrap items-center gap-2.5 text-[10px] font-mono uppercase tracking-[0.25em]">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
             </span>
-
-            <span className="text-white/15">•</span>
-
+            <span className="text-[#c19a88]">Official Squad Pass // Active Roster</span>
+            <span className="text-white/20">•</span>
+            <span className="text-emerald-400 font-semibold">STATUS: PAID (₹99)</span>
+            <span className="text-white/20">•</span>
             <button
               onClick={() => copyToClipboard(team.id, 'pass')}
-              className="group inline-flex items-center gap-1.5 text-[10px] font-mono text-white/50 hover:text-white transition-colors"
+              className="group inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors"
               title="Click to copy full Pass ID"
             >
               <span>ID:</span>
-              <span className="text-white/80 font-semibold group-hover:text-[#e8c5b4]">
-                {team.id.slice(0, 12)}...
+              <span className="text-[#e8c5b4] font-semibold">
+                [{team.id.slice(0, 10).toUpperCase()}]
               </span>
               {copiedPassId ? (
                 <Check className="h-3 w-3 text-emerald-400" />
@@ -155,53 +139,54 @@ export default function TeamWorkspaceClient({
             </button>
           </div>
 
-          <div className="flex items-center gap-4">
+          {/* Right Quick Actions */}
+          <div className="flex items-center gap-5 text-xs">
             <button
               onClick={() => window.print()}
-              className="inline-flex items-center gap-1.5 text-[11px] font-medium text-neutral-400 hover:text-white transition-colors"
+              className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors font-medium"
               title="Print official team credentials"
             >
               <Printer className="h-3.5 w-3.5 text-[#c19a88]" />
               <span>Print Pass</span>
             </button>
 
+            <span className="text-white/15">|</span>
+
             <button
               onClick={shareSquadPass}
-              className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#e8c5b4] hover:text-white transition-colors"
+              className="group inline-flex items-center gap-1.5 text-[#e8c5b4] hover:text-white transition-colors font-semibold"
               title="Share squad credentials"
             >
               {copiedInvite ? (
                 <>
                   <Check className="h-3.5 w-3.5 text-emerald-400" />
-                  <span className="text-emerald-400">Copied!</span>
+                  <span className="text-emerald-400">Copied Pass!</span>
                 </>
               ) : (
                 <>
                   <Share2 className="h-3.5 w-3.5 text-[#c19a88]" />
-                  <span>Share Pass</span>
+                  <span>Share Squad Pass</span>
                 </>
               )}
             </button>
           </div>
         </div>
 
-        {/* Squad Title & Track Identity */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pt-1">
-          <div className="space-y-1.5">
-            <div className="flex flex-wrap items-center gap-3">
-              <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-                {team.name}
-              </h1>
-              {track && (
-                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-[#e8c5b4] font-mono">
-                  <span className="text-white/20">/</span>
-                  <TrackIcon className="h-3.5 w-3.5 text-[#c19a88]" />
-                  <span>{track.name}</span>
-                </span>
-              )}
-            </div>
+        {/* Editorial Headline & Manifesto */}
+        <div className="relative z-10 max-w-3xl space-y-5 pb-9">
+          <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold text-white tracking-tight leading-[1.06]">
+            Squad{' '}
+            <span className="font-serif italic font-normal text-[#e8c5b4]">
+              {team.name}
+            </span>
+          </h1>
 
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-white/50 font-light">
+          <div className="border-l-2 border-[#c19a88]/45 pl-4 space-y-2">
+            <p className="text-sm sm:text-[15px] text-neutral-300/90 leading-relaxed font-light">
+              Verified engineering squad competing in{' '}
+              <strong className="text-white font-medium">{track ? track.name : 'Skaleathon'}</strong>. Your team credential covers 1 to 6 members under a single flat registration pass.
+            </p>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-white/45 font-mono">
               <span className="inline-flex items-center gap-1.5">
                 <MapPin className="h-3 w-3 text-[#c19a88]" />
                 <span>
@@ -221,226 +206,212 @@ export default function TeamWorkspaceClient({
               </span>
             </div>
           </div>
-
-          <Link
-            href="/dashboard/track"
-            className="w-fit inline-flex items-center gap-1.5 text-xs font-medium text-[#e8c5b4] hover:text-white transition-colors group"
-          >
-            <Code2 className="h-3.5 w-3.5 text-[#c19a88]" />
-            <span>Track Specifications</span>
-            <ArrowRight className="h-3 w-3 text-[#c19a88] group-hover:translate-x-0.5 transition-transform" />
-          </Link>
         </div>
+
+        {/* Full-Width 4-Column Editorial Section Index Bar */}
+        <nav className="grid grid-cols-2 sm:grid-cols-4 border-t border-b border-white/[0.08] divide-y sm:divide-y-0 sm:divide-x divide-white/[0.06]">
+          {[
+            { href: '#roster', num: '01', label: `Confirmed Roster (${members.length}/6)`, active: true },
+            { href: '/dashboard/track', num: '02', label: track ? track.name : 'Track Specs', active: false },
+            { href: '/dashboard/stages', num: '03', label: 'Stage 01 Screening', active: false },
+            { href: '/dashboard/submission', num: '04', label: 'Deliverables Portal', active: false },
+          ].map((sec) => (
+            <Link
+              key={sec.num}
+              href={sec.href}
+              className={`group relative py-3.5 px-4 flex items-center justify-between text-xs transition-all ${
+                sec.active
+                  ? 'text-white font-semibold bg-white/[0.02]'
+                  : 'text-neutral-500 hover:text-neutral-200 hover:bg-white/[0.01]'
+              }`}
+            >
+              <div className="flex items-center gap-2.5 truncate">
+                <span className="font-mono text-[10px] text-[#c19a88] font-bold">
+                  {sec.num}
+                </span>
+                <span className="truncate">{sec.label}</span>
+              </div>
+              <ArrowUpRight
+                className={`h-3.5 w-3.5 shrink-0 transition-transform ${
+                  sec.active
+                    ? 'text-[#e8c5b4]'
+                    : 'text-neutral-600 group-hover:text-neutral-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
+                }`}
+              />
+              {sec.active && (
+                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4]" />
+              )}
+            </Link>
+          ))}
+        </nav>
       </header>
 
-      {/* 2. Open Telemetry Strip (No Boxes — Clean Left-Accented Columns) */}
-      <section className="relative z-10 grid grid-cols-2 sm:grid-cols-4 gap-6 border-b border-white/[0.08] pb-7">
-        <div className="border-l-2 border-[#c19a88]/40 pl-3.5 space-y-0.5">
-          <span className="text-white/40 text-[9px] uppercase font-mono tracking-wider block">
-            Team Leader
-          </span>
-          <span className="font-semibold text-white block truncate text-xs sm:text-sm">
-            {leaderMember?.name || userName || 'Team Lead'}
-          </span>
-          <span className="text-white/45 text-[10px] font-mono truncate block">
-            {leaderMember?.email || userEmail}
-          </span>
+      {/* 2. Section 01: Squad Telemetry Pillars */}
+      <section className="space-y-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+          <div>
+            <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
+              01 // Squad Credentials &amp; Verification
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+              Enrollment &amp;{' '}
+              <span className="font-serif italic font-normal text-[#e8c5b4]">
+                Pass Telemetry
+              </span>
+            </h2>
+          </div>
+          <p className="text-xs text-neutral-400 font-light max-w-xs">
+            Official tournament registration record and active milestone schedule.
+          </p>
         </div>
 
-        <div className="border-l-2 border-white/15 pl-3.5 space-y-0.5">
-          <span className="text-white/40 text-[9px] uppercase font-mono tracking-wider block">
-            Roster Capacity
-          </span>
-          <span className="font-semibold text-white block text-xs sm:text-sm">
-            {members.length} of 6 Engineers
-          </span>
-          <span className="text-[#c19a88] text-[10px] block font-medium">
-            {openSlotsCount > 0 ? `${openSlotsCount} slots available` : 'Full squad (6/6)'}
-          </span>
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 pt-2 border-t border-white/[0.08]">
+          {/* Pillar 01 */}
+          <div className="relative pt-4 space-y-2.5">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#c19a88] font-bold">
+                Pillar 01 • Squad Leadership &amp; Payment
+              </span>
+              <span className="font-mono text-2xl font-light text-white/10 select-none">01</span>
+            </div>
+            <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+              Led by {leaderMember?.name || userName || 'Team Lead'}
+            </h3>
+            <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+              Primary correspondence and stage updates are dispatched to{' '}
+              <span className="text-white font-mono text-xs">{leaderMember?.email || userEmail}</span>. Flat ₹99 team registration is verified (Ref:{' '}
+              <span className="font-mono text-[#e8c5b4]">
+                {paymentOrder?.razorpay_payment_id || 'RZP_SETTLED'}
+              </span>
+              ).
+            </p>
+          </div>
 
-        <div className="border-l-2 border-emerald-500/40 pl-3.5 space-y-0.5">
-          <span className="text-white/40 text-[9px] uppercase font-mono tracking-wider block">
-            Payment Status
-          </span>
-          <span className="font-semibold text-emerald-400 flex items-center gap-1 text-xs sm:text-sm">
-            <CheckCircle2 className="h-3.5 w-3.5" />
-            <span>₹99 Verified</span>
-          </span>
-          <span className="text-white/45 text-[10px] font-mono truncate block">
-            Ref: {paymentOrder?.razorpay_payment_id || 'RZP_SETTLED'}
-          </span>
-        </div>
-
-        <div className="border-l-2 border-white/15 pl-3.5 space-y-0.5">
-          <span className="text-white/40 text-[9px] uppercase font-mono tracking-wider block">
-            Active Milestone
-          </span>
-          <span className="font-semibold text-white block text-xs sm:text-sm">
-            Stage 1 Screening
-          </span>
-          <span className="text-white/45 text-[10px] block">Sat, Jan 08, 2028</span>
+          {/* Pillar 02 */}
+          <div className="relative pt-4 md:border-l md:border-white/[0.08] md:pl-8 lg:pl-12 space-y-2.5">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#e8c5b4] font-bold">
+                Pillar 02 • Up Next: Stage 01 Screening
+              </span>
+              <span className="font-mono text-2xl font-light text-white/10 select-none">02</span>
+            </div>
+            <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+              Saturday, January 8, 2028 • 10:00 AM IST
+            </h3>
+            <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+              Timed 45-minute online technical screening assessment evaluating core CS fundamentals and{' '}
+              {track?.name || 'track'} domain logic.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* 3. Confirmed Squad Roster (Open Blended List — No Cards) */}
-      <section className="relative z-10 space-y-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Users className="h-3.5 w-3.5 text-[#c19a88]" />
-            <h2 className="text-[11px] uppercase font-bold tracking-[0.2em] text-[#c19a88]">
-              Confirmed Squad Roster ({members.length}/6)
+      {/* 3. Section 02: Confirmed Squad Roster Ledger */}
+      <section id="roster" className="space-y-5 pt-10 border-t border-white/[0.08] scroll-mt-28">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+          <div>
+            <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
+              02 // Registered Engineers ({members.length} of 6)
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+              Confirmed Squad{' '}
+              <span className="font-serif italic font-normal text-[#e8c5b4]">
+                Roster
+              </span>
             </h2>
           </div>
-          <span className="text-[10px] text-neutral-500 font-mono">1–6 Members Policy</span>
+          <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-500">
+            1 to 6 Members Policy
+          </span>
         </div>
 
         <div className="divide-y divide-white/[0.06] border-t border-b border-white/[0.06]">
           {/* Leader Row */}
           {leaderMember && (
-            <div className="flex items-center justify-between py-3.5 group">
-              <div className="flex items-center gap-3.5 min-w-0">
+            <div className="flex items-center justify-between py-4">
+              <div className="flex items-center gap-4 min-w-0">
                 <span className="text-xs font-mono font-bold text-[#c19a88] w-6 shrink-0">
                   01
                 </span>
-                <div className="min-w-0">
-                  <div className="flex items-center gap-2">
-                    <p className="text-sm font-semibold text-white truncate">
+                <div className="min-w-0 space-y-0.5">
+                  <div className="flex items-center gap-2.5">
+                    <p className="text-sm sm:text-base font-bold text-white truncate">
                       {leaderMember.name}
                     </p>
-                    <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-[#e8c5b4]">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#e8c5b4]">
                       • Team Lead
                     </span>
                   </div>
-                  <div className="flex flex-wrap items-center gap-x-2.5 text-[11px] text-white/45 font-mono truncate">
+                  <div className="flex flex-wrap items-center gap-x-3 text-xs text-white/45 font-mono truncate">
                     <span className="truncate">{leaderMember.email}</span>
                     {leaderMember.phone && <span>• {leaderMember.phone}</span>}
                   </div>
                 </div>
               </div>
 
-              <span className="text-[10px] font-mono text-emerald-400/80 shrink-0">
-                Verified
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-mono text-emerald-400 shrink-0">
+                <CheckCircle2 className="h-3.5 w-3.5" />
+                <span>Verified</span>
               </span>
             </div>
           )}
 
           {/* Other Members */}
           {regularMembers.map((member, idx) => (
-            <div key={member.id} className="flex items-center justify-between py-3.5 group">
-              <div className="flex items-center gap-3.5 min-w-0">
+            <div key={member.id} className="flex items-center justify-between py-4">
+              <div className="flex items-center gap-4 min-w-0">
                 <span className="text-xs font-mono text-white/35 w-6 shrink-0">
                   {String(idx + 2).padStart(2, '0')}
                 </span>
-                <div className="min-w-0">
-                  <div className="flex items-center gap-2">
-                    <p className="text-sm font-medium text-white truncate">{member.name}</p>
-                    <span className="text-[9px] font-mono uppercase tracking-widest text-neutral-500">
+                <div className="min-w-0 space-y-0.5">
+                  <div className="flex items-center gap-2.5">
+                    <p className="text-sm sm:text-base font-semibold text-white truncate">
+                      {member.name}
+                    </p>
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-500">
                       • Member
                     </span>
                   </div>
-                  <div className="flex flex-wrap items-center gap-x-2.5 text-[11px] text-white/45 font-mono truncate">
+                  <div className="flex flex-wrap items-center gap-x-3 text-xs text-white/45 font-mono truncate">
                     <span className="truncate">{member.email}</span>
                     {member.phone && <span>• {member.phone}</span>}
                   </div>
                 </div>
               </div>
 
-              <span className="text-[10px] font-mono text-white/30 shrink-0">Active</span>
+              <span className="text-[11px] font-mono text-white/40 shrink-0">Active</span>
             </div>
           ))}
 
-          {/* Single Blended Open Slots Row */}
+          {/* Single Compact Open Slots Row */}
           {openSlotsCount > 0 && (
-            <div className="flex items-center justify-between py-3.5">
-              <div className="flex items-center gap-3.5 min-w-0">
-                <span className="text-xs font-mono text-[#c19a88]/70 w-6 shrink-0">
+            <div className="flex items-center justify-between py-4">
+              <div className="flex items-center gap-4 min-w-0">
+                <span className="text-xs font-mono font-bold text-[#c19a88] w-6 shrink-0">
                   +{openSlotsCount}
                 </span>
                 <div>
-                  <p className="text-xs sm:text-sm font-medium text-white/70">
+                  <p className="text-xs sm:text-sm font-semibold text-white/80">
                     {openSlotsCount} Open Roster {openSlotsCount === 1 ? 'Slot' : 'Slots'} Available
                   </p>
-                  <p className="text-[11px] text-white/40 font-light">
-                    You can invite up to {6 - members.length} additional teammates to this pass
+                  <p className="text-xs text-neutral-400 font-light">
+                    Invite up to {6 - members.length} additional teammates to join this squad pass
                   </p>
                 </div>
               </div>
 
               <button
                 onClick={shareSquadPass}
-                className="inline-flex items-center gap-1.5 text-xs font-medium text-[#e8c5b4] hover:text-white transition-colors shrink-0"
+                className="group inline-flex items-center gap-1.5 text-xs font-semibold text-[#e8c5b4] hover:text-white transition-colors shrink-0"
               >
-                <Share2 className="h-3 w-3 text-[#c19a88]" />
+                <Share2 className="h-3.5 w-3.5 text-[#c19a88]" />
                 <span>Invite / Share Pass</span>
+                <ArrowRight className="h-3 w-3 text-[#c19a88] group-hover:translate-x-0.5 transition-transform" />
               </button>
             </div>
           )}
         </div>
       </section>
-
-      {/* 4. Up Next Milestone (Open Left-Border Callout, No Box) */}
-      <section className="relative z-10 border-l-2 border-emerald-400/60 pl-4 py-1 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="space-y-0.5">
-          <div className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-emerald-400">
-              Up Next: Stage 1 — Online Screening Assessment
-            </span>
-          </div>
-          <p className="font-semibold text-white text-xs sm:text-sm">
-            Saturday, January 8, 2028 • 10:00 AM – 8:00 PM IST
-          </p>
-          <p className="text-xs text-white/50 font-light">
-            Timed 45-minute technical evaluation covering core CS fundamentals &amp;{' '}
-            {track?.name || 'track'} domain logic.
-          </p>
-        </div>
-
-        <Link
-          href="/dashboard/stages"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors shrink-0 group"
-        >
-          <span>View All 4 Stages</span>
-          <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
-        </Link>
-      </section>
-
-      {/* 5. Open Quick-Links Footer Strip (No Boxes) */}
-      <footer className="relative z-10 pt-4 border-t border-white/[0.08] grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <Link href="/dashboard/stages" className="group block space-y-1">
-          <div className="flex items-center gap-2 text-xs font-semibold text-white group-hover:text-[#e8c5b4] transition-colors">
-            <Layers className="h-3.5 w-3.5 text-[#c19a88]" />
-            <span>Tournament Stages</span>
-            <ArrowRight className="h-3 w-3 text-neutral-500 group-hover:text-[#e8c5b4] group-hover:translate-x-0.5 transition-all" />
-          </div>
-          <p className="text-[11px] text-neutral-500 font-light">
-            Review timeline, rubrics &amp; elimination rules.
-          </p>
-        </Link>
-
-        <Link href="/dashboard/submission" className="group block space-y-1">
-          <div className="flex items-center gap-2 text-xs font-semibold text-white group-hover:text-[#e8c5b4] transition-colors">
-            <Send className="h-3.5 w-3.5 text-[#c19a88]" />
-            <span>Deliverables Portal</span>
-            <ArrowRight className="h-3 w-3 text-neutral-500 group-hover:text-[#e8c5b4] group-hover:translate-x-0.5 transition-all" />
-          </div>
-          <p className="text-[11px] text-neutral-500 font-light">
-            Upload Stage 2 Architecture PDF &amp; Stage 3 Codebase.
-          </p>
-        </Link>
-
-        <Link href="/dashboard/track" className="group block space-y-1">
-          <div className="flex items-center gap-2 text-xs font-semibold text-white group-hover:text-[#e8c5b4] transition-colors">
-            <Code2 className="h-3.5 w-3.5 text-[#c19a88]" />
-            <span>Track Specifications</span>
-            <ArrowRight className="h-3 w-3 text-neutral-500 group-hover:text-[#e8c5b4] group-hover:translate-x-0.5 transition-all" />
-          </div>
-          <p className="text-[11px] text-neutral-500 font-light">
-            Recommended stack &amp; guidelines for {track?.name || 'your track'}.
-          </p>
-        </Link>
-      </footer>
     </motion.div>
   );
 }

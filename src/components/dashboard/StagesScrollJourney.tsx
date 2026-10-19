@@ -10,12 +10,8 @@ import {
   Trophy,
   ArrowRight,
   ArrowLeft,
-  CheckCircle2,
-  Clock,
+  ArrowUpRight,
   Sparkles,
-  ChevronRight,
-  ShieldCheck,
-  Award,
 } from 'lucide-react';
 
 const STAGE_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -51,211 +47,235 @@ export default function StagesScrollJourney({ stages }: StagesScrollJourneyProps
   const [activeStage, setActiveStage] = useState<string>('01');
 
   return (
-    <div className="space-y-10 sm:space-y-16 pb-20">
-      {/* Editorial Header */}
-      <div className="relative border-b border-white/[0.08] pb-8 pt-2">
-        <div className="pointer-events-none absolute -top-10 right-0 h-72 w-72 rounded-full bg-[#c19a88]/10 blur-[120px]" />
-        
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 relative z-10">
-          <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 text-xs text-[#e8c5b4] font-medium">
-              <Sparkles className="h-3.5 w-3.5 text-[#c19a88]" />
-              <span className="font-mono uppercase tracking-[0.2em] text-[10px]">
-                Sequential Roadmap
-              </span>
-            </div>
+    <div className="relative w-full space-y-14 pb-24 text-neutral-200">
+      {/* Subtle Background Ambient Glows (Blended into background) */}
+      <div className="pointer-events-none absolute -top-20 right-10 h-96 w-96 rounded-full bg-[#c19a88]/15 blur-[160px]" />
+      <div className="pointer-events-none absolute top-40 -left-20 h-72 w-72 rounded-full bg-[#805948]/12 blur-[140px]" />
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
-              The 4-Stage{' '}
-              <span className="font-serif italic font-normal text-[#e8c5b4]">
-                Tournament Journey
-              </span>
-            </h1>
+      {/* 1. Open Luxury Editorial Hero */}
+      <header className="relative pt-1">
+        {/* Faint Oversized Architectural Watermark */}
+        <div className="pointer-events-none select-none absolute right-2 top-8 hidden xl:block overflow-hidden">
+          <span className="font-mono text-[110px] font-black tracking-tighter text-white/[0.02] leading-none uppercase">
+            ROADMAP
+          </span>
+        </div>
 
-            <p className="text-sm sm:text-base text-neutral-400 font-light leading-relaxed">
-              Scroll down to explore the progression, evaluation benchmarks, and deliverables for every phase of Skaleathon.
-            </p>
+        {/* Top Utility & Context Ribbon */}
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 pb-4 mb-7 border-b border-white/[0.07]">
+          <div className="flex flex-wrap items-center gap-2.5 text-[10px] font-mono uppercase tracking-[0.25em]">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c19a88] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#c19a88]" />
+            </span>
+            <span className="text-[#c19a88]">Tournament Progression // Sequential Roadmap</span>
+            <span className="text-white/20">•</span>
+            <span className="text-neutral-400">
+              Format: <strong className="text-white font-semibold">4 Evaluation Phases</strong>
+            </span>
+            <span className="text-white/20">•</span>
+            <span className="text-[#e8c5b4] font-semibold">[SKALEATHON]</span>
           </div>
 
-          <Link
-            href="/dashboard"
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs font-medium text-neutral-300 hover:text-white hover:bg-white/[0.08] hover:border-[#c19a88]/40 transition-all w-fit shrink-0 backdrop-blur-xl"
-          >
-            <ArrowLeft className="h-3.5 w-3.5" />
-            <span>Dashboard Overview</span>
-          </Link>
-        </div>
-
-        {/* Quick Stage Anchor Links */}
-        <div className="flex items-center gap-2 mt-8 overflow-x-auto scrollbar-none pb-1">
-          {stages.map((st) => (
-            <a
-              key={st.number}
-              href={`#stage-${st.number}`}
-              onClick={() => setActiveStage(st.number)}
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs transition-all whitespace-nowrap ${
-                activeStage === st.number
-                  ? 'bg-gradient-to-r from-white/[0.12] to-white/[0.06] text-white border border-[#c19a88]/40 shadow-[0_0_15px_rgba(193,154,136,0.15)] font-semibold'
-                  : 'text-neutral-400 hover:text-white hover:bg-white/[0.04] border border-transparent'
-              }`}
+          {/* Right Quick Actions */}
+          <div className="flex items-center gap-5 text-xs">
+            <Link
+              href="/dashboard"
+              className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors font-medium"
             >
-              <span className="font-mono text-[10px] text-[#c19a88]">{st.number}</span>
-              <span>{st.title}</span>
-            </a>
-          ))}
+              <ArrowLeft className="h-3.5 w-3.5 text-[#c19a88]" />
+              <span>Overview</span>
+            </Link>
+
+            <span className="text-white/15">|</span>
+
+            <Link
+              href="/dashboard/submission"
+              className="group inline-flex items-center gap-1.5 text-[#e8c5b4] hover:text-white transition-colors font-semibold"
+            >
+              <Send className="h-3.5 w-3.5 text-[#c19a88]" />
+              <span>Deliverables Portal</span>
+              <ArrowRight className="h-3 w-3 text-[#c19a88] group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+          </div>
         </div>
-      </div>
 
-      {/* Vertical Scroll Flow (Not In Cards) */}
-      <div className="relative">
-        {/* Continuous Connected Glowing Timeline Track */}
-        <div className="absolute left-4 sm:left-8 top-6 bottom-20 w-[2px] bg-gradient-to-b from-[#c19a88] via-[#805948]/60 to-white/10 pointer-events-none hidden md:block" />
+        {/* Editorial Headline & Manifesto */}
+        <div className="relative z-10 max-w-3xl space-y-5 pb-9">
+          <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold text-white tracking-tight leading-[1.06]">
+            The 4-Stage{' '}
+            <span className="font-serif italic font-normal text-[#e8c5b4]">
+              Tournament Journey
+            </span>
+          </h1>
 
-        <div className="space-y-20 sm:space-y-28">
-          {stages.map((stage, idx) => {
-            const Icon = STAGE_ICONS[stage.number] || Sparkles;
+          <p className="border-l-2 border-[#c19a88]/45 pl-4 text-sm sm:text-[15px] text-neutral-300/90 leading-relaxed font-light">
+            Explore the sequential progression, evaluation benchmarks, and required engineering deliverables for every phase of Skaleathon—from initial technical screening to the live Grand Finale defense.
+          </p>
+        </div>
 
+        {/* Full-Width 4-Column Editorial Stage Index Bar */}
+        <nav className="grid grid-cols-2 sm:grid-cols-4 border-t border-b border-white/[0.08] divide-y sm:divide-y-0 sm:divide-x divide-white/[0.06]">
+          {stages.map((st) => {
+            const isActive = activeStage === st.number;
             return (
-              <motion.section
-                id={`stage-${stage.number}`}
-                key={stage.number}
-                initial={{ opacity: 0, y: 35 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                onViewportEnter={() => setActiveStage(stage.number)}
-                className="relative scroll-mt-28 md:pl-24"
+              <a
+                key={st.number}
+                href={`#stage-${st.number}`}
+                onClick={() => setActiveStage(st.number)}
+                className={`group relative py-3.5 px-4 flex items-center justify-between text-xs transition-all ${
+                  isActive
+                    ? 'text-white font-semibold bg-white/[0.02]'
+                    : 'text-neutral-500 hover:text-neutral-200 hover:bg-white/[0.01]'
+                }`}
               >
-                {/* Timeline Milestone Node Marker */}
-                <div className="hidden md:flex absolute -left-[11px] sm:-left-[3px] top-1.5 h-10 w-10 -translate-x-1/2 items-center justify-center rounded-2xl border border-white/20 bg-[#0B0B0B] text-white shadow-[0_0_20px_rgba(193,154,136,0.25)]">
-                  <Icon className="h-4 w-4 text-[#c19a88]" />
-                  <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c19a88] opacity-60" />
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#c19a88]" />
+                <div className="flex items-center gap-2.5 truncate">
+                  <span className="font-mono text-[10px] text-[#c19a88] font-bold">
+                    {st.number}
                   </span>
+                  <span className="truncate">{st.title}</span>
                 </div>
-
-                {/* Open Stage Content Block (No Card Container) */}
-                <div className="relative">
-                  {/* Watermark Stage Numeral */}
-                  <span className="pointer-events-none absolute -right-4 -top-12 text-7xl sm:text-9xl font-black text-white/[0.03] select-none font-mono">
-                    {stage.number}
-                  </span>
-
-                  {/* Header Meta Line */}
-                  <div className="flex flex-wrap items-center gap-3 mb-3">
-                    <span className="text-xs font-mono font-bold tracking-[0.25em] text-[#c19a88] uppercase">
-                      Stage {stage.number}
-                    </span>
-                    <span className="text-neutral-600">•</span>
-                    <span className={`text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${stage.categoryColor}`}>
-                      {stage.category}
-                    </span>
-                    <span className="text-neutral-600 hidden sm:inline">•</span>
-                    <span className="text-xs text-neutral-400 font-mono hidden sm:inline">
-                      {stage.schedule}
-                    </span>
-                  </div>
-
-                  {/* Stage Headline */}
-                  <div className="space-y-1 mb-5">
-                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white">
-                      {stage.title}
-                    </h2>
-                    <p className="text-xs sm:text-sm font-serif italic text-[#e8c5b4]/90 tracking-wide">
-                      {stage.subtitle}
-                    </p>
-                  </div>
-
-                  {/* Narrative Body Copy */}
-                  <p className="text-sm sm:text-base text-neutral-300 font-light leading-relaxed max-w-3xl mb-8">
-                    {stage.description}
-                  </p>
-
-                  {/* Minimal Spec Pillars (Border-free, Open Minimalist Badges) */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mb-8">
-                    <div className="border-l-2 border-[#c19a88]/40 pl-3.5 py-1">
-                      <span className="text-[10px] uppercase tracking-wider text-neutral-500 font-medium block">
-                        Submission Format
-                      </span>
-                      <span className="text-xs sm:text-sm font-medium text-white mt-0.5 block leading-snug">
-                        {stage.format}
-                      </span>
-                    </div>
-
-                    <div className="border-l-2 border-[#e8c5b4]/40 pl-3.5 py-1">
-                      <span className="text-[10px] uppercase tracking-wider text-neutral-500 font-medium block">
-                        Weightage & Impact
-                      </span>
-                      <span className="text-xs sm:text-sm font-medium text-[#e8c5b4] mt-0.5 block leading-snug">
-                        {stage.weightage}
-                      </span>
-                    </div>
-
-                    <div className="border-l-2 border-white/20 pl-3.5 py-1">
-                      <span className="text-[10px] uppercase tracking-wider text-neutral-500 font-medium block">
-                        Core Evaluation Lens
-                      </span>
-                      <span className="text-xs sm:text-sm font-medium text-neutral-300 mt-0.5 block leading-snug">
-                        {stage.criteria}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Key Deliverables Bullet Pills */}
-                  {stage.deliverables && stage.deliverables.length > 0 && (
-                    <div className="space-y-2 max-w-3xl mb-8">
-                      <span className="text-[10px] uppercase font-mono tracking-[0.2em] text-neutral-400 block">
-                        Required Stage Deliverables
-                      </span>
-                      <div className="flex flex-wrap gap-2">
-                        {stage.deliverables.map((d, dIdx) => (
-                          <div
-                            key={dIdx}
-                            className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.02] px-3.5 py-1.5 text-xs text-neutral-200"
-                          >
-                            <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88]" />
-                            <span>{d}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Status & CTA Bar */}
-                  <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/[0.06] max-w-3xl">
-                    <div className="flex items-center gap-2.5">
-                      <span className="text-xs text-neutral-400">Current Squad Status:</span>
-                      <span className="inline-flex items-center gap-1.5 text-xs font-medium text-white px-3 py-1 rounded-full border border-white/10 bg-white/[0.04]">
-                        <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                        <span>{stage.status}</span>
-                      </span>
-                    </div>
-
-                    {stage.actionHref ? (
-                      <Link
-                        href={stage.actionHref}
-                        className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-5 py-2 text-xs font-semibold text-white shadow-lg shadow-[#805948]/20 transition-all hover:scale-105"
-                      >
-                        <span>{stage.actionLabel}</span>
-                        <ArrowRight className="h-3.5 w-3.5" />
-                      </Link>
-                    ) : (
-                      <span className="text-xs text-neutral-500 font-mono">
-                        Milestone unlocks in progression
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                {/* Delicate Divider Between Stages */}
-                {idx < stages.length - 1 && (
-                  <div className="mt-16 sm:mt-24 border-b border-white/[0.06]" />
+                <ArrowUpRight
+                  className={`h-3.5 w-3.5 shrink-0 transition-transform ${
+                    isActive
+                      ? 'text-[#e8c5b4]'
+                      : 'text-neutral-600 group-hover:text-neutral-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
+                  }`}
+                />
+                {isActive && (
+                  <motion.span
+                    layoutId="stageSectionUnderline"
+                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4]"
+                  />
                 )}
-              </motion.section>
+              </a>
             );
           })}
-        </div>
+        </nav>
+      </header>
+
+      {/* 2. Open Vertical Stage Stream */}
+      <div className="space-y-16">
+        {stages.map((stage, idx) => {
+          const Icon = STAGE_ICONS[stage.number] || Sparkles;
+
+          return (
+            <motion.section
+              id={`stage-${stage.number}`}
+              key={stage.number}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.45 }}
+              onViewportEnter={() => setActiveStage(stage.number)}
+              className={`relative scroll-mt-28 space-y-6 ${
+                idx > 0 ? 'pt-12 border-t border-white/[0.08]' : ''
+              }`}
+            >
+              {/* Stage Header Row */}
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+                <div className="space-y-1">
+                  <div className="flex flex-wrap items-center gap-2.5 text-[10px] font-mono uppercase tracking-[0.26em]">
+                    <span className="text-[#c19a88] font-bold">
+                      {stage.number} {'//'} {stage.category}
+                    </span>
+                    <span className="text-white/20">•</span>
+                    <span className="text-neutral-400">{stage.schedule}</span>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <Icon className="h-5 w-5 text-[#c19a88] shrink-0" />
+                    <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                      {stage.title.split(' ').slice(0, -1).join(' ')}{' '}
+                      <span className="font-serif italic font-normal text-[#e8c5b4]">
+                        {stage.title.split(' ').slice(-1)}
+                      </span>
+                    </h2>
+                  </div>
+                </div>
+
+                {/* Status Readout */}
+                <div className="flex items-center gap-2 text-xs font-mono">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-neutral-400">Status:</span>
+                  <span className="text-white font-semibold">{stage.status}</span>
+                </div>
+              </div>
+
+              {/* Description */}
+              <p className="border-l-2 border-[#c19a88]/40 pl-4 text-sm text-neutral-300 font-light leading-relaxed max-w-3xl">
+                {stage.description}
+              </p>
+
+              {/* 3-Column Architectural Spec Strip */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10 pt-4 pb-4 border-t border-b border-white/[0.06]">
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-[#c19a88] font-bold">
+                      Format &amp; Window
+                    </span>
+                    <span className="font-mono text-lg font-light text-white/10 select-none">01</span>
+                  </div>
+                  <p className="text-xs sm:text-sm font-semibold text-white">
+                    {stage.format}
+                  </p>
+                </div>
+
+                <div className="md:border-l md:border-white/[0.08] md:pl-6 lg:pl-8 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-[#e8c5b4] font-bold">
+                      Weightage &amp; Impact
+                    </span>
+                    <span className="font-mono text-lg font-light text-white/10 select-none">02</span>
+                  </div>
+                  <p className="text-xs sm:text-sm font-semibold text-[#e8c5b4]">
+                    {stage.weightage}
+                  </p>
+                </div>
+
+                <div className="md:border-l md:border-white/[0.08] md:pl-6 lg:pl-8 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-neutral-400 font-bold">
+                      Evaluation Criteria
+                    </span>
+                    <span className="font-mono text-lg font-light text-white/10 select-none">03</span>
+                  </div>
+                  <p className="text-xs sm:text-sm font-light text-neutral-300">
+                    {stage.criteria}
+                  </p>
+                </div>
+              </div>
+
+              {/* Deliverables & Action Footer */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-500">
+                    Deliverables:
+                  </span>
+                  {stage.deliverables.map((d, dIdx) => (
+                    <span
+                      key={dIdx}
+                      className="inline-flex items-center gap-2 text-xs font-mono text-neutral-300"
+                    >
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88]" />
+                      <span>{d}</span>
+                    </span>
+                  ))}
+                </div>
+
+                {stage.actionHref && (
+                  <Link
+                    href={stage.actionHref}
+                    className="group inline-flex items-center gap-1.5 text-xs font-semibold text-[#e8c5b4] hover:text-white transition-colors shrink-0"
+                  >
+                    <span>{stage.actionLabel}</span>
+                    <ArrowRight className="h-3.5 w-3.5 text-[#c19a88] group-hover:translate-x-0.5 transition-transform" />
+                  </Link>
+                )}
+              </div>
+            </motion.section>
+          );
+        })}
       </div>
     </div>
   );
