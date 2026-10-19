@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { Sparkles, ShieldCheck, Terminal, Award } from 'lucide-react';
+import { Sparkles, ShieldCheck, Trophy, Layers } from 'lucide-react';
 import { EventData } from '@/lib/db/types';
 import GlassmorphismCta from '@/components/ui/glassmorphism-cta';
 import { motion } from 'framer-motion';
@@ -53,7 +53,7 @@ export default function HeroSection({ event }: HeroProps) {
           className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 text-xs font-medium text-white/70 mb-8 backdrop-blur-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
         >
           <Sparkles className="h-3.5 w-3.5 text-[#c19a88]" />
-          <span className="tracking-[0.24em] uppercase text-white/80 font-semibold text-[11px]">SkaleKraft Presents</span>
+          <span className="font-serif italic text-sm text-[#f5ded3] tracking-wide">SkaleKraft presents</span>
         </motion.div>
 
         {/* Master Event Title */}
@@ -143,27 +143,53 @@ export default function HeroSection({ event }: HeroProps) {
 
         {/* 4 Official Trust Badges */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-14 pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-4 text-xs text-white/60 max-w-5xl mx-auto"
+          className="mt-14 pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto"
         >
-          <div className="flex items-center justify-center gap-2 p-2.5 rounded-xl border border-white/[0.04] bg-white/[0.01]">
-            <Award className="h-4 w-4 text-[#c19a88] shrink-0" />
-            <span className="font-medium text-white/80">₹35,000 Cash Pool</span>
-          </div>
-          <div className="flex items-center justify-center gap-2 p-2.5 rounded-xl border border-white/[0.04] bg-white/[0.01]">
-            <Terminal className="h-4 w-4 text-[#c19a88] shrink-0" />
-            <span className="font-medium text-white/80">4 Tournament Stages</span>
-          </div>
-          <div className="flex items-center justify-center gap-2 p-2.5 rounded-xl border border-white/[0.04] bg-white/[0.01]">
-            <ShieldCheck className="h-4 w-4 text-[#c19a88] shrink-0" />
-            <span className="font-medium text-white/80">Top 25 Merit Certificates</span>
-          </div>
-          <div className="flex items-center justify-center gap-2 p-2.5 rounded-xl border border-white/[0.04] bg-white/[0.01]">
-            <Sparkles className="h-4 w-4 text-[#c19a88] shrink-0" />
-            <span className="font-medium text-white/80">SkaleKraft Internship Interviews</span>
-          </div>
+          {[
+            {
+              icon: Trophy,
+              title: '₹35,000 Prize Pool',
+              subtitle: 'Top 3 Cash Grants',
+            },
+            {
+              icon: Layers,
+              title: '4 Progressive Rounds',
+              subtitle: 'Quiz to Grand Finale',
+            },
+            {
+              icon: ShieldCheck,
+              title: 'Top 25 Merit Awards',
+              subtitle: 'Verified Credentials',
+            },
+            {
+              icon: Sparkles,
+              title: 'Studio Internship Track',
+              subtitle: 'SkaleKraft Interviews',
+            },
+          ].map((badge) => {
+            const Icon = badge.icon;
+            return (
+              <div
+                key={badge.title}
+                className="group relative flex items-center gap-3 p-3 sm:p-3.5 rounded-xl border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05] hover:border-[#c19a88]/40 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.25)] backdrop-blur-sm"
+              >
+                <div className="w-9 h-9 rounded-lg bg-[#c19a88]/10 border border-[#c19a88]/20 flex items-center justify-center shrink-0 text-[#c19a88] group-hover:scale-105 group-hover:bg-[#c19a88]/20 group-hover:border-[#c19a88]/40 transition-all">
+                  <Icon className="h-4 w-4" />
+                </div>
+                <div className="flex flex-col text-left min-w-0">
+                  <span className="font-semibold text-white/95 text-xs sm:text-[13px] tracking-tight group-hover:text-white transition-colors truncate">
+                    {badge.title}
+                  </span>
+                  <span className="text-[10px] sm:text-[11px] text-white/50 group-hover:text-[#c19a88] transition-colors truncate">
+                    {badge.subtitle}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
         </motion.div>
 
         {/* Live Interactive Hacker CLI & Telemetry Playground */}

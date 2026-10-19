@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Instrument_Serif } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -8,6 +9,13 @@ import Script from 'next/script';
 import AudioToggle from '@/components/layout/AudioToggle';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 import InteractiveAmbientBackground from '@/components/layout/InteractiveAmbientBackground';
+
+const instrumentSerif = Instrument_Serif({
+  weight: '400',
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+  variable: '--font-instrument-serif',
+});
 
 
 export const metadata: Metadata = {
@@ -75,7 +83,7 @@ export default function RootLayout({
       }}
     >
       <html lang="en" className="dark">
-        <body className="min-h-screen bg-[#0B0B0B] text-white flex flex-col antialiased selection:bg-[#805948]/30 selection:text-white relative overflow-x-clip">
+        <body className={`min-h-screen bg-[#0B0B0B] text-white flex flex-col antialiased selection:bg-[#805948]/30 selection:text-white relative overflow-x-clip ${instrumentSerif.variable}`}>
           {/* SkaleKraft Signature Interactive Background Architecture */}
           <InteractiveAmbientBackground />
 

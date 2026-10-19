@@ -155,8 +155,8 @@ export default function Navbar() {
                 />
               </div>
               <div className="flex flex-col justify-center">
-                <span className="text-[9px] uppercase tracking-[0.26em] font-medium text-white/50 leading-tight">
-                  SkaleKraft Presents
+                <span className="font-serif italic text-xs sm:text-[13px] tracking-wide text-[#e8c5b4] leading-tight">
+                  SkaleKraft presents
                 </span>
                 <div className="flex items-center gap-2 mt-0.5">
                   <span className="text-base sm:text-lg font-semibold tracking-[0.22em] sm:tracking-[0.24em] text-white">

@@ -85,6 +85,10 @@ const config: Config = {
           750: "#1A1A1A",
         }
       },
+      fontFamily: {
+        serif: ["var(--font-instrument-serif)", "Georgia", "serif"],
+        editorial: ["var(--font-instrument-serif)", "Georgia", "serif"],
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

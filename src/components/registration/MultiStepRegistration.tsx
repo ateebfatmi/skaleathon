@@ -106,6 +106,16 @@ export default function MultiStepRegistration({
   const [leaderName, setLeaderName] = useState('');
   const [leaderEmail, setLeaderEmail] = useState('');
   const [leaderPhone, setLeaderPhone] = useState('');
+  const [leaderEmailTouched, setLeaderEmailTouched] = useState(false);
+  const [leaderPhoneTouched, setLeaderPhoneTouched] = useState(false);
+  const [step2Attempted, setStep2Attempted] = useState(false);
+  const [touchedMemberEmails, setTouchedMemberEmails] = useState<{ [key: number]: boolean }>({});
+  const [touchedMemberPhones, setTouchedMemberPhones] = useState<{ [key: number]: boolean }>({});
+
+  // Email format validator
+  const isValidEmail = (email: string) => {
+    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email.trim());
+  };
 
   // Additional Members (0 to 5)
   const [members, setMembers] = useState<Member[]>([]);
@@ -141,9 +151,22 @@ export default function MultiStepRegistration({
     setMembers(members.filter((_, i) => i !== index));
   };
 
+  const handleLeaderPhoneChange = (val: string) => {
+    // Restrict strictly to digits only, up to 10 digits
+    const cleaned = val.replace(/\D/g, '').slice(0, 10);
+    setLeaderPhone(cleaned);
+  };
+
   const updateMember = (index: number, field: keyof Member, value: string) => {
     const updated = [...members];
-    updated[index][field] = value;
+    if (field === 'phone') {
+      // Restrict strictly to digits only, up to 10 digits
+      updated[index][field] = value.replace(/\D/g, '').slice(0, 10);
+    } else if (field === 'email') {
+      updated[index][field] = value.trim();
+    } else {
+      updated[index][field] = value;
+    }
     setMembers(updated);
   };
 
@@ -168,30 +191,48 @@ export default function MultiStepRegistration({
   // STEP 2 Validation -> Proceed to Step 3 (Review)
   const handleProceedToStep3 = () => {
     setErrorMessage(null);
+    setStep2Attempted(true);
+
     if (!leaderName.trim() || leaderName.length < 2) {
       setErrorMessage('Team Leader name is required.');
       return;
     }
-    if (!leaderEmail.trim() || !leaderEmail.includes('@')) {
-      setErrorMessage('Valid Team Leader email address is required.');
+    if (!leaderEmail.trim() || !isValidEmail(leaderEmail)) {
+      setErrorMessage('Please write the email in the correct format (e.g. name@example.com) for the Team Leader.');
       return;
     }
-    if (!leaderPhone.trim() || leaderPhone.length < 10) {
-      setErrorMessage('Valid 10-digit phone number is required for the Team Leader.');
+    if (!leaderPhone.trim() || leaderPhone.length !== 10) {
+      setErrorMessage('Please enter a valid 10-digit mobile number for the Team Leader.');
       return;
     }
 
     // Validate additional members
     for (let i = 0; i < members.length; i++) {
       const m = members[i];
-      if (!m.name.trim() || !m.email.trim() || !m.email.includes('@')) {
-        setErrorMessage(`Please enter a valid name and email for Member #${i + 2}.`);
+      if (!m.name.trim()) {
+        setErrorMessage(`Please enter a full name for Member #${i + 2}.`);
+        return;
+      }
+      if (!m.email.trim() || !isValidEmail(m.email)) {
+        setErrorMessage(`Please write the email in the correct format (e.g. name@example.com) for Member #${i + 2}.`);
+        return;
+      }
+      if (m.phone && m.phone.length > 0 && m.phone.length !== 10) {
+        setErrorMessage(`Phone number for Member #${i + 2} must be a 10-digit number, or left empty.`);
         return;
       }
       if (m.email.toLowerCase().trim() === leaderEmail.toLowerCase().trim()) {
         setErrorMessage(`Member #${i + 2} cannot have the same email as the Team Leader.`);
         return;
       }
+    }
+
+    // Check for duplicate emails among members
+    const memberEmails = members.map((m) => m.email.toLowerCase().trim());
+    const duplicates = memberEmails.filter((item, index) => memberEmails.indexOf(item) !== index);
+    if (duplicates.length > 0) {
+      setErrorMessage('Each squad member must have a distinct email address.');
+      return;
     }
 
     setStep(3);
