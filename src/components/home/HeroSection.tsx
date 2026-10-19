@@ -72,7 +72,7 @@ export default function HeroSection({ event }: HeroProps) {
             whileHover={{ scale: 1.08, rotate: -3, cursor: 'grab' }}
             whileDrag={{ scale: 1.22, rotate: 6, cursor: 'grabbing', zIndex: 50 }}
             transition={{ type: 'spring', stiffness: 500, damping: 25 }}
-            className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#f5ded3] via-[#e8c5b4] to-[#c19a88] bg-clip-text text-transparent pb-1 inline-block cursor-grab active:cursor-grabbing relative touch-none"
+            className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#f5ded3] via-[#e8c5b4] to-[#c19a88] bg-clip-text text-transparent pl-1 pr-5 sm:pr-8 py-1 -mr-3 sm:-mr-5 inline-block cursor-grab active:cursor-grabbing relative touch-none overflow-visible"
             title="Drag me!"
           >
             2027
