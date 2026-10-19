@@ -18,6 +18,7 @@ import {
   Code2,
   Bell,
   Award,
+  Trophy,
 } from 'lucide-react';
 import {
   SignedIn,
@@ -84,13 +85,13 @@ export default function Navbar() {
     { name: 'Tracks', href: '/tracks' },
     { name: 'Prizes', href: '/prizes' },
     { name: 'Rules', href: '/rules' },
-    { name: 'Leaderboard', href: '/leaderboard' },
     { name: 'FAQ', href: '/faq' },
   ];
 
   const dashboardNavLinks = [
     { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Stages', href: '/dashboard/stages', icon: Layers },
+    { name: 'Leaderboard', href: '/dashboard/leaderboard', icon: Trophy },
     { name: 'My Team', href: '/dashboard/team', icon: Users },
     { name: 'Project Submission', href: '/dashboard/submission', icon: Send },
     { name: 'Track & Specs', href: '/dashboard/track', icon: Code2 },

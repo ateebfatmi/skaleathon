@@ -36,7 +36,7 @@ export default async function CertificatesDashboardPage() {
             Certificates are issued immediately after the organizing committee reviews and publishes final leaderboard scores. Check back once results are officially released.
           </p>
           <Link
-            href="/leaderboard"
+            href="/dashboard/leaderboard"
             className="inline-block rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-6 py-2.5 text-xs font-semibold text-slate-300 transition-colors"
           >
             Check Leaderboard Status
@@ -50,8 +50,8 @@ export default async function CertificatesDashboardPage() {
             Merit certificates are reserved for teams finishing within the Top 25 national rankings. We sincerely thank your team for your dedication, innovative work, and participation in Skaleathon 2027.
           </p>
           <Link
-            href="/leaderboard"
-            className="inline-block rounded-xl bg-brand-600 px-6 py-2.5 text-xs font-bold text-white hover:bg-brand-500 transition-colors"
+            href="/dashboard/leaderboard"
+            className="inline-block rounded-xl bg-[#805948] px-6 py-2.5 text-xs font-bold text-white hover:bg-[#9c6d58] transition-colors"
           >
             View Final Results
           </Link>

@@ -32,7 +32,6 @@ export default function Footer() {
     { label: 'Competition Tracks', href: '/tracks' },
     { label: 'Prize Pool & Perks', href: '/prizes' },
     { label: 'Rules & Guidelines', href: '/rules' },
-    { label: 'Live Leaderboard', href: '/leaderboard' },
     { label: 'Frequently Asked Questions', href: '/faq' },
   ];
 
@@ -121,9 +120,6 @@ export default function Footer() {
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs">
               <Link href="/tracks" className="hover:text-white transition-colors">
                 Tracks
-              </Link>
-              <Link href="/leaderboard" className="hover:text-white transition-colors">
-                Leaderboard
               </Link>
               <Link href="/rules" className="hover:text-white transition-colors">
                 Rules

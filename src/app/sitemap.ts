@@ -10,7 +10,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/prizes',
     '/rules',
     '/faq',
-    '/leaderboard',
     '/privacy',
     '/terms',
     '/refund-policy',
