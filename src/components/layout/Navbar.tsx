@@ -67,6 +67,7 @@ export default function Navbar() {
   }, [mobileMenuOpen]);
 
   const navLinks = [
+    { name: 'Home', href: '/' },
     { name: 'Tracks', href: '/tracks' },
     { name: 'Prizes', href: '/prizes' },
     { name: 'Rules', href: '/rules' },
