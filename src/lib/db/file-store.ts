@@ -80,7 +80,7 @@ const INITIAL_STATE: DatabaseState = {
       slug: 'ai-ml',
       description:
         'Leverage LLMs, predictive intelligence, neural architectures, and agentic workflows to build impactful real-world solutions.',
-      color_accent: '#8b5cf6',
+      color_accent: '#c19a88',
       is_active: true,
       created_at: new Date().toISOString(),
     },
@@ -91,7 +91,7 @@ const INITIAL_STATE: DatabaseState = {
       slug: 'web-dev',
       description:
         'Engineer scalable, resilient, high-performance web platforms and digital infrastructure for modern enterprises.',
-      color_accent: '#06b6d4',
+      color_accent: '#e8c5b4',
       is_active: true,
       created_at: new Date().toISOString(),
     },
@@ -102,7 +102,7 @@ const INITIAL_STATE: DatabaseState = {
       slug: 'app-dev',
       description:
         'Design sleek, responsive mobile and cross-platform native experiences solving concrete user and business challenges.',
-      color_accent: '#6366f1',
+      color_accent: '#d9ab97',
       is_active: true,
       created_at: new Date().toISOString(),
     },

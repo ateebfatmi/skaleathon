@@ -71,9 +71,17 @@ export default function TrackScrollJourney({
   track,
   team,
   trackMeta,
-  accentColor,
+  accentColor: rawAccent,
 }: TrackScrollJourneyProps) {
   const [activeSection, setActiveSection] = useState<'vectors' | 'stack' | 'deliverables' | 'rubric'>('vectors');
+
+  // Normalize color to SkaleKraft warm copper / champagne palette to avoid odd purple tint
+  const isOddColor =
+    !rawAccent ||
+    rawAccent.toLowerCase().startsWith('#8b') ||
+    rawAccent.toLowerCase().startsWith('#63') ||
+    rawAccent.toLowerCase().includes('purple');
+  const accentColor = isOddColor ? '#c19a88' : rawAccent;
 
   return (
     <div className="space-y-12 sm:space-y-16 pb-24 text-neutral-200">

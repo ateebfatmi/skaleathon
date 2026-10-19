@@ -165,7 +165,14 @@ export default async function DashboardTrackPage() {
     ? TRACK_METAS[track.id] || TRACK_METAS['track-ai-ml']
     : null;
 
-  const accentColor = track?.color_accent || '#c19a88';
+  // Ensure we strictly use the luxury SkaleKraft copper/champagne palette and avoid odd purple colors
+  const rawColor = track?.color_accent;
+  const isOddColor =
+    !rawColor ||
+    rawColor.toLowerCase().startsWith('#8b') ||
+    rawColor.toLowerCase().startsWith('#63') ||
+    rawColor.toLowerCase().includes('purple');
+  const accentColor = isOddColor ? '#c19a88' : rawColor;
 
   if (!track) {
     return (
