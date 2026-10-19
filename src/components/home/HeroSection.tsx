@@ -6,6 +6,7 @@ import { Sparkles, ArrowRight, ShieldCheck, Terminal, Award } from 'lucide-react
 import { EventData } from '@/lib/db/types';
 import GlassmorphismCta from '@/components/ui/glassmorphism-cta';
 import { motion } from 'framer-motion';
+import InteractiveTerminal from '@/components/home/InteractiveTerminal';
 
 interface HeroProps {
   event: EventData;
@@ -142,6 +143,16 @@ export default function HeroSection({ event }: HeroProps) {
             <Terminal className="h-4 w-4 text-[#c19a88]" />
             <span>Team Size: 1 to 6 Innovators</span>
           </div>
+        </motion.div>
+
+        {/* Live Interactive Hacker CLI & Telemetry Playground */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.7 }}
+          className="mt-12"
+        >
+          <InteractiveTerminal />
         </motion.div>
       </div>
     </section>

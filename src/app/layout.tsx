@@ -7,6 +7,7 @@ import { dark } from '@clerk/themes';
 import { FluidParticlesBackground } from '@/components/ui/fluid-particles-background';
 import PremiumCursor from '@/components/layout/PremiumCursor';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
+import AudioToggle from '@/components/layout/AudioToggle';
 
 export const metadata: Metadata = {
   title: 'Skaleathon 2027 — National Online Hackathon | SkaleKraft',
@@ -96,6 +97,7 @@ export default function RootLayout({
           <Navbar />
           <main className="relative z-10 flex-1">{children}</main>
           <Footer />
+          <AudioToggle />
         </body>
       </html>
     </ClerkProvider>

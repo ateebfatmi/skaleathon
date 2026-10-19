@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Target, Zap, Globe2, ShieldCheck, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { SpotlightCard } from '@/components/ui/spotlight-card';
 
 export default function AboutSection() {
   const highlights = [
@@ -94,22 +95,27 @@ export default function AboutSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.15 }}
                   transition={{ duration: 0.5, delay: i * 0.08 }}
-                  className="rounded-[20px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.94))] p-6 hover:border-[#c19a88]/30 hover:bg-white/[0.02] transition-all group"
+                  className="h-full"
                 >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="p-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88] shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
-                      <Icon className="h-4 w-4" strokeWidth={1.8} />
+                  <SpotlightCard
+                    spotlightColor="rgba(193, 154, 136, 0.12)"
+                    className="h-full p-6 hover:border-[#c19a88]/30 group"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="p-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88] shadow-[0_4px_16px_rgba(0,0,0,0.3)] group-hover:scale-105 transition-transform">
+                        <Icon className="h-4 w-4" strokeWidth={1.8} />
+                      </div>
+                      <span className="font-mono text-[9px] tracking-[0.2em] text-white/25">
+                        {item.number}
+                      </span>
                     </div>
-                    <span className="font-mono text-[9px] tracking-[0.2em] text-white/25">
-                      {item.number}
-                    </span>
-                  </div>
-                  <h3 className="text-sm font-semibold tracking-wide text-white mb-2 group-hover:text-[#c19a88] transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs text-white/45 leading-relaxed font-light">
-                    {item.desc}
-                  </p>
+                    <h3 className="text-sm font-semibold tracking-wide text-white mb-2 group-hover:text-[#c19a88] transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs text-white/45 leading-relaxed font-light">
+                      {item.desc}
+                    </p>
+                  </SpotlightCard>
                 </motion.div>
               );
             })}

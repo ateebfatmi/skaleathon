@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Bot, Globe, Smartphone, ArrowRight } from 'lucide-react';
 import { EventTrack } from '@/lib/db/types';
 import { motion } from 'framer-motion';
+import { SpotlightCard } from '@/components/ui/spotlight-card';
 
 interface TracksProps {
   tracks: EventTrack[];
@@ -52,6 +53,13 @@ export default function TracksSection({ tracks }: TracksProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {tracks.map((track, idx) => {
             const Icon = iconMap[track.id] || Bot;
+            const techStacks: Record<string, string[]> = {
+              'track-ai-ml': ['PyTorch', 'LLMs & Agents', 'Transformers', 'FastAPI'],
+              'track-web-dev': ['Next.js 14', 'TypeScript', 'WebSockets', 'Supabase'],
+              'track-app-dev': ['Flutter', 'React Native', 'Offline-First', 'On-Device ML'],
+            };
+            const currentStack = techStacks[track.id] || ['Full-Stack', 'APIs', 'Cloud'];
+
             return (
               <motion.div
                 key={track.id}
@@ -59,36 +67,55 @@ export default function TracksSection({ tracks }: TracksProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="relative flex flex-col justify-between rounded-[24px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.035),rgba(14,14,14,0.95))] p-7 sm:p-8 hover:border-[#c19a88]/40 shadow-[0_20px_50px_rgba(0,0,0,0.4)] transition-all duration-300 group"
+                className="h-full"
               >
-                <div>
-                  <div className="flex items-center justify-between mb-7">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88] shadow-[0_4px_20px_rgba(0,0,0,0.3)] group-hover:scale-105 transition-transform">
-                      <Icon className="h-6 w-6" strokeWidth={1.7} />
+                <SpotlightCard
+                  enableTilt
+                  spotlightColor={idx === 0 ? 'rgba(52,211,153,0.12)' : idx === 1 ? 'rgba(56,189,248,0.12)' : 'rgba(251,191,36,0.12)'}
+                  className="h-full flex flex-col justify-between group hover:border-[#c19a88]/50 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-7">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88] shadow-[0_4px_20px_rgba(0,0,0,0.3)] group-hover:scale-110 group-hover:text-white transition-all">
+                        <Icon className="h-6 w-6" strokeWidth={1.7} />
+                      </div>
+                      <span className="font-mono text-xs tracking-[0.2em] text-[#c19a88]/70 uppercase px-2 py-0.5 rounded-full border border-white/5 bg-white/[0.02]">
+                        0{idx + 1}
+                      </span>
                     </div>
-                    <span className="font-mono text-xs tracking-[0.2em] text-[#c19a88]/70 uppercase">
-                      0{idx + 1}
-                    </span>
+
+                    <h3 className="text-xl font-medium tracking-tight text-white mb-3 group-hover:text-[#c19a88] transition-colors">
+                      {track.name}
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-white/50 leading-relaxed font-light mb-6">
+                      {track.description}
+                    </p>
+
+                    {/* Tech Pills */}
+                    <div className="flex flex-wrap gap-1.5 mb-6">
+                      {currentStack.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-2.5 py-0.5 rounded-md text-[10px] font-mono border border-white/[0.08] bg-white/[0.03] text-white/60 group-hover:border-white/15 group-hover:text-white/80 transition-colors"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
                   </div>
 
-                  <h3 className="text-xl font-medium tracking-tight text-white mb-3 group-hover:text-[#c19a88] transition-colors">
-                    {track.name}
-                  </h3>
-
-                  <p className="text-xs sm:text-sm text-white/50 leading-relaxed font-light">
-                    {track.description}
-                  </p>
-                </div>
-
-                <div className="mt-8 pt-6 border-t border-white/[0.07] flex items-center justify-between">
-                  <Link
-                    href={`/register?track=${track.id}`}
-                    className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#c19a88] hover:text-white transition-colors"
-                  >
-                    <span>Register Track</span>
-                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </div>
+                  <div className="mt-auto pt-6 border-t border-white/[0.07] flex items-center justify-between">
+                    <Link
+                      href={`/register?track=${track.id}`}
+                      className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#c19a88] hover:text-white transition-colors"
+                    >
+                      <span>Register Track</span>
+                      <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1.5 transition-transform" />
+                    </Link>
+                    <span className="text-[10px] font-mono text-white/30">₹99 / Team</span>
+                  </div>
+                </SpotlightCard>
               </motion.div>
             );
           })}

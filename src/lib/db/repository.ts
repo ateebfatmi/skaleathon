@@ -1,4 +1,5 @@
 import { FileStore } from './file-store';
+import { SupabaseStore } from './supabase-store';
 import {
   EventData,
   EventTrack,
@@ -23,8 +24,20 @@ import {
 export class EventRepository {
   private static store = FileStore.getInstance();
 
+  private static isSupabaseEnabled(): boolean {
+    return !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
+  }
+
   // --- EVENTS ---
   static async getEvent(eventId: string = 'skaleathon-2027'): Promise<EventData> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const ev = await SupabaseStore.getEvent(eventId);
+        if (ev) return ev;
+      } catch (err) {
+        console.warn('SupabaseStore.getEvent error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     const event = state.events.find((e) => e.id === eventId);
     if (!event) {
@@ -38,6 +51,13 @@ export class EventRepository {
     actorId: string,
     eventId: string = 'skaleathon-2027'
   ): Promise<EventData> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        return await SupabaseStore.updateEvent(updates, actorId, eventId);
+      } catch (err) {
+        console.warn('SupabaseStore.updateEvent error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     const index = state.events.findIndex((e) => e.id === eventId);
     if (index === -1) throw new Error(`Event not found: ${eventId}`);
@@ -74,22 +94,54 @@ export class EventRepository {
 
   // --- TRACKS ---
   static async getTracks(eventId: string = 'skaleathon-2027'): Promise<EventTrack[]> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const tracks = await SupabaseStore.getTracks(eventId);
+        if (tracks.length > 0) return tracks;
+      } catch (err) {
+        console.warn('SupabaseStore.getTracks error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     return state.tracks.filter((t) => t.event_id === eventId && t.is_active);
   }
 
   static async getTrack(trackId: string): Promise<EventTrack | null> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const track = await SupabaseStore.getTrack(trackId);
+        if (track) return track;
+      } catch (err) {
+        console.warn('SupabaseStore.getTrack error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     return state.tracks.find((t) => t.id === trackId) || null;
   }
 
   // --- PROFILES ---
   static async getProfile(userId: string): Promise<Profile | null> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const profile = await SupabaseStore.getProfile(userId);
+        if (profile) return profile;
+      } catch (err) {
+        console.warn('SupabaseStore.getProfile error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     return state.profiles.find((p) => p.id === userId) || null;
   }
 
   static async getProfileByEmail(email: string): Promise<Profile | null> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const profile = await SupabaseStore.getProfileByEmail(email);
+        if (profile) return profile;
+      } catch (err) {
+        console.warn('SupabaseStore.getProfileByEmail error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     return state.profiles.find((p) => p.email.toLowerCase() === email.toLowerCase()) || null;
   }
@@ -104,6 +156,14 @@ export class EventRepository {
     state?: string | null;
     role?: Profile['role'];
   }): Promise<Profile> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const profile = await SupabaseStore.upsertProfile(data);
+        return profile;
+      } catch (err) {
+        console.warn('SupabaseStore.upsertProfile error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     const existingIndex = state.profiles.findIndex(
       (p) => p.id === data.id || p.email.toLowerCase() === data.email.toLowerCase()
@@ -141,6 +201,13 @@ export class EventRepository {
 
   // --- TEAMS & MEMBERS ---
   static async checkDuplicateMembership(email: string, excludeTeamId?: string): Promise<boolean> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        return await SupabaseStore.checkDuplicateMembership(email, excludeTeamId);
+      } catch (err) {
+        console.warn('SupabaseStore.checkDuplicateMembership error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     const cleanEmail = email.toLowerCase().trim();
     return state.teamMembers.some((m) => {
@@ -162,6 +229,14 @@ export class EventRepository {
     state?: string | null;
     members: Array<{ name: string; email: string; phone?: string | null; college_or_org?: string | null }>;
   }): Promise<{ team: Team; members: TeamMember[] }> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const res = await SupabaseStore.createTeam(params);
+        return res;
+      } catch (err) {
+        console.warn('SupabaseStore.createTeam error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     const event = await this.getEvent();
 
@@ -264,16 +339,40 @@ export class EventRepository {
   }
 
   static async getTeam(teamId: string): Promise<Team | null> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const team = await SupabaseStore.getTeam(teamId);
+        if (team) return team;
+      } catch (err) {
+        console.warn('SupabaseStore.getTeam error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     return state.teams.find((t) => t.id === teamId) || null;
   }
 
   static async getTeamByLeader(leaderId: string): Promise<Team | null> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const team = await SupabaseStore.getTeamByLeader(leaderId);
+        if (team) return team;
+      } catch (err) {
+        console.warn('SupabaseStore.getTeamByLeader error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     return state.teams.find((t) => t.leader_id === leaderId) || null;
   }
 
   static async getTeamByMemberEmail(email: string): Promise<Team | null> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const team = await SupabaseStore.getTeamByMemberEmail(email);
+        if (team) return team;
+      } catch (err) {
+        console.warn('SupabaseStore.getTeamByMemberEmail error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     const member = state.teamMembers.find((m) => m.email.toLowerCase() === email.toLowerCase());
     if (!member) return null;
@@ -281,6 +380,14 @@ export class EventRepository {
   }
 
   static async getTeamMembers(teamId: string): Promise<TeamMember[]> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const team = await SupabaseStore.getTeam(teamId);
+        if (team?.members && team.members.length > 0) return team.members;
+      } catch (err) {
+        console.warn('SupabaseStore.getTeamMembers error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     return state.teamMembers.filter((m) => m.team_id === teamId);
   }
@@ -288,6 +395,28 @@ export class EventRepository {
   static async listTeams(filters?: { status?: Team['status']; trackId?: string; search?: string }): Promise<
     Array<Team & { members: TeamMember[]; paymentOrder?: PaymentOrder | null }>
   > {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const teams = await SupabaseStore.getTeams();
+        if (teams.length > 0) {
+          let filtered = teams;
+          if (filters?.status) filtered = filtered.filter((t) => t.status === filters.status);
+          if (filters?.trackId) filtered = filtered.filter((t) => t.track_id === filters.trackId);
+          if (filters?.search) {
+            const q = filters.search.toLowerCase();
+            filtered = filtered.filter(
+              (t) =>
+                t.name.toLowerCase().includes(q) ||
+                t.college_or_org?.toLowerCase().includes(q) ||
+                t.city?.toLowerCase().includes(q)
+            );
+          }
+          return filtered;
+        }
+      } catch (err) {
+        console.warn('SupabaseStore.getTeams error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     let teams = [...state.teams];
 
@@ -321,6 +450,19 @@ export class EventRepository {
     amountInr: number;
     orderId: string;
   }): Promise<PaymentOrder> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        return await SupabaseStore.createPaymentOrder({
+          id: params.orderId,
+          team_id: params.teamId,
+          amount_inr: params.amountInr,
+          currency: 'INR',
+          status: 'created',
+        });
+      } catch (err) {
+        console.warn('SupabaseStore.createPaymentOrder error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     const existing = state.paymentOrders.find((p) => p.team_id === params.teamId && p.status === 'paid');
     if (existing) {
@@ -343,6 +485,14 @@ export class EventRepository {
   }
 
   static async getPaymentOrder(orderId: string): Promise<PaymentOrder | null> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const order = await SupabaseStore.getPaymentOrder(orderId);
+        if (order) return order;
+      } catch (err) {
+        console.warn('SupabaseStore.getPaymentOrder error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     return state.paymentOrders.find((p) => p.id === orderId) || null;
   }
@@ -357,6 +507,21 @@ export class EventRepository {
     paymentId: string;
     signature: string;
   }): Promise<PaymentOrder> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const order = await SupabaseStore.updatePaymentOrder(params.orderId, {
+          status: 'paid',
+          razorpay_payment_id: params.paymentId,
+          razorpay_signature: params.signature,
+        });
+        if (order?.team_id) {
+          await SupabaseStore.updateTeamStatus(order.team_id, 'paid', order.team_id);
+        }
+        return order;
+      } catch (err) {
+        console.warn('SupabaseStore.completePaymentOrder error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     const orderIndex = state.paymentOrders.findIndex((p) => p.id === params.orderId);
     if (orderIndex === -1) {
@@ -435,11 +600,27 @@ export class EventRepository {
 
   // --- SUBMISSIONS ---
   static async getSubmissionByTeam(teamId: string): Promise<Submission | null> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const sub = await SupabaseStore.getSubmissionByTeam(teamId);
+        if (sub) return sub;
+      } catch (err) {
+        console.warn('SupabaseStore.getSubmissionByTeam error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     return state.submissions.find((s) => s.team_id === teamId) || null;
   }
 
   static async getSubmission(submissionId: string): Promise<Submission | null> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const sub = await SupabaseStore.getSubmission(submissionId);
+        if (sub) return sub;
+      } catch (err) {
+        console.warn('SupabaseStore.getSubmission error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     return state.submissions.find((s) => s.id === submissionId) || null;
   }
@@ -464,6 +645,32 @@ export class EventRepository {
     },
     userId: string
   ): Promise<Submission> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const sub = await SupabaseStore.createSubmission(
+          {
+            team_id: teamId,
+            track_id: data.track_id,
+            title: data.title,
+            problem_statement: data.problem_statement,
+            description: data.description,
+            solution_overview: data.solution_overview,
+            tech_stack: data.tech_stack,
+            github_url: data.github_url,
+            live_demo_url: data.live_demo_url,
+            demo_video_url: data.demo_video_url,
+            presentation_url: data.presentation_url,
+            member_contributions: data.member_contributions,
+            ai_tool_disclosure: data.ai_tool_disclosure,
+            status: data.isDraft ? 'draft' : 'submitted',
+          },
+          userId
+        );
+        return sub;
+      } catch (err) {
+        console.warn('SupabaseStore.createSubmission error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     const team = state.teams.find((t) => t.id === teamId);
     if (!team) throw new Error('Team not found');
@@ -557,6 +764,14 @@ export class EventRepository {
 
   // --- JUDGING & CRITERIA ---
   static async getJudgingCriteria(): Promise<JudgingCriterion[]> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const criteria = await SupabaseStore.getJudgingCriteria();
+        if (criteria.length > 0) return criteria;
+      } catch (err) {
+        console.warn('SupabaseStore.getJudgingCriteria error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     return [...state.judgingCriteria].sort((a, b) => a.sort_order - b.sort_order);
   }
@@ -565,6 +780,13 @@ export class EventRepository {
     criteria: JudgingCriterion[],
     actorId: string
   ): Promise<JudgingCriterion[]> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        return await SupabaseStore.updateJudgingCriteria(criteria, actorId);
+      } catch (err) {
+        console.warn('SupabaseStore.updateJudgingCriteria error, using fallback:', err);
+      }
+    }
     const totalWeight = criteria.reduce((sum, c) => sum + c.weight_percentage, 0);
     if (totalWeight !== 100) {
       throw new Error(`Total criteria weights must equal 100% (currently ${totalWeight}%).`);
@@ -585,6 +807,14 @@ export class EventRepository {
   }
 
   static async getJudges(): Promise<Judge[]> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const judges = await SupabaseStore.getJudges();
+        if (judges.length > 0) return judges;
+      } catch (err) {
+        console.warn('SupabaseStore.getJudges error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     return state.judges.map((j) => {
       const profile = state.profiles.find((p) => p.id === j.id);
@@ -758,6 +988,15 @@ export class EventRepository {
   }
 
   static async publishLeaderboard(actorId: string): Promise<LeaderboardResult[]> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        await SupabaseStore.publishLeaderboard('skaleathon-2027', actorId);
+        const res = await SupabaseStore.getLeaderboard('skaleathon-2027', true);
+        if (res.length > 0) return res;
+      } catch (err) {
+        console.warn('SupabaseStore.publishLeaderboard error, using fallback:', err);
+      }
+    }
     const results = await this.calculateAndPreviewLeaderboard();
     const state = this.store.getState();
     const now = new Date().toISOString();
@@ -825,6 +1064,14 @@ export class EventRepository {
   }
 
   static async getPublicLeaderboard(): Promise<LeaderboardResult[]> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const res = await SupabaseStore.getLeaderboard('skaleathon-2027', true);
+        if (res.length > 0) return res;
+      } catch (err) {
+        console.warn('SupabaseStore.getLeaderboard error, using fallback:', err);
+      }
+    }
     const state = this.store.getState();
     return state.leaderboardResults
       .filter((r) => r.is_published)

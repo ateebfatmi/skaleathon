@@ -1,10 +1,12 @@
 'use client';
 
 import React from 'react';
-import { Trophy, Award, Briefcase } from 'lucide-react';
+import { Trophy, Award, Briefcase, Sparkles, CheckCircle2 } from 'lucide-react';
 import { formatINR } from '@/lib/utils';
 import { EventData } from '@/lib/db/types';
 import { motion } from 'framer-motion';
+import { SpotlightCard } from '@/components/ui/spotlight-card';
+import CertificatePreviewModal from '@/components/home/CertificatePreviewModal';
 
 interface PrizesProps {
   event: EventData;
@@ -18,7 +20,7 @@ export default function PrizesSection({ event }: PrizesProps) {
       subtitle: 'Runner-Up Winner',
       badge: 'Silver Rank',
       order: 'order-2 md:order-1',
-      cardStyle: 'border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.025),rgba(14,14,14,0.95))]',
+      spotlight: 'rgba(203, 213, 225, 0.14)',
       amountClass: 'bg-gradient-to-br from-white via-slate-200 to-slate-400',
     },
     {
@@ -27,7 +29,7 @@ export default function PrizesSection({ event }: PrizesProps) {
       subtitle: 'National Champion',
       badge: 'Grand Winner',
       order: 'order-1 md:order-2',
-      cardStyle: 'border-[#c19a88]/60 bg-[linear-gradient(145deg,rgba(193,154,136,0.08),rgba(17,14,13,0.96))] shadow-[0_25px_70px_rgba(128,89,72,0.28)] md:-translate-y-3 z-10',
+      spotlight: 'rgba(232, 197, 180, 0.25)',
       amountClass: 'bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948]',
       isGrand: true,
     },
@@ -37,7 +39,7 @@ export default function PrizesSection({ event }: PrizesProps) {
       subtitle: 'Second Runner-Up',
       badge: 'Bronze Rank',
       order: 'order-3',
-      cardStyle: 'border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.025),rgba(14,14,14,0.95))]',
+      spotlight: 'rgba(193, 154, 136, 0.14)',
       amountClass: 'bg-gradient-to-br from-white via-[#f2d9ce] to-[#805948]',
     },
   ];
@@ -83,32 +85,54 @@ export default function PrizesSection({ event }: PrizesProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className={`rounded-[24px] border p-8 flex flex-col justify-between transition-all duration-300 ${prize.cardStyle} ${prize.order}`}
+              className={`h-full ${prize.order} ${prize.isGrand ? 'md:-translate-y-4 z-10' : ''}`}
             >
-              <div>
-                <div className="flex items-center justify-between mb-5">
-                  <span className="text-[9px] font-mono uppercase tracking-[0.18em] px-2.5 py-1 rounded-full border border-white/10 bg-white/[0.04] text-[#c19a88]">
-                    {prize.badge}
-                  </span>
-                  {prize.isGrand && (
-                    <Trophy className="h-5 w-5 text-[#c19a88]" strokeWidth={1.8} />
-                  )}
+              <SpotlightCard
+                enableTilt
+                spotlightColor={prize.spotlight}
+                className={`h-full flex flex-col justify-between transition-all duration-300 relative ${
+                  prize.isGrand
+                    ? 'border-[#c19a88]/70 bg-[linear-gradient(145deg,rgba(193,154,136,0.1),rgba(17,14,13,0.98))] shadow-[0_30px_90px_rgba(128,89,72,0.35)]'
+                    : 'border-white/[0.08] shadow-[0_20px_50px_rgba(0,0,0,0.5)]'
+                }`}
+              >
+                {prize.isGrand && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4] text-[10px] font-bold text-black uppercase tracking-widest shadow-md flex items-center gap-1">
+                    <Sparkles className="h-3 w-3" />
+                    <span>Grand Champion</span>
+                  </div>
+                )}
+
+                <div>
+                  <div className="flex items-center justify-between mb-5">
+                    <span className="text-[9px] font-mono uppercase tracking-[0.18em] px-2.5 py-1 rounded-full border border-white/10 bg-white/[0.04] text-[#c19a88]">
+                      {prize.badge}
+                    </span>
+                    {prize.isGrand ? (
+                      <div className="p-2 rounded-xl bg-[#c19a88]/20 border border-[#c19a88]/40 text-[#c19a88] shadow-[0_0_15px_rgba(193,154,136,0.4)]">
+                        <Trophy className="h-5 w-5 text-[#e8c5b4]" strokeWidth={2} />
+                      </div>
+                    ) : (
+                      <Trophy className="h-4 w-4 text-white/30" strokeWidth={1.8} />
+                    )}
+                  </div>
+
+                  <div className="text-xs uppercase tracking-[0.14em] text-white/45 font-medium">
+                    {prize.place}
+                  </div>
+                  <div
+                    className={`text-3xl sm:text-4xl font-mono font-bold tracking-tight my-2.5 bg-clip-text text-transparent ${prize.amountClass}`}
+                  >
+                    {prize.amount}
+                  </div>
+                  <p className="text-xs text-white/60 font-light">{prize.subtitle}</p>
                 </div>
 
-                <div className="text-xs uppercase tracking-[0.14em] text-white/45 font-medium">
-                  {prize.place}
+                <div className="mt-7 pt-4 border-t border-white/[0.08] flex items-center justify-between text-[11px] text-white/40 font-light">
+                  <span>Official Cash Grant</span>
+                  <span className="text-[#c19a88] font-mono text-[10px]">+ Certificate</span>
                 </div>
-                <div
-                  className={`text-3xl sm:text-4xl font-mono font-bold tracking-tight my-2.5 bg-clip-text text-transparent ${prize.amountClass}`}
-                >
-                  {prize.amount}
-                </div>
-                <p className="text-xs text-white/60 font-light">{prize.subtitle}</p>
-              </div>
-
-              <div className="mt-7 pt-4 border-t border-white/[0.08] text-[11px] text-white/40 font-light">
-                Official Cash Grant + Certificate of Excellence
-              </div>
+              </SpotlightCard>
             </motion.div>
           ))}
         </div>
@@ -121,19 +145,34 @@ export default function PrizesSection({ event }: PrizesProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.5 }}
-            className="rounded-[22px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-6 sm:p-7 flex items-start gap-4"
+            className="h-full"
           >
-            <div className="p-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88] shrink-0">
-              <Award className="h-5 w-5" strokeWidth={1.8} />
-            </div>
-            <div>
-              <h3 className="text-sm sm:text-base font-semibold tracking-wide text-white">
-                Top 25 Teams — Merit Credentials
-              </h3>
-              <p className="mt-1 text-xs text-white/50 leading-relaxed font-light">
-                All confirmed members of top 25 teams receive an official, cryptographically verifiable digital certificate with live QR verification.
-              </p>
-            </div>
+            <SpotlightCard
+              spotlightColor="rgba(193,154,136,0.18)"
+              className="h-full flex flex-col justify-between"
+            >
+              <div className="flex items-start gap-4">
+                <div className="p-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88] shrink-0">
+                  <Award className="h-5 w-5" strokeWidth={1.8} />
+                </div>
+                <div>
+                  <h3 className="text-sm sm:text-base font-semibold tracking-wide text-white">
+                    Top 25 Teams — Merit Credentials
+                  </h3>
+                  <p className="mt-1 text-xs text-white/50 leading-relaxed font-light">
+                    All confirmed members of top 25 teams receive an official, cryptographically verifiable digital certificate with live QR verification.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-white/[0.08] flex items-center justify-between">
+                <CertificatePreviewModal />
+                <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1">
+                  <CheckCircle2 className="h-3 w-3" />
+                  <span>Tamper-Proof</span>
+                </span>
+              </div>
+            </SpotlightCard>
           </motion.div>
 
           {/* Internship Opportunity */}
@@ -142,19 +181,33 @@ export default function PrizesSection({ event }: PrizesProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="rounded-[22px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-6 sm:p-7 flex items-start gap-4"
+            className="h-full"
           >
-            <div className="p-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88] shrink-0">
-              <Briefcase className="h-5 w-5" strokeWidth={1.8} />
-            </div>
-            <div>
-              <h3 className="text-sm sm:text-base font-semibold tracking-wide text-white">
-                SkaleKraft Studio Internship Gateway
-              </h3>
-              <p className="mt-1 text-xs text-white/50 leading-relaxed font-light">
-                High-performing builders from top 5 teams receive direct fast-track interviews for paid software engineering and AI internships at SkaleKraft.
-              </p>
-            </div>
+            <SpotlightCard
+              spotlightColor="rgba(193,154,136,0.18)"
+              className="h-full flex flex-col justify-between"
+            >
+              <div className="flex items-start gap-4">
+                <div className="p-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88] shrink-0">
+                  <Briefcase className="h-5 w-5" strokeWidth={1.8} />
+                </div>
+                <div>
+                  <h3 className="text-sm sm:text-base font-semibold tracking-wide text-white">
+                    SkaleKraft Studio Internship Gateway
+                  </h3>
+                  <p className="mt-1 text-xs text-white/50 leading-relaxed font-light">
+                    High-performing builders from top 5 teams receive direct fast-track interviews for paid software engineering and AI internships at SkaleKraft.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-white/[0.08] flex items-center justify-between">
+                <span className="text-[10px] text-white/40 italic">
+                  *Disclaimer: Non-guarantee interview evaluation
+                </span>
+                <span className="text-[10px] font-mono text-[#c19a88]">Top 5 Teams</span>
+              </div>
+            </SpotlightCard>
           </motion.div>
         </div>
       </div>

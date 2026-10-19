@@ -5,12 +5,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { Menu, X, User, ArrowRight, Sparkles } from 'lucide-react';
+import { Menu, X, User, ArrowRight, Sparkles, LayoutDashboard } from 'lucide-react';
 import {
   SignedIn,
   SignedOut,
   SignInButton,
   UserButton,
+  useUser,
 } from '@clerk/nextjs';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 
@@ -19,6 +20,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const { user } = useUser();
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -165,16 +167,55 @@ export default function Navbar() {
               {mounted ? (
                 <>
                   <SignedIn>
-                    <div className="flex items-center space-x-3">
-                      <Link
-                        href="/dashboard"
-                        className="group flex items-center space-x-1.5 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs font-medium text-neutral-300 hover:border-[#c19a88]/40 hover:bg-white/[0.07] hover:text-white transition-all shadow-sm"
-                      >
-                        <User className="h-3.5 w-3.5 text-[#c19a88] group-hover:scale-110 transition-transform" />
-                        <span>Dashboard</span>
-                      </Link>
-                      <div className="p-0.5 rounded-full ring-1 ring-[#c19a88]/50 shadow-[0_0_15px_rgba(193,154,136,0.25)] hover:ring-[#c19a88] transition-all">
-                        <UserButton afterSignOutUrl="/" />
+                    <div className="flex items-center gap-3">
+                      {/* Luxury Account Capsule */}
+                      <div className="group flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.03] p-1.5 pr-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_4px_20px_rgba(0,0,0,0.35)] backdrop-blur-2xl transition-all duration-300 hover:border-[#c19a88]/40 hover:bg-white/[0.06] hover:shadow-[0_0_25px_rgba(193,154,136,0.2)]">
+                        
+                        {/* Avatar with Copper Ring & Status Indicator */}
+                        <div className="relative flex items-center shrink-0">
+                          <UserButton
+                            afterSignOutUrl="/"
+                            appearance={{
+                              elements: {
+                                avatarBox:
+                                  "h-8 w-8 rounded-full ring-2 ring-[#c19a88]/60 transition-all duration-300 hover:ring-[#c19a88] shadow-[0_0_14px_rgba(193,154,136,0.35)] hover:scale-105",
+                                userButtonTrigger: "focus:outline-none focus:ring-0",
+                                userButtonPopoverCard:
+                                  "border border-white/10 shadow-2xl backdrop-blur-2xl bg-[#0F0F0F]/95 rounded-2xl p-1",
+                                userButtonPopoverActionButton:
+                                  "hover:bg-white/[0.06] text-neutral-300 hover:text-white transition-colors rounded-xl",
+                                userButtonPopoverActionButtonText: "text-xs font-medium",
+                                userButtonPopoverFooter: "hidden",
+                              },
+                            }}
+                          />
+                          <span className="pointer-events-none absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-[#0B0B0B] shadow-[0_0_6px_#10b981]" />
+                        </div>
+
+                        {/* User Identity Info */}
+                        <Link href="/dashboard" className="flex flex-col text-left group/text">
+                          <span className="text-xs font-semibold text-white/90 group-hover/text:text-[#c19a88] transition-colors max-w-[110px] truncate leading-tight">
+                            {user?.firstName || user?.fullName || 'Innovator'}
+                          </span>
+                          <span className="text-[9px] uppercase tracking-[0.22em] text-[#c19a88] font-bold leading-none mt-0.5">
+                            Participant
+                          </span>
+                        </Link>
+
+                        {/* Micro Glass Divider */}
+                        <span className="h-4 w-[1px] bg-white/10 ml-0.5" />
+
+                        {/* Dashboard Action Link */}
+                        <Link
+                          href="/dashboard"
+                          className="flex items-center gap-1.5 text-xs font-medium text-neutral-300 hover:text-white transition-colors py-0.5 group/dash"
+                          title="Open Participant Dashboard"
+                        >
+                          <LayoutDashboard className="h-3.5 w-3.5 text-[#c19a88] transition-transform duration-300 group-hover/dash:scale-110" />
+                          <span className="hidden lg:inline text-neutral-400 group-hover/dash:text-white transition-colors font-medium">
+                            Dashboard
+                          </span>
+                        </Link>
                       </div>
                     </div>
                   </SignedIn>
@@ -266,16 +307,40 @@ export default function Navbar() {
                 {mounted ? (
                   <>
                     <SignedIn>
-                      <div className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/10">
-                        <span className="text-xs text-neutral-400 font-medium">Signed In Account</span>
-                        <UserButton afterSignOutUrl="/" />
+                      <div className="flex items-center justify-between p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 shadow-sm">
+                        <div className="flex items-center gap-3">
+                          <div className="relative">
+                            <UserButton
+                              afterSignOutUrl="/"
+                              appearance={{
+                                elements: {
+                                  avatarBox:
+                                    "h-9 w-9 rounded-full ring-2 ring-[#c19a88]/60 shadow-[0_0_12px_rgba(193,154,136,0.3)]",
+                                },
+                              }}
+                            />
+                            <span className="pointer-events-none absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-[#0B0B0B]" />
+                          </div>
+                          <div className="flex flex-col text-left">
+                            <span className="text-sm font-semibold text-white">
+                              {user?.fullName || user?.firstName || 'Participant'}
+                            </span>
+                            <span className="text-[10px] text-neutral-400 truncate max-w-[170px]">
+                              {user?.primaryEmailAddress?.emailAddress || 'Skaleathon Innovator'}
+                            </span>
+                          </div>
+                        </div>
+                        <span className="text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-md border border-[#c19a88]/30 bg-[#c19a88]/10 text-[#c19a88] font-bold">
+                          Active
+                        </span>
                       </div>
                       <Link
                         href="/dashboard"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="block rounded-xl bg-white/[0.06] border border-white/10 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-white/[0.1] transition-colors"
+                        className="flex items-center justify-center gap-2 rounded-xl bg-white/[0.06] border border-white/10 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-white/[0.1] transition-colors"
                       >
-                        Go to Dashboard
+                        <LayoutDashboard className="h-4 w-4 text-[#c19a88]" />
+                        <span>Go to Dashboard</span>
                       </Link>
                     </SignedIn>
 
