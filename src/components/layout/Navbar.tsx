@@ -134,7 +134,11 @@ export default function Navbar() {
           
           {/* Logo & Brand Cluster */}
           <div className="flex items-center gap-3 shrink-0">
-            <Link href="/" className="flex items-center gap-3 group shrink-0 select-none">
+            <Link
+              href="/"
+              onClick={handleHomeClick}
+              className="flex items-center gap-3 group shrink-0 select-none"
+            >
               <div
                 className="relative h-10 w-10 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] p-0.5 shadow-[0_0_20px_rgba(193,154,136,0.2)] transition-all duration-300 group-hover:scale-105 group-hover:border-[#c19a88]/50 group-hover:shadow-[0_0_25px_rgba(193,154,136,0.35)]"
                 style={{ width: 40, height: 40, minWidth: 40, minHeight: 40 }}
@@ -190,6 +194,7 @@ export default function Navbar() {
                   <Link
                     key={item.href}
                     href={item.href}
+                    onClick={item.href === '/' ? handleHomeClick : undefined}
                     className={`relative flex h-8 items-center rounded-full px-4 text-xs font-medium tracking-wide transition-colors duration-200 ${
                       active
                         ? 'text-white font-semibold'
@@ -478,7 +483,13 @@ export default function Navbar() {
                       <Link
                         key={link.name}
                         href={link.href}
-                        onClick={() => setMobileMenuOpen(false)}
+                        onClick={(e) => {
+                          setMobileMenuOpen(false);
+                          if (link.href === '/' && pathname === '/') {
+                            e.preventDefault();
+                            scrollToTop();
+                          }
+                        }}
                         className="rounded-lg px-3 py-2 text-xs font-medium text-neutral-400 hover:text-white hover:bg-white/[0.04]"
                       >
                         {link.name}
@@ -495,7 +506,13 @@ export default function Navbar() {
                     <Link
                       key={link.name}
                       href={link.href}
-                      onClick={() => setMobileMenuOpen(false)}
+                      onClick={(e) => {
+                        setMobileMenuOpen(false);
+                        if (link.href === '/' && pathname === '/') {
+                          e.preventDefault();
+                          scrollToTop();
+                        }
+                      }}
                       className={`flex items-center justify-between rounded-xl px-4 py-3 text-sm font-medium transition-all ${
                         active
                           ? 'bg-white/[0.08] text-[#e8c5b4] font-semibold border border-[#c19a88]/30'
