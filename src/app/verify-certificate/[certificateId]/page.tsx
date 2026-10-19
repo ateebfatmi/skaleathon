@@ -109,7 +109,7 @@ export default async function VerifyCertificatePage({
 
               <div className="space-y-1">
                 <span className="text-white/40 text-xs font-mono uppercase tracking-[0.14em]">Issued By</span>
-                <p className="text-white/70 font-light">SkaleKraft Product Studio</p>
+                <p className="text-white/70 font-light">SkaleKraft</p>
               </div>
             </div>
 

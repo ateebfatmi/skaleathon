@@ -23,7 +23,7 @@ export default function HeroSection({ event }: HeroProps) {
 
   return (
     <section id="top" className="relative overflow-hidden pt-20 pb-20 lg:pt-28 lg:pb-32 bg-[#0B0B0B]">
-      {/* 1. SkaleKraft Studio Ambient Radial Copper and Bronze Halos */}
+      {/* 1. SkaleKraft Ambient Radial Copper and Bronze Halos */}
       <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-full max-w-6xl h-[650px] pointer-events-none">
         <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[650px] h-[380px] bg-[radial-gradient(ellipse_80%_50%_at_50%_20%,rgba(193,154,136,0.22),transparent_70%)] blur-2xl" />
         <div className="absolute top-24 left-1/4 w-[420px] h-[420px] bg-[#805948]/20 rounded-full blur-[140px]" />
@@ -61,9 +61,9 @@ export default function HeroSection({ event }: HeroProps) {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight text-white max-w-4xl mx-auto leading-[1.05] select-none"
+          className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-[0.16em] sm:tracking-[0.20em] md:tracking-[0.24em] text-white max-w-5xl mx-auto leading-[1.1] select-none"
         >
-          SKALE<span className="skalekraft-gradient-text">ATHON</span>
+          SKALE<span className="text-[#c19a88]">ATHON</span>
         </motion.h1>
 
         {/* Official Tagline */}

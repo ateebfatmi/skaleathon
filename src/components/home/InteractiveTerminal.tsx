@@ -173,7 +173,7 @@ export default function InteractiveTerminal() {
             </div>
             <div className="text-[11px] text-white/60 pt-1">
               • Top 25 Teams: Tamper-evident cryptographic merit credentials with QR authentication.
-              <br />• Selected Candidates: Internship opportunities & fast-track interview evaluation at SkaleKraft Studio.
+              <br />• Selected Candidates: Internship opportunities & fast-track interview evaluation at SkaleKraft.
             </div>
           </div>
         );
@@ -417,7 +417,7 @@ export default function InteractiveTerminal() {
 
           <div className="p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
             <div className="text-white/50 text-[10px]">ORGANIZER ECOSYSTEM</div>
-            <div className="text-white font-bold text-sm">SKALEKRAFT STUDIO</div>
+            <div className="text-white font-bold text-sm">SKALEKRAFT</div>
             <p className="text-white/40 text-[10px]">Official portal: skalekraft.in</p>
           </div>
         </div>

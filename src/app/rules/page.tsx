@@ -120,7 +120,7 @@ export default function RulesPage() {
                   </div>
                   <h3 className="text-xs font-bold text-white">Grand Finale Live Q&A</h3>
                   <p className="text-[11px] text-white/50 leading-relaxed font-light">
-                    Top finalist teams defend their architecture and code in a live Q&A session with domain judges and SkaleKraft studio leadership to determine final rankings.
+                    Top finalist teams defend their architecture and code in a live Q&A session with domain judges and SkaleKraft leadership to determine final rankings.
                   </p>
                 </div>
               </div>

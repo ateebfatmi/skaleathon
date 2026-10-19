@@ -193,7 +193,7 @@ export default function PrizesSection({ event }: PrizesProps) {
                 </div>
                 <div>
                   <h3 className="text-sm sm:text-base font-semibold tracking-wide text-white">
-                    SkaleKraft Studio Internship Gateway
+                    SkaleKraft Internship Gateway
                   </h3>
                   <p className="mt-1 text-xs text-white/50 leading-relaxed font-light">
                     Internship opportunities are available for selected candidates, offering direct fast-track interviews for paid software engineering and AI internships at SkaleKraft.

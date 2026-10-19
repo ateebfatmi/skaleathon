@@ -7,7 +7,7 @@ import { cyberAudio } from '@/lib/cyber-sound';
 export default function CertificatePreviewModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState('Alex Rivers');
-  const [team, setTeam] = useState('NeuralCraft Studio');
+  const [team, setTeam] = useState('NeuralCraft Lab');
   const [track, setTrack] = useState('AI & Machine Learning Track');
 
   const open = () => {

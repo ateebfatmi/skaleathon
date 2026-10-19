@@ -127,7 +127,7 @@ export default async function PrizesPage() {
               <h3 className="text-lg font-medium text-white">SkaleKraft Internship Gateway</h3>
             </div>
             <p className="text-sm text-white/55 leading-relaxed font-light">
-              Internship opportunities are available for selected candidates, offering direct fast-track interviews for technical internships at SkaleKraft, working alongside studio leads on client systems and AI products.
+              Internship opportunities are available for selected candidates, offering direct fast-track interviews for technical internships at SkaleKraft, working alongside SkaleKraft leads on client systems and AI products.
             </p>
           </div>
         </div>

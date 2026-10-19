@@ -155,12 +155,12 @@ export default function Navbar() {
                 />
               </div>
               <div className="flex flex-col justify-center">
-                <span className="text-[10px] uppercase tracking-[0.24em] font-medium text-[#c19a88] leading-tight">
+                <span className="text-[9px] uppercase tracking-[0.26em] font-medium text-white/50 leading-tight">
                   SkaleKraft Presents
                 </span>
                 <div className="flex items-center gap-2 mt-0.5">
-                  <span className="text-base sm:text-lg font-black tracking-[0.12em] text-white">
-                    SKALE<span className="skalekraft-gradient-text">ATHON</span>
+                  <span className="text-base sm:text-lg font-semibold tracking-[0.22em] sm:tracking-[0.24em] text-white">
+                    SKALE<span className="text-[#c19a88]">ATHON</span>
                   </span>
                 </div>
               </div>

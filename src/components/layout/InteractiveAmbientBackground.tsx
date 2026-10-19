@@ -20,14 +20,14 @@ export default function InteractiveAmbientBackground() {
 
   return (
     <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden select-none">
-      {/* 1. Dynamic Cursor-Followed Copper Spotlight (Exact SkaleKraft Studio signature) */}
+      {/* 1. Dynamic Cursor-Followed Copper Spotlight (Exact SkaleKraft signature) */}
       <div
         ref={spotlightRef}
         style={{ left: '50%', top: '35%', transform: 'translate(-50%, -50%)' }}
         className="pointer-events-none fixed h-[580px] w-[580px] rounded-full bg-[radial-gradient(circle_at_center,rgba(193,154,136,0.16)_0%,rgba(128,89,72,0.05)_45%,transparent_70%)] blur-3xl hidden md:block transition-[left,top] duration-150 ease-out will-change-[left,top]"
       />
 
-      {/* 2. Top & Bottom Ambient Radial Ellipses from SkaleKraft Studio */}
+      {/* 2. Top & Bottom Ambient Radial Ellipses from SkaleKraft */}
       <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_50%_at_50%_-12%,rgba(193,154,136,0.22),transparent_70%),radial-gradient(ellipse_60%_40%_at_50%_115%,rgba(128,89,72,0.12),transparent_70%)]" />
 
       {/* 3. SkaleKraft 32px Micro Dot Matrix Grid */}

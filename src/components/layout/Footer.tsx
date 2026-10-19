@@ -103,8 +103,8 @@ export default function Footer() {
                     style={{ width: 32, height: 32, maxWidth: 32, maxHeight: 32 }}
                   />
                 </div>
-                <span className="text-sm font-bold tracking-wide text-white">
-                  SKALE<span className="skalekraft-gradient-text">ATHON</span>
+                <span className="text-sm font-semibold tracking-[0.22em] text-white">
+                  SKALE<span className="text-[#c19a88]">ATHON</span>
                 </span>
               </Link>
               <span className="text-neutral-600">|</span>
@@ -202,7 +202,7 @@ export default function Footer() {
       <div className="container mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-5">
           
-          {/* Brand & Studio Information (Spans 2 columns) */}
+          {/* Brand Information (Spans 2 columns) */}
           <div className="space-y-6 lg:col-span-2">
             <Link href="/" className="flex items-center gap-3 group select-none">
               <div
@@ -219,12 +219,12 @@ export default function Footer() {
                 />
               </div>
               <div className="flex flex-col justify-center">
-                <span className="text-[10px] uppercase tracking-[0.24em] font-medium text-[#c19a88] leading-tight">
+                <span className="text-[9px] uppercase tracking-[0.26em] font-medium text-white/50 leading-tight">
                   SkaleKraft Presents
                 </span>
                 <div className="flex items-center gap-2 mt-0.5">
-                  <span className="text-lg font-black tracking-[0.12em] text-white">
-                    SKALE<span className="skalekraft-gradient-text">ATHON</span>
+                  <span className="text-lg font-semibold tracking-[0.24em] text-white">
+                    SKALE<span className="text-[#c19a88]">ATHON</span>
                   </span>
                 </div>
               </div>
@@ -250,7 +250,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="text-[#c19a88] hover:underline font-medium inline-flex items-center gap-1"
                 >
-                  <span>SkaleKraft Studio</span>
+                  <span>SkaleKraft</span>
                   <ArrowUpRight className="h-3 w-3" />
                 </a>
               </div>
@@ -268,7 +268,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-400 hover:border-[#c19a88]/50 hover:bg-[#c19a88]/15 hover:text-white transition-all shadow-sm"
-                  aria-label="SkaleKraft Studio Website"
+                  aria-label="SkaleKraft Website"
                 >
                   <Globe className="h-4 w-4" />
                 </a>

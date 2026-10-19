@@ -139,7 +139,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
             </h1>
 
             <p className="mt-4 text-xs sm:text-sm text-neutral-400 max-w-xl mx-auto leading-relaxed font-light">
-              Form your team of 1–6 engineers, choose your technical arena, and finalize the flat ₹99 entry fee to compete for ₹35,000 in cash prizes, verifiable credentials, and fast-track studio interviews.
+              Form your team of 1–6 engineers, choose your technical arena, and finalize the flat ₹99 entry fee to compete for ₹35,000 in cash prizes, verifiable credentials, and fast-track interviews at SkaleKraft.
             </p>
 
             {/* Value Highlights Strip */}
@@ -179,7 +179,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
                   <Briefcase className="h-4 w-4" />
                 </div>
                 <div>
-                  <div className="text-[11px] font-bold text-white">Studio Fast-Track</div>
+                  <div className="text-[11px] font-bold text-white">SkaleKraft Fast-Track</div>
                   <div className="text-[10px] text-neutral-400">Direct Interviews</div>
                 </div>
               </div>
@@ -219,7 +219,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
           <div className="max-w-xl mx-auto rounded-[28px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-10 text-center space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.4)] backdrop-blur-xl">
             <h2 className="text-xl font-medium text-white">Registration is Currently Closed</h2>
             <p className="text-xs text-white/50 leading-relaxed font-light">
-              The portal is currently inactive ({event.status.replace(/_/g, ' ')}). Please monitor updates on the homepage or contact the studio at skalekraft@gmail.com.
+              The portal is currently inactive ({event.status.replace(/_/g, ' ')}). Please monitor updates on the homepage or contact SkaleKraft at skalekraft@gmail.com.
             </p>
             <Link
               href="/"

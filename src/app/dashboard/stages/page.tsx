@@ -73,7 +73,7 @@ export default async function DashboardStagesPage() {
       category: 'Grand Finale',
       categoryColor: 'border-amber-500/30 bg-amber-500/10 text-amber-400',
       description:
-        'Top finalist teams are invited to present their solution live before an esteemed jury panel composed of SkaleKraft studio leaders, senior engineers, and industry venture scouts.',
+        'Top finalist teams are invited to present their solution live before an esteemed jury panel composed of SkaleKraft leaders, senior engineers, and industry venture scouts.',
       format: 'Live Video Presentation & Judge Q&A (10 mins)',
       schedule: 'Final Day of Skaleathon',
       weightage: 'Determines ₹35,000 Prize Distribution',
