@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import './globals.css';
 
 export default function GlobalError({
   error,
@@ -25,8 +26,14 @@ export default function GlobalError({
             A critical interface issue was caught. Please reload the application.
           </p>
           <button
-            onClick={() => reset()}
-            className="w-full py-2.5 rounded-full bg-[#c19a88] hover:bg-[#d3a58f] text-black font-semibold text-xs transition-colors"
+            onClick={() => {
+              if (typeof window !== 'undefined') {
+                window.location.reload();
+              } else {
+                reset();
+              }
+            }}
+            className="w-full py-2.5 rounded-full bg-[#c19a88] hover:bg-[#d3a58f] text-black font-semibold text-xs transition-colors cursor-pointer"
           >
             Reload Skaleathon
           </button>

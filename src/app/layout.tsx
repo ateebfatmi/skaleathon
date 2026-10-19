@@ -5,6 +5,7 @@ import Footer from '@/components/layout/Footer';
 import { ClerkProvider } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
 import AudioToggle from '@/components/layout/AudioToggle';
+import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 
 
 export const metadata: Metadata = {
@@ -84,10 +85,18 @@ export default function RootLayout({
 
 
 
-          <Navbar />
-          <main className="relative z-10 flex-1">{children}</main>
-          <Footer />
-          <AudioToggle />
+          <ErrorBoundary fallback={null}>
+            <Navbar />
+          </ErrorBoundary>
+          <ErrorBoundary fallback={null}>
+            <main className="relative z-10 flex-1">{children}</main>
+          </ErrorBoundary>
+          <ErrorBoundary fallback={null}>
+            <Footer />
+          </ErrorBoundary>
+          <ErrorBoundary fallback={null}>
+            <AudioToggle />
+          </ErrorBoundary>
         </body>
       </html>
     </ClerkProvider>
