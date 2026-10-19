@@ -41,36 +41,73 @@ export default async function LeaderboardPage() {
 
         {!isPublished ? (
           /* Unannounced / Under Evaluation State */
-          <div className="max-w-2xl mx-auto rounded-[28px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.035),rgba(14,14,14,0.96))] p-10 sm:p-14 text-center space-y-6 shadow-[0_25px_70px_rgba(0,0,0,0.5)]">
-            <div className="p-4 w-fit mx-auto rounded-2xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88]">
-              <Lock className="h-7 w-7" strokeWidth={1.8} />
+          <div className="max-w-3xl mx-auto space-y-8">
+            <div className="rounded-[32px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.96))] p-8 sm:p-12 text-center space-y-6 shadow-[0_30px_90px_rgba(0,0,0,0.6)] backdrop-blur-2xl relative overflow-hidden">
+              {/* Subtle accent glow */}
+              <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-72 h-48 bg-[#c19a88]/15 rounded-full blur-[90px]" />
+
+              <div className="relative p-4 w-16 h-16 mx-auto rounded-2xl border border-[#c19a88]/30 bg-[#805948]/15 text-[#e8c5b4] flex items-center justify-center shadow-inner">
+                <Lock className="h-7 w-7 text-[#c19a88]" strokeWidth={1.8} />
+              </div>
+
+              <div className="space-y-3 relative z-10">
+                <div className="inline-flex items-center gap-2 text-[11px] font-mono tracking-wider px-3.5 py-1.5 rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 text-[#e8c5b4]">
+                  <Sparkles className="h-3.5 w-3.5 text-[#c19a88]" />
+                  <span>NATIONAL EVALUATION CYCLE</span>
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                  Official Rankings Unlock Post-Defense
+                </h2>
+                <p className="text-sm sm:text-base text-neutral-400 max-w-xl mx-auto leading-relaxed font-light">
+                  Scores and national podium standings will be published here following the <strong>Stage 4 Live Panel Defense</strong>. Every submission undergoes blind multi-judge evaluation across architectural rigor, code originality, and execution impact.
+                </p>
+              </div>
+
+              {/* Milestone Roadmap */}
+              <div className="pt-4 grid grid-cols-1 sm:grid-cols-3 gap-3 text-left">
+                <div className="rounded-2xl border border-white/[0.06] bg-black/40 p-4 space-y-1">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-400 block">Phase 01</span>
+                  <div className="text-xs font-semibold text-white">Quiz & Screening</div>
+                  <p className="text-[11px] text-neutral-400">CS logic & track fundamentals</p>
+                </div>
+                <div className="rounded-2xl border border-white/[0.06] bg-black/40 p-4 space-y-1">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#c19a88] block">Phase 02</span>
+                  <div className="text-xs font-semibold text-white">10-Day Build Sprint</div>
+                  <p className="text-[11px] text-neutral-400">GitHub repo, demo URL & walkthrough</p>
+                </div>
+                <div className="rounded-2xl border border-white/[0.06] bg-black/40 p-4 space-y-1">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-400 block">Phase 03</span>
+                  <div className="text-xs font-semibold text-white">Grand Finale Defense</div>
+                  <p className="text-[11px] text-neutral-400">Live panel Q&A & ₹35K awards</p>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="pt-6 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-center gap-3">
+                <Link
+                  href="/register"
+                  className="w-full sm:w-auto text-xs font-semibold tracking-wide text-white bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-6 py-3 rounded-full transition-all shadow-[0_4px_20px_rgba(128,89,72,0.3)] hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  Register Team (₹99)
+                </Link>
+                <Link
+                  href="/rules"
+                  className="w-full sm:w-auto text-xs font-medium text-neutral-300 hover:text-white px-6 py-3 rounded-full border border-white/10 bg-white/[0.03] hover:bg-white/[0.07] transition-colors"
+                >
+                  Review Judging Protocol
+                </Link>
+                <Link
+                  href="/prizes"
+                  className="w-full sm:w-auto text-xs font-medium text-[#c19a88] hover:text-[#e8c5b4] px-6 py-3 rounded-full border border-[#c19a88]/20 bg-[#805948]/10 hover:bg-[#805948]/20 transition-colors"
+                >
+                  View Prize Pool (₹35,000)
+                </Link>
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <h2 className="text-2xl font-medium text-white">Results Pending Official Announce</h2>
-              <p className="text-sm text-white/50 leading-relaxed font-light">
-                Project submissions are currently progressing through multi-criterion evaluation. Official standings and prize conferrals will be published here upon authorization.
-              </p>
-            </div>
-
-            <div className="inline-flex items-center gap-2 text-xs font-mono tracking-wide px-4 py-2 rounded-full border border-white/10 bg-white/[0.03] text-[#c19a88]">
-              <Sparkles className="h-3.5 w-3.5 text-[#c19a88]" />
-              <span>CURRENT STAGE: {event.status.replace(/_/g, ' ').toUpperCase()}</span>
-            </div>
-
-            <div className="pt-4 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                href="/dashboard"
-                className="w-full sm:w-auto text-xs font-semibold tracking-wide text-white bg-gradient-to-r from-[#805948] to-[#c19a88] px-6 py-3 rounded-full transition-all shadow-[0_4px_20px_rgba(128,89,72,0.3)] hover:scale-105"
-              >
-                Go to Team Dashboard
-              </Link>
-              <Link
-                href="/rules"
-                className="w-full sm:w-auto text-xs font-medium text-white/70 hover:text-white px-6 py-3 rounded-full border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] transition-colors"
-              >
-                Review Judging Protocol
-              </Link>
+            {/* Criteria preview card */}
+            <div className="rounded-2xl border border-white/[0.06] bg-white/[0.015] p-5 text-center text-xs text-neutral-500">
+              <span className="text-neutral-400 font-medium">Evaluation Criteria:</span> Technical Innovation (30%) • System Architecture & Code Quality (30%) • Functional Completeness & UI/UX (25%) • Live Panel Defense (15%).
             </div>
           </div>
         ) : (
