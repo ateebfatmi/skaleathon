@@ -162,7 +162,7 @@ export default function HeroSection({ event }: HeroProps) {
             {
               icon: ShieldCheck,
               title: 'Top 25 Merit Awards',
-              subtitle: 'Verified Credentials',
+              subtitle: 'Certificates',
             },
             {
               icon: Sparkles,

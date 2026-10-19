@@ -6,11 +6,11 @@ export default function PrivacyPage() {
   const sections = [
     {
       heading: '1. Information We Collect',
-      body: 'Skaleathon 2027 operates under a data minimization principle. We collect only the information necessary to register teams, coordinate project evaluations, process the ₹99 team entry fee securely via Razorpay, and issue verifiable digital credentials. We do not store payment card details, UPI PINs, or bank account numbers.',
+      body: 'Skaleathon 2027 operates under a data minimization principle. We collect only the information necessary to register teams, coordinate project evaluations, process the ₹99 team entry fee securely via Razorpay, and issue certificates. We do not store payment card details, UPI PINs, or bank account numbers.',
     },
     {
       heading: '2. Use of Information',
-      body: 'Your information is utilized solely to administer event participation, authenticate submissions, distribute official cash awards, and generate tamper-proof digital certificates.',
+      body: 'Your information is utilized solely to administer event participation, authenticate submissions, distribute official cash awards, and generate digital certificates.',
     },
     {
       heading: '3. Data Privacy & Confidentiality',

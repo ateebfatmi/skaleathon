@@ -37,10 +37,10 @@ export default async function VerifyCertificatePage({
             </div>
             <h1 className="text-2xl font-medium text-white">Certificate Not Found</h1>
             <p className="text-xs sm:text-sm text-white/55 max-w-md mx-auto leading-relaxed font-light">
-              The identifier <code className="text-[#c19a88] font-mono bg-white/[0.04] border border-white/10 px-2 py-0.5 rounded">{code}</code> is not registered in the Skaleathon 2027 official credential database.
+              The identifier <code className="text-[#c19a88] font-mono bg-white/[0.04] border border-white/10 px-2 py-0.5 rounded">{code}</code> is not registered in the Skaleathon 2027 official certificate database.
             </p>
             <p className="text-xs text-white/40 font-light">
-              Please ensure the certificate code was copied accurately from the credential or scanned directly from the QR code.
+              Please ensure the certificate code was copied accurately from the certificate or scanned directly from the QR code.
             </p>
           </div>
         ) : cert.is_revoked ? (
@@ -51,7 +51,7 @@ export default async function VerifyCertificatePage({
             </div>
             <h1 className="text-2xl font-medium text-amber-300">Certificate Revoked</h1>
             <p className="text-xs sm:text-sm text-white/55 max-w-md mx-auto leading-relaxed font-light">
-              This credential has been officially marked as revoked by the SkaleKraft Organizing Committee.
+              This certificate has been officially marked as revoked by the SkaleKraft Organizing Committee.
             </p>
             {cert.revocation_reason && (
               <p className="text-xs text-amber-200/80 bg-black/40 p-3 rounded-lg border border-amber-500/20 font-light">
@@ -60,7 +60,7 @@ export default async function VerifyCertificatePage({
             )}
           </div>
         ) : (
-          /* Valid Verified Certificate */
+          /* Valid Certificate */
           <div className="rounded-[28px] border border-[#c19a88]/40 bg-[linear-gradient(145deg,rgba(193,154,136,0.06),rgba(14,14,14,0.96))] p-8 sm:p-12 space-y-8 shadow-[0_25px_70px_rgba(128,89,72,0.25)]">
             {/* Verification Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/[0.08] pb-6">
@@ -72,7 +72,7 @@ export default async function VerifyCertificatePage({
                   <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#c19a88]">
                     Registry Authenticated
                   </span>
-                  <h1 className="text-xl font-medium text-white">Authentic SkaleKraft Credential</h1>
+                  <h1 className="text-xl font-medium text-white">Authentic SkaleKraft Certificate</h1>
                 </div>
               </div>
 

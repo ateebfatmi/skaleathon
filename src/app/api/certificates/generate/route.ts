@@ -9,7 +9,7 @@ export async function POST() {
 
     return NextResponse.json({
       success: true,
-      message: `Issued/verified certificates for eligible Top 25 teams.`,
+      message: `Issued certificates for eligible Top 25 teams.`,
       certificates: certs,
     });
   } catch (err: any) {

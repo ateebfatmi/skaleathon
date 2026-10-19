@@ -139,7 +139,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
             </h1>
 
             <p className="mt-4 text-xs sm:text-sm text-neutral-400 max-w-xl mx-auto leading-relaxed font-light">
-              Form your team of 1–6 engineers, choose your technical arena, and finalize the flat ₹99 entry fee to compete for ₹35,000 in cash prizes, verifiable credentials, and fast-track interviews at SkaleKraft.
+              Form your team of 1–6 engineers, choose your technical arena, and finalize the flat ₹99 entry fee to compete for ₹35,000 in cash prizes, certificates for Top 25 teams, and fast-track interviews at SkaleKraft.
             </p>
 
             {/* Value Highlights Strip */}
@@ -169,8 +169,8 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
                   <Award className="h-4 w-4" />
                 </div>
                 <div>
-                  <div className="text-[11px] font-bold text-white">Top 25 Badges</div>
-                  <div className="text-[10px] text-neutral-400">Verified Credentials</div>
+                  <div className="text-[11px] font-bold text-white">Top 25 Merit</div>
+                  <div className="text-[10px] text-neutral-400">Certificates</div>
                 </div>
               </div>
 

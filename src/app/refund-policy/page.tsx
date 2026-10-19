@@ -6,7 +6,7 @@ export default function RefundPolicyPage() {
   const sections = [
     {
       heading: '1. General Registration Policy',
-      body: 'The Skaleathon 2027 flat team fee of ₹99 is a nominal entry contribution committed to hosting infrastructure, judge synchronization, and tamper-evident certificate issuance. Once verified, the fee is generally non-refundable as computational allocations are reserved immediately.',
+      body: 'The Skaleathon 2027 flat team fee of ₹99 is a nominal entry contribution committed to hosting infrastructure, judge synchronization, and certificate issuance. Once verified, the fee is generally non-refundable as computational allocations are reserved immediately.',
     },
     {
       heading: '2. Eligible Refund Circumstances',

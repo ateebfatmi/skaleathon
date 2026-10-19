@@ -172,7 +172,7 @@ export default function InteractiveTerminal() {
               </div>
             </div>
             <div className="text-[11px] text-white/60 pt-1">
-              • Top 25 Teams: Tamper-evident cryptographic merit credentials with QR authentication.
+              • Top 25 Teams: Official certificates of merit.
               <br />• Selected Candidates: Internship opportunities & fast-track interview evaluation at SkaleKraft.
             </div>
           </div>

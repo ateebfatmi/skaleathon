@@ -72,7 +72,7 @@ export default function PrizesSection({ event }: PrizesProps) {
             .
           </h2>
           <p className="mt-4 text-sm text-white/55 leading-relaxed font-light">
-            ₹35,000 cash rewards, tamper-proof merit credentials, and internship opportunities for selected candidates with the SkaleKraft product team.
+            ₹35,000 cash rewards, certificates for Top 25 teams, and internship opportunities for selected candidates with the SkaleKraft product team.
           </p>
         </motion.div>
 
@@ -157,10 +157,10 @@ export default function PrizesSection({ event }: PrizesProps) {
                 </div>
                 <div>
                   <h3 className="text-sm sm:text-base font-semibold tracking-wide text-white">
-                    Top 25 Teams — Merit Credentials
+                    Top 25 Teams — Certificates
                   </h3>
                   <p className="mt-1 text-xs text-white/50 leading-relaxed font-light">
-                    All confirmed members of top 25 teams receive an official, cryptographically verifiable digital certificate with live QR verification.
+                    All confirmed members of top 25 teams receive an official digital certificate of merit.
                   </p>
                 </div>
               </div>
@@ -169,7 +169,7 @@ export default function PrizesSection({ event }: PrizesProps) {
                 <CertificatePreviewModal />
                 <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1">
                   <CheckCircle2 className="h-3 w-3" />
-                  <span>Tamper-Proof</span>
+                  <span>Official</span>
                 </span>
               </div>
             </SpotlightCard>

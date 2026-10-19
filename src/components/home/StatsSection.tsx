@@ -48,8 +48,8 @@ export default function StatsSection({ event }: StatsProps) {
       label: 'OFFICIAL CERTIFICATES',
       value: `Top ${event.certificates_top_n || 25}`,
       suffix: ' Teams',
-      sublabel: 'Cryptographically verified credentials with QR validation',
-      badge: 'Tamper Proof',
+      sublabel: 'Merit certificates awarded to Top 25 teams',
+      badge: 'Official',
       icon: Award,
       accentColor: '#805948',
       gradientClass: 'from-white via-[#e8cbbf] to-[#805948]',
@@ -85,7 +85,7 @@ export default function StatsSection({ event }: StatsProps) {
             </h2>
           </div>
           <p className="text-xs text-white/40 max-w-xs sm:text-right">
-            Measurable prize pool, accessible flat registration, and verified credentials from day one.
+            Measurable prize pool, accessible flat registration, and certificates for Top 25 teams.
           </p>
         </motion.div>
 

@@ -19,7 +19,7 @@ export default async function CertificatesDashboardPage() {
       <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-8 space-y-4">
         <div>
           <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400">
-            Official Credentials
+            Official Certificates
           </span>
           <h1 className="text-2xl sm:text-3xl font-black text-white">Certificates of Merit</h1>
           <p className="text-xs text-slate-400 mt-1">
@@ -74,7 +74,7 @@ export default async function CertificatesDashboardPage() {
                 <h3 className="text-lg font-bold text-white">{cert.recipient_name}</h3>
                 <p className="text-xs font-medium text-cyanAccent-300 mt-0.5">{cert.achievement_text}</p>
                 <div className="mt-3 text-[11px] font-mono text-slate-400">
-                  Credential ID: {cert.certificate_code}
+                  Certificate ID: {cert.certificate_code}
                 </div>
               </div>
 

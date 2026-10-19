@@ -57,7 +57,7 @@ export default function AdminCertificatesPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <span className="text-[10px] font-bold uppercase tracking-wider text-cyanAccent-400">
-              National Credential Registry
+              National Certificate Registry
             </span>
             <h1 className="text-2xl font-black text-white">Certificate Management</h1>
             <p className="text-xs text-slate-400 mt-1">

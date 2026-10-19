@@ -42,8 +42,8 @@ export default function CertificatePreviewModal() {
                   <Award className="h-4 w-4" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold text-white">Cryptographic Certificate Simulator</h3>
-                  <p className="text-[11px] text-white/50">Preview official Skaleathon 2027 Top 25 credential</p>
+                  <h3 className="text-sm font-semibold text-white">Certificate Preview</h3>
+                  <p className="text-[11px] text-white/50">Preview official Skaleathon 2027 Top 25 certificate</p>
                 </div>
               </div>
               <button
@@ -81,11 +81,11 @@ export default function CertificatePreviewModal() {
             {/* Live Visual Certificate Card */}
             <div className="relative rounded-2xl border-2 border-[#c19a88]/40 bg-[linear-gradient(145deg,#120e0d,#080707)] p-6 sm:p-8 text-center shadow-inner overflow-hidden">
               <div className="absolute top-3 left-4 font-mono text-[9px] text-[#c19a88] tracking-widest uppercase">
-                SKALEKRAFT AUTHENTICATED
+                SKALEKRAFT
               </div>
               <div className="absolute top-3 right-4 flex items-center gap-1 font-mono text-[9px] text-emerald-400">
                 <CheckCircle2 className="h-3 w-3" />
-                <span>SHA-256 VERIFIED</span>
+                <span>OFFICIAL</span>
               </div>
 
               <div className="mt-4 mb-2">
@@ -110,7 +110,7 @@ export default function CertificatePreviewModal() {
               {/* Certificate Bottom Telemetry */}
               <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-left">
                 <div className="space-y-0.5">
-                  <div className="text-[9px] font-mono text-white/40 uppercase tracking-wider">Credential ID</div>
+                  <div className="text-[9px] font-mono text-white/40 uppercase tracking-wider">Certificate ID</div>
                   <div className="text-[10px] font-mono text-[#c19a88] font-bold">SK2027-T25-99A8F4</div>
                 </div>
 

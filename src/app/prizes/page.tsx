@@ -30,7 +30,7 @@ export default async function PrizesPage() {
             .
           </h1>
           <p className="mt-4 text-base text-white/55 leading-relaxed font-light">
-            SkaleKraft has allocated an official prize pool of {formatINR(event.prize_pool_inr || 35000)} alongside tamper-proof digital merit credentials and internship opportunities for selected candidates.
+            SkaleKraft has allocated an official prize pool of {formatINR(event.prize_pool_inr || 35000)} alongside merit certificates and internship opportunities for selected candidates.
           </p>
         </div>
 
@@ -54,7 +54,7 @@ export default async function PrizesPage() {
               </p>
             </div>
             <div className="mt-8 pt-6 border-t border-white/[0.08] text-xs text-[#c19a88] font-medium">
-              Cash Grant + Winner Credential + SkaleKraft Interview Opportunity
+              Cash Grant + Winner Certificate + SkaleKraft Interview Opportunity
             </div>
           </div>
 
@@ -76,7 +76,7 @@ export default async function PrizesPage() {
               </p>
             </div>
             <div className="mt-8 pt-6 border-t border-white/[0.08] text-xs text-white/60 font-light">
-              Cash Grant + Merit Credential + SkaleKraft Interview Opportunity
+              Cash Grant + Runner-up Certificate + SkaleKraft Interview Opportunity
             </div>
           </div>
 
@@ -98,7 +98,7 @@ export default async function PrizesPage() {
               </p>
             </div>
             <div className="mt-8 pt-6 border-t border-white/[0.08] text-xs text-white/60 font-light">
-              Cash Grant + Merit Credential + SkaleKraft Interview Opportunity
+              Cash Grant + 2nd Runner-up Certificate + SkaleKraft Interview Opportunity
             </div>
           </div>
         </div>
@@ -109,12 +109,12 @@ export default async function PrizesPage() {
           <div className="rounded-[28px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-8 space-y-4">
             <div className="flex items-center gap-3">
               <div className="p-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88]">
-                <ShieldCheck className="h-5 w-5" strokeWidth={1.8} />
+                <Award className="h-5 w-5" strokeWidth={1.8} />
               </div>
-              <h3 className="text-lg font-medium text-white">Top 25 Teams — Merit Credentials</h3>
+              <h3 className="text-lg font-medium text-white">Top 25 Teams — Certificates</h3>
             </div>
             <p className="text-sm text-white/55 leading-relaxed font-light">
-              Eligible members of the top 25 teams will receive an official, cryptographically verifiable digital certificate conferral from SkaleKraft with live QR validation and verifiable codes.
+              Eligible members of the top 25 teams will receive an official digital certificate of merit from SkaleKraft.
             </p>
           </div>
 

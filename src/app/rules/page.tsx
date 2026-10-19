@@ -24,7 +24,7 @@ export default function RulesPage() {
             .
           </h1>
           <p className="mt-4 text-base text-white/55 leading-relaxed font-light">
-            Please read these official rules carefully prior to team registration. Compliance with all requirements is mandatory for evaluation eligibility and credential conferral.
+            Please read these official rules carefully prior to team registration. Compliance with all requirements is mandatory for evaluation eligibility and certificate conferral.
           </p>
         </div>
 
