@@ -24,21 +24,25 @@ export default function HeroSection({ event }: HeroProps) {
 
   return (
     <section id="top" className="relative overflow-hidden pt-20 pb-20 lg:pt-28 lg:pb-32 bg-[#0B0B0B]">
-      {/* Velaris WebGL Living Gradient Ambient Background */}
-      <div className="absolute inset-0 pointer-events-none opacity-40 mix-blend-screen">
+      {/* 1. SkaleKraft Studio Ambient Radial Copper and Bronze Halos */}
+      <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-full max-w-6xl h-[650px] pointer-events-none">
+        <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[650px] h-[380px] bg-[radial-gradient(ellipse_80%_50%_at_50%_20%,rgba(193,154,136,0.22),transparent_70%)] blur-2xl" />
+        <div className="absolute top-24 left-1/4 w-[420px] h-[420px] bg-[#805948]/20 rounded-full blur-[140px]" />
+        <div className="absolute top-36 right-1/4 w-[380px] h-[380px] bg-[#c19a88]/15 rounded-full blur-[130px]" />
+      </div>
+
+      {/* 2. Micro 32px Dot Matrix Grid Overlay */}
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.025)_1px,transparent_0)] [background-size:32px_32px] opacity-70" />
+
+      {/* 3. Velaris WebGL living gradient canvas */}
+      <div className="absolute inset-0 pointer-events-none opacity-25 mix-blend-screen">
         <Velaris
           height="100%"
           bg="#0B0B0B"
-          colors={['#c19a88', '#805948', '#e8c5b4', '#18121d']}
-          speed={1.4}
-          grain={0.2}
+          colors={['#c19a88', '#805948', '#e8c5b4', '#141414']}
+          speed={1.0}
+          grain={0.15}
         />
-      </div>
-
-      {/* Background radial ambient copper & bronze lights */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] pointer-events-none opacity-40">
-        <div className="absolute top-1/4 left-1/3 w-[450px] h-[450px] bg-[#805948]/25 rounded-full blur-[140px]" />
-        <div className="absolute top-1/3 right-1/4 w-[380px] h-[380px] bg-[#c19a88]/15 rounded-full blur-[120px]" />
       </div>
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
@@ -50,9 +54,7 @@ export default function HeroSection({ event }: HeroProps) {
           className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 text-xs font-medium text-white/70 mb-8 backdrop-blur-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
         >
           <Sparkles className="h-3.5 w-3.5 text-[#c19a88]" />
-          <span className="tracking-[0.24em] uppercase text-white/60 font-semibold">SkaleKraft Presents</span>
-          <span className="text-white/20">•</span>
-          <span className="text-[#c19a88] font-medium tracking-wide">National Online Hackathon</span>
+          <span className="tracking-[0.24em] uppercase text-white/80 font-semibold text-[11px]">SkaleKraft Presents</span>
         </motion.div>
 
         {/* Master Event Title */}
@@ -60,12 +62,21 @@ export default function HeroSection({ event }: HeroProps) {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.08]"
+          className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.08] select-none"
         >
           SKALEATHON{' '}
-          <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
+          <motion.span
+            drag
+            dragSnapToOrigin
+            dragElastic={0.25}
+            whileHover={{ scale: 1.08, rotate: -3, cursor: 'grab' }}
+            whileDrag={{ scale: 1.22, rotate: 6, cursor: 'grabbing', zIndex: 50 }}
+            transition={{ type: 'spring', stiffness: 500, damping: 25 }}
+            className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#f5ded3] via-[#e8c5b4] to-[#c19a88] bg-clip-text text-transparent pb-1 inline-block cursor-grab active:cursor-grabbing relative touch-none"
+            title="Drag me!"
+          >
             2027
-          </span>
+          </motion.span>
         </motion.h1>
 
         {/* Official Tagline */}
@@ -133,19 +144,19 @@ export default function HeroSection({ event }: HeroProps) {
           )}
 
           <Link
-            href="/candidates"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] hover:bg-white/[0.08] px-5 py-2.5 text-xs sm:text-sm font-medium text-white hover:border-[#c19a88]/40 transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
-          >
-            <Sparkles className="h-4 w-4 text-[#c19a88]" />
-            <span>Registered Candidates</span>
-          </Link>
-
-          <Link
             href="/tracks"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-transparent hover:border-white/10 px-5 py-2.5 text-xs sm:text-sm font-medium text-white/60 hover:text-white transition-colors"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] hover:bg-white/[0.08] px-5 py-2.5 text-xs sm:text-sm font-medium text-white hover:border-[#c19a88]/40 transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
           >
             <Terminal className="h-4 w-4 text-[#c19a88]" />
             <span>Explore Arenas</span>
+          </Link>
+
+          <Link
+            href="/rules"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-transparent hover:border-white/10 px-5 py-2.5 text-xs sm:text-sm font-medium text-white/60 hover:text-white transition-colors"
+          >
+            <Sparkles className="h-4 w-4 text-[#c19a88]" />
+            <span>Tournament Rules</span>
           </Link>
         </motion.div>
 

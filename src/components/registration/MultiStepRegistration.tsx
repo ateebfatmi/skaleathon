@@ -959,37 +959,46 @@ export default function MultiStepRegistration({
 
       {/* STEP 4: PAYMENT (RAZORPAY) */}
       {step === 4 && paymentOrder && (
-        <div className={isModal ? "space-y-4" : "rounded-[28px] border border-white/10 bg-[#0E0E0E] p-6 sm:p-8 space-y-6 shadow-2xl shadow-black/80 backdrop-blur-xl"}>
-          <div className={isModal ? "border-b border-white/10 pb-2.5" : "border-b border-white/10 pb-4"}>
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className={`${isModal ? 'text-base sm:text-lg' : 'text-xl'} font-bold text-white`}>
-                  Step 4: Secure Razorpay Payment
-                </h2>
-                <p className="text-xs text-neutral-400 mt-0.5">
-                  Finalize your team registration fee of ₹99 via Razorpay.
-                </p>
+        <div className={isModal ? "space-y-4" : "rounded-[28px] border border-white/15 bg-gradient-to-b from-[#141414]/95 via-[#101010]/98 to-[#0B0B0B] p-6 sm:p-9 space-y-6 shadow-[0_25px_80px_rgba(0,0,0,0.85),0_0_50px_rgba(193,154,136,0.06)] backdrop-blur-2xl relative overflow-hidden"}>
+          {!isModal && (
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#c19a88] to-transparent opacity-80" />
+          )}
+
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#c19a88] font-bold">
+                  Stage 04 of 05
+                </span>
+                <span className="text-white/20">•</span>
+                <span className="text-[10px] font-mono text-neutral-400">Checkout</span>
               </div>
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-[#c19a88]">
-                <Lock className="h-4 w-4" />
-                <span>256-bit Encrypted</span>
-              </div>
+              <h2 className={`${isModal ? 'text-base sm:text-lg' : 'text-xl sm:text-2xl'} font-bold text-white tracking-tight`}>
+                Secure Razorpay Payment
+              </h2>
+              <p className="text-xs text-neutral-400 mt-0.5">
+                Finalize your team registration fee of ₹99 via Razorpay.
+              </p>
+            </div>
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-[#c19a88] bg-[#805948]/20 border border-[#c19a88]/30 px-3 py-1 rounded-full self-start sm:self-auto">
+              <Lock className="h-3.5 w-3.5" />
+              <span>256-bit Encrypted</span>
             </div>
           </div>
 
           {/* Payment Invoice Summary */}
-          <div className={`rounded-2xl border border-white/10 bg-[#141414] ${isModal ? 'p-4 space-y-3' : 'p-6 space-y-4'}`}>
-            <div className="flex items-center justify-between text-xs">
+          <div className={`rounded-2xl border border-white/10 bg-[#141414] ${isModal ? 'p-4 space-y-3' : 'p-6 space-y-4'} shadow-inner`}>
+            <div className="flex items-center justify-between text-xs pb-3 border-b border-white/10">
               <span className="text-neutral-400">Team</span>
               <span className="font-bold text-white">{teamName}</span>
             </div>
-            <div className="flex items-center justify-between text-xs">
+            <div className="flex items-center justify-between text-xs pb-3 border-b border-white/10">
               <span className="text-neutral-400">Order Reference</span>
               <span className="font-mono text-neutral-300">{paymentOrder.orderId}</span>
             </div>
-            <div className="flex items-center justify-between text-xs">
+            <div className="flex items-center justify-between text-xs pt-1">
               <span className="text-neutral-400">Amount Due</span>
-              <span className="text-xl font-black text-[#e8c5b4] font-mono">₹{paymentOrder.amount}.00</span>
+              <span className="text-2xl font-black text-[#e8c5b4] font-mono">₹{paymentOrder.amount}.00</span>
             </div>
           </div>
 
@@ -1012,12 +1021,12 @@ export default function MultiStepRegistration({
               type="button"
               disabled={loading}
               onClick={handleVerifyPayment}
-              className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-6 py-3.5 text-sm font-bold text-white shadow-xl shadow-[#805948]/25 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 transition-all"
+              className="w-full inline-flex items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-[#805948] via-[#9c6d58] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-7 py-3.5 text-sm font-bold text-white shadow-xl shadow-[#805948]/30 hover:shadow-[0_0_30px_rgba(193,154,136,0.35)] hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 transition-all cursor-pointer"
             >
               <CreditCard className="h-4 w-4" />
               <span>{loading ? 'Verifying Gateway Signature...' : 'Pay ₹99 & Verify Signature'}</span>
             </button>
-            <p className="text-center text-[10px] text-neutral-500">
+            <p className="text-center text-[10px] text-neutral-500 font-mono">
               * In sandbox mode without live merchant keys, the system executes an automated cryptographic signature exchange with server-side audit logging.
             </p>
           </div>
@@ -1026,14 +1035,18 @@ export default function MultiStepRegistration({
 
       {/* STEP 5: REGISTRATION CONFIRMATION */}
       {step === 5 && (
-        <div className={isModal ? "rounded-2xl border border-[#c19a88]/30 bg-[#0E0E0E] p-6 sm:p-8 text-center space-y-4 shadow-xl" : "rounded-[28px] border border-[#c19a88]/30 bg-[#0E0E0E] p-8 sm:p-12 text-center space-y-6 shadow-2xl shadow-black/80"}>
-          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#805948]/20 border border-[#c19a88]/40 text-[#c19a88] mx-auto shadow-inner">
+        <div className={isModal ? "rounded-2xl border border-[#c19a88]/30 bg-[#0E0E0E] p-6 sm:p-8 text-center space-y-4 shadow-xl" : "rounded-[28px] border border-[#c19a88]/30 bg-gradient-to-b from-[#141414] via-[#101010] to-[#0A0A0A] p-8 sm:p-12 text-center space-y-6 shadow-2xl shadow-black/80 relative overflow-hidden"}>
+          {!isModal && (
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#c19a88] to-transparent opacity-80" />
+          )}
+
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#805948]/20 border border-[#c19a88]/40 text-[#c19a88] mx-auto shadow-inner ring-4 ring-[#805948]/20 animate-in zoom-in-75 duration-300">
             <CheckCircle2 className="h-8 w-8" />
           </div>
 
           <div className="space-y-2">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-[#c19a88]">
-              Authoritatively Verified
+            <span className="text-[10px] font-bold uppercase tracking-widest text-[#c19a88] font-mono">
+              ✦ Authoritatively Verified // Cohort 2027
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-white">Registration Confirmed!</h1>
             <p className="text-xs sm:text-sm text-neutral-300 max-w-md mx-auto leading-relaxed">
@@ -1042,7 +1055,7 @@ export default function MultiStepRegistration({
           </div>
 
           {/* Receipt Card */}
-          <div className="rounded-2xl border border-white/10 bg-black/50 p-6 text-left max-w-md mx-auto text-xs space-y-3">
+          <div className="rounded-2xl border border-white/10 bg-black/50 p-6 text-left max-w-md mx-auto text-xs space-y-3 shadow-inner">
             <div className="flex justify-between pb-2 border-b border-white/10">
               <span className="text-neutral-400">Registration ID:</span>
               <span className="font-mono font-bold text-white">{createdTeam?.id}</span>
@@ -1064,7 +1077,7 @@ export default function MultiStepRegistration({
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
               onClick={() => router.push('/dashboard')}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-8 py-3 text-xs font-bold text-white shadow-lg shadow-[#805948]/25 hover:scale-[1.02] active:scale-[0.98] transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-8 py-3 text-xs font-bold text-white shadow-lg shadow-[#805948]/25 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
             >
               <span>Go to Team Dashboard</span>
               <ArrowRight className="h-4 w-4" />
@@ -1072,7 +1085,7 @@ export default function MultiStepRegistration({
 
             <button
               onClick={() => window.print()}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-6 py-3 text-xs font-semibold text-neutral-300 hover:text-white transition-colors"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-6 py-3 text-xs font-semibold text-neutral-300 hover:text-white transition-colors cursor-pointer"
             >
               <Download className="h-4 w-4" />
               <span>Print Registration Receipt</span>

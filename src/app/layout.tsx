@@ -7,6 +7,7 @@ import { dark } from '@clerk/themes';
 import Script from 'next/script';
 import AudioToggle from '@/components/layout/AudioToggle';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
+import InteractiveAmbientBackground from '@/components/layout/InteractiveAmbientBackground';
 
 
 export const metadata: Metadata = {
@@ -75,13 +76,8 @@ export default function RootLayout({
     >
       <html lang="en" className="dark">
         <body className="min-h-screen bg-[#0B0B0B] text-white flex flex-col antialiased selection:bg-[#805948]/30 selection:text-white relative overflow-x-clip">
-          {/* SkaleKraft Signature Background Architecture */}
-          <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-            {/* Top & bottom ambient light ellipses */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-12%,rgba(193,154,136,0.18),transparent_70%),radial-gradient(ellipse_60%_40%_at_50%_115%,rgba(128,89,72,0.10),transparent_70%)]" />
-            {/* Micro 32px dot matrix grid */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.025)_1px,transparent_0)] [background-size:32px_32px] opacity-70" />
-          </div>
+          {/* SkaleKraft Signature Interactive Background Architecture */}
+          <InteractiveAmbientBackground />
 
 
 
