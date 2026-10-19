@@ -19,7 +19,7 @@ const instrumentSerif = Instrument_Serif({
 
 
 export const metadata: Metadata = {
-  title: 'Skaleathon — National Online Hackathon | SkaleKraft',
+  title: 'Skaleathon',
   description:
     'SkaleKraft presents Skaleathon: Build. Innovate. Scale. National online hackathon across India with ₹35,000 prize pool, ₹99 registration fee, certificates for top 25 teams, and interview opportunities.',
   keywords: [
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'SkaleKraft', url: 'https://skalekraft.in' }],
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   openGraph: {
-    title: 'Skaleathon — National Online Hackathon | SkaleKraft',
+    title: 'Skaleathon',
     description: 'Build. Innovate. Scale. Compete for ₹35,000 prize pool across AI/ML, Web, and App development tracks.',
     url: '/',
     siteName: 'Skaleathon',
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Skaleathon — National Online Hackathon',
+    title: 'Skaleathon',
     description: 'Build. Innovate. Scale. Presented by SkaleKraft.',
   },
   robots: {
