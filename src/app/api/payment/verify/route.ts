@@ -5,7 +5,10 @@ import { NotificationService } from '@/lib/notifications/service';
 
 export async function POST(req: NextRequest) {
   try {
-    const { orderId, paymentId, signature } = await req.json();
+    const body = await req.json().catch(() => ({}));
+    const orderId = body.orderId || body.razorpay_order_id;
+    const paymentId = body.paymentId || body.razorpay_payment_id;
+    const signature = body.signature || body.razorpay_signature;
 
     if (!orderId || !paymentId || !signature) {
       return NextResponse.json(

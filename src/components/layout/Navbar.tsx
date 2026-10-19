@@ -80,7 +80,8 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { name: 'Home', href: '/' },
+    { name: 'Register', href: '/register' },
+    { name: 'Registered Candidates', href: '/candidates' },
     { name: 'Tracks', href: '/tracks' },
     { name: 'Prizes', href: '/prizes' },
     { name: 'Rules', href: '/rules' },
@@ -92,6 +93,7 @@ export default function Navbar() {
     { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Stages', href: '/dashboard/stages', icon: Layers },
     { name: 'My Team', href: '/dashboard/team', icon: Users },
+    { name: 'Candidates', href: '/candidates', icon: Users },
     { name: 'Project Submission', href: '/dashboard/submission', icon: Send },
     { name: 'Track & Specs', href: '/dashboard/track', icon: Code2 },
     { name: 'Announcements', href: '/dashboard/announcements', icon: Bell },
@@ -186,7 +188,7 @@ export default function Navbar() {
           {!isDashboard ? (
             <nav
               aria-label="Main Navigation"
-              className="hidden md:flex items-center rounded-full border border-white/[0.08] bg-white/[0.02] p-1.5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.06),0_8px_24px_rgba(0,0,0,0.4)] backdrop-blur-2xl"
+              className="hidden lg:flex items-center rounded-full border border-white/[0.08] bg-white/[0.02] p-1.5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.06),0_8px_24px_rgba(0,0,0,0.4)] backdrop-blur-2xl"
             >
               {navLinks.map((item) => {
                 const active = pathname === item.href;
@@ -195,7 +197,7 @@ export default function Navbar() {
                     key={item.href}
                     href={item.href}
                     onClick={item.href === '/' ? handleHomeClick : undefined}
-                    className={`relative flex h-8 items-center rounded-full px-4 text-xs font-medium tracking-wide transition-colors duration-200 ${
+                    className={`relative flex h-8 items-center rounded-full px-3 text-xs font-medium tracking-wide transition-colors duration-200 ${
                       active
                         ? 'text-white font-semibold'
                         : 'text-neutral-400 hover:text-white hover:bg-white/[0.04]'

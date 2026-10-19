@@ -227,21 +227,20 @@ export default function MultiStepRegistration({
     }
   };
 
-  // STEP 4 -> Verify Payment
+  // STEP 4 -> Open Razorpay Modal & Verify Payment Signature
   const handleVerifyPayment = async () => {
     setLoading(true);
     setErrorMessage(null);
 
-    try {
-      // Complete signature verification
+    const executeVerification = async (verifyPayload: {
+      orderId: string;
+      paymentId: string;
+      signature: string;
+    }) => {
       const verifyRes = await fetch('/api/payment/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          orderId: paymentOrder.orderId,
-          paymentId: `pay_${Math.random().toString(36).substring(2, 12)}`,
-          signature: `sandbox_sig_${Math.random().toString(36).substring(2, 16)}`,
-        }),
+        body: JSON.stringify(verifyPayload),
       });
 
       const verifyData = await verifyRes.json();
@@ -251,6 +250,80 @@ export default function MultiStepRegistration({
 
       setPaymentConfirmed(true);
       setStep(5);
+    };
+
+    try {
+      // Check if window.Razorpay is available for Standard Web Checkout
+      if (typeof window !== 'undefined' && window.Razorpay) {
+        const keyId =
+          paymentOrder.keyId ||
+          process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ||
+          'rzp_test_TprfRK3zhNYH43';
+
+        const rzp = new window.Razorpay({
+          key: keyId,
+          amount: (paymentOrder.amount || 99) * 100,
+          currency: paymentOrder.currency || 'INR',
+          name: 'SkaleKraft — Skaleathon 2027',
+          description: `Team Registration: ${teamName}`,
+          image: '/icon.png',
+          order_id: paymentOrder.orderId,
+          prefill: {
+            name: leaderName,
+            email: leaderEmail,
+            contact: leaderPhone || undefined,
+          },
+          notes: {
+            teamName,
+            track: currentTrackObj?.name || '',
+          },
+          theme: {
+            color: '#805948',
+          },
+          modal: {
+            ondismiss: function () {
+              setLoading(false);
+            },
+          },
+          handler: async function (response: {
+            razorpay_payment_id: string;
+            razorpay_order_id: string;
+            razorpay_signature: string;
+          }) {
+            try {
+              setLoading(true);
+              await executeVerification({
+                orderId: response.razorpay_order_id,
+                paymentId: response.razorpay_payment_id,
+                signature: response.razorpay_signature,
+              });
+            } catch (err: any) {
+              setErrorMessage(err.message);
+            } finally {
+              setLoading(false);
+            }
+          },
+        });
+
+        rzp.on('payment.failed', function (failureRes: any) {
+          const msg =
+            failureRes?.error?.description ||
+            failureRes?.error?.reason ||
+            'Payment failed. Please try again.';
+          setErrorMessage(msg);
+          setLoading(false);
+        });
+
+        rzp.open();
+        return;
+      }
+
+      // Fallback sandbox simulation if Razorpay script is blocked or in offline sandbox
+      await executeVerification({
+        orderId: paymentOrder.orderId,
+        paymentId: `pay_${Math.random().toString(36).substring(2, 12)}`,
+        signature: `sandbox_sig_${Math.random().toString(36).substring(2, 16)}`,
+      });
     } catch (err: any) {
       setErrorMessage(err.message);
     } finally {

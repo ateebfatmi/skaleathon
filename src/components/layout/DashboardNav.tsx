@@ -14,6 +14,7 @@ export default function DashboardNav() {
     { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Stages', href: '/dashboard/stages', icon: Layers },
     { name: 'My Team', href: '/dashboard/team', icon: Users },
+    { name: 'Candidates', href: '/candidates', icon: Users },
     { name: 'Project Submission', href: '/dashboard/submission', icon: Send },
     { name: 'Track & Specs', href: '/dashboard/track', icon: Code2 },
     { name: 'Announcements', href: '/dashboard/announcements', icon: Bell },

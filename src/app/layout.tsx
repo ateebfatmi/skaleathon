@@ -4,6 +4,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { ClerkProvider } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
+import Script from 'next/script';
 import AudioToggle from '@/components/layout/AudioToggle';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 
@@ -97,6 +98,12 @@ export default function RootLayout({
           <ErrorBoundary fallback={null}>
             <AudioToggle />
           </ErrorBoundary>
+
+          {/* Razorpay Standard Checkout SDK */}
+          <Script
+            src="https://checkout.razorpay.com/v1/checkout.js"
+            strategy="lazyOnload"
+          />
         </body>
       </html>
     </ClerkProvider>
