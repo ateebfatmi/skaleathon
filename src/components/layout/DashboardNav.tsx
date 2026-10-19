@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Users, Send, Award, Bell, Code2, Layers } from 'lucide-react';
+import { LayoutDashboard, Users, Send, Code2, Layers, Trophy } from 'lucide-react';
 
 import { motion } from 'framer-motion';
 
@@ -13,11 +13,10 @@ export default function DashboardNav() {
   const links = [
     { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Stages', href: '/dashboard/stages', icon: Layers },
+    { name: 'Track', href: '/dashboard/track', icon: Code2 },
     { name: 'My Team', href: '/dashboard/team', icon: Users },
     { name: 'Submission', href: '/dashboard/submission', icon: Send },
-    { name: 'Track & Specs', href: '/dashboard/track', icon: Code2 },
-    { name: 'Announcements', href: '/dashboard/announcements', icon: Bell },
-    { name: 'Certificates', href: '/dashboard/certificates', icon: Award },
+    { name: 'Leaderboard', href: '/dashboard/leaderboard', icon: Trophy },
   ];
 
   return (

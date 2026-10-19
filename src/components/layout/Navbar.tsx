@@ -16,8 +16,6 @@ import {
   Users,
   Send,
   Code2,
-  Bell,
-  Award,
   Trophy,
 } from 'lucide-react';
 import {
@@ -91,12 +89,10 @@ export default function Navbar() {
   const dashboardNavLinks = [
     { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Stages', href: '/dashboard/stages', icon: Layers },
-    { name: 'Leaderboard', href: '/dashboard/leaderboard', icon: Trophy },
+    { name: 'Track', href: '/dashboard/track', icon: Code2 },
     { name: 'My Team', href: '/dashboard/team', icon: Users },
     { name: 'Submission', href: '/dashboard/submission', icon: Send },
-    { name: 'Track & Specs', href: '/dashboard/track', icon: Code2 },
-    { name: 'Announcements', href: '/dashboard/announcements', icon: Bell },
-    { name: 'Certificates', href: '/dashboard/certificates', icon: Award },
+    { name: 'Leaderboard', href: '/dashboard/leaderboard', icon: Trophy },
   ];
 
   const defaultRegisterButton = (
