@@ -29,6 +29,7 @@ export default function Footer() {
     pathname.startsWith('/judge');
   const isRegisterPage = pathname === '/register';
   const isDashboardPage = pathname.startsWith('/dashboard');
+  const isTracksPage = pathname === '/tracks' || pathname.startsWith('/tracks/');
 
   const competitionLinks = [
     { label: 'Competition Tracks', href: '/tracks' },
@@ -159,8 +160,8 @@ export default function Footer() {
       {/* Ambient background glow */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#805948]/10 via-transparent to-transparent" />
 
-      {/* Pre-Footer Action Banner (Hidden on /register and /dashboard) */}
-      {!isRegisterPage && !isDashboardPage && (
+      {/* Pre-Footer Action Banner (Hidden on /register, /dashboard, and /tracks) */}
+      {!isRegisterPage && !isDashboardPage && !isTracksPage && (
         <div className="border-b border-white/[0.06] bg-white/[0.01]">
           <div className="container mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
             <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-r from-[#120F0D]/90 via-[#0B0C12]/90 to-[#120F0D]/90 p-8 sm:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-2xl">
