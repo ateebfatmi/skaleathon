@@ -207,4 +207,5 @@ const Velaris = ({
   );
 };
 
+export { Velaris };
 export default Velaris;

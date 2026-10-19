@@ -17,6 +17,16 @@ import {
   Download,
   ExternalLink,
   Check,
+  Building,
+  Mail,
+  Phone,
+  BrainCircuit,
+  Globe,
+  Smartphone,
+  ShieldCheck,
+  Clock,
+  Shield,
+  UserCheck,
 } from 'lucide-react';
 import { EventTrack } from '@/lib/db/types';
 import { LocationInput } from './LocationInput';
@@ -336,42 +346,69 @@ export default function MultiStepRegistration({
   return (
     <div className={isModal ? "w-full" : "max-w-3xl mx-auto"}>
       {/* Progress Stepper Bar */}
-      <div className={isModal ? "mb-5" : "mb-10"}>
-        <div className="flex items-center justify-between">
-          {['Team Profile', 'Members', 'Review', 'Payment', 'Confirmed'].map((label, i) => {
-            const stepNum = i + 1;
-            const isCompleted = step > stepNum;
-            const isCurrent = step === stepNum;
-
-            return (
-              <div key={i} className="flex flex-col items-center">
-                <div
-                  className={`flex ${isModal ? 'h-7 w-7 text-[11px]' : 'h-9 w-9 text-xs'} items-center justify-center rounded-xl font-black transition-all ${
-                    isCompleted
-                      ? 'bg-gradient-to-r from-[#805948] to-[#c19a88] text-white shadow-md shadow-[#805948]/25'
-                      : isCurrent
-                      ? 'bg-gradient-to-r from-[#805948] to-[#c19a88] text-white ring-2 sm:ring-4 ring-[#805948]/25 shadow-md shadow-[#805948]/30'
-                      : 'border border-white/10 bg-white/5 text-neutral-500'
-                  }`}
-                >
-                  {isCompleted ? <CheckCircle2 className={isModal ? 'h-3.5 w-3.5' : 'h-5 w-5'} /> : stepNum}
-                </div>
-                <span
-                  className={`mt-1.5 ${isModal ? 'text-[9px]' : 'text-[10px]'} font-bold uppercase tracking-wider ${
-                    isCurrent ? 'text-[#e8c5b4]' : 'text-neutral-400'
-                  }`}
-                >
-                  {label}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-        <div className="mt-3 h-1 w-full bg-white/5 rounded-full overflow-hidden">
+      <div
+        className={
+          isModal
+            ? "mb-5"
+            : "mb-8 rounded-2xl border border-white/10 bg-[#121212]/80 p-4 sm:p-5 backdrop-blur-xl shadow-xl shadow-black/50 relative overflow-hidden"
+        }
+      >
+        {!isModal && (
+          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#c19a88]/40 to-transparent" />
+        )}
+        <div className="relative">
+          {/* Continuous connecting bar behind circles */}
+          <div className="absolute top-4 sm:top-5 left-6 right-6 h-[2px] bg-white/[0.08] -z-0" />
           <div
-            className="h-full bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4] transition-all duration-300"
-            style={{ width: `${((step - 1) / 4) * 100}%` }}
+            className="absolute top-4 sm:top-5 left-6 h-[2px] bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4] transition-all duration-500 -z-0 shadow-[0_0_12px_rgba(193,154,136,0.6)]"
+            style={{
+              width: `${((step - 1) / 4) * 100}%`,
+              maxWidth: 'calc(100% - 48px)',
+            }}
           />
+
+          <div className="relative z-10 flex items-center justify-between">
+            {['Team Profile', 'Members', 'Review', 'Payment', 'Confirmed'].map((label, i) => {
+              const stepNum = i + 1;
+              const isCompleted = step > stepNum;
+              const isCurrent = step === stepNum;
+
+              return (
+                <div key={i} className="flex flex-col items-center">
+                  <div
+                    className={`flex ${
+                      isModal ? 'h-7 w-7 text-[11px]' : 'h-8 w-8 sm:h-10 sm:w-10 text-xs sm:text-sm'
+                    } items-center justify-center rounded-xl font-bold transition-all duration-300 ${
+                      isCompleted
+                        ? 'bg-gradient-to-br from-[#805948] to-[#c19a88] text-white shadow-md shadow-[#805948]/30 ring-2 ring-[#c19a88]/40'
+                        : isCurrent
+                        ? 'bg-gradient-to-br from-[#c19a88] to-[#805948] text-white ring-4 ring-[#805948]/30 shadow-[0_0_20px_rgba(193,154,136,0.45)] scale-105'
+                        : 'border border-white/10 bg-[#161616] text-neutral-500'
+                    }`}
+                  >
+                    {isCompleted ? (
+                      <CheckCircle2 className={isModal ? 'h-3.5 w-3.5' : 'h-4 w-4 sm:h-5 sm:w-5'} />
+                    ) : (
+                      <span className="font-mono">{stepNum}</span>
+                    )}
+                  </div>
+                  <span
+                    className={`mt-2 ${
+                      isModal ? 'text-[9px]' : 'text-[10px] sm:text-[11px]'
+                    } font-bold uppercase tracking-wider transition-colors text-center ${
+                      isCurrent
+                        ? 'text-[#e8c5b4]'
+                        : isCompleted
+                        ? 'text-white/80'
+                        : 'text-neutral-500'
+                    }`}
+                  >
+                    {label}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -385,29 +422,54 @@ export default function MultiStepRegistration({
 
       {/* STEP 1: TEAM INFORMATION */}
       {step === 1 && (
-        <div className={isModal ? "space-y-4" : "rounded-[28px] border border-white/10 bg-[#0E0E0E] p-6 sm:p-8 space-y-6 shadow-2xl shadow-black/80 backdrop-blur-xl"}>
-          <div className={isModal ? "border-b border-white/10 pb-2.5" : "border-b border-white/10 pb-4"}>
-            <h2 className={`${isModal ? 'text-base sm:text-lg' : 'text-xl'} font-bold text-white`}>
-              Step 1: Team & Track Information
-            </h2>
-            <p className="text-xs text-neutral-400 mt-0.5">
-              Provide your team identifier and select your primary competition track.
-            </p>
+        <div className={isModal ? "space-y-4" : "rounded-[28px] border border-white/15 bg-gradient-to-b from-[#141414]/95 via-[#101010]/98 to-[#0B0B0B] p-6 sm:p-9 space-y-6 shadow-[0_25px_80px_rgba(0,0,0,0.85),0_0_50px_rgba(193,154,136,0.06)] backdrop-blur-2xl relative overflow-hidden"}>
+          {!isModal && (
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#c19a88] to-transparent opacity-80" />
+          )}
+
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#c19a88] font-bold">
+                  Stage 01 of 05
+                </span>
+                <span className="text-white/20">•</span>
+                <span className="text-[10px] font-mono text-neutral-400">Team Blueprint</span>
+              </div>
+              <h2 className={`${isModal ? 'text-base sm:text-lg' : 'text-xl sm:text-2xl'} font-bold text-white tracking-tight`}>
+                Team & Track Information
+              </h2>
+              <p className="text-xs text-neutral-400 mt-0.5">
+                Provide your team identifier and select your primary competition track.
+              </p>
+            </div>
+            {!isModal && (
+              <div className="inline-flex items-center gap-1.5 text-[11px] font-mono text-neutral-400 bg-white/[0.03] border border-white/10 px-3 py-1 rounded-full self-start sm:self-auto">
+                <Clock className="h-3 w-3 text-[#c19a88]" />
+                <span>Est: ~2 mins</span>
+              </div>
+            )}
           </div>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">
-                Team Name <span className="text-red-400">*</span>
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5 flex items-center justify-between">
+                <span>Team Name <span className="text-red-400">*</span></span>
+                <span className="text-[10px] text-neutral-500 font-normal">Unique squad handle</span>
               </label>
-              <input
-                type="text"
-                required
-                value={teamName}
-                onChange={(e) => setTeamName(e.target.value)}
-                placeholder="e.g. NeuralCoders"
-                className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
-              />
+              <div className="relative">
+                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-500">
+                  <Users className="h-4 w-4" />
+                </div>
+                <input
+                  type="text"
+                  required
+                  value={teamName}
+                  onChange={(e) => setTeamName(e.target.value)}
+                  placeholder="e.g. NeuralCoders"
+                  className="w-full rounded-xl border border-white/10 bg-[#141414] pl-10 pr-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20 focus:outline-none transition-all"
+                />
+              </div>
             </div>
 
             <div>
@@ -455,27 +517,57 @@ export default function MultiStepRegistration({
                   </div>
                 </div>
               ) : (
-                <div className={`grid grid-cols-1 sm:grid-cols-3 ${isModal ? 'gap-2.5' : 'gap-3'}`}>
-                  {tracks.map((track) => (
-                    <button
-                      key={track.id}
-                      type="button"
-                      onClick={() => {
-                        setSelectedTrack(track.id);
-                        if (hasPreselectedTrack) setIsChangingTrack(false);
-                      }}
-                      className={`${isModal ? 'p-2.5' : 'p-3.5'} rounded-xl border text-left transition-all ${
-                        selectedTrack === track.id
-                          ? 'border-[#c19a88] bg-[#805948]/20 text-white shadow-[0_0_20px_rgba(193,154,136,0.18)] ring-1 ring-[#c19a88]/40'
-                          : 'border-white/10 bg-white/[0.03] text-neutral-400 hover:border-white/20 hover:text-white'
-                      }`}
-                    >
-                      <div className="text-xs font-bold text-white">{track.name}</div>
-                      <div className="text-[10px] text-neutral-400 mt-1 line-clamp-2">
-                        {track.description}
-                      </div>
-                    </button>
-                  ))}
+                <div className={`grid grid-cols-1 sm:grid-cols-3 ${isModal ? 'gap-2.5' : 'gap-3.5'}`}>
+                  {tracks.map((track) => {
+                    const isAi = track.slug.includes('ai');
+                    const isWeb = track.slug.includes('web');
+                    const isSelected = selectedTrack === track.id;
+
+                    return (
+                      <button
+                        key={track.id}
+                        type="button"
+                        onClick={() => {
+                          setSelectedTrack(track.id);
+                          if (hasPreselectedTrack) setIsChangingTrack(false);
+                        }}
+                        className={`group relative p-3.5 sm:p-4 rounded-xl border text-left transition-all duration-200 overflow-hidden ${
+                          isSelected
+                            ? 'border-[#c19a88] bg-gradient-to-b from-[#805948]/25 via-[#c19a88]/10 to-[#141414] text-white shadow-[0_0_25px_rgba(193,154,136,0.22)] ring-1 ring-[#c19a88]/50'
+                            : 'border-white/10 bg-white/[0.02] text-neutral-400 hover:border-white/20 hover:bg-white/[0.04] hover:text-white'
+                        }`}
+                      >
+                        {isSelected && (
+                          <div className="absolute top-0 right-0 px-2 py-0.5 rounded-bl-lg bg-[#c19a88] text-[9px] font-mono font-bold text-black uppercase">
+                            Selected
+                          </div>
+                        )}
+                        <div className="flex items-center gap-2 mb-2">
+                          <div
+                            className={`p-1.5 rounded-lg border transition-colors ${
+                              isSelected
+                                ? 'border-[#c19a88]/50 bg-[#c19a88]/20 text-[#e8c5b4]'
+                                : 'border-white/10 bg-white/5 text-neutral-400 group-hover:text-white'
+                            }`}
+                          >
+                            {isAi ? (
+                              <BrainCircuit className="h-4 w-4" />
+                            ) : isWeb ? (
+                              <Globe className="h-4 w-4" />
+                            ) : (
+                              <Smartphone className="h-4 w-4" />
+                            )}
+                          </div>
+                          <span className="text-xs font-bold text-white leading-tight">
+                            {track.name}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-neutral-400 leading-relaxed line-clamp-2">
+                          {track.description}
+                        </p>
+                      </button>
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -508,37 +600,50 @@ export default function MultiStepRegistration({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">
-                College or Organization <span className="text-neutral-400">(Optional)</span>
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5 flex items-center justify-between">
+                <span>College or Organization <span className="text-neutral-500 font-normal">(Optional)</span></span>
               </label>
-              <input
-                type="text"
-                value={collegeOrOrg}
-                onChange={(e) => setCollegeOrOrg(e.target.value)}
-                placeholder="e.g. IIT Delhi / Independent"
-                className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
-              />
+              <div className="relative">
+                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-500">
+                  <Building className="h-4 w-4" />
+                </div>
+                <input
+                  type="text"
+                  value={collegeOrOrg}
+                  onChange={(e) => setCollegeOrOrg(e.target.value)}
+                  placeholder="e.g. IIT Delhi / Independent"
+                  className="w-full rounded-xl border border-white/10 bg-[#141414] pl-10 pr-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20 focus:outline-none transition-all"
+                />
+              </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">
-                Short Team Description <span className="text-neutral-400">(Optional)</span>
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5 flex items-center justify-between">
+                <span>Short Team Description <span className="text-neutral-500 font-normal">(Optional)</span></span>
               </label>
-              <textarea
-                rows={isModal ? 2 : 2}
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Briefly describe your team's background or area of interest..."
-                className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
-              />
+              <div className="relative">
+                <div className="absolute left-3.5 top-3 text-neutral-500">
+                  <FileText className="h-4 w-4" />
+                </div>
+                <textarea
+                  rows={isModal ? 2 : 2}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Briefly describe your team's background, vision, or area of interest..."
+                  className="w-full rounded-xl border border-white/10 bg-[#141414] pl-10 pr-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20 focus:outline-none transition-all resize-none"
+                />
+              </div>
             </div>
           </div>
 
-          <div className="flex justify-end pt-4 border-t border-white/10">
+          <div className="flex items-center justify-between pt-5 border-t border-white/10">
+            <span className="text-[11px] font-mono text-neutral-500">
+              * Required fields to proceed
+            </span>
             <button
               type="button"
               onClick={handleProceedToStep2}
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/25 hover:scale-[1.02] active:scale-[0.98] transition-all"
+              className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#805948] via-[#9c6d58] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-7 py-3 text-xs font-bold text-white shadow-xl shadow-[#805948]/30 hover:shadow-[0_0_30px_rgba(193,154,136,0.35)] hover:scale-[1.02] active:scale-[0.98] transition-all"
             >
               <span>Continue to Members (Step 2)</span>
               <ArrowRight className="h-4 w-4" />
@@ -549,18 +654,35 @@ export default function MultiStepRegistration({
 
       {/* STEP 2: TEAM MEMBERS */}
       {step === 2 && (
-        <div className={isModal ? "space-y-4" : "rounded-[28px] border border-white/10 bg-[#0E0E0E] p-6 sm:p-8 space-y-6 shadow-2xl shadow-black/80 backdrop-blur-xl"}>
-          <div className={isModal ? "border-b border-white/10 pb-2.5" : "border-b border-white/10 pb-4"}>
-            <h2 className={`${isModal ? 'text-base sm:text-lg' : 'text-xl'} font-bold text-white`}>
-              Step 2: Team Members (1–6 Members)
-            </h2>
-            <p className="text-xs text-neutral-400 mt-0.5">
-              You can participate as an individual builder or add up to 5 additional members (Total size: 1–6).
-            </p>
+        <div className={isModal ? "space-y-4" : "rounded-[28px] border border-white/15 bg-gradient-to-b from-[#141414]/95 via-[#101010]/98 to-[#0B0B0B] p-6 sm:p-9 space-y-6 shadow-[0_25px_80px_rgba(0,0,0,0.85),0_0_50px_rgba(193,154,136,0.06)] backdrop-blur-2xl relative overflow-hidden"}>
+          {!isModal && (
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#c19a88] to-transparent opacity-80" />
+          )}
+
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#c19a88] font-bold">
+                  Stage 02 of 05
+                </span>
+                <span className="text-white/20">•</span>
+                <span className="text-[10px] font-mono text-neutral-400">Roster Setup</span>
+              </div>
+              <h2 className={`${isModal ? 'text-base sm:text-lg' : 'text-xl sm:text-2xl'} font-bold text-white tracking-tight`}>
+                Team Members (1–6 Builders)
+              </h2>
+              <p className="text-xs text-neutral-400 mt-0.5">
+                Participate as an individual engineer or add up to 5 teammates (flat ₹99 covers entire squad).
+              </p>
+            </div>
+            <div className="inline-flex items-center gap-1.5 text-[11px] font-mono text-[#e8c5b4] bg-[#805948]/20 border border-[#c19a88]/30 px-3 py-1 rounded-full self-start sm:self-auto">
+              <UserCheck className="h-3.5 w-3.5 text-[#c19a88]" />
+              <span>{1 + members.length} of 6 Enrolled</span>
+            </div>
           </div>
 
           {/* Leader Card */}
-          <div className={`rounded-2xl border border-[#805948]/30 bg-[#805948]/10 ${isModal ? 'p-3.5 space-y-3' : 'p-5 space-y-4'}`}>
+          <div className={`rounded-2xl border border-[#805948]/30 bg-[#805948]/10 ${isModal ? 'p-3.5 space-y-3' : 'p-5 space-y-4'} relative overflow-hidden`}>
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-[#e8c5b4] uppercase tracking-wider flex items-center gap-1.5">
                 <Users className="h-4 w-4 text-[#c19a88]" />
@@ -576,42 +698,57 @@ export default function MultiStepRegistration({
                 <label className="block text-[11px] font-semibold text-neutral-300 mb-1">
                   Full Name <span className="text-red-400">*</span>
                 </label>
-                <input
-                  type="text"
-                  required
-                  value={leaderName}
-                  onChange={(e) => setLeaderName(e.target.value)}
-                  placeholder="Leader Name"
-                  className="w-full rounded-xl border border-white/10 bg-[#141414] px-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
-                />
+                <div className="relative">
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500">
+                    <Users className="h-3.5 w-3.5" />
+                  </div>
+                  <input
+                    type="text"
+                    required
+                    value={leaderName}
+                    onChange={(e) => setLeaderName(e.target.value)}
+                    placeholder="Leader Name"
+                    className="w-full rounded-xl border border-white/10 bg-[#141414] pl-9 pr-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20 focus:outline-none transition-all"
+                  />
+                </div>
               </div>
 
               <div>
                 <label className="block text-[11px] font-semibold text-neutral-300 mb-1">
                   Email Address <span className="text-red-400">*</span>
                 </label>
-                <input
-                  type="email"
-                  required
-                  value={leaderEmail}
-                  onChange={(e) => setLeaderEmail(e.target.value)}
-                  placeholder="leader@example.com"
-                  className="w-full rounded-xl border border-white/10 bg-[#141414] px-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
-                />
+                <div className="relative">
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500">
+                    <Mail className="h-3.5 w-3.5" />
+                  </div>
+                  <input
+                    type="email"
+                    required
+                    value={leaderEmail}
+                    onChange={(e) => setLeaderEmail(e.target.value)}
+                    placeholder="leader@example.com"
+                    className="w-full rounded-xl border border-white/10 bg-[#141414] pl-9 pr-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20 focus:outline-none transition-all"
+                  />
+                </div>
               </div>
 
               <div>
                 <label className="block text-[11px] font-semibold text-neutral-300 mb-1">
                   Phone Number <span className="text-red-400">*</span>
                 </label>
-                <input
-                  type="tel"
-                  required
-                  value={leaderPhone}
-                  onChange={(e) => setLeaderPhone(e.target.value)}
-                  placeholder="10-digit mobile"
-                  className="w-full rounded-xl border border-white/10 bg-[#141414] px-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
-                />
+                <div className="relative">
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500">
+                    <Phone className="h-3.5 w-3.5" />
+                  </div>
+                  <input
+                    type="tel"
+                    required
+                    value={leaderPhone}
+                    onChange={(e) => setLeaderPhone(e.target.value)}
+                    placeholder="10-digit mobile"
+                    className="w-full rounded-xl border border-white/10 bg-[#141414] pl-9 pr-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20 focus:outline-none transition-all"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -621,16 +758,17 @@ export default function MultiStepRegistration({
             {members.map((member, idx) => (
               <div
                 key={idx}
-                className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 space-y-3 relative"
+                className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 space-y-3 relative hover:border-white/20 transition-all"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-neutral-300">
+                  <span className="text-xs font-bold text-neutral-300 flex items-center gap-1.5">
+                    <Users className="h-3.5 w-3.5 text-neutral-500" />
                     Member #{idx + 2}
                   </span>
                   <button
                     type="button"
                     onClick={() => removeMember(idx)}
-                    className="p-1 rounded text-red-400 hover:bg-red-950/40 transition-colors"
+                    className="p-1 rounded text-red-400 hover:bg-red-950/40 hover:text-red-300 transition-colors"
                     title="Remove member"
                   >
                     <Trash2 className="h-4 w-4" />
@@ -638,35 +776,44 @@ export default function MultiStepRegistration({
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <div>
+                  <div className="relative">
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500">
+                      <Users className="h-3.5 w-3.5" />
+                    </div>
                     <input
                       type="text"
                       required
                       value={member.name}
                       onChange={(e) => updateMember(idx, 'name', e.target.value)}
                       placeholder="Full Name *"
-                      className="w-full rounded-xl border border-white/10 bg-[#141414] px-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
+                      className="w-full rounded-xl border border-white/10 bg-[#141414] pl-9 pr-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20 focus:outline-none transition-all"
                     />
                   </div>
 
-                  <div>
+                  <div className="relative">
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500">
+                      <Mail className="h-3.5 w-3.5" />
+                    </div>
                     <input
                       type="email"
                       required
                       value={member.email}
                       onChange={(e) => updateMember(idx, 'email', e.target.value)}
                       placeholder="Email Address *"
-                      className="w-full rounded-xl border border-white/10 bg-[#141414] px-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
+                      className="w-full rounded-xl border border-white/10 bg-[#141414] pl-9 pr-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20 focus:outline-none transition-all"
                     />
                   </div>
 
-                  <div>
+                  <div className="relative">
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500">
+                      <Phone className="h-3.5 w-3.5" />
+                    </div>
                     <input
                       type="tel"
                       value={member.phone}
                       onChange={(e) => updateMember(idx, 'phone', e.target.value)}
                       placeholder="Phone (Optional)"
-                      className="w-full rounded-xl border border-white/10 bg-[#141414] px-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
+                      className="w-full rounded-xl border border-white/10 bg-[#141414] pl-9 pr-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20 focus:outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -677,7 +824,7 @@ export default function MultiStepRegistration({
               <button
                 type="button"
                 onClick={addMember}
-                className="w-full flex items-center justify-center gap-2 rounded-xl border border-dashed border-white/20 py-3 text-xs font-semibold text-neutral-300 hover:border-[#c19a88] hover:text-[#c19a88] transition-colors"
+                className="w-full flex items-center justify-center gap-2 rounded-xl border border-dashed border-white/20 py-3 text-xs font-semibold text-neutral-300 hover:border-[#c19a88] hover:text-[#c19a88] hover:bg-white/[0.02] transition-all"
               >
                 <Plus className="h-4 w-4" />
                 <span>Add Another Member ({1 + members.length} of 6 configured)</span>
@@ -685,11 +832,11 @@ export default function MultiStepRegistration({
             )}
           </div>
 
-          <div className="flex items-center justify-between pt-4 border-t border-white/10">
+          <div className="flex items-center justify-between pt-5 border-t border-white/10">
             <button
               type="button"
               onClick={() => setStep(1)}
-              className="inline-flex items-center gap-2 text-xs font-semibold text-neutral-400 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-2.5 text-xs font-semibold text-neutral-300 hover:text-white hover:bg-white/10 transition-all"
             >
               <ArrowLeft className="h-4 w-4" />
               <span>Back</span>
@@ -698,7 +845,7 @@ export default function MultiStepRegistration({
             <button
               type="button"
               onClick={handleProceedToStep3}
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/25 hover:scale-[1.02] active:scale-[0.98] transition-all"
+              className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#805948] via-[#9c6d58] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-7 py-3 text-xs font-bold text-white shadow-xl shadow-[#805948]/30 hover:shadow-[0_0_30px_rgba(193,154,136,0.35)] hover:scale-[1.02] active:scale-[0.98] transition-all"
             >
               <span>Review Details (Step 3)</span>
               <ArrowRight className="h-4 w-4" />
@@ -709,18 +856,31 @@ export default function MultiStepRegistration({
 
       {/* STEP 3: REVIEW & CONSENT */}
       {step === 3 && (
-        <div className={isModal ? "space-y-4" : "rounded-[28px] border border-white/10 bg-[#0E0E0E] p-6 sm:p-8 space-y-6 shadow-2xl shadow-black/80 backdrop-blur-xl"}>
-          <div className={isModal ? "border-b border-white/10 pb-2.5" : "border-b border-white/10 pb-4"}>
-            <h2 className={`${isModal ? 'text-base sm:text-lg' : 'text-xl'} font-bold text-white`}>
-              Step 3: Review & Policy Consent
-            </h2>
-            <p className="text-xs text-neutral-400 mt-0.5">
-              Verify your team composition and review applicable event policies.
-            </p>
+        <div className={isModal ? "space-y-4" : "rounded-[28px] border border-white/15 bg-gradient-to-b from-[#141414]/95 via-[#101010]/98 to-[#0B0B0B] p-6 sm:p-9 space-y-6 shadow-[0_25px_80px_rgba(0,0,0,0.85),0_0_50px_rgba(193,154,136,0.06)] backdrop-blur-2xl relative overflow-hidden"}>
+          {!isModal && (
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#c19a88] to-transparent opacity-80" />
+          )}
+
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#c19a88] font-bold">
+                  Stage 03 of 05
+                </span>
+                <span className="text-white/20">•</span>
+                <span className="text-[10px] font-mono text-neutral-400">Verification</span>
+              </div>
+              <h2 className={`${isModal ? 'text-base sm:text-lg' : 'text-xl sm:text-2xl'} font-bold text-white tracking-tight`}>
+                Review & Policy Consent
+              </h2>
+              <p className="text-xs text-neutral-400 mt-0.5">
+                Verify your team composition and review applicable event policies.
+              </p>
+            </div>
           </div>
 
           {/* Summary Box */}
-          <div className={`rounded-2xl border border-white/10 bg-[#141414] ${isModal ? 'p-4 space-y-3' : 'p-5 space-y-4'} text-xs`}>
+          <div className={`rounded-2xl border border-white/10 bg-[#141414] ${isModal ? 'p-4 space-y-3' : 'p-6 space-y-4'} text-xs shadow-inner`}>
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <span className="text-neutral-400">Team Name</span>
               <span className="font-bold text-white text-sm">{teamName}</span>
@@ -728,7 +888,10 @@ export default function MultiStepRegistration({
 
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <span className="text-neutral-400">Selected Track</span>
-              <span className="font-bold text-[#c19a88]">{currentTrackObj?.name}</span>
+              <span className="font-bold text-[#c19a88] flex items-center gap-1.5">
+                <Sparkles className="h-3.5 w-3.5" />
+                {currentTrackObj?.name}
+              </span>
             </div>
 
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
@@ -746,14 +909,14 @@ export default function MultiStepRegistration({
               <span className="text-neutral-200">{leaderName} ({leaderEmail})</span>
             </div>
 
-            <div className="flex items-center justify-between pt-1">
+            <div className="flex items-center justify-between pt-2">
               <span className="text-neutral-300 font-bold">Total Registration Fee</span>
               <span className="text-lg font-black text-[#e8c5b4] font-mono">₹99.00 (Flat Per Team)</span>
             </div>
           </div>
 
           {/* Mandatory Policy Consent */}
-          <div className="rounded-2xl border border-[#805948]/30 bg-[#805948]/10 p-4">
+          <div className="rounded-2xl border border-[#805948]/30 bg-[#805948]/10 p-4.5 hover:border-[#c19a88]/40 transition-colors">
             <label className="flex items-start gap-3 cursor-pointer">
               <input
                 type="checkbox"
@@ -771,11 +934,11 @@ export default function MultiStepRegistration({
             </label>
           </div>
 
-          <div className="flex items-center justify-between pt-4 border-t border-white/10">
+          <div className="flex items-center justify-between pt-5 border-t border-white/10">
             <button
               type="button"
               onClick={() => setStep(2)}
-              className="inline-flex items-center gap-2 text-xs font-semibold text-neutral-400 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-2.5 text-xs font-semibold text-neutral-300 hover:text-white hover:bg-white/10 transition-all"
             >
               <ArrowLeft className="h-4 w-4" />
               <span>Back</span>
@@ -785,7 +948,7 @@ export default function MultiStepRegistration({
               type="button"
               disabled={loading}
               onClick={handleRegisterAndPay}
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/25 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 transition-all"
+              className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#805948] via-[#9c6d58] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-7 py-3 text-xs font-bold text-white shadow-xl shadow-[#805948]/30 hover:shadow-[0_0_30px_rgba(193,154,136,0.35)] hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 transition-all"
             >
               <span>{loading ? 'Registering Team...' : 'Proceed to Payment (₹99)'}</span>
               <ArrowRight className="h-4 w-4" />

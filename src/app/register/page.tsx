@@ -5,7 +5,17 @@ import MultiStepRegistration from '@/components/registration/MultiStepRegistrati
 import RegisteredTeamView from '@/components/registration/RegisteredTeamView';
 import { TeamMember, EventTrack, PaymentOrder } from '@/lib/db/types';
 import Link from 'next/link';
-import { ArrowLeft, Sparkles, AlertCircle } from 'lucide-react';
+import {
+  ArrowLeft,
+  Sparkles,
+  Shield,
+  Trophy,
+  Award,
+  Briefcase,
+  Lock,
+  CheckCircle2,
+} from 'lucide-react';
+import Velaris from '@/components/ui/velaris';
 
 export const revalidate = 0;
 
@@ -45,72 +55,145 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
   const showRegistrationForm = !registeredTeam || searchParams?.new === 'true';
 
   return (
-    <div className="py-14 sm:py-20 bg-[#0B0B0B] min-h-screen relative overflow-hidden">
-      {/* Background ambient light */}
-      <div className="pointer-events-none absolute left-1/2 top-20 -translate-x-1/2 w-full max-w-7xl h-96 bg-[#805948]/10 rounded-full blur-[160px]" />
+    <div className="min-h-screen bg-[#0B0B0B] text-white relative overflow-hidden pt-12 pb-24 sm:pt-16 sm:pb-32 selection:bg-[#805948]/30">
+      {/* Living WebGL Ambient Mesh Canvas */}
+      <div className="fixed inset-0 pointer-events-none opacity-30 mix-blend-screen z-0">
+        <Velaris
+          height="100%"
+          bg="#0B0B0B"
+          colors={['#c19a88', '#805948', '#e8c5b4', '#151016']}
+          speed={1.0}
+          grain={0.18}
+        />
+      </div>
 
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* Radial ambient copper & bronze lights */}
+      <div className="pointer-events-none fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[700px] z-0">
+        <div className="absolute top-10 left-1/4 w-[520px] h-[520px] bg-[#805948]/20 rounded-full blur-[140px]" />
+        <div className="absolute top-24 right-1/4 w-[420px] h-[420px] bg-[#c19a88]/15 rounded-full blur-[120px]" />
+        <div className="absolute bottom-10 left-1/3 w-[360px] h-[360px] bg-[#e8c5b4]/10 rounded-full blur-[130px]" />
+      </div>
+
+      {/* Micro dot matrix pattern */}
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.03)_1px,transparent_0)] [background-size:28px_28px] opacity-75 z-0" />
+
+      <div className="container mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Navigation back */}
-        <div className="mb-8">
+        <div className="mb-8 flex items-center justify-between">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.16em] text-white/50 hover:text-[#c19a88] transition-colors"
+            className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-[11px] font-mono uppercase tracking-[0.18em] text-neutral-400 hover:text-white hover:border-[#c19a88]/40 hover:bg-white/[0.06] backdrop-blur-md transition-all shadow-sm"
           >
-            <ArrowLeft className="h-3.5 w-3.5" />
-            <span>Back to Skaleathon</span>
+            <ArrowLeft className="h-3.5 w-3.5 text-[#c19a88] group-hover:-translate-x-0.5 transition-transform" />
+            <span>Return to Overview</span>
           </Link>
+
+          <div className="hidden sm:flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-[#c19a88] bg-[#805948]/10 border border-[#c19a88]/20 px-3 py-1 rounded-full">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span>Official Portal • January 2028</span>
+          </div>
         </div>
 
         {/* Dynamic Header */}
         {!showRegistrationForm && registeredTeam ? (
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <div className="inline-flex items-center gap-2.5 mb-3">
-              <span className="h-px w-6 bg-emerald-500/70" />
-              <p className="text-[10px] uppercase tracking-[0.26em] text-emerald-400 font-semibold">
-                National Registration • Verified Candidate
-              </p>
-              <span className="h-px w-6 bg-emerald-500/70" />
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-medium text-emerald-400 mb-5 backdrop-blur-xl shadow-sm">
+              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
+              <span className="tracking-[0.24em] uppercase font-bold text-[10px]">
+                National Registration Verified
+              </span>
             </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-white tracking-tight leading-tight">
+
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-medium text-white tracking-tight leading-[1.15]">
               Registration{' '}
               <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
                 confirmed
               </span>
               .
             </h1>
-            <p className="mt-3 text-xs sm:text-sm text-white/55 leading-relaxed font-light">
-              Welcome back, <strong className="text-white font-medium">{session?.fullName || registeredTeam.name}</strong>. Your squad is officially verified and enrolled for Skaleathon (January 2028). Below is your digital team pass and stage roadmap.
+
+            <p className="mt-4 text-xs sm:text-sm text-neutral-400 max-w-xl mx-auto leading-relaxed font-light">
+              Welcome back, <strong className="text-white font-medium">{session?.fullName || registeredTeam.name}</strong>. Your squad is authoritatively enrolled and verified for Skaleathon (January 2028). Below is your digital team pass, roster details, and competition roadmap.
             </p>
           </div>
         ) : (
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <div className="inline-flex items-center gap-2.5 mb-3">
-              <span className="h-px w-6 bg-[#c19a88]/70" />
-              <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
-                National Registration
-              </p>
-              <span className="h-px w-6 bg-[#c19a88]/70" />
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+            {/* Brand Badge */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 text-xs font-medium text-white/70 mb-5 backdrop-blur-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
+              <Sparkles className="h-3.5 w-3.5 text-[#c19a88]" />
+              <span className="tracking-[0.24em] uppercase text-white/60 font-semibold text-[10px]">
+                SkaleKraft Presents
+              </span>
+              <span className="text-white/20">•</span>
+              <span className="text-[#c19a88] font-medium tracking-wider text-[11px]">
+                National Hackathon Registration
+              </span>
             </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-white tracking-tight leading-tight">
+
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-medium text-white tracking-tight leading-[1.15]">
               Register your{' '}
               <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
-                team
+                squad
               </span>
               .
             </h1>
-            <p className="mt-4 text-xs sm:text-sm text-white/55 leading-relaxed font-light">
-              Form your squad of 1–6 engineers, pick your arena, and complete the flat ₹99 team entry fee to compete for ₹35,000 in prizes and SkaleKraft studio internship opportunities for selected candidates.
+
+            <p className="mt-4 text-xs sm:text-sm text-neutral-400 max-w-xl mx-auto leading-relaxed font-light">
+              Form your team of 1–6 engineers, choose your technical arena, and finalize the flat ₹99 entry fee to compete for ₹35,000 in cash prizes, verifiable credentials, and fast-track studio interviews.
             </p>
+
+            {/* Value Highlights Strip */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 mt-8 pt-6 border-t border-white/[0.08]">
+              <div className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-sm text-left">
+                <div className="h-8 w-8 rounded-lg bg-[#805948]/20 border border-[#c19a88]/30 flex items-center justify-center text-[#c19a88] shrink-0">
+                  <Shield className="h-4 w-4" />
+                </div>
+                <div>
+                  <div className="text-[11px] font-bold text-white">Flat ₹99 Entry</div>
+                  <div className="text-[10px] text-neutral-400">1 to 6 members</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-sm text-left">
+                <div className="h-8 w-8 rounded-lg bg-[#805948]/20 border border-[#c19a88]/30 flex items-center justify-center text-[#c19a88] shrink-0">
+                  <Trophy className="h-4 w-4" />
+                </div>
+                <div>
+                  <div className="text-[11px] font-bold text-white">₹35,000 Pool</div>
+                  <div className="text-[10px] text-neutral-400">Top 3 Cash Awards</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-sm text-left">
+                <div className="h-8 w-8 rounded-lg bg-[#805948]/20 border border-[#c19a88]/30 flex items-center justify-center text-[#c19a88] shrink-0">
+                  <Award className="h-4 w-4" />
+                </div>
+                <div>
+                  <div className="text-[11px] font-bold text-white">Top 25 Badges</div>
+                  <div className="text-[10px] text-neutral-400">Verified Credentials</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-sm text-left">
+                <div className="h-8 w-8 rounded-lg bg-[#805948]/20 border border-[#c19a88]/30 flex items-center justify-center text-[#c19a88] shrink-0">
+                  <Briefcase className="h-4 w-4" />
+                </div>
+                <div>
+                  <div className="text-[11px] font-bold text-white">Studio Fast-Track</div>
+                  <div className="text-[10px] text-neutral-400">Direct Interviews</div>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
         {/* If user is registering another team while already having an active team */}
         {searchParams?.new === 'true' && registeredTeam && (
-          <div className="max-w-2xl mx-auto mb-8 rounded-2xl border border-[#c19a88]/30 bg-[#c19a88]/10 p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+          <div className="max-w-3xl mx-auto mb-8 rounded-2xl border border-[#c19a88]/30 bg-[#c19a88]/10 p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs backdrop-blur-md">
             <div className="flex items-center gap-2 text-white">
               <Sparkles className="h-4 w-4 text-[#c19a88] shrink-0" />
               <span>
-                You currently have an active registration for <strong className="text-[#e8c5b4]">{registeredTeam.name}</strong>.
+                You currently have an active registration for team <strong className="text-[#e8c5b4]">{registeredTeam.name}</strong>.
               </span>
             </div>
             <Link
@@ -122,7 +205,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
           </div>
         )}
 
-        {/* Content View */}
+        {/* Main Content Area */}
         {!showRegistrationForm && registeredTeam ? (
           <RegisteredTeamView
             team={registeredTeam}
@@ -133,20 +216,37 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
             userEmail={session?.email}
           />
         ) : isClosed ? (
-          <div className="max-w-xl mx-auto rounded-[28px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-10 text-center space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+          <div className="max-w-xl mx-auto rounded-[28px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-10 text-center space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.4)] backdrop-blur-xl">
             <h2 className="text-xl font-medium text-white">Registration is Currently Closed</h2>
             <p className="text-xs text-white/50 leading-relaxed font-light">
               The portal is currently inactive ({event.status.replace(/_/g, ' ')}). Please monitor updates on the homepage or contact the studio at skalekraft@gmail.com.
             </p>
             <Link
               href="/"
-              className="inline-block rounded-full bg-white/[0.05] border border-white/10 px-6 py-2.5 text-xs font-semibold text-white hover:bg-white/10 transition-colors"
+              className="inline-block rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] px-6 py-2.5 text-xs font-semibold text-white shadow-lg hover:scale-105 transition-all"
             >
               Return to Homepage
             </Link>
           </div>
         ) : (
-          <MultiStepRegistration tracks={tracks} />
+          <div className="relative">
+            <MultiStepRegistration tracks={tracks} />
+
+            {/* Bottom Trust & Assurance Note */}
+            <div className="mt-8 text-center text-[11px] text-neutral-500 font-mono flex flex-wrap items-center justify-center gap-4">
+              <span className="inline-flex items-center gap-1.5">
+                <Lock className="h-3 w-3 text-[#c19a88]" />
+                256-Bit SSL Encryption
+              </span>
+              <span>•</span>
+              <span className="inline-flex items-center gap-1.5">
+                <CheckCircle2 className="h-3 w-3 text-emerald-400" />
+                Razorpay Automated Reconciliation
+              </span>
+              <span>•</span>
+              <span>Instant Team Dashboard Provisioning</span>
+            </div>
+          </div>
         )}
       </div>
     </div>
