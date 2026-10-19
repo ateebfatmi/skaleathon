@@ -176,20 +176,34 @@ export default function Navbar() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`relative flex h-8 items-center rounded-full px-4 text-xs font-medium tracking-wide transition-all duration-200 ${
+                    className={`relative flex h-8 items-center rounded-full px-4 text-xs font-medium tracking-wide transition-colors duration-200 ${
                       active
-                        ? 'bg-gradient-to-r from-white/[0.12] to-white/[0.07] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_0_15px_rgba(193,154,136,0.15)] font-semibold'
-                        : 'text-neutral-400 hover:text-white hover:bg-white/[0.05]'
+                        ? 'text-white font-semibold'
+                        : 'text-neutral-400 hover:text-white hover:bg-white/[0.04]'
                     }`}
                   >
                     {active && (
-                      <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] shadow-[0_0_8px_#c19a88] mr-2 inline-block animate-pulse" />
+                      <motion.div
+                        layoutId="active-nav-indicator"
+                        className="absolute inset-0 rounded-full bg-gradient-to-r from-white/[0.14] to-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_0_15px_rgba(193,154,136,0.18)]"
+                        transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                      />
                     )}
-                    <span>{item.name}</span>
+                    <span className="relative z-10 flex items-center">
+                      {active && (
+                        <motion.span
+                          layoutId="active-nav-dot"
+                          className="h-1.5 w-1.5 rounded-full bg-[#c19a88] shadow-[0_0_8px_#c19a88] mr-2 inline-block"
+                          transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                        />
+                      )}
+                      <span>{item.name}</span>
+                    </span>
                   </Link>
                 );
               })}
             </nav>
+
           ) : (
             /* Subtle center breadcrumb on Dashboard top row */
             <div className="hidden lg:flex items-center gap-2 text-xs font-medium text-white/50">

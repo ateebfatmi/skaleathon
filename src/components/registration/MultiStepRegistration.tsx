@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
   Users,
@@ -16,8 +16,11 @@ import {
   Sparkles,
   Download,
   ExternalLink,
+  Check,
 } from 'lucide-react';
 import { EventTrack } from '@/lib/db/types';
+import { LocationInput } from './LocationInput';
+import { INDIAN_STATES, MAJOR_INDIAN_CITIES } from '@/data/indiaLocations';
 
 interface Member {
   name: string;
@@ -46,18 +49,35 @@ export default function MultiStepRegistration({
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // Form State
+  const hasPreselectedTrack = Boolean(initialTrackId || searchParams?.get('track'));
+  const [isChangingTrack, setIsChangingTrack] = useState(false);
   const [teamName, setTeamName] = useState('');
   const [selectedTrack, setSelectedTrack] = useState(preselectedTrack);
 
   useEffect(() => {
     if (initialTrackId) {
       setSelectedTrack(initialTrackId);
+      setIsChangingTrack(false);
     }
   }, [initialTrackId]);
   const [collegeOrOrg, setCollegeOrOrg] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [description, setDescription] = useState('');
+
+  const availableCities = useMemo(() => {
+    if (state.trim()) {
+      const matchState = state.trim().toLowerCase();
+      const inState = MAJOR_INDIAN_CITIES.filter(
+        (c) => c.state.toLowerCase() === matchState
+      );
+      const otherStates = MAJOR_INDIAN_CITIES.filter(
+        (c) => c.state.toLowerCase() !== matchState
+      );
+      return inState.length > 0 ? [...inState, ...otherStates] : MAJOR_INDIAN_CITIES;
+    }
+    return MAJOR_INDIAN_CITIES;
+  }, [state]);
 
   // Leader details
   const [leaderName, setLeaderName] = useState('');
@@ -318,58 +338,100 @@ export default function MultiStepRegistration({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">
-                Competition Track <span className="text-red-400">*</span>
-              </label>
-              <div className={`grid grid-cols-1 sm:grid-cols-3 ${isModal ? 'gap-2.5' : 'gap-3'}`}>
-                {tracks.map((track) => (
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="block text-xs font-semibold text-neutral-300">
+                  Competition Track <span className="text-red-400">*</span>
+                </label>
+                {hasPreselectedTrack && !isChangingTrack && (
                   <button
-                    key={track.id}
                     type="button"
-                    onClick={() => setSelectedTrack(track.id)}
-                    className={`${isModal ? 'p-2.5' : 'p-3.5'} rounded-xl border text-left transition-all ${
-                      selectedTrack === track.id
-                        ? 'border-[#c19a88] bg-[#805948]/20 text-white shadow-[0_0_20px_rgba(193,154,136,0.18)] ring-1 ring-[#c19a88]/40'
-                        : 'border-white/10 bg-white/[0.03] text-neutral-400 hover:border-white/20 hover:text-white'
-                    }`}
+                    onClick={() => setIsChangingTrack(true)}
+                    className="text-[11px] font-mono text-[#c19a88] hover:text-[#e8c5b4] underline cursor-pointer"
                   >
-                    <div className="text-xs font-bold text-white">{track.name}</div>
-                    <div className="text-[10px] text-neutral-400 mt-1 line-clamp-2">
-                      {track.description}
-                    </div>
+                    Change Track
                   </button>
-                ))}
+                )}
+                {hasPreselectedTrack && isChangingTrack && (
+                  <button
+                    type="button"
+                    onClick={() => setIsChangingTrack(false)}
+                    className="text-[11px] font-mono text-white/40 hover:text-white cursor-pointer"
+                  >
+                    Done
+                  </button>
+                )}
               </div>
+
+              {hasPreselectedTrack && !isChangingTrack && currentTrackObj ? (
+                <div className="rounded-xl border border-[#c19a88]/40 bg-[#805948]/15 p-3 sm:p-3.5 flex items-center justify-between shadow-sm">
+                  <div className="flex items-center gap-3">
+                    <div className="h-8 w-8 rounded-lg border border-[#c19a88]/40 bg-[#c19a88]/20 flex items-center justify-center text-[#e8c5b4] shrink-0">
+                      <Check className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold text-white flex items-center gap-2">
+                        <span>{currentTrackObj.name}</span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400">
+                          Selected
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-white/50 line-clamp-1 mt-0.5 font-light">
+                        {currentTrackObj.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className={`grid grid-cols-1 sm:grid-cols-3 ${isModal ? 'gap-2.5' : 'gap-3'}`}>
+                  {tracks.map((track) => (
+                    <button
+                      key={track.id}
+                      type="button"
+                      onClick={() => {
+                        setSelectedTrack(track.id);
+                        if (hasPreselectedTrack) setIsChangingTrack(false);
+                      }}
+                      className={`${isModal ? 'p-2.5' : 'p-3.5'} rounded-xl border text-left transition-all ${
+                        selectedTrack === track.id
+                          ? 'border-[#c19a88] bg-[#805948]/20 text-white shadow-[0_0_20px_rgba(193,154,136,0.18)] ring-1 ring-[#c19a88]/40'
+                          : 'border-white/10 bg-white/[0.03] text-neutral-400 hover:border-white/20 hover:text-white'
+                      }`}
+                    >
+                      <div className="text-xs font-bold text-white">{track.name}</div>
+                      <div className="text-[10px] text-neutral-400 mt-1 line-clamp-2">
+                        {track.description}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-semibold text-neutral-300 mb-1.5">
-                  City <span className="text-red-400">*</span>
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                  placeholder="e.g. Bengaluru"
-                  className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
-                />
-              </div>
+              <LocationInput
+                label="City"
+                required
+                value={city}
+                onChange={setCity}
+                options={availableCities}
+                placeholder="e.g. Bengaluru"
+                helperText={state ? `Prioritizing ${state}` : 'Select or search'}
+                onSelectOption={(item) => {
+                  if (typeof item !== 'string' && item.state) {
+                    setState(item.state);
+                  }
+                }}
+              />
 
-              <div>
-                <label className="block text-xs font-semibold text-neutral-300 mb-1.5">
-                  State <span className="text-red-400">*</span>
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={state}
-                  onChange={(e) => setState(e.target.value)}
-                  placeholder="e.g. Karnataka"
-                  className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
-                />
-              </div>
+              <LocationInput
+                label="State"
+                required
+                value={state}
+                onChange={setState}
+                options={INDIAN_STATES}
+                placeholder="e.g. Karnataka"
+                helperText="Select or search"
+              />
             </div>
 
             <div>
@@ -574,16 +636,18 @@ export default function MultiStepRegistration({
 
       {/* STEP 3: REVIEW & CONSENT */}
       {step === 3 && (
-        <div className="rounded-[28px] border border-white/10 bg-[#0E0E0E] p-6 sm:p-8 space-y-6 shadow-2xl shadow-black/80 backdrop-blur-xl">
-          <div className="border-b border-white/10 pb-4">
-            <h2 className="text-xl font-bold text-white">Step 3: Review & Policy Consent</h2>
-            <p className="text-xs text-neutral-400 mt-1">
+        <div className={isModal ? "space-y-4" : "rounded-[28px] border border-white/10 bg-[#0E0E0E] p-6 sm:p-8 space-y-6 shadow-2xl shadow-black/80 backdrop-blur-xl"}>
+          <div className={isModal ? "border-b border-white/10 pb-2.5" : "border-b border-white/10 pb-4"}>
+            <h2 className={`${isModal ? 'text-base sm:text-lg' : 'text-xl'} font-bold text-white`}>
+              Step 3: Review & Policy Consent
+            </h2>
+            <p className="text-xs text-neutral-400 mt-0.5">
               Verify your team composition and review applicable event policies.
             </p>
           </div>
 
           {/* Summary Box */}
-          <div className="rounded-2xl border border-white/10 bg-[#141414] p-5 space-y-4 text-xs">
+          <div className={`rounded-2xl border border-white/10 bg-[#141414] ${isModal ? 'p-4 space-y-3' : 'p-5 space-y-4'} text-xs`}>
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <span className="text-neutral-400">Team Name</span>
               <span className="font-bold text-white text-sm">{teamName}</span>
@@ -659,12 +723,14 @@ export default function MultiStepRegistration({
 
       {/* STEP 4: PAYMENT (RAZORPAY) */}
       {step === 4 && paymentOrder && (
-        <div className="rounded-[28px] border border-white/10 bg-[#0E0E0E] p-6 sm:p-8 space-y-6 shadow-2xl shadow-black/80 backdrop-blur-xl">
-          <div className="border-b border-white/10 pb-4">
+        <div className={isModal ? "space-y-4" : "rounded-[28px] border border-white/10 bg-[#0E0E0E] p-6 sm:p-8 space-y-6 shadow-2xl shadow-black/80 backdrop-blur-xl"}>
+          <div className={isModal ? "border-b border-white/10 pb-2.5" : "border-b border-white/10 pb-4"}>
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold text-white">Step 4: Secure Razorpay Payment</h2>
-                <p className="text-xs text-neutral-400 mt-1">
+                <h2 className={`${isModal ? 'text-base sm:text-lg' : 'text-xl'} font-bold text-white`}>
+                  Step 4: Secure Razorpay Payment
+                </h2>
+                <p className="text-xs text-neutral-400 mt-0.5">
                   Finalize your team registration fee of ₹99 via Razorpay.
                 </p>
               </div>
@@ -676,7 +742,7 @@ export default function MultiStepRegistration({
           </div>
 
           {/* Payment Invoice Summary */}
-          <div className="rounded-2xl border border-white/10 bg-[#141414] p-6 space-y-4">
+          <div className={`rounded-2xl border border-white/10 bg-[#141414] ${isModal ? 'p-4 space-y-3' : 'p-6 space-y-4'}`}>
             <div className="flex items-center justify-between text-xs">
               <span className="text-neutral-400">Team</span>
               <span className="font-bold text-white">{teamName}</span>
@@ -692,7 +758,7 @@ export default function MultiStepRegistration({
           </div>
 
           {/* Gateway Status Box */}
-          <div className="rounded-2xl border border-[#805948]/30 bg-[#805948]/10 p-5 space-y-3">
+          <div className={`rounded-2xl border border-[#805948]/30 bg-[#805948]/10 ${isModal ? 'p-3.5 space-y-2' : 'p-5 space-y-3'}`}>
             <div className="flex items-start gap-3">
               <CreditCard className="h-5 w-5 text-[#c19a88] shrink-0 mt-0.5" />
               <div>
@@ -724,7 +790,7 @@ export default function MultiStepRegistration({
 
       {/* STEP 5: REGISTRATION CONFIRMATION */}
       {step === 5 && (
-        <div className="rounded-[28px] border border-[#c19a88]/30 bg-[#0E0E0E] p-8 sm:p-12 text-center space-y-6 shadow-2xl shadow-black/80">
+        <div className={isModal ? "rounded-2xl border border-[#c19a88]/30 bg-[#0E0E0E] p-6 sm:p-8 text-center space-y-4 shadow-xl" : "rounded-[28px] border border-[#c19a88]/30 bg-[#0E0E0E] p-8 sm:p-12 text-center space-y-6 shadow-2xl shadow-black/80"}>
           <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#805948]/20 border border-[#c19a88]/40 text-[#c19a88] mx-auto shadow-inner">
             <CheckCircle2 className="h-8 w-8" />
           </div>
