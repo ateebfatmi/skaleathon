@@ -26,10 +26,20 @@ interface Member {
   college_or_org: string;
 }
 
-export default function MultiStepRegistration({ tracks }: { tracks: EventTrack[] }) {
+export default function MultiStepRegistration({
+  tracks,
+  initialTrackId,
+  isModal = false,
+  onClose,
+}: {
+  tracks: EventTrack[];
+  initialTrackId?: string;
+  isModal?: boolean;
+  onClose?: () => void;
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const preselectedTrack = searchParams.get('track') || tracks[0]?.id || 'track-ai-ml';
+  const preselectedTrack = initialTrackId || searchParams.get('track') || tracks[0]?.id || 'track-ai-ml';
 
   const [step, setStep] = useState<number>(1);
   const [loading, setLoading] = useState(false);
@@ -38,6 +48,12 @@ export default function MultiStepRegistration({ tracks }: { tracks: EventTrack[]
   // Form State
   const [teamName, setTeamName] = useState('');
   const [selectedTrack, setSelectedTrack] = useState(preselectedTrack);
+
+  useEffect(() => {
+    if (initialTrackId) {
+      setSelectedTrack(initialTrackId);
+    }
+  }, [initialTrackId]);
   const [collegeOrOrg, setCollegeOrOrg] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');

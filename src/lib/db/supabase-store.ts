@@ -331,6 +331,7 @@ export class SupabaseStore {
     }
 
     // 3. Insert team members
+    const defaultCollege = params.college_or_org?.trim() || 'Independent';
     const membersToInsert = [
       {
         id: crypto.randomUUID(),
@@ -339,7 +340,7 @@ export class SupabaseStore {
         name: params.leader_name,
         email: params.leader_email.toLowerCase(),
         phone: params.leader_phone || null,
-        college_name: params.college_or_org || null,
+        college_name: defaultCollege,
         is_leader: true,
         created_at: new Date().toISOString(),
       },
@@ -350,7 +351,7 @@ export class SupabaseStore {
         name: m.name,
         email: m.email.toLowerCase(),
         phone: m.phone || null,
-        college_name: m.college_or_org || null,
+        college_name: m.college_or_org?.trim() || defaultCollege,
         is_leader: false,
         created_at: new Date().toISOString(),
       })),

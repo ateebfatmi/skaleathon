@@ -1,17 +1,26 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { Bot, Globe, Smartphone, ArrowRight } from 'lucide-react';
 import { EventTrack } from '@/lib/db/types';
 import { motion } from 'framer-motion';
 import { SpotlightCard } from '@/components/ui/spotlight-card';
+import RegistrationModal from '@/components/registration/RegistrationModal';
 
 interface TracksProps {
   tracks: EventTrack[];
 }
 
 export default function TracksSection({ tracks }: TracksProps) {
+  const [registerModalOpen, setRegisterModalOpen] = useState(false);
+  const [selectedTrackForModal, setSelectedTrackForModal] = useState<string>('track-ai-ml');
+
+  const handleOpenRegistration = (trackId: string) => {
+    setSelectedTrackForModal(trackId);
+    setRegisterModalOpen(true);
+  };
+
   const iconMap: Record<string, any> = {
     'track-ai-ml': Bot,
     'track-web-dev': Globe,
@@ -106,13 +115,14 @@ export default function TracksSection({ tracks }: TracksProps) {
                   </div>
 
                   <div className="mt-auto pt-6 border-t border-white/[0.07] flex items-center justify-between">
-                    <Link
-                      href={`/register?track=${track.id}`}
-                      className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#c19a88] hover:text-white transition-colors"
+                    <button
+                      type="button"
+                      onClick={() => handleOpenRegistration(track.id)}
+                      className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#c19a88] hover:text-white transition-colors cursor-pointer group/btn"
                     >
-                      <span>Register Track</span>
-                      <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1.5 transition-transform" />
-                    </Link>
+                      <span>Register for Track</span>
+                      <ArrowRight className="h-3.5 w-3.5 group-hover/btn:translate-x-1.5 transition-transform" />
+                    </button>
                     <span className="text-[10px] font-mono text-white/30">₹99 / Team</span>
                   </div>
                 </SpotlightCard>
@@ -121,6 +131,14 @@ export default function TracksSection({ tracks }: TracksProps) {
           })}
         </div>
       </div>
+
+      {/* Pop-up Candidate & Team Registration Modal */}
+      <RegistrationModal
+        isOpen={registerModalOpen}
+        onClose={() => setRegisterModalOpen(false)}
+        tracks={tracks}
+        selectedTrackId={selectedTrackForModal}
+      />
     </section>
   );
 }
