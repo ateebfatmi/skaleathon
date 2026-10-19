@@ -199,7 +199,7 @@ export default async function DashboardPage() {
             <ChevronRight className="h-4 w-4 text-neutral-500 group-hover:text-white group-hover:translate-x-1 transition-all" />
           </Link>
 
-          {/* Project Submission */}
+          {/* Submission (PPT & Project) */}
           <Link
             href="/dashboard/submission"
             className="group flex items-center justify-between py-4 hover:pl-2 transition-all"
@@ -210,10 +210,10 @@ export default async function DashboardPage() {
               </div>
               <div>
                 <div className="text-sm font-semibold text-white group-hover:text-[#e8c5b4] transition-colors">
-                  Project Submission
+                  Submission
                 </div>
                 <div className="text-xs text-neutral-400">
-                  Deliverable specifications, code repository guidelines, and demo portal (activates in Stage 03).
+                  Stage 02 Architecture PPT & Stage 03 deliverable portal.
                 </div>
               </div>
             </div>

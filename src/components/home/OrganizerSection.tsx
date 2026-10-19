@@ -23,7 +23,7 @@ export default function OrganizerSection() {
             <div className="flex items-center gap-2.5">
               <span className="h-px w-6 bg-[#c19a88]/70" />
               <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
-                The Product Studio
+                About SkaleKraft
               </p>
             </div>
 
@@ -33,7 +33,7 @@ export default function OrganizerSection() {
                 style={{ width: 56, height: 56, minWidth: 56, minHeight: 56 }}
               >
                 <Image
-                  src="/images/skalekraft-mark.png"
+                  src="/images/skalekraft-logo.png"
                   alt="SkaleKraft logo"
                   width={56}
                   height={56}
@@ -51,7 +51,7 @@ export default function OrganizerSection() {
             </div>
 
             <p className="text-base sm:text-lg text-white/70 leading-relaxed font-light">
-              <strong className="text-white font-medium">SkaleKraft</strong> is an independent software product studio engineering modern websites, mobile applications, AI agents, and scalable digital systems for ambitious brands.
+              <strong className="text-white font-medium">SkaleKraft</strong> engineers modern websites, mobile applications, AI agents, and scalable digital systems for ambitious brands.
             </p>
 
             <p className="text-sm text-white/50 leading-relaxed font-light">
@@ -65,7 +65,7 @@ export default function OrganizerSection() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] px-6 py-3 text-xs font-semibold tracking-wide text-white shadow-[0_4px_25px_rgba(128,89,72,0.35)] hover:scale-105 transition-all duration-300"
               >
-                <span>Visit SkaleKraft Studio</span>
+                <span>Visit SkaleKraft</span>
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
 

@@ -52,7 +52,7 @@ const STAGES_OVERVIEW = [
     title: 'Codebase & Demo Submission',
     status: 'Locked • Phase 03',
     statusColor: 'text-amber-400 bg-amber-500/10 border-amber-500/30',
-    description: 'Public GitHub repo, working live cloud deployment, and 2-3 minute unlisted video walkthrough demonstration.',
+    description: 'Public GitHub repo, working live cloud deployment, and optional 2-3 minute video walkthrough (not necessary, but provides a distinct evaluation advantage).',
   },
   {
     step: 'Stage 04',
@@ -179,15 +179,15 @@ export default function SubmissionPage() {
           <div className="space-y-3 relative z-10 max-w-xl mx-auto">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 px-4 py-1.5 text-[10px] font-mono uppercase tracking-wider text-[#e8c5b4]">
               <Clock className="h-3.5 w-3.5 text-[#c19a88]" />
-              <span>Stage 03 • Deliverable Window Opening Soon</span>
+              <span>Stages 02 & 03 • Deliverable Window Opening Soon</span>
             </div>
 
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-white">
-              Project Submissions Unlock in Phase 03
+              Submissions Unlock in Stages 02 & 03
             </h1>
 
             <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-              The project deliverable submission portal for codebases, live deployment links, and video walkthroughs will officially activate following the completion of <strong>Stage 01 Online Screening Quiz</strong>.
+              The official submission portal for <strong>Stage 02 Idea & Architecture PPT</strong> and <strong>Stage 03 Codebase & Demo</strong> will officially activate following the completion of Stage 01 Online Screening Quiz.
             </p>
 
             {team && (
@@ -235,24 +235,36 @@ export default function SubmissionPage() {
                 Advance Preparation
               </span>
               <h2 className="text-lg font-bold text-white mt-0.5">
-                Deliverables Required in Stage 03
+                Deliverables Required for Submissions
               </h2>
             </div>
             <span className="text-xs text-neutral-400 font-mono">
-              Prepare these assets in advance for a frictionless submission
+              Prepare both PPT blueprint and codebase deliverables in advance
             </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="p-4 rounded-2xl border border-[#c19a88]/30 bg-[#c19a88]/[0.03] space-y-2">
+              <div className="flex items-center gap-2 text-white text-xs font-semibold">
+                <div className="p-1.5 rounded-lg bg-[#c19a88]/20 border border-[#c19a88]/40 text-[#e8c5b4]">
+                  <FileText className="h-4 w-4" />
+                </div>
+                <span>Stage 02 • Architecture PPT (PDF) <span className="text-[#c19a88]">*</span></span>
+              </div>
+              <p className="text-[11px] text-neutral-400 leading-relaxed font-light">
+                Submit a structured slide deck (max 10 slides) detailing your problem statement, system architecture, database schema, API/AI design, and execution plan.
+              </p>
+            </div>
+
             <div className="p-4 rounded-2xl border border-white/[0.06] bg-white/[0.02] space-y-2">
               <div className="flex items-center gap-2 text-white text-xs font-semibold">
                 <div className="p-1.5 rounded-lg bg-[#c19a88]/15 border border-[#c19a88]/30 text-[#c19a88]">
                   <Github className="h-4 w-4" />
                 </div>
-                <span>1. Public GitHub Repository <span className="text-[#c19a88]">*</span></span>
+                <span>Stage 03 • Public GitHub Repo <span className="text-[#c19a88]">*</span></span>
               </div>
               <p className="text-[11px] text-neutral-400 leading-relaxed font-light">
-                Must contain your complete engineering source code, a comprehensive README with setup instructions, environment variable template, and clear commit history.
+                Must contain your complete engineering source code, a comprehensive README with setup instructions, environment template, and clear commit history.
               </p>
             </div>
 
@@ -261,10 +273,10 @@ export default function SubmissionPage() {
                 <div className="p-1.5 rounded-lg bg-[#c19a88]/15 border border-[#c19a88]/30 text-[#c19a88]">
                   <Globe className="h-4 w-4" />
                 </div>
-                <span>2. Live Deployed URL (Recommended)</span>
+                <span>Stage 03 • Live Deployed URL</span>
               </div>
               <p className="text-[11px] text-neutral-400 leading-relaxed font-light">
-                Host your prototype live on Vercel, Netlify, Railway, or AWS. Working URLs receive bonus technical execution marks during blind judge evaluation.
+                Host your prototype live on Vercel, Netlify, Railway, or AWS. Working live URLs receive bonus technical execution marks during blind judge evaluation.
               </p>
             </div>
 
@@ -273,19 +285,19 @@ export default function SubmissionPage() {
                 <div className="p-1.5 rounded-lg bg-[#c19a88]/15 border border-[#c19a88]/30 text-[#c19a88]">
                   <Video className="h-4 w-4" />
                 </div>
-                <span>3. 2-3 Min Video Walkthrough (Recommended)</span>
+                <span>Stage 03 • Video Walkthrough (Optional Advantage)</span>
               </div>
               <p className="text-[11px] text-neutral-400 leading-relaxed font-light">
-                An unlisted YouTube or Loom walkthrough demonstrating the working product, key architecture, and how it solves the stated industry problem.
+                An unlisted YouTube or Loom walkthrough demonstrating the working product and architecture. A video link is not necessary, but gives your team an evaluation edge.
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl border border-white/[0.06] bg-white/[0.02] space-y-2">
+            <div className="p-4 rounded-2xl border border-white/[0.06] bg-white/[0.02] space-y-2 sm:col-span-2">
               <div className="flex items-center gap-2 text-white text-xs font-semibold">
                 <div className="p-1.5 rounded-lg bg-[#c19a88]/15 border border-[#c19a88]/30 text-[#c19a88]">
-                  <FileText className="h-4 w-4" />
+                  <Code2 className="h-4 w-4" />
                 </div>
-                <span>4. Architectural Breakdown & AI Disclosure</span>
+                <span>Stage 03 • Architectural Breakdown & AI Disclosure</span>
               </div>
               <p className="text-[11px] text-neutral-400 leading-relaxed font-light">
                 Written breakdown of problem statement, architectural diagram, member contributions, and transparent disclosure of AI coding assistants utilized.

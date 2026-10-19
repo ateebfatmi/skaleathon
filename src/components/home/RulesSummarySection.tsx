@@ -9,11 +9,11 @@ export default function RulesSummarySection() {
   const rules = [
     'Open across India to engineering students, recent graduates, and independent developers.',
     'Teams composed of 1 to 6 members. Solo builders are fully supported.',
-    'Nominal ₹99 flat team registration fee confirmed prior to project submission.',
+    'Nominal ₹99 flat team registration fee confirmed prior to competition submission.',
     'Original codebase written for this event. Plagiarized projects face immediate disqualification.',
     'Open-source libraries, frameworks, and public APIs are permitted with attribution.',
     'AI tool assistance is welcomed with full disclosure in the final submission manifesto.',
-    'A public GitHub repository and live deployed URL / demo video are required for scoring.',
+    'A public GitHub repository and live deployed URL are required (video demo provides an evaluation advantage).',
   ];
 
   return (

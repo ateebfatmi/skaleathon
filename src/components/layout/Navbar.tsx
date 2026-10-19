@@ -93,7 +93,7 @@ export default function Navbar() {
     { name: 'Stages', href: '/dashboard/stages', icon: Layers },
     { name: 'Leaderboard', href: '/dashboard/leaderboard', icon: Trophy },
     { name: 'My Team', href: '/dashboard/team', icon: Users },
-    { name: 'Project Submission', href: '/dashboard/submission', icon: Send },
+    { name: 'Submission', href: '/dashboard/submission', icon: Send },
     { name: 'Track & Specs', href: '/dashboard/track', icon: Code2 },
     { name: 'Announcements', href: '/dashboard/announcements', icon: Bell },
     { name: 'Certificates', href: '/dashboard/certificates', icon: Award },
@@ -253,14 +253,14 @@ export default function Navbar() {
                         </div>
 
                         {/* User Identity Info */}
-                        <Link href="/dashboard" className="flex flex-col text-left group/text">
-                          <span className="text-xs font-semibold text-white/90 group-hover/text:text-[#c19a88] transition-colors max-w-[120px] truncate leading-tight">
+                        <div className="flex flex-col text-left select-none">
+                          <span className="text-xs font-semibold text-white/90 max-w-[120px] truncate leading-tight">
                             {user?.firstName || user?.fullName || 'Innovator'}
                           </span>
                           <span className="text-[9px] uppercase tracking-[0.22em] text-[#c19a88] font-bold leading-none mt-0.5">
                             Participant
                           </span>
-                        </Link>
+                        </div>
                       </div>
                     </div>
                   </SignedIn>

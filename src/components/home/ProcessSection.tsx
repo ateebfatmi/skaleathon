@@ -35,7 +35,7 @@ export default function ProcessSection() {
       title: 'Project Submission',
       subtitle: 'Core Engineering & Codebase',
       date: 'Jan 17–26, 2028',
-      desc: 'The primary building phase. Teams submit their public GitHub repository, live deployed URL, demo walkthrough video, and documentation.',
+      desc: 'The primary building phase. Teams submit their public GitHub repository and live deployed URL (optional demo video provides an evaluation advantage).',
       icon: Code2,
       accent: 'rgba(232, 197, 180, 0.18)',
       badge: 'Build Phase',

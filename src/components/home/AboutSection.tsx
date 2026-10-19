@@ -52,7 +52,7 @@ export default function AboutSection() {
             <div className="flex items-center gap-2.5">
               <span className="h-px w-6 bg-[#c19a88]/70" />
               <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
-                The Studio Standard
+                The Engineering Standard
               </p>
             </div>
 
@@ -66,7 +66,7 @@ export default function AboutSection() {
 
             <p className="text-base text-white/70 leading-relaxed font-light">
               <strong className="text-white font-medium">Skaleathon</strong> is presented by{' '}
-              <strong className="text-[#c19a88] font-medium">SkaleKraft</strong> — an independent product studio engineering modern websites, mobile applications, and autonomous AI systems for ambitious brands.
+              <strong className="text-[#c19a88] font-medium">SkaleKraft</strong> — engineering modern websites, mobile applications, and autonomous AI systems for ambitious brands.
             </p>
 
             <p className="text-sm text-white/50 leading-relaxed font-light">

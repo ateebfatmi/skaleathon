@@ -147,11 +147,11 @@ export default async function DashboardTrackPage() {
 
                 <div className="p-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02] space-y-1">
                   <div className="flex items-center gap-2 font-semibold text-white">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
-                    <span>2-3 Minute Video Demo</span>
+                    <CheckCircle2 className="h-3.5 w-3.5 text-[#c19a88] shrink-0" />
+                    <span>2-3 Minute Video Demo (Optional Advantage)</span>
                   </div>
                   <p className="text-neutral-400 leading-relaxed pl-5.5">
-                    Unlisted YouTube, Loom, or Drive video demonstrating the core workflow and technical implementation.
+                    Unlisted YouTube, Loom, or Drive video. A video link is not necessary, but will give your team a distinct evaluation advantage with the judges.
                   </p>
                 </div>
 

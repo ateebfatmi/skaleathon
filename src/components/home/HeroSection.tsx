@@ -82,7 +82,7 @@ export default function HeroSection({ event }: HeroProps) {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="mt-6 text-base sm:text-lg text-white/70 max-w-2xl mx-auto font-normal leading-relaxed"
         >
-          India&apos;s definitive 4-stage national engineering tournament. Architect, build, and deploy production-grade software across AI/ML, Web, and Mobile arenas — competing for a ₹35,000 cash prize pool, Top 25 merit certificates, and SkaleKraft studio internship opportunities.
+          India&apos;s definitive 4-stage national engineering tournament. Architect, build, and deploy production-grade software across AI/ML, Web, and Mobile arenas — competing for a ₹35,000 cash prize pool, Top 25 merit certificates, and SkaleKraft internship opportunities.
         </motion.p>
 
         {/* Status & Funnel Pill */}
@@ -152,7 +152,7 @@ export default function HeroSection({ event }: HeroProps) {
           </div>
           <div className="flex items-center justify-center gap-2 p-2.5 rounded-xl border border-white/[0.04] bg-white/[0.01]">
             <Sparkles className="h-4 w-4 text-[#c19a88] shrink-0" />
-            <span className="font-medium text-white/80">Studio Internship Interviews</span>
+            <span className="font-medium text-white/80">SkaleKraft Internship Interviews</span>
           </div>
         </motion.div>
 
