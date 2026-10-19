@@ -11,6 +11,8 @@ import {
   ArrowUpRight,
   ArrowRight,
   Sparkles,
+  Instagram,
+  Linkedin,
   Github,
   LayoutDashboard,
   Shield,
@@ -39,7 +41,7 @@ export default function Footer() {
     { label: 'Team Registration', href: '/register' },
     { label: 'Participant Dashboard', href: '/dashboard' },
     { label: 'Submit Deliverables', href: '/dashboard/submission' },
-    { label: 'Verify Credentials', href: '/verify-certificate/SKALE27-PREVIEW' },
+    { label: 'Certificates', href: '/verify-certificate/SKALE27-PREVIEW' },
     { label: 'Judge Evaluation Portal', href: '/judge' },
   ];
 
@@ -128,7 +130,7 @@ export default function Footer() {
                 FAQ
               </Link>
               <Link href="/verify-certificate/SKALE27-PREVIEW" className="hover:text-white transition-colors">
-                Verify Credentials
+                Certificates
               </Link>
               <a
                 href="mailto:skalekraft@gmail.com"
@@ -173,7 +175,7 @@ export default function Footer() {
                     Ready to Build, Innovate, and Scale?
                   </h3>
                   <p className="text-sm sm:text-base text-neutral-400 font-light leading-relaxed">
-                    Join hundreds of forward-thinking engineers across India. Register your team for ₹99 and compete for the ₹35,000 cash pool, top 25 verified credentials, and interview opportunities.
+                    Join hundreds of forward-thinking engineers across India. Register your team for ₹99 and compete for the ₹35,000 prize pool, certificates for Top 25 teams, and interview opportunities.
                   </p>
                 </div>
 
@@ -257,29 +259,32 @@ export default function Footer() {
 
               <div className="flex items-center gap-3">
                 <a
+                  href="https://instagram.com/skalekraft"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-400 hover:border-[#c19a88]/50 hover:bg-[#c19a88]/15 hover:text-white transition-all shadow-sm"
+                  aria-label="SkaleKraft on Instagram"
+                  title="Instagram"
+                >
+                  <Instagram className="h-4 w-4" />
+                </a>
+                <a
+                  href="https://linkedin.com/company/skalekraft"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-400 hover:border-[#c19a88]/50 hover:bg-[#c19a88]/15 hover:text-white transition-all shadow-sm"
+                  aria-label="SkaleKraft on LinkedIn"
+                  title="LinkedIn"
+                >
+                  <Linkedin className="h-4 w-4" />
+                </a>
+                <a
                   href="mailto:skalekraft@gmail.com"
                   className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-400 hover:border-[#c19a88]/50 hover:bg-[#c19a88]/15 hover:text-white transition-all shadow-sm"
                   aria-label="Email SkaleKraft"
+                  title="Email SkaleKraft"
                 >
                   <Mail className="h-4 w-4" />
-                </a>
-                <a
-                  href="https://skalekraft.in"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-400 hover:border-[#c19a88]/50 hover:bg-[#c19a88]/15 hover:text-white transition-all shadow-sm"
-                  aria-label="SkaleKraft Website"
-                >
-                  <Globe className="h-4 w-4" />
-                </a>
-                <a
-                  href="https://github.com/ateebfatmi"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-400 hover:border-[#c19a88]/50 hover:bg-[#c19a88]/15 hover:text-white transition-all shadow-sm"
-                  aria-label="GitHub Profile"
-                >
-                  <Github className="h-4 w-4" />
                 </a>
               </div>
             </div>
@@ -346,8 +351,8 @@ export default function Footer() {
                 href="/verify-certificate/SKALE27-PREVIEW"
                 className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.02] px-3 py-2 text-xs font-medium text-neutral-300 hover:border-[#c19a88]/40 hover:text-white transition-all"
               >
-                <ShieldCheck className="h-3.5 w-3.5 text-[#c19a88]" />
-                <span>Verify Credentials</span>
+                <Award className="h-3.5 w-3.5 text-[#c19a88]" />
+                <span>Certificates</span>
               </Link>
             </div>
           </div>
