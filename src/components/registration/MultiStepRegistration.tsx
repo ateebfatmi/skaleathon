@@ -241,9 +241,9 @@ export default function MultiStepRegistration({
   const currentTrackObj = tracks.find((t) => t.id === selectedTrack);
 
   return (
-    <div className="max-w-3xl mx-auto">
+    <div className={isModal ? "w-full" : "max-w-3xl mx-auto"}>
       {/* Progress Stepper Bar */}
-      <div className="mb-10">
+      <div className={isModal ? "mb-5" : "mb-10"}>
         <div className="flex items-center justify-between">
           {['Team Profile', 'Members', 'Review', 'Payment', 'Confirmed'].map((label, i) => {
             const stepNum = i + 1;
@@ -253,19 +253,19 @@ export default function MultiStepRegistration({
             return (
               <div key={i} className="flex flex-col items-center">
                 <div
-                  className={`flex h-9 w-9 items-center justify-center rounded-xl text-xs font-black transition-all ${
+                  className={`flex ${isModal ? 'h-7 w-7 text-[11px]' : 'h-9 w-9 text-xs'} items-center justify-center rounded-xl font-black transition-all ${
                     isCompleted
-                      ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
+                      ? 'bg-gradient-to-r from-[#805948] to-[#c19a88] text-white shadow-md shadow-[#805948]/25'
                       : isCurrent
-                      ? 'bg-brand-600 text-white ring-4 ring-brand-500/20 shadow-md shadow-brand-500/30'
-                      : 'border border-white/10 bg-white/5 text-slate-500'
+                      ? 'bg-gradient-to-r from-[#805948] to-[#c19a88] text-white ring-2 sm:ring-4 ring-[#805948]/25 shadow-md shadow-[#805948]/30'
+                      : 'border border-white/10 bg-white/5 text-neutral-500'
                   }`}
                 >
-                  {isCompleted ? <CheckCircle2 className="h-5 w-5" /> : stepNum}
+                  {isCompleted ? <CheckCircle2 className={isModal ? 'h-3.5 w-3.5' : 'h-5 w-5'} /> : stepNum}
                 </div>
                 <span
-                  className={`mt-2 text-[10px] font-bold uppercase tracking-wider ${
-                    isCurrent ? 'text-white' : 'text-slate-400'
+                  className={`mt-1.5 ${isModal ? 'text-[9px]' : 'text-[10px]'} font-bold uppercase tracking-wider ${
+                    isCurrent ? 'text-[#e8c5b4]' : 'text-neutral-400'
                   }`}
                 >
                   {label}
@@ -274,9 +274,9 @@ export default function MultiStepRegistration({
             );
           })}
         </div>
-        <div className="mt-4 h-1 w-full bg-white/5 rounded-full overflow-hidden">
+        <div className="mt-3 h-1 w-full bg-white/5 rounded-full overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-brand-500 to-cyanAccent-500 transition-all duration-300"
+            className="h-full bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4] transition-all duration-300"
             style={{ width: `${((step - 1) / 4) * 100}%` }}
           />
         </div>
@@ -284,7 +284,7 @@ export default function MultiStepRegistration({
 
       {/* Error Alert */}
       {errorMessage && (
-        <div className="mb-6 flex items-start gap-2.5 rounded-xl border border-red-500/30 bg-red-950/30 p-4 text-xs text-red-200">
+        <div className="mb-4 flex items-start gap-2.5 rounded-xl border border-red-500/30 bg-red-950/30 p-3.5 text-xs text-red-200">
           <AlertCircle className="h-4 w-4 shrink-0 text-red-400 mt-0.5" />
           <span>{errorMessage}</span>
         </div>
@@ -292,17 +292,19 @@ export default function MultiStepRegistration({
 
       {/* STEP 1: TEAM INFORMATION */}
       {step === 1 && (
-        <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 space-y-6">
-          <div className="border-b border-white/10 pb-4">
-            <h2 className="text-xl font-bold text-white">Step 1: Team & Track Information</h2>
-            <p className="text-xs text-slate-400 mt-1">
+        <div className={isModal ? "space-y-4" : "rounded-[28px] border border-white/10 bg-[#0E0E0E] p-6 sm:p-8 space-y-6 shadow-2xl shadow-black/80 backdrop-blur-xl"}>
+          <div className={isModal ? "border-b border-white/10 pb-2.5" : "border-b border-white/10 pb-4"}>
+            <h2 className={`${isModal ? 'text-base sm:text-lg' : 'text-xl'} font-bold text-white`}>
+              Step 1: Team & Track Information
+            </h2>
+            <p className="text-xs text-neutral-400 mt-0.5">
               Provide your team identifier and select your primary competition track.
             </p>
           </div>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">
                 Team Name <span className="text-red-400">*</span>
               </label>
               <input
@@ -311,28 +313,28 @@ export default function MultiStepRegistration({
                 value={teamName}
                 onChange={(e) => setTeamName(e.target.value)}
                 placeholder="e.g. NeuralCoders"
-                className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+                className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">
                 Competition Track <span className="text-red-400">*</span>
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className={`grid grid-cols-1 sm:grid-cols-3 ${isModal ? 'gap-2.5' : 'gap-3'}`}>
                 {tracks.map((track) => (
                   <button
                     key={track.id}
                     type="button"
                     onClick={() => setSelectedTrack(track.id)}
-                    className={`p-3.5 rounded-xl border text-left transition-all ${
+                    className={`${isModal ? 'p-2.5' : 'p-3.5'} rounded-xl border text-left transition-all ${
                       selectedTrack === track.id
-                        ? 'border-cyanAccent-400 bg-cyanAccent-950/40 text-white'
-                        : 'border-white/10 bg-white/5 text-slate-400 hover:border-white/20'
+                        ? 'border-[#c19a88] bg-[#805948]/20 text-white shadow-[0_0_20px_rgba(193,154,136,0.18)] ring-1 ring-[#c19a88]/40'
+                        : 'border-white/10 bg-white/[0.03] text-neutral-400 hover:border-white/20 hover:text-white'
                     }`}
                   >
                     <div className="text-xs font-bold text-white">{track.name}</div>
-                    <div className="text-[10px] text-slate-400 mt-1 line-clamp-2">
+                    <div className="text-[10px] text-neutral-400 mt-1 line-clamp-2">
                       {track.description}
                     </div>
                   </button>
@@ -342,7 +344,7 @@ export default function MultiStepRegistration({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                <label className="block text-xs font-semibold text-neutral-300 mb-1.5">
                   City <span className="text-red-400">*</span>
                 </label>
                 <input
@@ -351,12 +353,12 @@ export default function MultiStepRegistration({
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   placeholder="e.g. Bengaluru"
-                  className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+                  className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                <label className="block text-xs font-semibold text-neutral-300 mb-1.5">
                   State <span className="text-red-400">*</span>
                 </label>
                 <input
@@ -365,34 +367,34 @@ export default function MultiStepRegistration({
                   value={state}
                   onChange={(e) => setState(e.target.value)}
                   placeholder="e.g. Karnataka"
-                  className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+                  className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                College or Organization <span className="text-slate-400">(Optional)</span>
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">
+                College or Organization <span className="text-neutral-400">(Optional)</span>
               </label>
               <input
                 type="text"
                 value={collegeOrOrg}
                 onChange={(e) => setCollegeOrOrg(e.target.value)}
                 placeholder="e.g. IIT Delhi / Independent"
-                className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+                className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                Short Team Description <span className="text-slate-400">(Optional)</span>
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">
+                Short Team Description <span className="text-neutral-400">(Optional)</span>
               </label>
               <textarea
-                rows={2}
+                rows={isModal ? 2 : 2}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Briefly describe your team's background or area of interest..."
-                className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+                className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
               />
             </div>
           </div>
@@ -401,7 +403,7 @@ export default function MultiStepRegistration({
             <button
               type="button"
               onClick={handleProceedToStep2}
-              className="inline-flex items-center gap-2 rounded-xl bg-brand-600 px-6 py-2.5 text-xs font-bold text-white hover:bg-brand-500 transition-colors"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/25 hover:scale-[1.02] active:scale-[0.98] transition-all"
             >
               <span>Continue to Members (Step 2)</span>
               <ArrowRight className="h-4 w-4" />
@@ -412,29 +414,31 @@ export default function MultiStepRegistration({
 
       {/* STEP 2: TEAM MEMBERS */}
       {step === 2 && (
-        <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 space-y-6">
-          <div className="border-b border-white/10 pb-4">
-            <h2 className="text-xl font-bold text-white">Step 2: Team Members (1–6 Members)</h2>
-            <p className="text-xs text-slate-400 mt-1">
+        <div className={isModal ? "space-y-4" : "rounded-[28px] border border-white/10 bg-[#0E0E0E] p-6 sm:p-8 space-y-6 shadow-2xl shadow-black/80 backdrop-blur-xl"}>
+          <div className={isModal ? "border-b border-white/10 pb-2.5" : "border-b border-white/10 pb-4"}>
+            <h2 className={`${isModal ? 'text-base sm:text-lg' : 'text-xl'} font-bold text-white`}>
+              Step 2: Team Members (1–6 Members)
+            </h2>
+            <p className="text-xs text-neutral-400 mt-0.5">
               You can participate as an individual builder or add up to 5 additional members (Total size: 1–6).
             </p>
           </div>
 
           {/* Leader Card */}
-          <div className="rounded-2xl border border-brand-500/30 bg-brand-950/20 p-5 space-y-4">
+          <div className={`rounded-2xl border border-[#805948]/30 bg-[#805948]/10 ${isModal ? 'p-3.5 space-y-3' : 'p-5 space-y-4'}`}>
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-brand-300 uppercase tracking-wider flex items-center gap-1.5">
-                <Users className="h-4 w-4" />
+              <span className="text-xs font-bold text-[#e8c5b4] uppercase tracking-wider flex items-center gap-1.5">
+                <Users className="h-4 w-4 text-[#c19a88]" />
                 Member #1: Team Leader (Primary Contact)
               </span>
-              <span className="text-[10px] font-semibold bg-brand-900/60 px-2 py-0.5 rounded text-brand-200">
+              <span className="text-[10px] font-semibold bg-[#805948]/40 border border-[#c19a88]/30 px-2.5 py-0.5 rounded-full text-[#e8c5b4]">
                 Authorized Submitter
               </span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div>
-                <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                <label className="block text-[11px] font-semibold text-neutral-300 mb-1">
                   Full Name <span className="text-red-400">*</span>
                 </label>
                 <input
@@ -443,12 +447,12 @@ export default function MultiStepRegistration({
                   value={leaderName}
                   onChange={(e) => setLeaderName(e.target.value)}
                   placeholder="Leader Name"
-                  className="w-full rounded-xl border border-white/10 bg-[#080d17] px-3 py-2 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+                  className="w-full rounded-xl border border-white/10 bg-[#141414] px-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                <label className="block text-[11px] font-semibold text-neutral-300 mb-1">
                   Email Address <span className="text-red-400">*</span>
                 </label>
                 <input
@@ -457,12 +461,12 @@ export default function MultiStepRegistration({
                   value={leaderEmail}
                   onChange={(e) => setLeaderEmail(e.target.value)}
                   placeholder="leader@example.com"
-                  className="w-full rounded-xl border border-white/10 bg-[#080d17] px-3 py-2 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+                  className="w-full rounded-xl border border-white/10 bg-[#141414] px-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                <label className="block text-[11px] font-semibold text-neutral-300 mb-1">
                   Phone Number <span className="text-red-400">*</span>
                 </label>
                 <input
@@ -471,7 +475,7 @@ export default function MultiStepRegistration({
                   value={leaderPhone}
                   onChange={(e) => setLeaderPhone(e.target.value)}
                   placeholder="10-digit mobile"
-                  className="w-full rounded-xl border border-white/10 bg-[#080d17] px-3 py-2 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+                  className="w-full rounded-xl border border-white/10 bg-[#141414] px-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
                 />
               </div>
             </div>
@@ -482,10 +486,10 @@ export default function MultiStepRegistration({
             {members.map((member, idx) => (
               <div
                 key={idx}
-                className="rounded-2xl border border-white/10 bg-[#080d17] p-4 space-y-3 relative"
+                className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 space-y-3 relative"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-300">
+                  <span className="text-xs font-bold text-neutral-300">
                     Member #{idx + 2}
                   </span>
                   <button
@@ -506,7 +510,7 @@ export default function MultiStepRegistration({
                       value={member.name}
                       onChange={(e) => updateMember(idx, 'name', e.target.value)}
                       placeholder="Full Name *"
-                      className="w-full rounded-xl border border-white/10 bg-[#060911] px-3 py-2 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+                      className="w-full rounded-xl border border-white/10 bg-[#141414] px-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
                     />
                   </div>
 
@@ -517,7 +521,7 @@ export default function MultiStepRegistration({
                       value={member.email}
                       onChange={(e) => updateMember(idx, 'email', e.target.value)}
                       placeholder="Email Address *"
-                      className="w-full rounded-xl border border-white/10 bg-[#060911] px-3 py-2 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+                      className="w-full rounded-xl border border-white/10 bg-[#141414] px-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
                     />
                   </div>
 
@@ -527,7 +531,7 @@ export default function MultiStepRegistration({
                       value={member.phone}
                       onChange={(e) => updateMember(idx, 'phone', e.target.value)}
                       placeholder="Phone (Optional)"
-                      className="w-full rounded-xl border border-white/10 bg-[#060911] px-3 py-2 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+                      className="w-full rounded-xl border border-white/10 bg-[#141414] px-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none transition-colors"
                     />
                   </div>
                 </div>
@@ -538,7 +542,7 @@ export default function MultiStepRegistration({
               <button
                 type="button"
                 onClick={addMember}
-                className="w-full flex items-center justify-center gap-2 rounded-xl border border-dashed border-white/20 py-3 text-xs font-semibold text-slate-300 hover:border-cyanAccent-400 hover:text-white transition-colors"
+                className="w-full flex items-center justify-center gap-2 rounded-xl border border-dashed border-white/20 py-3 text-xs font-semibold text-neutral-300 hover:border-[#c19a88] hover:text-[#c19a88] transition-colors"
               >
                 <Plus className="h-4 w-4" />
                 <span>Add Another Member ({1 + members.length} of 6 configured)</span>
@@ -550,7 +554,7 @@ export default function MultiStepRegistration({
             <button
               type="button"
               onClick={() => setStep(1)}
-              className="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white"
+              className="inline-flex items-center gap-2 text-xs font-semibold text-neutral-400 hover:text-white"
             >
               <ArrowLeft className="h-4 w-4" />
               <span>Back</span>
@@ -559,7 +563,7 @@ export default function MultiStepRegistration({
             <button
               type="button"
               onClick={handleProceedToStep3}
-              className="inline-flex items-center gap-2 rounded-xl bg-brand-600 px-6 py-2.5 text-xs font-bold text-white hover:bg-brand-500 transition-colors"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/25 hover:scale-[1.02] active:scale-[0.98] transition-all"
             >
               <span>Review Details (Step 3)</span>
               <ArrowRight className="h-4 w-4" />
@@ -570,62 +574,62 @@ export default function MultiStepRegistration({
 
       {/* STEP 3: REVIEW & CONSENT */}
       {step === 3 && (
-        <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 space-y-6">
+        <div className="rounded-[28px] border border-white/10 bg-[#0E0E0E] p-6 sm:p-8 space-y-6 shadow-2xl shadow-black/80 backdrop-blur-xl">
           <div className="border-b border-white/10 pb-4">
             <h2 className="text-xl font-bold text-white">Step 3: Review & Policy Consent</h2>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-neutral-400 mt-1">
               Verify your team composition and review applicable event policies.
             </p>
           </div>
 
           {/* Summary Box */}
-          <div className="rounded-2xl border border-white/10 bg-[#080d17] p-5 space-y-4 text-xs">
+          <div className="rounded-2xl border border-white/10 bg-[#141414] p-5 space-y-4 text-xs">
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <span className="text-slate-400">Team Name</span>
+              <span className="text-neutral-400">Team Name</span>
               <span className="font-bold text-white text-sm">{teamName}</span>
             </div>
 
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <span className="text-slate-400">Selected Track</span>
-              <span className="font-bold text-cyanAccent-300">{currentTrackObj?.name}</span>
+              <span className="text-neutral-400">Selected Track</span>
+              <span className="font-bold text-[#c19a88]">{currentTrackObj?.name}</span>
             </div>
 
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <span className="text-slate-400">Location</span>
-              <span className="text-slate-200">{city}, {state}</span>
+              <span className="text-neutral-400">Location</span>
+              <span className="text-neutral-200">{city}, {state}</span>
             </div>
 
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <span className="text-slate-400">Total Team Size</span>
+              <span className="text-neutral-400">Total Team Size</span>
               <span className="font-bold text-white">{1 + members.length} Innovator(s)</span>
             </div>
 
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <span className="text-slate-400">Team Leader</span>
-              <span className="text-slate-200">{leaderName} ({leaderEmail})</span>
+              <span className="text-neutral-400">Team Leader</span>
+              <span className="text-neutral-200">{leaderName} ({leaderEmail})</span>
             </div>
 
             <div className="flex items-center justify-between pt-1">
-              <span className="text-slate-300 font-bold">Total Registration Fee</span>
-              <span className="text-lg font-black text-amber-400">₹99.00 (Flat Per Team)</span>
+              <span className="text-neutral-300 font-bold">Total Registration Fee</span>
+              <span className="text-lg font-black text-[#e8c5b4] font-mono">₹99.00 (Flat Per Team)</span>
             </div>
           </div>
 
           {/* Mandatory Policy Consent */}
-          <div className="rounded-2xl border border-brand-500/20 bg-brand-950/20 p-4">
+          <div className="rounded-2xl border border-[#805948]/30 bg-[#805948]/10 p-4">
             <label className="flex items-start gap-3 cursor-pointer">
               <input
                 type="checkbox"
                 checked={acceptedPolicies}
                 onChange={(e) => setAcceptedPolicies(e.target.checked)}
-                className="mt-1 h-4 w-4 rounded border-white/20 bg-[#080d17] text-brand-600 focus:ring-brand-500"
+                className="mt-1 h-4 w-4 rounded border-white/20 bg-[#141414] text-[#c19a88] focus:ring-[#c19a88] accent-[#c19a88]"
               />
-              <span className="text-xs text-slate-300 leading-relaxed">
+              <span className="text-xs text-neutral-300 leading-relaxed">
                 I hereby certify that all information provided is accurate and all team members consent to participation. I accept the{' '}
-                <a href="/rules" target="_blank" className="text-cyanAccent-400 underline">Official Rules</a>,{' '}
-                <a href="/terms" target="_blank" className="text-cyanAccent-400 underline">Terms & Conditions</a>,{' '}
-                <a href="/privacy" target="_blank" className="text-cyanAccent-400 underline">Privacy Policy</a>, and the{' '}
-                <a href="/refund-policy" target="_blank" className="text-cyanAccent-400 underline">Refund Policy</a>.
+                <a href="/rules" target="_blank" className="text-[#c19a88] hover:text-[#e8c5b4] underline">Official Rules</a>,{' '}
+                <a href="/terms" target="_blank" className="text-[#c19a88] hover:text-[#e8c5b4] underline">Terms & Conditions</a>,{' '}
+                <a href="/privacy" target="_blank" className="text-[#c19a88] hover:text-[#e8c5b4] underline">Privacy Policy</a>, and the{' '}
+                <a href="/refund-policy" target="_blank" className="text-[#c19a88] hover:text-[#e8c5b4] underline">Refund Policy</a>.
               </span>
             </label>
           </div>
@@ -634,7 +638,7 @@ export default function MultiStepRegistration({
             <button
               type="button"
               onClick={() => setStep(2)}
-              className="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white"
+              className="inline-flex items-center gap-2 text-xs font-semibold text-neutral-400 hover:text-white"
             >
               <ArrowLeft className="h-4 w-4" />
               <span>Back</span>
@@ -644,7 +648,7 @@ export default function MultiStepRegistration({
               type="button"
               disabled={loading}
               onClick={handleRegisterAndPay}
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-brand-500/20 hover:from-brand-500 hover:to-indigo-500 disabled:opacity-50 transition-all"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/25 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 transition-all"
             >
               <span>{loading ? 'Registering Team...' : 'Proceed to Payment (₹99)'}</span>
               <ArrowRight className="h-4 w-4" />
@@ -655,16 +659,16 @@ export default function MultiStepRegistration({
 
       {/* STEP 4: PAYMENT (RAZORPAY) */}
       {step === 4 && paymentOrder && (
-        <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 space-y-6">
+        <div className="rounded-[28px] border border-white/10 bg-[#0E0E0E] p-6 sm:p-8 space-y-6 shadow-2xl shadow-black/80 backdrop-blur-xl">
           <div className="border-b border-white/10 pb-4">
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-xl font-bold text-white">Step 4: Secure Razorpay Payment</h2>
-                <p className="text-xs text-slate-400 mt-1">
+                <p className="text-xs text-neutral-400 mt-1">
                   Finalize your team registration fee of ₹99 via Razorpay.
                 </p>
               </div>
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-400">
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-[#c19a88]">
                 <Lock className="h-4 w-4" />
                 <span>256-bit Encrypted</span>
               </div>
@@ -672,28 +676,28 @@ export default function MultiStepRegistration({
           </div>
 
           {/* Payment Invoice Summary */}
-          <div className="rounded-2xl border border-white/10 bg-[#080d17] p-6 space-y-4">
+          <div className="rounded-2xl border border-white/10 bg-[#141414] p-6 space-y-4">
             <div className="flex items-center justify-between text-xs">
-              <span className="text-slate-400">Team</span>
+              <span className="text-neutral-400">Team</span>
               <span className="font-bold text-white">{teamName}</span>
             </div>
             <div className="flex items-center justify-between text-xs">
-              <span className="text-slate-400">Order Reference</span>
-              <span className="font-mono text-slate-300">{paymentOrder.orderId}</span>
+              <span className="text-neutral-400">Order Reference</span>
+              <span className="font-mono text-neutral-300">{paymentOrder.orderId}</span>
             </div>
             <div className="flex items-center justify-between text-xs">
-              <span className="text-slate-400">Amount Due</span>
-              <span className="text-xl font-black text-amber-400">₹{paymentOrder.amount}.00</span>
+              <span className="text-neutral-400">Amount Due</span>
+              <span className="text-xl font-black text-[#e8c5b4] font-mono">₹{paymentOrder.amount}.00</span>
             </div>
           </div>
 
           {/* Gateway Status Box */}
-          <div className="rounded-2xl border border-cyanAccent-500/20 bg-cyanAccent-950/20 p-5 space-y-3">
+          <div className="rounded-2xl border border-[#805948]/30 bg-[#805948]/10 p-5 space-y-3">
             <div className="flex items-start gap-3">
-              <CreditCard className="h-5 w-5 text-cyanAccent-400 shrink-0 mt-0.5" />
+              <CreditCard className="h-5 w-5 text-[#c19a88] shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-xs font-bold text-white">Server-Verified Gateway Integration</h4>
-                <p className="text-[11px] text-slate-300 mt-1 leading-relaxed">
+                <p className="text-[11px] text-neutral-300 mt-1 leading-relaxed">
                   Our payment workflow strictly enforces server-side Razorpay order generation, cryptographic HMAC signature verification, and idempotent webhook reconciliation.
                 </p>
               </div>
@@ -706,12 +710,12 @@ export default function MultiStepRegistration({
               type="button"
               disabled={loading}
               onClick={handleVerifyPayment}
-              className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-6 py-3.5 text-sm font-bold text-white shadow-xl shadow-emerald-600/20 hover:from-emerald-500 hover:to-teal-500 disabled:opacity-50 transition-all"
+              className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-6 py-3.5 text-sm font-bold text-white shadow-xl shadow-[#805948]/25 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 transition-all"
             >
               <CreditCard className="h-4 w-4" />
               <span>{loading ? 'Verifying Gateway Signature...' : 'Pay ₹99 & Verify Signature'}</span>
             </button>
-            <p className="text-center text-[10px] text-slate-400">
+            <p className="text-center text-[10px] text-neutral-500">
               * In sandbox mode without live merchant keys, the system executes an automated cryptographic signature exchange with server-side audit logging.
             </p>
           </div>
@@ -720,45 +724,45 @@ export default function MultiStepRegistration({
 
       {/* STEP 5: REGISTRATION CONFIRMATION */}
       {step === 5 && (
-        <div className="rounded-3xl border border-emerald-500/40 bg-gradient-to-b from-[#0f192b] to-[#0a0e1a] p-8 sm:p-12 text-center space-y-6 shadow-2xl shadow-emerald-500/10">
-          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 mx-auto">
+        <div className="rounded-[28px] border border-[#c19a88]/30 bg-[#0E0E0E] p-8 sm:p-12 text-center space-y-6 shadow-2xl shadow-black/80">
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#805948]/20 border border-[#c19a88]/40 text-[#c19a88] mx-auto shadow-inner">
             <CheckCircle2 className="h-8 w-8" />
           </div>
 
           <div className="space-y-2">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-400">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-[#c19a88]">
               Authoritatively Verified
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-white">Registration Confirmed!</h1>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
+            <p className="text-xs sm:text-sm text-neutral-300 max-w-md mx-auto leading-relaxed">
               Congratulations! Team <strong>{teamName}</strong> is officially registered for Skaleathon 2027 under the <strong>{currentTrackObj?.name}</strong>.
             </p>
           </div>
 
           {/* Receipt Card */}
-          <div className="rounded-2xl border border-white/10 bg-black/40 p-6 text-left max-w-md mx-auto text-xs space-y-3">
+          <div className="rounded-2xl border border-white/10 bg-black/50 p-6 text-left max-w-md mx-auto text-xs space-y-3">
             <div className="flex justify-between pb-2 border-b border-white/10">
-              <span className="text-slate-400">Registration ID:</span>
+              <span className="text-neutral-400">Registration ID:</span>
               <span className="font-mono font-bold text-white">{createdTeam?.id}</span>
             </div>
             <div className="flex justify-between pb-2 border-b border-white/10">
-              <span className="text-slate-400">Order Reference:</span>
-              <span className="font-mono text-slate-300">{paymentOrder?.orderId}</span>
+              <span className="text-neutral-400">Order Reference:</span>
+              <span className="font-mono text-neutral-300">{paymentOrder?.orderId}</span>
             </div>
             <div className="flex justify-between pb-2 border-b border-white/10">
-              <span className="text-slate-400">Payment Status:</span>
-              <span className="font-bold text-emerald-400">Verified Paid (₹99.00)</span>
+              <span className="text-neutral-400">Payment Status:</span>
+              <span className="font-bold text-[#c19a88]">Verified Paid (₹99.00)</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Registered Members:</span>
-              <span className="text-slate-200">{1 + members.length} Member(s)</span>
+              <span className="text-neutral-400">Registered Members:</span>
+              <span className="text-neutral-200">{1 + members.length} Member(s)</span>
             </div>
           </div>
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
               onClick={() => router.push('/dashboard')}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-brand-600 px-8 py-3 text-xs font-bold text-white shadow-lg hover:bg-brand-500 transition-colors"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-8 py-3 text-xs font-bold text-white shadow-lg shadow-[#805948]/25 hover:scale-[1.02] active:scale-[0.98] transition-all"
             >
               <span>Go to Team Dashboard</span>
               <ArrowRight className="h-4 w-4" />
@@ -766,7 +770,7 @@ export default function MultiStepRegistration({
 
             <button
               onClick={() => window.print()}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 px-6 py-3 text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-6 py-3 text-xs font-semibold text-neutral-300 hover:text-white transition-colors"
             >
               <Download className="h-4 w-4" />
               <span>Print Registration Receipt</span>

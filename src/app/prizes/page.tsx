@@ -30,7 +30,7 @@ export default async function PrizesPage() {
             .
           </h1>
           <p className="mt-4 text-base text-white/55 leading-relaxed font-light">
-            SkaleKraft has allocated an official prize pool of {formatINR(event.prize_pool_inr || 35000)} alongside tamper-proof digital merit credentials and technical internship interview pathways.
+            SkaleKraft has allocated an official prize pool of {formatINR(event.prize_pool_inr || 35000)} alongside tamper-proof digital merit credentials and internship opportunities for selected candidates.
           </p>
         </div>
 
@@ -127,7 +127,7 @@ export default async function PrizesPage() {
               <h3 className="text-lg font-medium text-white">SkaleKraft Internship Gateway</h3>
             </div>
             <p className="text-sm text-white/55 leading-relaxed font-light">
-              Standout developers from top 5 teams receive direct fast-track interviews for technical internships at SkaleKraft, working alongside studio leads on client systems and AI products.
+              Internship opportunities are available for selected candidates, offering direct fast-track interviews for technical internships at SkaleKraft, working alongside studio leads on client systems and AI products.
             </p>
           </div>
         </div>

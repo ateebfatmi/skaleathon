@@ -9,7 +9,7 @@ export default async function AdminSubmissionsPage() {
 
   return (
     <div className="space-y-8">
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 space-y-4">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-8 space-y-4">
         <div>
           <span className="text-[10px] font-bold uppercase tracking-wider text-cyanAccent-400">
             Project Deliverable Review
@@ -21,10 +21,10 @@ export default async function AdminSubmissionsPage() {
         </div>
       </div>
 
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] overflow-hidden">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="border-b border-white/10 bg-[#080d17] text-slate-400 font-semibold">
+            <thead className="border-b border-white/10 bg-[#141414] text-slate-400 font-semibold">
               <tr>
                 <th className="py-3.5 px-6">Project Title & Team</th>
                 <th className="py-3.5 px-6">Track</th>

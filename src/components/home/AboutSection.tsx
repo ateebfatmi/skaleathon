@@ -29,7 +29,7 @@ export default function AboutSection() {
     {
       number: '04',
       title: 'SkaleKraft Engineering Gateway',
-      desc: 'Standout developers from top teams earn direct interviews for paid software engineering and AI internships at SkaleKraft.',
+      desc: 'Internship opportunities are available for selected candidates, offering direct interviews for paid software engineering and AI roles at SkaleKraft.',
       icon: Zap,
     },
   ];

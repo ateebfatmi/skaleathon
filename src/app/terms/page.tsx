@@ -18,7 +18,7 @@ export default function TermsPage() {
     },
     {
       heading: '4. Internship Opportunity Disclaimer',
-      body: 'Candidates from the top five teams receive an opportunity to interview for technical internships at SkaleKraft. This is an interview pathway only and is not a guarantee of employment. Hiring decisions remain at the sole discretion of SkaleKraft based on performance, technical fit, and background verification.',
+      body: 'There are internship opportunities for selected candidates to interview for technical internships at SkaleKraft. This is an interview pathway only and is not a guarantee of employment. Hiring decisions remain at the sole discretion of SkaleKraft based on performance, technical fit, and background verification.',
     },
     {
       heading: '5. Governing Law & Dispute Resolution',

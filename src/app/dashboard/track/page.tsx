@@ -31,7 +31,7 @@ export default async function DashboardTrackPage() {
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className="rounded-2xl border border-white/10 bg-[#0c1220]/80 p-5 sm:p-6 backdrop-blur-xl relative overflow-hidden">
+      <div className="rounded-2xl border border-white/10 bg-[#0E0E0E]/80 p-5 sm:p-6 backdrop-blur-xl relative overflow-hidden">
         <div
           className="pointer-events-none absolute -right-10 -bottom-10 w-60 h-60 rounded-full blur-[100px]"
           style={{
@@ -92,7 +92,7 @@ export default async function DashboardTrackPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Main Track Detail Card */}
           <div className="lg:col-span-8 space-y-6">
-            <div className="rounded-2xl border border-white/10 bg-[#0c1220]/70 p-6 space-y-4">
+            <div className="rounded-2xl border border-white/10 bg-[#0E0E0E]/70 p-6 space-y-4">
               <h2 className="text-base font-bold text-white flex items-center gap-2">
                 <Code2 className="h-4 w-4 text-[#c19a88]" />
                 <span>Track Scope & Objective</span>
@@ -118,7 +118,7 @@ export default async function DashboardTrackPage() {
             </div>
 
             {/* Deliverable Requirements */}
-            <div className="rounded-2xl border border-white/10 bg-[#0c1220]/70 p-6 space-y-4">
+            <div className="rounded-2xl border border-white/10 bg-[#0E0E0E]/70 p-6 space-y-4">
               <h2 className="text-base font-bold text-white flex items-center gap-2">
                 <FileCheck2 className="h-4 w-4 text-[#c19a88]" />
                 <span>Required Deliverables</span>
@@ -170,7 +170,7 @@ export default async function DashboardTrackPage() {
 
           {/* Sidebar: Evaluation Rubric */}
           <div className="lg:col-span-4 space-y-6">
-            <div className="rounded-2xl border border-white/10 bg-[#0c1220]/70 p-5 space-y-4">
+            <div className="rounded-2xl border border-white/10 bg-[#0E0E0E]/70 p-5 space-y-4">
               <h3 className="text-sm font-bold text-white flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-[#c19a88]" />
                 <span>Judging Criteria</span>
@@ -219,7 +219,7 @@ export default async function DashboardTrackPage() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-[#0c1220]/70 p-5 text-center space-y-3">
+            <div className="rounded-2xl border border-white/10 bg-[#0E0E0E]/70 p-5 text-center space-y-3">
               <h4 className="text-xs font-bold uppercase tracking-wider text-white">Ready to submit?</h4>
               <p className="text-[11px] text-neutral-400">
                 You can save drafts and finalize your submission any time before the deadline.
@@ -237,7 +237,7 @@ export default async function DashboardTrackPage() {
       ) : (
         /* Fallback if no team or track selected yet */
         <div className="space-y-6">
-          <div className="rounded-2xl border border-white/10 bg-[#0c1220]/70 p-8 text-center space-y-3">
+          <div className="rounded-2xl border border-white/10 bg-[#0E0E0E]/70 p-8 text-center space-y-3">
             <h2 className="text-lg font-bold text-white">No Track Selected Yet</h2>
             <p className="text-xs text-neutral-400 max-w-md mx-auto">
               You haven&apos;t registered a team or chosen a track yet. Choose one of our three core tracks during team registration:
@@ -255,7 +255,7 @@ export default async function DashboardTrackPage() {
             {allTracks.map((t) => (
               <div
                 key={t.id}
-                className="rounded-2xl border border-white/10 bg-[#0c1220]/60 p-5 space-y-3"
+                className="rounded-2xl border border-white/10 bg-[#0E0E0E]/60 p-5 space-y-3"
               >
                 <div className="flex items-center justify-between">
                   <span

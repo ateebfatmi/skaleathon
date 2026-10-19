@@ -1,13 +1,12 @@
 import React from 'react';
 import { EventRepository } from '@/lib/db/repository';
-import HeroAscii from '@/components/ui/hero-ascii';
+import HeroSection from '@/components/home/HeroSection';
 import TechMarquee from '@/components/home/TechMarquee';
 import StatsSection from '@/components/home/StatsSection';
 import AboutSection from '@/components/home/AboutSection';
 import TracksSection from '@/components/home/TracksSection';
 import PrizesSection from '@/components/home/PrizesSection';
 import ProcessSection from '@/components/home/ProcessSection';
-import VelarisShowcase from '@/components/home/VelarisShowcase';
 import TimelineSection from '@/components/home/TimelineSection';
 import RulesSummarySection from '@/components/home/RulesSummarySection';
 import FaqSection from '@/components/home/FaqSection';
@@ -23,14 +22,14 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col">
-      <HeroAscii />
+      <HeroSection event={event} />
+
       <TechMarquee />
       <StatsSection event={event} />
       <AboutSection />
       <TracksSection tracks={tracks} />
       <PrizesSection event={event} />
       <ProcessSection />
-      <VelarisShowcase />
       <TimelineSection event={event} />
       <RulesSummarySection />
       <FaqSection />

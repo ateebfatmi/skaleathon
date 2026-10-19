@@ -67,8 +67,8 @@ export default function InteractiveTerminal() {
                 <span className="text-emerald-400 font-bold block">Stage 1: Online Technical Quiz</span>
                 <span className="text-white/60 text-[10px]">Timed screening round covering core CS logic and track concepts.</span>
               </div>
-              <div className="p-2 rounded-lg border border-cyan-500/20 bg-cyan-500/10">
-                <span className="text-cyan-400 font-bold block">Stage 2: Idea & Architecture PPT</span>
+              <div className="p-2 rounded-lg border border-[#c19a88]/30 bg-[#c19a88]/10">
+                <span className="text-[#c19a88] font-bold block">Stage 2: Idea & Architecture PPT</span>
                 <span className="text-white/60 text-[10px]">Blueprint round submitting problem statement, schema, and tech stack.</span>
               </div>
               <div className="p-2 rounded-lg border border-[#c19a88]/30 bg-[#c19a88]/10">
@@ -90,7 +90,7 @@ export default function InteractiveTerminal() {
             <div className="text-[#c19a88] font-bold">⚡ Active Competition Tracks:</div>
             <div className="space-y-1 text-neutral-300 text-[11px]">
               <div><span className="text-emerald-400 font-mono font-bold">[01] AI & Machine Learning:</span> Neural agents, LLM pipelines, autonomous computer vision.</div>
-              <div><span className="text-cyan-400 font-mono font-bold">[02] Web Architecture:</span> High-throughput distributed services, Next.js, WebSockets, edge infra.</div>
+              <div><span className="text-[#c19a88] font-mono font-bold">[02] Web Architecture:</span> High-throughput distributed services, Next.js, WebSockets, edge infra.</div>
               <div><span className="text-amber-400 font-mono font-bold">[03] Mobile Systems:</span> Cross-platform native apps, on-device ML, offline-first sync.</div>
             </div>
             <div className="pt-1">
@@ -125,7 +125,7 @@ export default function InteractiveTerminal() {
             </div>
             <div className="text-[11px] text-white/60 pt-1">
               • Top 25 Teams: Tamper-evident cryptographic merit credentials with QR authentication.
-              <br />• Top 5 Teams: Fast-track interview evaluation for technical internships at SkaleKraft Studio.
+              <br />• Selected Candidates: Internship opportunities & fast-track interview evaluation at SkaleKraft Studio.
             </div>
           </div>
         );
@@ -359,8 +359,8 @@ export default function InteractiveTerminal() {
 
           <div className="p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
             <div className="text-white/50 text-[10px]">CAREER ACCELERATION</div>
-            <div className="text-[#e8c5b4] font-bold text-sm">TOP 5 INTERVIEWS</div>
-            <p className="text-white/40 text-[10px]">SkaleKraft engineering studio gateway</p>
+            <div className="text-[#e8c5b4] font-bold text-sm">SELECTED CANDIDATES</div>
+            <p className="text-white/40 text-[10px]">SkaleKraft internship opportunities</p>
           </div>
 
           <div className="p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">

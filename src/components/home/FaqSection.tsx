@@ -5,7 +5,7 @@ import { ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function FaqSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const faqs = [
     {
@@ -22,7 +22,7 @@ export default function FaqSection() {
     },
     {
       q: 'What are the prizes and certificate recognitions?',
-      a: 'The total authorized prize pool is ₹35,000 (1st Prize: ₹20,000, 2nd Prize: ₹10,000, 3rd Prize: ₹5,000). Official merit certificates are awarded to confirmed members of the Top 25 teams. Additionally, candidates from the top 5 teams earn interviews for technical internships at SkaleKraft.',
+      a: 'The total authorized prize pool is ₹35,000 (1st Prize: ₹20,000, 2nd Prize: ₹10,000, 3rd Prize: ₹5,000). Official merit certificates are awarded to confirmed members of the Top 25 teams. Additionally, there are internship opportunities for selected candidates at SkaleKraft.',
     },
     {
       q: 'Are generative AI tools like Copilot, Cursor, or ChatGPT allowed?',

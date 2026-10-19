@@ -17,23 +17,12 @@ export default function HeroSection({ event }: HeroProps) {
   const isRegistrationOpen = event.status === 'registration_open';
 
   return (
-    <section className="relative overflow-hidden pt-20 pb-20 lg:pt-28 lg:pb-32 bg-[#0B0B0B]">
-      {/* Velaris WebGL Living Gradient Ambient Background */}
-      <div className="absolute inset-0 pointer-events-none opacity-40 mix-blend-screen">
-        <Velaris
-          height="100%"
-          bg="#0B0B0B"
-          colors={['#c19a88', '#805948', '#e8c5b4', '#18121d']}
-          speed={1.4}
-          grain={0.2}
-        />
+    <section className="relative overflow-hidden pt-20 pb-20 lg:pt-28 lg:pb-32 bg-[#06070A]">
+      {/* Subtle, restrained ambient glow — dark and high-contrast */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[450px] pointer-events-none opacity-20">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[400px] h-[300px] bg-[#805948]/20 rounded-full blur-[160px]" />
       </div>
 
-      {/* Background radial ambient copper & bronze lights */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] pointer-events-none opacity-40">
-        <div className="absolute top-1/4 left-1/3 w-[450px] h-[450px] bg-[#805948]/25 rounded-full blur-[140px]" />
-        <div className="absolute top-1/3 right-1/4 w-[380px] h-[380px] bg-[#c19a88]/15 rounded-full blur-[120px]" />
-      </div>
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         {/* Brand Hierarchy Header */}

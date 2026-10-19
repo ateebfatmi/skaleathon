@@ -20,7 +20,7 @@ export default async function JudgeOverviewPage() {
   return (
     <div className="space-y-8">
       {/* Criteria Weight Alert */}
-      <div className="rounded-2xl border border-white/10 bg-[#0c1220] p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="rounded-2xl border border-white/10 bg-[#0E0E0E] p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-sm font-bold text-white">Official Multi-Criterion Scoring Framework</h2>
           <p className="text-xs text-slate-400 mt-1">
@@ -42,7 +42,7 @@ export default async function JudgeOverviewPage() {
         </div>
 
         {assignments.length === 0 ? (
-          <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 text-center space-y-4">
+          <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-8 text-center space-y-4">
             <Clock className="h-8 w-8 text-slate-500 mx-auto" />
             <h3 className="text-base font-bold text-white">No Direct Assignments Allocated Yet</h3>
             <p className="text-xs text-slate-400 max-w-md mx-auto">
@@ -58,7 +58,7 @@ export default async function JudgeOverviewPage() {
               return (
                 <div
                   key={assignment.id}
-                  className="rounded-2xl border border-white/10 bg-[#0c1220] p-6 space-y-4 hover:border-white/20 transition-all flex flex-col justify-between"
+                  className="rounded-2xl border border-white/10 bg-[#0E0E0E] p-6 space-y-4 hover:border-white/20 transition-all flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-3">
@@ -107,7 +107,7 @@ export default async function JudgeOverviewPage() {
         </h2>
 
         {allSubmissions.length === 0 ? (
-          <div className="rounded-2xl border border-white/10 bg-[#0c1220] p-8 text-center text-xs text-slate-400">
+          <div className="rounded-2xl border border-white/10 bg-[#0E0E0E] p-8 text-center text-xs text-slate-400">
             No projects submitted by paid teams yet.
           </div>
         ) : (
@@ -115,7 +115,7 @@ export default async function JudgeOverviewPage() {
             {allSubmissions.map((sub) => (
               <div
                 key={sub.id}
-                className="rounded-2xl border border-white/10 bg-[#0c1220] p-6 space-y-4 flex flex-col justify-between"
+                className="rounded-2xl border border-white/10 bg-[#0E0E0E] p-6 space-y-4 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">

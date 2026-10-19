@@ -139,7 +139,7 @@ export default function EvaluateProjectPage({
 
   if (loading) {
     return (
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-12 text-center text-xs text-slate-400">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-12 text-center text-xs text-slate-400">
         Loading evaluation matrix...
       </div>
     );
@@ -147,7 +147,7 @@ export default function EvaluateProjectPage({
 
   if (!submission) {
     return (
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-12 text-center space-y-4">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-12 text-center space-y-4">
         <h2 className="text-xl font-bold text-white">Submission Not Found</h2>
         <p className="text-xs text-slate-400">
           The requested submission ID could not be retrieved from the database.
@@ -197,7 +197,7 @@ export default function EvaluateProjectPage({
       )}
 
       {/* Project Overview Card (Protected: no participant phone or personal emails) */}
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 space-y-6">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-8 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 border-b border-white/10 pb-6">
           <div>
             <span className="text-[10px] font-bold uppercase tracking-wider text-cyanAccent-400">
@@ -254,7 +254,7 @@ export default function EvaluateProjectPage({
             <h3 className="font-bold text-slate-300 uppercase tracking-wider mb-1 text-[11px]">
               Problem Statement:
             </h3>
-            <p className="text-slate-200 bg-[#080d17] p-4 rounded-xl border border-white/5">
+            <p className="text-slate-200 bg-[#141414] p-4 rounded-xl border border-white/5">
               {submission.problem_statement}
             </p>
           </div>
@@ -263,7 +263,7 @@ export default function EvaluateProjectPage({
             <h3 className="font-bold text-slate-300 uppercase tracking-wider mb-1 text-[11px]">
               Solution Architecture & Implementation:
             </h3>
-            <p className="text-slate-200 bg-[#080d17] p-4 rounded-xl border border-white/5">
+            <p className="text-slate-200 bg-[#141414] p-4 rounded-xl border border-white/5">
               {submission.solution_overview}
             </p>
           </div>
@@ -272,7 +272,7 @@ export default function EvaluateProjectPage({
             <h3 className="font-bold text-slate-300 uppercase tracking-wider mb-1 text-[11px]">
               Full Description & Technical Polish:
             </h3>
-            <p className="text-slate-300 bg-[#080d17] p-4 rounded-xl border border-white/5 whitespace-pre-wrap">
+            <p className="text-slate-300 bg-[#141414] p-4 rounded-xl border border-white/5 whitespace-pre-wrap">
               {submission.description}
             </p>
           </div>
@@ -292,7 +292,7 @@ export default function EvaluateProjectPage({
       </div>
 
       {/* Scoring Rubric & Evaluation Form */}
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 space-y-8">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-8 space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
           <div>
             <h2 className="text-xl font-bold text-white flex items-center gap-2">
@@ -319,7 +319,7 @@ export default function EvaluateProjectPage({
             return (
               <div
                 key={crit.id}
-                className="p-5 rounded-2xl border border-white/5 bg-[#080d17] space-y-3"
+                className="p-5 rounded-2xl border border-white/5 bg-[#141414] space-y-3"
               >
                 <div className="flex items-center justify-between">
                   <div>
@@ -355,7 +355,7 @@ export default function EvaluateProjectPage({
                     disabled={isLocked}
                     value={currentVal}
                     onChange={(e) => handleScoreChange(crit.id, parseFloat(e.target.value) || 0)}
-                    className="w-16 rounded-lg border border-white/10 bg-[#060911] px-2 py-1 text-center font-mono text-xs text-white disabled:opacity-50"
+                    className="w-16 rounded-lg border border-white/10 bg-[#0B0B0B] px-2 py-1 text-center font-mono text-xs text-white disabled:opacity-50"
                   />
                 </div>
               </div>
@@ -375,7 +375,7 @@ export default function EvaluateProjectPage({
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
               placeholder="Highlight technical strengths and recommendations for scalability..."
-              className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none disabled:opacity-50"
+              className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none disabled:opacity-50"
             />
           </div>
 
@@ -389,7 +389,7 @@ export default function EvaluateProjectPage({
               value={internalNotes}
               onChange={(e) => setInternalNotes(e.target.value)}
               placeholder="Private comments on code originality, repo cleanliness, edge cases..."
-              className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none disabled:opacity-50"
+              className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none disabled:opacity-50"
             />
           </div>
         </div>

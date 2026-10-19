@@ -89,7 +89,7 @@ export default function RulesPage() {
               </div>
 
               <div className="p-4 rounded-xl border border-white/10 bg-white/[0.02] space-y-1">
-                <span className="text-[10px] font-mono text-cyan-400 font-bold uppercase tracking-wider">Stage 2 • PPT</span>
+                <span className="text-[10px] font-mono text-[#c19a88] font-bold uppercase tracking-wider">Stage 2 • PPT</span>
                 <h3 className="text-xs font-bold text-white">Idea & Architecture PPT</h3>
                 <p className="text-[11px] text-white/50 leading-relaxed font-light">
                   Shortlisted teams submit a structured slide deck detailing their problem statement, system architecture, database schema, tech stack, and feasibility.

@@ -59,7 +59,7 @@ export default async function AdminOverviewPage() {
       value: overview.certificatesIssued,
       sub: 'Top 25 finalists registry',
       icon: Award,
-      color: 'text-indigo-400 border-indigo-500/30',
+      color: 'text-[#c19a88] border-[#c19a88]/30',
     },
     {
       label: 'Event Lifecycle Stage',
@@ -79,7 +79,7 @@ export default async function AdminOverviewPage() {
           return (
             <div
               key={i}
-              className="rounded-3xl border border-white/10 bg-[#0c1220] p-6 space-y-4 hover:border-white/20 transition-all"
+              className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-6 space-y-4 hover:border-white/20 transition-all"
             >
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
@@ -101,7 +101,7 @@ export default async function AdminOverviewPage() {
       </div>
 
       {/* Quick Action Bar */}
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-6">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-6">
         <h3 className="text-sm font-bold text-white mb-4">Command Quick Actions</h3>
         <div className="flex flex-wrap gap-3">
           <Link
@@ -140,7 +140,7 @@ export default async function AdminOverviewPage() {
       </div>
 
       {/* Recent Activity / Audit History */}
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 space-y-4">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-8 space-y-4">
         <div className="flex items-center justify-between border-b border-white/10 pb-4">
           <h3 className="text-base font-bold text-white flex items-center gap-2">
             <History className="h-4 w-4 text-cyanAccent-400" />
@@ -161,7 +161,7 @@ export default async function AdminOverviewPage() {
             auditLogs.map((log) => (
               <div
                 key={log.id}
-                className="flex items-center justify-between p-3.5 rounded-xl border border-white/5 bg-[#080d17] text-xs"
+                className="flex items-center justify-between p-3.5 rounded-xl border border-white/5 bg-[#141414] text-xs"
               >
                 <div>
                   <span className="font-bold text-slate-200 font-mono">{log.action}</span>

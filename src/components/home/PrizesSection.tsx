@@ -72,7 +72,7 @@ export default function PrizesSection({ event }: PrizesProps) {
             .
           </h2>
           <p className="mt-4 text-sm text-white/55 leading-relaxed font-light">
-            ₹35,000 cash rewards, tamper-proof merit credentials, and direct technical internship interviews with the SkaleKraft product team.
+            ₹35,000 cash rewards, tamper-proof merit credentials, and internship opportunities for selected candidates with the SkaleKraft product team.
           </p>
         </motion.div>
 
@@ -196,7 +196,7 @@ export default function PrizesSection({ event }: PrizesProps) {
                     SkaleKraft Studio Internship Gateway
                   </h3>
                   <p className="mt-1 text-xs text-white/50 leading-relaxed font-light">
-                    High-performing builders from top 5 teams receive direct fast-track interviews for paid software engineering and AI internships at SkaleKraft.
+                    Internship opportunities are available for selected candidates, offering direct fast-track interviews for paid software engineering and AI internships at SkaleKraft.
                   </p>
                 </div>
               </div>
@@ -205,7 +205,7 @@ export default function PrizesSection({ event }: PrizesProps) {
                 <span className="text-[10px] text-white/40 italic">
                   *Disclaimer: Non-guarantee interview evaluation
                 </span>
-                <span className="text-[10px] font-mono text-[#c19a88]">Top 5 Teams</span>
+                <span className="text-[10px] font-mono text-[#c19a88]">Selected Candidates</span>
               </div>
             </SpotlightCard>
           </motion.div>

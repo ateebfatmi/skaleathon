@@ -24,9 +24,9 @@ export default function ProcessSection() {
       subtitle: 'Ideation & Blueprint Submission',
       desc: 'Shortlisted teams submit a structured presentation deck detailing their problem statement, system architecture, tech stack, and feasibility.',
       icon: Presentation,
-      accent: 'rgba(56, 189, 248, 0.15)',
+      accent: 'rgba(193, 154, 136, 0.15)',
       badge: 'Evaluation',
-      badgeClass: 'text-cyan-400 border-cyan-500/30 bg-cyan-500/10',
+      badgeClass: 'text-[#c19a88] border-[#c19a88]/30 bg-[#c19a88]/10',
     },
     {
       num: 'Stage 03',

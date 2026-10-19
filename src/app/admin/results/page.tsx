@@ -71,7 +71,7 @@ export default function AdminResultsPage() {
   return (
     <div className="space-y-8">
       {/* Header & Controls */}
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 space-y-4">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-8 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400">
@@ -131,8 +131,8 @@ export default function AdminResultsPage() {
       </div>
 
       {/* Leaderboard Table */}
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] overflow-hidden">
-        <div className="px-6 py-4 border-b border-white/10 bg-[#080d17] flex items-center justify-between">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] overflow-hidden">
+        <div className="px-6 py-4 border-b border-white/10 bg-[#141414] flex items-center justify-between">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
             Private Ranked Leaderboard Preview
           </span>

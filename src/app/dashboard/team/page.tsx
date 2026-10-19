@@ -14,7 +14,7 @@ export default async function TeamPage() {
 
   if (!team) {
     return (
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-12 text-center space-y-4">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-12 text-center space-y-4">
         <Users className="h-10 w-10 text-slate-500 mx-auto" />
         <h2 className="text-xl font-bold text-white">No Team Registered</h2>
         <p className="text-xs text-slate-400 max-w-md mx-auto">
@@ -33,7 +33,7 @@ export default async function TeamPage() {
   return (
     <div className="space-y-8">
       {/* Team Header Card */}
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 space-y-6">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-8 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
           <div>
             <span className="text-[10px] font-bold uppercase tracking-wider text-cyanAccent-400">
@@ -83,7 +83,7 @@ export default async function TeamPage() {
         </div>
 
         {team.description && (
-          <div className="p-4 rounded-xl bg-[#080d17] border border-white/5 text-xs text-slate-300 leading-relaxed">
+          <div className="p-4 rounded-xl bg-[#141414] border border-white/5 text-xs text-slate-300 leading-relaxed">
             <span className="font-semibold text-slate-400 block mb-1">Team Overview:</span>
             {team.description}
           </div>
@@ -91,7 +91,7 @@ export default async function TeamPage() {
       </div>
 
       {/* Team Members List */}
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 space-y-6">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-8 space-y-6">
         <div className="flex items-center justify-between border-b border-white/10 pb-4">
           <h2 className="text-lg font-bold text-white flex items-center gap-2">
             <Users className="h-5 w-5 text-cyanAccent-400" />
@@ -104,7 +104,7 @@ export default async function TeamPage() {
           {members.map((member, idx) => (
             <div
               key={member.id}
-              className="rounded-2xl border border-white/10 bg-[#080d17] p-5 space-y-2 relative"
+              className="rounded-2xl border border-white/10 bg-[#141414] p-5 space-y-2 relative"
             >
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-bold text-white">{member.name}</h3>

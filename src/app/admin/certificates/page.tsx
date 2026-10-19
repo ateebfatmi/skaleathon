@@ -53,7 +53,7 @@ export default function AdminCertificatesPage() {
 
   return (
     <div className="space-y-8">
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 space-y-4">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-8 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <span className="text-[10px] font-bold uppercase tracking-wider text-cyanAccent-400">
@@ -91,7 +91,7 @@ export default function AdminCertificatesPage() {
       </div>
 
       {/* Certificates Issued List */}
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 space-y-4">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-8 space-y-4">
         <div className="flex items-center justify-between border-b border-white/10 pb-4">
           <h2 className="text-base font-bold text-white">
             Issued Certificates Database ({certs.length})
@@ -113,7 +113,7 @@ export default function AdminCertificatesPage() {
             {certs.map((c) => (
               <div
                 key={c.id}
-                className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl border border-white/5 bg-[#080d17] gap-3 text-xs"
+                className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl border border-white/5 bg-[#141414] gap-3 text-xs"
               >
                 <div>
                   <div className="font-bold text-white text-sm">{c.recipient_name}</div>

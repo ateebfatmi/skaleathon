@@ -27,7 +27,7 @@ export default async function DashboardAnnouncementsPage() {
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className="rounded-2xl border border-white/10 bg-[#0c1220]/80 p-5 sm:p-6 backdrop-blur-xl relative overflow-hidden">
+      <div className="rounded-2xl border border-white/10 bg-[#0E0E0E]/80 p-5 sm:p-6 backdrop-blur-xl relative overflow-hidden">
         <div className="pointer-events-none absolute -right-10 -bottom-10 w-60 h-60 bg-[#c19a88]/10 rounded-full blur-[100px]" />
         
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
@@ -56,7 +56,7 @@ export default async function DashboardAnnouncementsPage() {
 
       {/* Announcements Feed */}
       {sortedAnnouncements.length === 0 ? (
-        <div className="rounded-2xl border border-white/10 bg-[#0c1220]/60 p-12 text-center space-y-3">
+        <div className="rounded-2xl border border-white/10 bg-[#0E0E0E]/60 p-12 text-center space-y-3">
           <Bell className="h-8 w-8 text-white/30 mx-auto" />
           <h3 className="text-base font-semibold text-white">No Announcements Yet</h3>
           <p className="text-xs text-white/50 max-w-md mx-auto">
@@ -74,15 +74,15 @@ export default async function DashboardAnnouncementsPage() {
                 ? { label: 'TIMELINE', color: 'border-amber-500/30 bg-amber-500/10 text-amber-300' }
                 : ann.category === 'results'
                 ? { label: 'RESULTS', color: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300' }
-                : { label: 'GENERAL', color: 'border-cyan-500/30 bg-cyan-500/10 text-cyan-300' };
+                : { label: 'GENERAL', color: 'border-[#c19a88]/30 bg-[#c19a88]/10 text-[#c19a88]' };
 
             return (
               <div
                 key={ann.id}
                 className={`rounded-2xl border p-5 sm:p-6 transition-all relative ${
                   isLatest
-                    ? 'border-[#c19a88]/40 bg-[#0c1220] shadow-[0_0_20px_rgba(193,154,136,0.08)]'
-                    : 'border-white/10 bg-[#0c1220]/60 hover:border-white/20'
+                    ? 'border-[#c19a88]/40 bg-[#0E0E0E] shadow-[0_0_20px_rgba(193,154,136,0.08)]'
+                    : 'border-white/10 bg-[#0E0E0E]/60 hover:border-white/20'
                 }`}
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/[0.06] pb-3 mb-3">

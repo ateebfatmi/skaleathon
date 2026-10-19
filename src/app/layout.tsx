@@ -5,7 +5,6 @@ import Footer from '@/components/layout/Footer';
 import { ClerkProvider } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
 import { FluidParticlesBackground } from '@/components/ui/fluid-particles-background';
-import PremiumCursor from '@/components/layout/PremiumCursor';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 import AudioToggle from '@/components/layout/AudioToggle';
 
@@ -74,25 +73,25 @@ export default function RootLayout({
       }}
     >
       <html lang="en" className="dark">
-        <body className="min-h-screen bg-[#0B0B0B] text-[#EDEDED] flex flex-col antialiased selection:bg-[#805948]/30 selection:text-white relative">
-          {/* Background Gradients & Fluid Particles (SkaleKraft ambient animation on EVERY page) */}
+        <body className="min-h-screen bg-[#060709] text-[#EDEDED] flex flex-col antialiased selection:bg-[#805948]/30 selection:text-white relative">
+          {/* Background Gradients & Fluid Particles — Deep dark & minimal brightness */}
           <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(128,89,72,0.18),transparent_40%),radial-gradient(circle_at_80%_100%,rgba(255,255,255,0.02),transparent_40%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.025)_1px,transparent_0)] [background-size:32px_32px] opacity-70" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(128,89,72,0.05),transparent_35%),radial-gradient(circle_at_80%_100%,rgba(255,255,255,0.015),transparent_35%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.015)_1px,transparent_0)] [background-size:32px_32px] opacity-50" />
           </div>
+
           <ErrorBoundary fallback={null}>
             <FluidParticlesBackground
               theme="dark"
-              particleCount={560}
-              noiseIntensity={0.0024}
-              particleSize={{ min: 0.45, max: 1.2 }}
-              className="pointer-events-none fixed inset-0 z-0 h-screen bg-transparent opacity-65 dark:bg-transparent"
+              particleCount={380}
+              noiseIntensity={0.0018}
+              particleSize={{ min: 0.35, max: 0.9 }}
+              className="pointer-events-none fixed inset-0 z-0 h-screen bg-transparent opacity-30 dark:bg-transparent"
             />
+
           </ErrorBoundary>
 
-          <ErrorBoundary fallback={null}>
-            <PremiumCursor />
-          </ErrorBoundary>
+
 
           <Navbar />
           <main className="relative z-10 flex-1">{children}</main>

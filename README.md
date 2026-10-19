@@ -22,7 +22,7 @@ Skaleathon 2027 is a standalone, full-stack, production-ready national online ha
   - 2nd Prize: ₹10,000
   - 3rd Prize: ₹5,000
 - **Merit Certificates:** Awarded to eligible members of the Top 25 finalist teams
-- **Internship Opportunity:** Candidates from the top five teams receive an opportunity to interview for internships at SkaleKraft. *(Official Notice: This is not a guarantee of an internship or employment).*
+- **Internship Opportunity:** Internship opportunities are available for selected candidates to interview for internships at SkaleKraft. *(Official Notice: This is not a guarantee of an internship or employment).*
 - **Event Lifecycle:** Controlled dynamically by administrators without code changes. Displays *"To be announced"* where dates are not yet finalized.
 
 ---

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
 import { cyberAudio } from '@/lib/cyber-sound';
 
@@ -17,27 +17,21 @@ export default function AudioToggle() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-40 hidden sm:flex items-center">
+    <div className="fixed bottom-5 right-5 z-40 hidden sm:flex items-center">
       <button
         onClick={toggle}
-        className={`group flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-mono tracking-wider backdrop-blur-2xl transition-all shadow-xl ${
+        className={`group flex items-center justify-center h-8 w-8 rounded-full border backdrop-blur-xl transition-all shadow-lg ${
           audioActive
-            ? 'border-[#c19a88] bg-[#07090E]/90 text-[#e8c5b4] shadow-[0_0_20px_rgba(193,154,136,0.3)]'
-            : 'border-white/10 bg-[#07090E]/80 text-white/50 hover:border-white/20 hover:text-white'
+            ? 'border-[#c19a88]/60 bg-[#121110]/90 text-[#e8c5b4] shadow-[0_0_15px_rgba(193,154,136,0.25)]'
+            : 'border-white/10 bg-[#121110]/70 text-white/40 hover:border-white/25 hover:text-white'
         }`}
-        title="Toggle futuristic HUD interface audio"
+        title={audioActive ? 'Mute sound effects' : 'Enable interface audio'}
         aria-label="Toggle UI Audio"
       >
         {audioActive ? (
-          <>
-            <Volume2 className="h-3.5 w-3.5 text-[#c19a88] animate-pulse" />
-            <span>SFX: ON</span>
-          </>
+          <Volume2 className="h-3.5 w-3.5 text-[#c19a88]" />
         ) : (
-          <>
-            <VolumeX className="h-3.5 w-3.5 text-white/40 group-hover:text-white" />
-            <span>SFX: MUTED</span>
-          </>
+          <VolumeX className="h-3.5 w-3.5" />
         )}
       </button>
     </div>

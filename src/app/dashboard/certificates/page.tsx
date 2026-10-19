@@ -16,7 +16,7 @@ export default async function CertificatesDashboardPage() {
 
   return (
     <div className="space-y-8">
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 space-y-4">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-8 space-y-4">
         <div>
           <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400">
             Official Credentials
@@ -29,7 +29,7 @@ export default async function CertificatesDashboardPage() {
       </div>
 
       {!resultsAnnounced ? (
-        <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-12 text-center space-y-4">
+        <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-12 text-center space-y-4">
           <Award className="h-10 w-10 text-slate-500 mx-auto" />
           <h2 className="text-lg font-bold text-white">Evaluation In Progress</h2>
           <p className="text-xs text-slate-400 max-w-md mx-auto leading-relaxed">
@@ -43,7 +43,7 @@ export default async function CertificatesDashboardPage() {
           </Link>
         </div>
       ) : certificates.length === 0 ? (
-        <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-12 text-center space-y-4">
+        <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-12 text-center space-y-4">
           <AlertCircle className="h-10 w-10 text-slate-500 mx-auto" />
           <h2 className="text-lg font-bold text-white">No Certificates Issued For This Team</h2>
           <p className="text-xs text-slate-400 max-w-md mx-auto leading-relaxed">

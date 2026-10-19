@@ -48,7 +48,7 @@ export default async function RegisterPage() {
             .
           </h1>
           <p className="mt-4 text-xs sm:text-sm text-white/55 leading-relaxed font-light">
-            Form your squad of 1–6 engineers, pick your arena, and complete the flat ₹99 team entry fee to compete for ₹35,000 in prizes and SkaleKraft studio internship pathways.
+            Form your squad of 1–6 engineers, pick your arena, and complete the flat ₹99 team entry fee to compete for ₹35,000 in prizes and SkaleKraft studio internship opportunities for selected candidates.
           </p>
         </div>
 

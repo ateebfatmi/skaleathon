@@ -13,7 +13,7 @@ export default async function SubmissionStatusPage() {
 
   if (!submission) {
     return (
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-12 text-center space-y-4">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-12 text-center space-y-4">
         <h2 className="text-xl font-bold text-white">No Submission Found</h2>
         <p className="text-xs text-slate-400">
           Your team has not yet recorded a project submission for Skaleathon 2027.

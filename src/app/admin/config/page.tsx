@@ -89,7 +89,7 @@ export default function AdminConfigPage() {
 
   return (
     <div className="max-w-4xl space-y-8">
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 space-y-4">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-8 space-y-4">
         <div>
           <span className="text-[10px] font-bold uppercase tracking-wider text-cyanAccent-400">
             Lifecycle & Operational Settings
@@ -115,7 +115,7 @@ export default function AdminConfigPage() {
         )}
       </div>
 
-      <form onSubmit={handleSave} className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 space-y-6">
+      <form onSubmit={handleSave} className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-8 space-y-6">
         {/* Status Dropdown */}
         <div className="p-5 rounded-2xl border border-brand-500/30 bg-brand-950/20 space-y-2">
           <label className="block text-xs font-bold text-white uppercase tracking-wider">
@@ -124,7 +124,7 @@ export default function AdminConfigPage() {
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value as EventStatus)}
-            className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white focus:border-brand-500 focus:outline-none"
+            className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white focus:border-brand-500 focus:outline-none"
           >
             <option value="draft">Draft (Private Testing)</option>
             <option value="upcoming">Upcoming (Dates Announced)</option>
@@ -149,7 +149,7 @@ export default function AdminConfigPage() {
               type="datetime-local"
               value={registrationStart}
               onChange={(e) => setRegistrationStart(e.target.value)}
-              className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white focus:border-brand-500 focus:outline-none"
             />
           </div>
 
@@ -162,7 +162,7 @@ export default function AdminConfigPage() {
               type="datetime-local"
               value={registrationEnd}
               onChange={(e) => setRegistrationEnd(e.target.value)}
-              className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white focus:border-brand-500 focus:outline-none"
             />
           </div>
 
@@ -175,7 +175,7 @@ export default function AdminConfigPage() {
               type="datetime-local"
               value={submissionDeadline}
               onChange={(e) => setSubmissionDeadline(e.target.value)}
-              className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white focus:border-brand-500 focus:outline-none"
             />
           </div>
 
@@ -188,7 +188,7 @@ export default function AdminConfigPage() {
               type="datetime-local"
               value={resultsAnnouncedAt}
               onChange={(e) => setResultsAnnouncedAt(e.target.value)}
-              className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white focus:border-brand-500 focus:outline-none"
             />
           </div>
         </div>
@@ -204,7 +204,7 @@ export default function AdminConfigPage() {
               min="0"
               value={registrationFee}
               onChange={(e) => setRegistrationFee(parseFloat(e.target.value))}
-              className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white focus:border-brand-500 focus:outline-none"
             />
           </div>
 
@@ -218,7 +218,7 @@ export default function AdminConfigPage() {
               max="6"
               value={minTeamSize}
               onChange={(e) => setMinTeamSize(parseInt(e.target.value))}
-              className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white focus:border-brand-500 focus:outline-none"
             />
           </div>
 
@@ -232,7 +232,7 @@ export default function AdminConfigPage() {
               max="6"
               value={maxTeamSize}
               onChange={(e) => setMaxTeamSize(parseInt(e.target.value))}
-              className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white focus:border-brand-500 focus:outline-none"
             />
           </div>
         </div>

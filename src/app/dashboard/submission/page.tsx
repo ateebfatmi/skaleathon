@@ -143,7 +143,7 @@ export default function SubmissionPage() {
 
   if (loading) {
     return (
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-12 text-center text-xs text-slate-400">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-12 text-center text-xs text-slate-400">
         Loading submission details...
       </div>
     );
@@ -170,7 +170,7 @@ export default function SubmissionPage() {
   return (
     <div className="space-y-8">
       {/* Header Card */}
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 space-y-4">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-8 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <span className="text-[10px] font-bold uppercase tracking-wider text-cyanAccent-400">
@@ -215,7 +215,7 @@ export default function SubmissionPage() {
       </div>
 
       {/* Submission Form */}
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 space-y-6">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-8 space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div className="sm:col-span-2">
             <label className="block text-xs font-semibold text-slate-300 mb-1.5">
@@ -227,7 +227,7 @@ export default function SubmissionPage() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Omniscience: Autonomous Agentic Security Scanner"
-              className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
             />
           </div>
 
@@ -238,7 +238,7 @@ export default function SubmissionPage() {
             <select
               value={trackId}
               onChange={(e) => setTrackId(e.target.value)}
-              className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white focus:border-brand-500 focus:outline-none"
             >
               {tracks.map((t) => (
                 <option key={t.id} value={t.id}>
@@ -264,7 +264,7 @@ export default function SubmissionPage() {
                   }
                 }}
                 placeholder="e.g. Next.js, PyTorch, Supabase"
-                className="flex-1 rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+                className="flex-1 rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
               />
               <button
                 type="button"
@@ -306,7 +306,7 @@ export default function SubmissionPage() {
               value={problemStatement}
               onChange={(e) => setProblemStatement(e.target.value)}
               placeholder="What core problem does your project solve? Who is the target user and why is this critical?"
-              className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
             />
           </div>
 
@@ -320,7 +320,7 @@ export default function SubmissionPage() {
               value={solutionOverview}
               onChange={(e) => setSolutionOverview(e.target.value)}
               placeholder="Describe your architectural approach and how your system works end-to-end..."
-              className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
             />
           </div>
 
@@ -334,7 +334,7 @@ export default function SubmissionPage() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Detailed feature breakdown, technical challenges overcome, security considerations, and future scalability..."
-              className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
             />
           </div>
         </div>
@@ -352,7 +352,7 @@ export default function SubmissionPage() {
               value={githubUrl}
               onChange={(e) => setGithubUrl(e.target.value)}
               placeholder="https://github.com/organization/repo"
-              className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
             />
           </div>
 
@@ -366,7 +366,7 @@ export default function SubmissionPage() {
               value={liveDemoUrl}
               onChange={(e) => setLiveDemoUrl(e.target.value)}
               placeholder="https://your-demo.vercel.app"
-              className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
             />
           </div>
 
@@ -380,7 +380,7 @@ export default function SubmissionPage() {
               value={demoVideoUrl}
               onChange={(e) => setDemoVideoUrl(e.target.value)}
               placeholder="https://youtu.be/... or Loom URL"
-              className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
             />
           </div>
 
@@ -394,7 +394,7 @@ export default function SubmissionPage() {
               value={presentationUrl}
               onChange={(e) => setPresentationUrl(e.target.value)}
               placeholder="https://docs.google.com/presentation/..."
-              className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
             />
           </div>
         </div>
@@ -410,7 +410,7 @@ export default function SubmissionPage() {
               value={memberContributions}
               onChange={(e) => setMemberContributions(e.target.value)}
               placeholder="Briefly state who built what (e.g. John: Backend API & DB, Sarah: Frontend UI)..."
-              className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
             />
           </div>
 
@@ -424,7 +424,7 @@ export default function SubmissionPage() {
               value={aiToolDisclosure}
               onChange={(e) => setAiToolDisclosure(e.target.value)}
               placeholder="Detail any AI tools used (e.g. GitHub Copilot for boilerplate, Claude for prompt design)..."
-              className="w-full rounded-xl border border-white/10 bg-[#080d17] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-xl border border-white/10 bg-[#141414] px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
             />
           </div>
         </div>
@@ -444,7 +444,7 @@ export default function SubmissionPage() {
             type="button"
             disabled={saving}
             onClick={() => handleSave(false)}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 px-8 py-2.5 text-xs font-bold text-white shadow-lg shadow-brand-500/20 hover:from-brand-500 hover:to-indigo-500 transition-all"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] px-8 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/25 hover:from-[#9c6d58] hover:to-[#d3a58f] transition-all"
           >
             <Send className="h-4 w-4" />
             <span>{saving ? 'Submitting Project...' : 'Submit Project For Evaluation'}</span>

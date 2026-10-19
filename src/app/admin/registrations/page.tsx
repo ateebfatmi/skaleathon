@@ -31,7 +31,7 @@ export default function AdminRegistrationsPage() {
 
   return (
     <div className="space-y-8">
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] p-8 space-y-4">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-8 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <span className="text-[10px] font-bold uppercase tracking-wider text-cyanAccent-400">
@@ -62,14 +62,14 @@ export default function AdminRegistrationsPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by team name, college, or city..."
-              className="w-full rounded-xl border border-white/10 bg-[#080d17] pl-10 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-xl border border-white/10 bg-[#141414] pl-10 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none"
             />
           </div>
 
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="w-full sm:w-48 rounded-xl border border-white/10 bg-[#080d17] px-3 py-2 text-xs text-white focus:border-brand-500 focus:outline-none"
+            className="w-full sm:w-48 rounded-xl border border-white/10 bg-[#141414] px-3 py-2 text-xs text-white focus:border-brand-500 focus:outline-none"
           >
             <option value="">All Payment States</option>
             <option value="paid">Verified Paid (₹99)</option>
@@ -80,10 +80,10 @@ export default function AdminRegistrationsPage() {
       </div>
 
       {/* Teams Table */}
-      <div className="rounded-3xl border border-white/10 bg-[#0c1220] overflow-hidden">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="border-b border-white/10 bg-[#080d17] text-slate-400 font-semibold">
+            <thead className="border-b border-white/10 bg-[#141414] text-slate-400 font-semibold">
               <tr>
                 <th className="py-3.5 px-6">Team Name</th>
                 <th className="py-3.5 px-6">Track</th>
