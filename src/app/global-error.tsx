@@ -12,6 +12,13 @@ export default function GlobalError({
 }) {
   useEffect(() => {
     console.error('Next.js Global Root Error:', error);
+    if (
+      error?.name === 'ChunkLoadError' ||
+      error?.message?.includes('Loading chunk') ||
+      error?.message?.includes('ChunkLoadError')
+    ) {
+      window.location.reload();
+    }
   }, [error]);
 
   return (

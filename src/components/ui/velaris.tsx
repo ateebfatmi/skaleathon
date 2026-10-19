@@ -118,77 +118,96 @@ const Velaris = ({
   };
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const container = containerRef.current;
-    if (!canvas || !container) return;
-
-    const gl = canvas.getContext("webgl");
-    if (!gl) return;
-
-    const createShader = (type: number, src: string) => {
-      const s = gl.createShader(type)!;
-      gl.shaderSource(s, src);
-      gl.compileShader(s);
-      return s;
-    };
-
-    const program = gl.createProgram()!;
-    gl.attachShader(program, createShader(gl.VERTEX_SHADER, vertexShaderGLSL));
-    gl.attachShader(
-      program,
-      createShader(gl.FRAGMENT_SHADER, fragmentShaderGLSL),
-    );
-    gl.linkProgram(program);
-    gl.useProgram(program);
-
-    const buffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
-      gl.STATIC_DRAW,
-    );
-
-    const pos = gl.getAttribLocation(program, "position");
-    gl.enableVertexAttribArray(pos);
-    gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
-
-    const locs = {
-      res: gl.getUniformLocation(program, "u_resolution"),
-      time: gl.getUniformLocation(program, "u_time"),
-      grain: gl.getUniformLocation(program, "u_grain"),
-      colors: gl.getUniformLocation(program, "u_colors"),
-      bg: gl.getUniformLocation(program, "u_bg"),
-    };
-
-    const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio, 2);
-      canvas.width = container.clientWidth * dpr;
-      canvas.height = container.clientHeight * dpr;
-      gl.viewport(0, 0, canvas.width, canvas.height);
-    };
-
-    const ro = new ResizeObserver(resize);
-    ro.observe(container);
-
     let raf: number;
-    const render = (t: number) => {
-      gl.uniform2f(locs.res, canvas.width, canvas.height);
-      gl.uniform1f(locs.time, t * 0.001 * speed);
-      gl.uniform1f(locs.grain, grain);
-      gl.uniform3f(locs.bg, ...hexToRgb(bg));
+    let ro: ResizeObserver | null = null;
 
-      const flat = new Float32Array(colors.slice(0, 4).flatMap(hexToRgb));
-      gl.uniform3fv(locs.colors, flat);
+    try {
+      const canvas = canvasRef.current;
+      const container = containerRef.current;
+      if (!canvas || !container) return;
 
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      const gl = (canvas.getContext("webgl") ||
+        canvas.getContext("experimental-webgl")) as WebGLRenderingContext | null;
+      if (!gl) return;
+
+      const createShader = (type: number, src: string) => {
+        const s = gl.createShader(type);
+        if (!s) return null;
+        gl.shaderSource(s, src);
+        gl.compileShader(s);
+        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+          gl.deleteShader(s);
+          return null;
+        }
+        return s;
+      };
+
+      const vert = createShader(gl.VERTEX_SHADER, vertexShaderGLSL);
+      const frag = createShader(gl.FRAGMENT_SHADER, fragmentShaderGLSL);
+      if (!vert || !frag) return;
+
+      const program = gl.createProgram();
+      if (!program) return;
+
+      gl.attachShader(program, vert);
+      gl.attachShader(program, frag);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+      gl.useProgram(program);
+
+      const buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.bufferData(
+        gl.ARRAY_BUFFER,
+        new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
+        gl.STATIC_DRAW,
+      );
+
+      const pos = gl.getAttribLocation(program, "position");
+      gl.enableVertexAttribArray(pos);
+      gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+
+      const locs = {
+        res: gl.getUniformLocation(program, "u_resolution"),
+        time: gl.getUniformLocation(program, "u_time"),
+        grain: gl.getUniformLocation(program, "u_grain"),
+        colors: gl.getUniformLocation(program, "u_colors"),
+        bg: gl.getUniformLocation(program, "u_bg"),
+      };
+
+      const resize = () => {
+        if (!container || !canvas) return;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = (container.clientWidth || 300) * dpr;
+        canvas.height = (container.clientHeight || 300) * dpr;
+        gl.viewport(0, 0, canvas.width, canvas.height);
+      };
+
+      ro = new ResizeObserver(resize);
+      ro.observe(container);
+      resize();
+
+      const render = (t: number) => {
+        gl.uniform2f(locs.res, canvas.width, canvas.height);
+        gl.uniform1f(locs.time, t * 0.001 * speed);
+        gl.uniform1f(locs.grain, grain);
+        gl.uniform3f(locs.bg, ...hexToRgb(bg));
+
+        const flat = new Float32Array(colors.slice(0, 4).flatMap(hexToRgb));
+        gl.uniform3fv(locs.colors, flat);
+
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        raf = requestAnimationFrame(render);
+      };
+
       raf = requestAnimationFrame(render);
-    };
+    } catch {
+      // Gracefully fall back if WebGL context is blocked (e.g. Brave Shields / fingerprinting protection)
+    }
 
-    raf = requestAnimationFrame(render);
     return () => {
-      ro.disconnect();
-      cancelAnimationFrame(raf);
+      if (ro) ro.disconnect();
+      if (raf) cancelAnimationFrame(raf);
     };
   }, [bg, colors, speed, grain]);
 

@@ -41,11 +41,22 @@ export default function RegisteredTeamView({
   const leaderMember = members.find((m) => m.role === 'leader') || members[0];
   const regularMembers = members.filter((m) => m.id !== leaderMember?.id);
 
-  const formattedDate = new Date(team.created_at).toLocaleDateString('en-IN', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  });
+  const formattedDate = team.created_at
+    ? (() => {
+        try {
+          const d = new Date(team.created_at);
+          return isNaN(d.getTime())
+            ? 'Active'
+            : d.toLocaleDateString('en-IN', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+              });
+        } catch {
+          return 'Active';
+        }
+      })()
+    : 'Active';
 
   return (
     <div className="space-y-8 max-w-4xl mx-auto">

@@ -13,6 +13,14 @@ export default function ErrorPage({
 }) {
   useEffect(() => {
     console.error('Next.js Page Error:', error);
+    // If a chunk failed to load because of a rebuild or updated deployment, auto-refresh to get new chunks
+    if (
+      error?.name === 'ChunkLoadError' ||
+      error?.message?.includes('Loading chunk') ||
+      error?.message?.includes('ChunkLoadError')
+    ) {
+      window.location.reload();
+    }
   }, [error]);
 
   return (
