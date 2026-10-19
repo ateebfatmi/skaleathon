@@ -1,8 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import { EventRepository } from '@/lib/db/repository';
-import { Trophy, Award, Briefcase, ArrowRight, ArrowUpRight } from 'lucide-react';
+import { Trophy, Award, ArrowRight } from 'lucide-react';
 import { formatINR } from '@/lib/utils';
+import { EditorialIndexBar } from '@/components/ui/EditorialIndexBar';
 
 export const revalidate = 0;
 
@@ -32,7 +33,7 @@ export default async function PrizesPage() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c19a88] opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-[#c19a88]" />
                 </span>
-                <span className="text-[#c19a88]">Official Honors // National Bounty Pool</span>
+                <span className="text-[#c19a88]">Official Honors {'//'} National Bounty Pool</span>
                 <span className="text-white/20">•</span>
                 <span className="text-neutral-400">
                   Total Pool: <strong className="text-white font-semibold">{formatINR(event.prize_pool_inr || 35000)}</strong>
@@ -73,36 +74,16 @@ export default async function PrizesPage() {
               </p>
             </div>
 
-            {/* Full-Width 4-Column Editorial Index Bar */}
-            <nav className="grid grid-cols-2 sm:grid-cols-4 border-t border-b border-white/[0.08] divide-y sm:divide-y-0 sm:divide-x divide-white/[0.06]">
-              {[
-                { href: '#podium', num: '01', label: `1st Prize: ${formatINR(event.first_prize_inr || 20000)}`, active: true },
-                { href: '#podium', num: '02', label: `2nd Prize: ${formatINR(event.second_prize_inr || 10000)}`, active: false },
-                { href: '#podium', num: '03', label: `3rd Prize: ${formatINR(event.third_prize_inr || 5000)}`, active: false },
-                { href: '#career', num: '04', label: 'Top 25 Merit & Careers', active: false },
-              ].map((sec) => (
-                <a
-                  key={sec.num}
-                  href={sec.href}
-                  className={`group relative py-3.5 px-4 flex items-center justify-between text-xs transition-all ${
-                    sec.active
-                      ? 'text-white font-semibold bg-white/[0.02]'
-                      : 'text-neutral-500 hover:text-neutral-200 hover:bg-white/[0.01]'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5 truncate">
-                    <span className="font-mono text-[10px] text-[#c19a88] font-bold">
-                      {sec.num}
-                    </span>
-                    <span className="truncate">{sec.label}</span>
-                  </div>
-                  <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-[#e8c5b4]" />
-                  {sec.active && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4]" />
-                  )}
-                </a>
-              ))}
-            </nav>
+            {/* Full-Width 4-Column Editorial Index Bar with Transition */}
+            <EditorialIndexBar
+              layoutIdPrefix="prizesIndex"
+              items={[
+                { num: '01', label: `1st Prize: ${formatINR(event.first_prize_inr || 20000)}`, href: '#podium' },
+                { num: '02', label: `2nd Prize: ${formatINR(event.second_prize_inr || 10000)}`, href: '#podium' },
+                { num: '03', label: `3rd Prize: ${formatINR(event.third_prize_inr || 5000)}`, href: '#podium' },
+                { num: '04', label: 'Top 25 Merit & Careers', href: '#career' },
+              ]}
+            />
           </header>
 
           {/* 2. Section 01: Podium Cash Grants (3-Column Open Architectural Grid) */}
@@ -110,7 +91,7 @@ export default async function PrizesPage() {
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
               <div>
                 <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
-                  01 // Championship Podium
+                  01 {'//'} Championship Podium
                 </span>
                 <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                   National Cash{' '}
@@ -189,7 +170,7 @@ export default async function PrizesPage() {
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
               <div>
                 <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
-                  02 // Beyond The Podium
+                  02 {'//'} Beyond The Podium
                 </span>
                 <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                   Merit Citations &amp;{' '}

@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { EventTrack } from '@/lib/db/types';
 import { motion } from 'framer-motion';
+import { EditorialIndexBar } from '@/components/ui/EditorialIndexBar';
 
 export default function SubmissionPage() {
   const router = useRouter();
@@ -300,51 +301,22 @@ export default function SubmissionPage() {
           </p>
         </div>
 
-        {/* Full-Width 4-Column Editorial Section Index Bar */}
-        <nav className="grid grid-cols-2 sm:grid-cols-4 border-t border-b border-white/[0.08] divide-y sm:divide-y-0 sm:divide-x divide-white/[0.06]">
-          {[
+        {/* Full-Width 4-Column Editorial Section Index Bar with Transition */}
+        <EditorialIndexBar
+          layoutIdPrefix="submissionIndex"
+          activeId={activeSection}
+          onSelectItem={(sec) => {
+            if (sec.id && sec.id !== 'rubric') {
+              setActiveSection(sec.id as 'stage2' | 'stage3' | 'guidelines');
+            }
+          }}
+          items={[
             { id: 'stage2', href: '#stage-02', num: '01', label: 'Stage 02: Architecture PDF' },
             { id: 'stage3', href: '#stage-03', num: '02', label: 'Stage 03: Prototype & Code' },
             { id: 'guidelines', href: '#guidelines', num: '03', label: 'Submission Protocol' },
             { id: 'rubric', href: '/dashboard/track#rubric', num: '04', label: 'Jury Rubric' },
-          ].map((sec) => {
-            const isActive = activeSection === sec.id;
-            return (
-              <a
-                key={sec.id}
-                href={sec.href}
-                onClick={() => {
-                  if (sec.id !== 'rubric') setActiveSection(sec.id as any);
-                }}
-                className={`group relative py-3.5 px-4 flex items-center justify-between text-xs transition-all ${
-                  isActive
-                    ? 'text-white font-semibold bg-white/[0.02]'
-                    : 'text-neutral-500 hover:text-neutral-200 hover:bg-white/[0.01]'
-                }`}
-              >
-                <div className="flex items-center gap-2.5 truncate">
-                  <span className="font-mono text-[10px] text-[#c19a88] font-bold">
-                    {sec.num}
-                  </span>
-                  <span className="truncate">{sec.label}</span>
-                </div>
-                <ArrowUpRight
-                  className={`h-3.5 w-3.5 shrink-0 transition-transform ${
-                    isActive
-                      ? 'text-[#e8c5b4]'
-                      : 'text-neutral-600 group-hover:text-neutral-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
-                  }`}
-                />
-                {isActive && (
-                  <motion.span
-                    layoutId="submissionSectionUnderline"
-                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4]"
-                  />
-                )}
-              </a>
-            );
-          })}
-        </nav>
+          ]}
+        />
       </header>
 
       {/* 2. Section 01: STAGE 02 — ARCHITECTURE PRESENTATION (PDF) */}

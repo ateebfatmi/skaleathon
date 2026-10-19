@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { Team, TeamMember, EventTrack, PaymentOrder } from '@/lib/db/types';
 import { motion } from 'framer-motion';
+import { EditorialIndexBar } from '@/components/ui/EditorialIndexBar';
 
 interface TeamWorkspaceClientProps {
   team: Team;
@@ -208,42 +209,16 @@ export default function TeamWorkspaceClient({
           </div>
         </div>
 
-        {/* Full-Width 4-Column Editorial Section Index Bar */}
-        <nav className="grid grid-cols-2 sm:grid-cols-4 border-t border-b border-white/[0.08] divide-y sm:divide-y-0 sm:divide-x divide-white/[0.06]">
-          {[
-            { href: '#roster', num: '01', label: `Confirmed Roster (${members.length}/6)`, active: true },
-            { href: '/dashboard/track', num: '02', label: track ? track.name : 'Track Specs', active: false },
-            { href: '/dashboard/stages', num: '03', label: 'Stage 01 Screening', active: false },
-            { href: '/dashboard/submission', num: '04', label: 'Deliverables Portal', active: false },
-          ].map((sec) => (
-            <Link
-              key={sec.num}
-              href={sec.href}
-              className={`group relative py-3.5 px-4 flex items-center justify-between text-xs transition-all ${
-                sec.active
-                  ? 'text-white font-semibold bg-white/[0.02]'
-                  : 'text-neutral-500 hover:text-neutral-200 hover:bg-white/[0.01]'
-              }`}
-            >
-              <div className="flex items-center gap-2.5 truncate">
-                <span className="font-mono text-[10px] text-[#c19a88] font-bold">
-                  {sec.num}
-                </span>
-                <span className="truncate">{sec.label}</span>
-              </div>
-              <ArrowUpRight
-                className={`h-3.5 w-3.5 shrink-0 transition-transform ${
-                  sec.active
-                    ? 'text-[#e8c5b4]'
-                    : 'text-neutral-600 group-hover:text-neutral-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
-                }`}
-              />
-              {sec.active && (
-                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4]" />
-              )}
-            </Link>
-          ))}
-        </nav>
+        {/* Full-Width 4-Column Editorial Section Index Bar with Transition */}
+        <EditorialIndexBar
+          layoutIdPrefix="teamWorkspaceIndex"
+          items={[
+            { href: '#roster', num: '01', label: `Confirmed Roster (${members.length}/6)` },
+            { href: '/dashboard/track', num: '02', label: track ? track.name : 'Track Specs' },
+            { href: '/dashboard/stages', num: '03', label: 'Stage 01 Screening' },
+            { href: '/dashboard/submission', num: '04', label: 'Deliverables Portal' },
+          ]}
+        />
       </header>
 
       {/* 2. Section 01: Squad Telemetry Pillars */}

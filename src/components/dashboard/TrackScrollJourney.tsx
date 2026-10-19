@@ -16,6 +16,7 @@ import {
   FileCode,
   CheckCircle2,
 } from 'lucide-react';
+import { EditorialIndexBar } from '@/components/ui/EditorialIndexBar';
 
 interface TrackScrollJourneyProps {
   track: {
@@ -229,51 +230,25 @@ export default function TrackScrollJourney({
           </div>
         </div>
 
-        {/* Section Jump Pill Buttons with Fluid Spring Transition */}
-        <div className="flex items-center gap-2 mt-4 pt-4 border-t border-white/[0.08] overflow-x-auto scrollbar-none pb-1">
-          {(
-            [
-              { id: 'scope', label: '01. Open Domain Freedom' },
-              { id: 'stack', label: '02. Recommended Stack' },
-              { id: 'deliverables', label: '03. Required Deliverables' },
-              { id: 'rubric', label: '04. Jury Rubric' },
-            ] as const
-          ).map((sec) => {
-            const isActive = activeSection === sec.id;
-            return (
-              <motion.a
-                key={sec.id}
-                href={`#${sec.id}`}
-                onClick={(e) => handleSectionSelect(e, sec.id)}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.96 }}
-                className={`relative flex items-center gap-2 px-4 py-2 rounded-full text-xs transition-colors duration-300 whitespace-nowrap select-none cursor-pointer ${
-                  isActive
-                    ? 'text-white font-semibold'
-                    : 'text-neutral-400 hover:text-white'
-                }`}
-              >
-                {isActive && (
-                  <motion.span
-                    layoutId="trackSectionActivePill"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                    className="absolute inset-0 rounded-full bg-gradient-to-r from-white/[0.12] to-white/[0.06] border border-[#c19a88]/45 shadow-[0_0_20px_rgba(193,154,136,0.2)]"
-                  />
-                )}
-                <span className="relative z-10 flex items-center gap-1.5">
-                  {isActive && (
-                    <motion.span
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ duration: 0.2 }}
-                      className="h-1.5 w-1.5 rounded-full bg-[#c19a88]"
-                    />
-                  )}
-                  <span>{sec.label}</span>
-                </span>
-              </motion.a>
-            );
-          })}
+        {/* Full-Width 4-Column Editorial Section Index Bar with Transition */}
+        <div className="mt-5">
+          <EditorialIndexBar
+            layoutIdPrefix="trackSpecIndex"
+            activeId={activeSection}
+            onSelectItem={(item) => {
+              if (item.id) {
+                const secId = item.id as SectionId;
+                setActiveSection(secId);
+                setPulseCount((prev) => ({ ...prev, [secId]: prev[secId] + 1 }));
+              }
+            }}
+            items={[
+              { id: 'scope', num: '01', label: 'Open Domain Freedom', href: '#scope' },
+              { id: 'stack', num: '02', label: 'Recommended Stack', href: '#stack' },
+              { id: 'deliverables', num: '03', label: 'Required Deliverables', href: '#deliverables' },
+              { id: 'rubric', num: '04', label: 'Jury Rubric', href: '#rubric' },
+            ]}
+          />
         </div>
       </header>
 

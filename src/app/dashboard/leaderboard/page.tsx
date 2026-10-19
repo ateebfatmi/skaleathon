@@ -9,8 +9,8 @@ import {
   Layers,
   ArrowLeft,
   ArrowRight,
-  ArrowUpRight,
 } from 'lucide-react';
+import { EditorialIndexBar } from '@/components/ui/EditorialIndexBar';
 
 export const revalidate = 0;
 
@@ -46,7 +46,7 @@ export default async function DashboardLeaderboardPage() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c19a88] opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#c19a88]" />
             </span>
-            <span className="text-[#c19a88]">National Standings // Jury Evaluation</span>
+            <span className="text-[#c19a88]">National Standings {'//'} Jury Evaluation</span>
             <span className="text-white/20">•</span>
             <span className="text-neutral-400">
               Squad: <strong className="text-white font-semibold">{team ? team.name : 'Unassigned'}</strong>
@@ -94,42 +94,16 @@ export default async function DashboardLeaderboardPage() {
           </p>
         </div>
 
-        {/* Full-Width 4-Column Editorial Section Index Bar */}
-        <nav className="grid grid-cols-2 sm:grid-cols-4 border-t border-b border-white/[0.08] divide-y sm:divide-y-0 sm:divide-x divide-white/[0.06]">
-          {[
-            { href: '#progression', num: '01', label: 'Stage 01: First Reveal', active: true },
-            { href: '#progression', num: '02', label: 'Stage 02 & 03: Sprint Ranks', active: false },
-            { href: '#honors', num: '03', label: 'National Honors & Prizes', active: false },
-            { href: '/dashboard/track#rubric', num: '04', label: 'Jury Scoring Rubric', active: false },
-          ].map((sec) => (
-            <Link
-              key={sec.num}
-              href={sec.href}
-              className={`group relative py-3.5 px-4 flex items-center justify-between text-xs transition-all ${
-                sec.active
-                  ? 'text-white font-semibold bg-white/[0.02]'
-                  : 'text-neutral-500 hover:text-neutral-200 hover:bg-white/[0.01]'
-              }`}
-            >
-              <div className="flex items-center gap-2.5 truncate">
-                <span className="font-mono text-[10px] text-[#c19a88] font-bold">
-                  {sec.num}
-                </span>
-                <span className="truncate">{sec.label}</span>
-              </div>
-              <ArrowUpRight
-                className={`h-3.5 w-3.5 shrink-0 transition-transform ${
-                  sec.active
-                    ? 'text-[#e8c5b4]'
-                    : 'text-neutral-600 group-hover:text-neutral-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
-                }`}
-              />
-              {sec.active && (
-                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4]" />
-              )}
-            </Link>
-          ))}
-        </nav>
+        {/* Full-Width 4-Column Editorial Section Index Bar with Transition */}
+        <EditorialIndexBar
+          layoutIdPrefix="leaderboardIndex"
+          items={[
+            { num: '01', label: 'Stage 01: First Reveal', href: '#progression' },
+            { num: '02', label: 'Stage 02 & 03: Sprint Ranks', href: '#progression' },
+            { num: '03', label: 'National Honors & Prizes', href: '#honors' },
+            { num: '04', label: 'Jury Scoring Rubric', href: '/dashboard/track#rubric' },
+          ]}
+        />
       </header>
 
       {!isPublished ? (
@@ -139,7 +113,7 @@ export default async function DashboardLeaderboardPage() {
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
               <div>
                 <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
-                  01 // Standings Activation Protocol
+                  01 {'//'} Standings Activation Protocol
                 </span>
                 <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                   Unlocks After{' '}
@@ -195,7 +169,7 @@ export default async function DashboardLeaderboardPage() {
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
               <div>
                 <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
-                  02 // Recognition &amp; Bounty Pool
+                  02 {'//'} Recognition &amp; Bounty Pool
                 </span>
                 <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                   National Podium &amp;{' '}
@@ -268,7 +242,7 @@ export default async function DashboardLeaderboardPage() {
           <div className="flex items-center justify-between">
             <div>
               <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
-                01 // Verified Jury Standings
+                01 {'//'} Verified Jury Standings
               </span>
               <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                 National Standings &amp;{' '}

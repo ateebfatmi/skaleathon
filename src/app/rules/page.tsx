@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { EditorialIndexBar } from '@/components/ui/EditorialIndexBar';
 
 export default function RulesPage() {
   return (
@@ -26,7 +27,7 @@ export default function RulesPage() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c19a88] opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-[#c19a88]" />
                 </span>
-                <span className="text-[#c19a88]">Competition Protocol // Governance &amp; Eligibility</span>
+                <span className="text-[#c19a88]">Competition Protocol {'//'} Governance &amp; Eligibility</span>
                 <span className="text-white/20">•</span>
                 <span className="text-neutral-400">
                   Team Size: <strong className="text-white font-semibold">1 to 6 Members</strong>
@@ -67,43 +68,23 @@ export default function RulesPage() {
               </p>
             </div>
 
-            {/* Full-Width 4-Column Editorial Section Index Bar */}
-            <nav className="grid grid-cols-2 sm:grid-cols-4 border-t border-b border-white/[0.08] divide-y sm:divide-y-0 sm:divide-x divide-white/[0.06]">
-              {[
-                { href: '#eligibility', num: '01', label: 'Eligibility & Squads', active: true },
-                { href: '#stages', num: '02', label: '4 Competition Stages', active: false },
-                { href: '#originality', num: '03', label: 'Code & AI Disclosure', active: false },
-                { href: '#deliverables', num: '04', label: 'Mandatory Deliverables', active: false },
-              ].map((sec) => (
-                <a
-                  key={sec.num}
-                  href={sec.href}
-                  className={`group relative py-3.5 px-4 flex items-center justify-between text-xs transition-all ${
-                    sec.active
-                      ? 'text-white font-semibold bg-white/[0.02]'
-                      : 'text-neutral-500 hover:text-neutral-200 hover:bg-white/[0.01]'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5 truncate">
-                    <span className="font-mono text-[10px] text-[#c19a88] font-bold">
-                      {sec.num}
-                    </span>
-                    <span className="truncate">{sec.label}</span>
-                  </div>
-                  <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-[#e8c5b4]" />
-                  {sec.active && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4]" />
-                  )}
-                </a>
-              ))}
-            </nav>
+            {/* Full-Width 4-Column Editorial Section Index Bar with Transition */}
+            <EditorialIndexBar
+              layoutIdPrefix="rulesIndex"
+              items={[
+                { num: '01', label: 'Eligibility & Squads', href: '#eligibility' },
+                { num: '02', label: '4 Competition Stages', href: '#stages' },
+                { num: '03', label: 'Code & AI Disclosure', href: '#originality' },
+                { num: '04', label: 'Mandatory Deliverables', href: '#deliverables' },
+              ]}
+            />
           </header>
 
           {/* 2. Section 01: Eligibility & Squad Composition */}
           <section id="eligibility" className="space-y-8 scroll-mt-28">
             <div>
               <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
-                01 // Participant Standards
+                01 {'//'} Participant Standards
               </span>
               <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                 Eligibility &amp;{' '}
@@ -150,7 +131,7 @@ export default function RulesPage() {
           <section id="stages" className="space-y-6 pt-10 border-t border-white/[0.08] scroll-mt-28">
             <div>
               <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
-                02 // Tournament Progression
+                02 {'//'} Tournament Progression
               </span>
               <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                 The 4 Progressive{' '}
@@ -210,7 +191,7 @@ export default function RulesPage() {
           <section id="originality" className="space-y-8 pt-10 border-t border-white/[0.08] scroll-mt-28">
             <div>
               <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
-                03 // Engineering Integrity
+                03 {'//'} Engineering Integrity
               </span>
               <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                 Code Originality &amp;{' '}

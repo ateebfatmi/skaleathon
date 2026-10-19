@@ -6,6 +6,7 @@ import { Bot, Globe, Smartphone, ArrowRight, ArrowUpRight, Sparkles } from 'luci
 import { EventTrack } from '@/lib/db/types';
 import RegistrationModal from '@/components/registration/RegistrationModal';
 import { motion } from 'framer-motion';
+import { EditorialIndexBar } from '@/components/ui/EditorialIndexBar';
 
 interface TracksPageClientProps {
   tracks: EventTrack[];
@@ -118,45 +119,21 @@ export default function TracksPageClient({ tracks }: TracksPageClientProps) {
             </p>
           </div>
 
-          {/* Full-Width 3-Column Editorial Track Index Bar */}
-          <nav className="grid grid-cols-1 sm:grid-cols-3 border-t border-b border-white/[0.08] divide-y sm:divide-y-0 sm:divide-x divide-white/[0.06]">
-            {tracks.map((t, idx) => {
-              const num = String(idx + 1).padStart(2, '0');
-              const isActive = activeTab === t.id;
-              return (
-                <a
-                  key={t.id}
-                  href={`#${t.id}`}
-                  onClick={() => setActiveTab(t.id)}
-                  className={`group relative py-3.5 px-4 flex items-center justify-between text-xs transition-all ${
-                    isActive
-                      ? 'text-white font-semibold bg-white/[0.02]'
-                      : 'text-neutral-500 hover:text-neutral-200 hover:bg-white/[0.01]'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5 truncate">
-                    <span className="font-mono text-[10px] text-[#c19a88] font-bold">
-                      {num}
-                    </span>
-                    <span className="truncate">{t.name}</span>
-                  </div>
-                  <ArrowUpRight
-                    className={`h-3.5 w-3.5 shrink-0 transition-transform ${
-                      isActive
-                        ? 'text-[#e8c5b4]'
-                        : 'text-neutral-600 group-hover:text-neutral-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
-                    }`}
-                  />
-                  {isActive && (
-                    <motion.span
-                      layoutId="publicTrackUnderline"
-                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4]"
-                    />
-                  )}
-                </a>
-              );
-            })}
-          </nav>
+          {/* Full-Width 3-Column Editorial Track Index Bar with Transition */}
+          <EditorialIndexBar
+            layoutIdPrefix="publicTracksIndex"
+            columns={3}
+            activeId={activeTab}
+            onSelectItem={(item) => {
+              if (item.id) setActiveTab(item.id);
+            }}
+            items={tracks.map((t, idx) => ({
+              id: t.id,
+              num: String(idx + 1).padStart(2, '0'),
+              label: t.name,
+              href: `#${t.id}`,
+            }))}
+          />
         </header>
 
         {/* 2. Open Track Sections (Blended into Background, No Boxy Cards) */}

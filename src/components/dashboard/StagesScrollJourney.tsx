@@ -13,6 +13,7 @@ import {
   ArrowUpRight,
   Sparkles,
 } from 'lucide-react';
+import { EditorialIndexBar } from '@/components/ui/EditorialIndexBar';
 
 const STAGE_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   '01': BrainCircuit,
@@ -114,44 +115,18 @@ export default function StagesScrollJourney({ stages }: StagesScrollJourneyProps
           </p>
         </div>
 
-        {/* Full-Width 4-Column Editorial Stage Index Bar */}
-        <nav className="grid grid-cols-2 sm:grid-cols-4 border-t border-b border-white/[0.08] divide-y sm:divide-y-0 sm:divide-x divide-white/[0.06]">
-          {stages.map((st) => {
-            const isActive = activeStage === st.number;
-            return (
-              <a
-                key={st.number}
-                href={`#stage-${st.number}`}
-                onClick={() => setActiveStage(st.number)}
-                className={`group relative py-3.5 px-4 flex items-center justify-between text-xs transition-all ${
-                  isActive
-                    ? 'text-white font-semibold bg-white/[0.02]'
-                    : 'text-neutral-500 hover:text-neutral-200 hover:bg-white/[0.01]'
-                }`}
-              >
-                <div className="flex items-center gap-2.5 truncate">
-                  <span className="font-mono text-[10px] text-[#c19a88] font-bold">
-                    {st.number}
-                  </span>
-                  <span className="truncate">{st.title}</span>
-                </div>
-                <ArrowUpRight
-                  className={`h-3.5 w-3.5 shrink-0 transition-transform ${
-                    isActive
-                      ? 'text-[#e8c5b4]'
-                      : 'text-neutral-600 group-hover:text-neutral-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
-                  }`}
-                />
-                {isActive && (
-                  <motion.span
-                    layoutId="stageSectionUnderline"
-                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4]"
-                  />
-                )}
-              </a>
-            );
-          })}
-        </nav>
+        {/* Full-Width 4-Column Editorial Stage Index Bar with Transition */}
+        <EditorialIndexBar
+          layoutIdPrefix="stagesIndex"
+          activeId={activeStage}
+          onSelectItem={(item) => setActiveStage(item.num)}
+          items={stages.map((st) => ({
+            id: st.number,
+            num: st.number,
+            label: st.title,
+            href: `#stage-${st.number}`,
+          }))}
+        />
       </header>
 
       {/* 2. Open Vertical Stage Stream */}
