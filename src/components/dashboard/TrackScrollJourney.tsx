@@ -14,11 +14,7 @@ import {
   GitBranch,
   Video,
   FileCode,
-  Send,
-  Cpu,
-  Terminal,
   CheckCircle2,
-  ArrowUpRight,
 } from 'lucide-react';
 
 interface TrackScrollJourneyProps {
@@ -55,13 +51,21 @@ const VERSATILE_EXAMPLE_DOMAINS = [
   { code: '∞', name: 'Custom / Your Own Domain', highlight: true },
 ];
 
+type SectionId = 'scope' | 'stack' | 'deliverables' | 'rubric';
+
 export default function TrackScrollJourney({
   track,
   team,
   trackMeta,
   accentColor: rawAccent,
 }: TrackScrollJourneyProps) {
-  const [activeSection, setActiveSection] = useState<'scope' | 'stack' | 'deliverables' | 'rubric'>('scope');
+  const [activeSection, setActiveSection] = useState<SectionId>('scope');
+  const [pulseCount, setPulseCount] = useState<Record<SectionId, number>>({
+    scope: 0,
+    stack: 0,
+    deliverables: 0,
+    rubric: 0,
+  });
 
   // Normalize color to SkaleKraft warm copper / champagne palette
   const isOddColor =
@@ -70,6 +74,17 @@ export default function TrackScrollJourney({
     rawAccent.toLowerCase().startsWith('#63') ||
     rawAccent.toLowerCase().includes('purple');
   const accentColor = isOddColor ? '#c19a88' : rawAccent;
+
+  const handleSectionSelect = (e: React.MouseEvent<HTMLAnchorElement>, id: SectionId) => {
+    e.preventDefault();
+    setActiveSection(id);
+    setPulseCount((prev) => ({ ...prev, [id]: prev[id] + 1 }));
+
+    const targetEl = document.getElementById(id);
+    if (targetEl) {
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
 
   // Split track title for editorial serif contrast (e.g. "AI &" + "Machine Learning")
   const renderStylizedTrackTitle = (name?: string) => {
@@ -182,7 +197,7 @@ export default function TrackScrollJourney({
         </div>
 
         {/* Editorial Headline & Manifesto */}
-        <div className="relative z-10 max-w-3xl space-y-5 pb-9">
+        <div className="relative z-10 max-w-3xl space-y-5 pb-6">
           <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold text-white tracking-tight leading-[1.06]">
             {renderStylizedTrackTitle(track?.name)}
           </h1>
@@ -190,55 +205,91 @@ export default function TrackScrollJourney({
           <p className="border-l-2 border-[#c19a88]/45 pl-4 text-sm sm:text-[15px] text-neutral-300/90 leading-relaxed font-light">
             {trackMeta ? trackMeta.manifesto : track?.description}
           </p>
+
+          {/* Spec Badges */}
+          <div className="flex flex-wrap items-center gap-3 pt-1 text-xs text-neutral-400">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03]">
+              <Compass className="h-3.5 w-3.5 text-[#c19a88]" />
+              <span>
+                Problem Statement: <strong className="text-white">100% Open &amp; Self-Defined</strong>
+              </span>
+            </div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03]">
+              <Sparkles className="h-3.5 w-3.5 text-[#e8c5b4]" />
+              <span>
+                Domain Choice: <strong className="text-white">Any Industry or Custom Domain</strong>
+              </span>
+            </div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03]">
+              <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
+              <span>
+                Squad Capacity: <strong className="text-white">1 to 6 Members</strong>
+              </span>
+            </div>
+          </div>
         </div>
 
-        {/* Full-Width 4-Column Editorial Section Index Bar */}
-        <nav className="grid grid-cols-2 sm:grid-cols-4 border-t border-b border-white/[0.08] divide-y sm:divide-y-0 sm:divide-x divide-white/[0.06]">
-          {[
-            { id: 'scope', num: '01', label: 'Open Domain Freedom' },
-            { id: 'stack', num: '02', label: 'Recommended Stack' },
-            { id: 'deliverables', num: '03', label: 'Required Deliverables' },
-            { id: 'rubric', num: '04', label: 'Jury Rubric' },
-          ].map((sec) => {
+        {/* Section Jump Pill Buttons with Fluid Spring Transition */}
+        <div className="flex items-center gap-2 mt-4 pt-4 border-t border-white/[0.08] overflow-x-auto scrollbar-none pb-1">
+          {(
+            [
+              { id: 'scope', label: '01. Open Domain Freedom' },
+              { id: 'stack', label: '02. Recommended Stack' },
+              { id: 'deliverables', label: '03. Required Deliverables' },
+              { id: 'rubric', label: '04. Jury Rubric' },
+            ] as const
+          ).map((sec) => {
             const isActive = activeSection === sec.id;
             return (
-              <a
+              <motion.a
                 key={sec.id}
                 href={`#${sec.id}`}
-                onClick={() => setActiveSection(sec.id as any)}
-                className={`group relative py-3.5 px-4 flex items-center justify-between text-xs transition-all ${
+                onClick={(e) => handleSectionSelect(e, sec.id)}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.96 }}
+                className={`relative flex items-center gap-2 px-4 py-2 rounded-full text-xs transition-colors duration-300 whitespace-nowrap select-none cursor-pointer ${
                   isActive
-                    ? 'text-white font-semibold bg-white/[0.02]'
-                    : 'text-neutral-500 hover:text-neutral-200 hover:bg-white/[0.01]'
+                    ? 'text-white font-semibold'
+                    : 'text-neutral-400 hover:text-white'
                 }`}
               >
-                <div className="flex items-center gap-2.5 truncate">
-                  <span className="font-mono text-[10px] text-[#c19a88] font-bold">
-                    {sec.num}
-                  </span>
-                  <span className="truncate">{sec.label}</span>
-                </div>
-                <ArrowUpRight
-                  className={`h-3.5 w-3.5 shrink-0 transition-transform ${
-                    isActive
-                      ? 'text-[#e8c5b4]'
-                      : 'text-neutral-600 group-hover:text-neutral-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
-                  }`}
-                />
                 {isActive && (
                   <motion.span
-                    layoutId="trackSectionUnderline"
-                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4]"
+                    layoutId="trackSectionActivePill"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    className="absolute inset-0 rounded-full bg-gradient-to-r from-white/[0.12] to-white/[0.06] border border-[#c19a88]/45 shadow-[0_0_20px_rgba(193,154,136,0.2)]"
                   />
                 )}
-              </a>
+                <span className="relative z-10 flex items-center gap-1.5">
+                  {isActive && (
+                    <motion.span
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.2 }}
+                      className="h-1.5 w-1.5 rounded-full bg-[#c19a88]"
+                    />
+                  )}
+                  <span>{sec.label}</span>
+                </span>
+              </motion.a>
             );
           })}
-        </nav>
+        </div>
       </header>
 
       {/* 2. Section 01: Open Problem Statement & Creative Autonomy */}
-      <section id="scope" className="space-y-8 scroll-mt-28">
+      <motion.section
+        id="scope"
+        key={`scope-${pulseCount.scope}`}
+        initial={{ opacity: 0.65, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+        className={`relative space-y-8 scroll-mt-28 rounded-2xl transition-all duration-500 ${
+          activeSection === 'scope' && pulseCount.scope > 0
+            ? 'ring-1 ring-[#c19a88]/30 bg-gradient-to-b from-[#c19a88]/[0.04] to-transparent p-5 -mx-5'
+            : ''
+        }`}
+      >
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
           <div>
             <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
@@ -256,14 +307,13 @@ export default function TrackScrollJourney({
           </p>
         </div>
 
-        {/* Side-by-Side Architectural Pillars (Blended with Fine Hairlines, No Boxy Cards) */}
+        {/* Side-by-Side Architectural Pillars */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 pt-2 border-t border-white/[0.08]">
           {/* Pillar 01 */}
           <motion.div
             initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.05 }}
             className="relative pt-4 space-y-3"
           >
             <div className="flex items-center justify-between">
@@ -283,9 +333,8 @@ export default function TrackScrollJourney({
           {/* Pillar 02 */}
           <motion.div
             initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.05 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.12 }}
             className="relative pt-4 md:border-l md:border-white/[0.08] md:pl-8 lg:pl-12 space-y-3"
           >
             <div className="flex items-center justify-between">
@@ -306,7 +355,7 @@ export default function TrackScrollJourney({
           </motion.div>
         </div>
 
-        {/* Open Domain Spectrum Index (Editorial Grid Line Stream) */}
+        {/* Open Domain Spectrum Index */}
         <div className="pt-6 border-t border-white/[0.06] space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-neutral-400">
@@ -318,9 +367,12 @@ export default function TrackScrollJourney({
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-3 pt-1">
-            {VERSATILE_EXAMPLE_DOMAINS.map((domain) => (
-              <div
+            {VERSATILE_EXAMPLE_DOMAINS.map((domain, idx) => (
+              <motion.div
                 key={domain.code}
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: idx * 0.025 }}
                 className={`group flex items-baseline gap-2.5 py-1.5 border-b transition-colors ${
                   domain.highlight
                     ? 'border-[#c19a88]/40 text-[#e8c5b4]'
@@ -337,15 +389,26 @@ export default function TrackScrollJourney({
                 >
                   {domain.name}
                 </span>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* 3. Section 02: Recommended Tech Toolkit */}
       {trackMeta && (
-        <section id="stack" className="space-y-6 pt-10 border-t border-white/[0.08] scroll-mt-28">
+        <motion.section
+          id="stack"
+          key={`stack-${pulseCount.stack}`}
+          initial={{ opacity: 0.65, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          className={`space-y-6 pt-10 border-t border-white/[0.08] scroll-mt-28 rounded-2xl transition-all duration-500 ${
+            activeSection === 'stack'
+              ? 'ring-1 ring-[#c19a88]/30 bg-gradient-to-b from-[#c19a88]/[0.04] to-transparent p-5 -mx-5'
+              : ''
+          }`}
+        >
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
             <div>
               <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
@@ -366,22 +429,36 @@ export default function TrackScrollJourney({
 
           <div className="flex flex-wrap items-center gap-x-8 gap-y-4 pt-3 border-t border-white/[0.06]">
             {trackMeta.suggestedStack.map((tech, idx) => (
-              <div
+              <motion.div
                 key={idx}
+                initial={{ opacity: 0, scale: 0.92, y: 8 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.35, delay: idx * 0.04 }}
                 className="group inline-flex items-center gap-2.5 text-xs sm:text-sm text-neutral-200 hover:text-[#e8c5b4] transition-colors"
               >
                 <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] group-hover:scale-125 transition-transform" />
                 <span className="font-mono">{tech}</span>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* 4. Split Section: Official Deliverables (Left) & Jury Rubric (Right) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-10 border-t border-white/[0.08]">
         {/* Left 7 Cols: Deliverables Ledger */}
-        <section id="deliverables" className="lg:col-span-7 space-y-5 scroll-mt-28">
+        <motion.section
+          id="deliverables"
+          key={`deliverables-${pulseCount.deliverables}`}
+          initial={{ opacity: 0.65, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          className={`lg:col-span-7 space-y-5 scroll-mt-28 rounded-2xl transition-all duration-500 ${
+            activeSection === 'deliverables'
+              ? 'ring-1 ring-[#c19a88]/35 bg-gradient-to-b from-[#c19a88]/[0.05] to-transparent p-5 -m-5'
+              : ''
+          }`}
+        >
           <div className="space-y-1">
             <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block">
               03 // Milestone Artifacts
@@ -396,7 +473,12 @@ export default function TrackScrollJourney({
 
           <div className="divide-y divide-white/[0.06] border-t border-b border-white/[0.06]">
             {/* Item 01 */}
-            <div className="py-4 flex items-start gap-4">
+            <motion.div
+              initial={{ opacity: 0, x: -12 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.35, delay: 0.04 }}
+              className="py-4 flex items-start gap-4"
+            >
               <span className="font-mono text-xs font-bold text-[#c19a88] pt-0.5">01</span>
               <div className="flex-1 space-y-1">
                 <div className="flex items-center justify-between gap-2">
@@ -413,10 +495,15 @@ export default function TrackScrollJourney({
                   <code className="text-[#e8c5b4] font-mono">README.md</code> detailing setup and system architecture.
                 </p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Item 02 */}
-            <div className="py-4 flex items-start gap-4">
+            <motion.div
+              initial={{ opacity: 0, x: -12 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.35, delay: 0.1 }}
+              className="py-4 flex items-start gap-4"
+            >
               <span className="font-mono text-xs font-bold text-[#c19a88] pt-0.5">02</span>
               <div className="flex-1 space-y-1">
                 <div className="flex items-center justify-between gap-2">
@@ -432,10 +519,15 @@ export default function TrackScrollJourney({
                   Accessible cloud deployment (Vercel, Railway, Render, AWS, or APK/TestFlight build) ready for live jury verification.
                 </p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Item 03 */}
-            <div className="py-4 flex items-start gap-4">
+            <motion.div
+              initial={{ opacity: 0, x: -12 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.35, delay: 0.16 }}
+              className="py-4 flex items-start gap-4"
+            >
               <span className="font-mono text-xs font-bold text-[#c19a88] pt-0.5">03</span>
               <div className="flex-1 space-y-1">
                 <div className="flex items-center justify-between gap-2">
@@ -451,10 +543,15 @@ export default function TrackScrollJourney({
                   A 2–3 minute unlisted YouTube or Loom walkthrough demonstrating real-time execution and core technical highlights.
                 </p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Item 04 */}
-            <div className="py-4 flex items-start gap-4">
+            <motion.div
+              initial={{ opacity: 0, x: -12 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.35, delay: 0.22 }}
+              className="py-4 flex items-start gap-4"
+            >
               <span className="font-mono text-xs font-bold text-white/30 pt-0.5">04</span>
               <div className="flex-1 space-y-1">
                 <div className="flex items-center justify-between gap-2">
@@ -470,12 +567,23 @@ export default function TrackScrollJourney({
                   Transparent declaration in your repository README acknowledging LLMs, foundational models, or external APIs integrated.
                 </p>
               </div>
-            </div>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Right 5 Cols: Jury Evaluation Rubric */}
-        <section id="rubric" className="lg:col-span-5 space-y-5 scroll-mt-28">
+        <motion.section
+          id="rubric"
+          key={`rubric-${pulseCount.rubric}`}
+          initial={{ opacity: 0.65, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          className={`lg:col-span-5 space-y-5 scroll-mt-28 rounded-2xl transition-all duration-500 ${
+            activeSection === 'rubric'
+              ? 'ring-1 ring-[#c19a88]/35 bg-gradient-to-b from-[#c19a88]/[0.05] to-transparent p-5 -m-5'
+              : ''
+          }`}
+        >
           <div className="space-y-1">
             <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block">
               04 // Scoring Weightage
@@ -493,29 +601,35 @@ export default function TrackScrollJourney({
               {
                 title: 'Innovation & Originality',
                 weight: '30%',
-                width: 'w-[30%]',
+                targetWidth: '30%',
                 desc: 'Novelty of problem formulation, creative autonomy, and distinct edge over existing solutions.',
               },
               {
                 title: 'Technical Architecture & Rigor',
                 weight: '30%',
-                width: 'w-[30%]',
+                targetWidth: '30%',
                 desc: 'System design depth, code quality, performance benchmarks, and production resilience.',
               },
               {
                 title: 'Real-World Utility & Scale',
                 weight: '20%',
-                width: 'w-[20%]',
+                targetWidth: '20%',
                 desc: 'Practical viability, domain impact, and architectural scalability under load.',
               },
               {
                 title: 'UX & Interface Craft',
                 weight: '20%',
-                width: 'w-[20%]',
+                targetWidth: '20%',
                 desc: 'Intuitive user flow, visual polish, responsiveness, and overall product execution.',
               },
             ].map((item, idx) => (
-              <div key={idx} className="py-3.5 space-y-2">
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, x: 12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.35, delay: idx * 0.06 }}
+                className="py-3.5 space-y-2"
+              >
                 <div className="flex items-baseline justify-between gap-2">
                   <span className="text-xs sm:text-sm font-semibold text-white">
                     {item.title}
@@ -524,18 +638,21 @@ export default function TrackScrollJourney({
                     {item.weight}
                   </span>
                 </div>
-                <div className="h-[2px] w-full bg-white/[0.06] overflow-hidden">
-                  <div
-                    className={`h-full bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4] ${item.width}`}
+                <div className="h-[2px] w-full bg-white/[0.06] overflow-hidden rounded-full">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: item.targetWidth }}
+                    transition={{ duration: 0.65, delay: 0.1 + idx * 0.08, ease: 'easeOut' }}
+                    className="h-full bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4]"
                   />
                 </div>
                 <p className="text-[11px] text-neutral-400 font-light leading-relaxed">
                   {item.desc}
                 </p>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </section>
+        </motion.section>
       </div>
     </div>
   );
