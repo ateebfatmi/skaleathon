@@ -82,22 +82,29 @@ export default function HeroSection({ event }: HeroProps) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-6 text-base sm:text-lg text-white/65 max-w-2xl mx-auto font-normal leading-relaxed"
+          className="mt-6 text-base sm:text-lg text-white/70 max-w-2xl mx-auto font-normal leading-relaxed"
         >
-          India&apos;s premier national online hackathon uniting ambitious developers, designers, and problem solvers to engineer scalable, production-grade solutions across AI/ML, Web, and Mobile ecosystems.
+          India&apos;s definitive 4-stage national engineering tournament. Architect, build, and deploy production-grade software across AI/ML, Web, and Mobile arenas — competing for a ₹35,000 cash prize pool, Top 25 merit certificates, and SkaleKraft studio internship opportunities.
         </motion.p>
 
-        {/* Status Pill */}
+        {/* Status & Funnel Pill */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.4, delay: 0.4 }}
-          className="mt-6 inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-medium border border-[#805948]/30 bg-[#805948]/10 text-white/80"
+          className="mt-7 inline-flex flex-wrap items-center justify-center gap-2.5 px-5 py-2 rounded-full text-xs font-medium border border-[#c19a88]/30 bg-[#805948]/15 text-white/90 shadow-[0_4px_25px_rgba(128,89,72,0.18)] backdrop-blur-xl"
         >
-          <span className="h-2 w-2 rounded-full bg-[#c19a88] animate-pulse" />
-          <span>Status: {isRegistrationOpen ? 'Registration is Officially Open' : event.status.replace(/_/g, ' ').toUpperCase()}</span>
-          <span className="text-white/40">•</span>
-          <span className="text-[#c19a88] font-semibold">₹99 / Team</span>
+          <span className="flex h-2 w-2 relative">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          <span className="font-semibold text-emerald-400">
+            {isRegistrationOpen ? 'Registration Officially Open' : event.status.replace(/_/g, ' ').toUpperCase()}
+          </span>
+          <span className="text-white/30">•</span>
+          <span className="text-white/80">Flat ₹99 per Squad (1–6 Members)</span>
+          <span className="text-white/30">•</span>
+          <span className="text-[#e8c5b4] font-mono">4 Stages: Quiz → PPT → Build → Live Q&A</span>
         </motion.div>
 
         {/* CTA Buttons */}
@@ -105,7 +112,7 @@ export default function HeroSection({ event }: HeroProps) {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
-          className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-4"
+          className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3.5"
         >
           {isRegistrationOpen ? (
             <GlassmorphismCta
@@ -114,7 +121,7 @@ export default function HeroSection({ event }: HeroProps) {
               avatarSrc="/images/skalekraft-logo.png"
               avatarAlt="SkaleKraft logo"
               shimmerColor="rgba(193,154,136,0.85)"
-              className="text-sm py-2.5 px-5"
+              className="text-sm py-2.5 px-6 font-semibold"
             />
           ) : (
             <button
@@ -126,40 +133,44 @@ export default function HeroSection({ event }: HeroProps) {
           )}
 
           <Link
-            href="/tracks"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] hover:bg-white/[0.07] px-6 py-2.5 text-sm font-medium text-white/80 hover:text-white transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
+            href="/candidates"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] hover:bg-white/[0.08] px-5 py-2.5 text-xs sm:text-sm font-medium text-white hover:border-[#c19a88]/40 transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
           >
-            <Terminal className="h-4 w-4 text-[#c19a88]" />
-            <span>Explore Tracks</span>
+            <Sparkles className="h-4 w-4 text-[#c19a88]" />
+            <span>Registered Candidates</span>
           </Link>
 
           <Link
-            href="/rules"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-transparent hover:border-white/10 px-5 py-2.5 text-sm font-medium text-white/55 hover:text-white transition-colors"
+            href="/tracks"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-transparent hover:border-white/10 px-5 py-2.5 text-xs sm:text-sm font-medium text-white/60 hover:text-white transition-colors"
           >
-            <ShieldCheck className="h-4 w-4" />
-            <span>Rules</span>
+            <Terminal className="h-4 w-4 text-[#c19a88]" />
+            <span>Explore Arenas</span>
           </Link>
         </motion.div>
 
-        {/* Trust Badges */}
+        {/* 4 Official Trust Badges */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-14 pt-8 border-t border-white/10 flex flex-wrap items-center justify-center gap-y-4 gap-x-8 text-xs text-white/55"
+          className="mt-14 pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-4 text-xs text-white/60 max-w-5xl mx-auto"
         >
-          <div className="flex items-center gap-2">
-            <Award className="h-4 w-4 text-[#c19a88]" />
-            <span>₹35,000 Authorized Prize Pool</span>
+          <div className="flex items-center justify-center gap-2 p-2.5 rounded-xl border border-white/[0.04] bg-white/[0.01]">
+            <Award className="h-4 w-4 text-[#c19a88] shrink-0" />
+            <span className="font-medium text-white/80">₹35,000 Cash Pool</span>
           </div>
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="h-4 w-4 text-[#c19a88]" />
-            <span>Official Certificates for Top 25 Teams</span>
+          <div className="flex items-center justify-center gap-2 p-2.5 rounded-xl border border-white/[0.04] bg-white/[0.01]">
+            <Terminal className="h-4 w-4 text-[#c19a88] shrink-0" />
+            <span className="font-medium text-white/80">4 Tournament Stages</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Terminal className="h-4 w-4 text-[#c19a88]" />
-            <span>Team Size: 1 to 6 Innovators</span>
+          <div className="flex items-center justify-center gap-2 p-2.5 rounded-xl border border-white/[0.04] bg-white/[0.01]">
+            <ShieldCheck className="h-4 w-4 text-[#c19a88] shrink-0" />
+            <span className="font-medium text-white/80">Top 25 Merit Certificates</span>
+          </div>
+          <div className="flex items-center justify-center gap-2 p-2.5 rounded-xl border border-white/[0.04] bg-white/[0.01]">
+            <Sparkles className="h-4 w-4 text-[#c19a88] shrink-0" />
+            <span className="font-medium text-white/80">Studio Internship Interviews</span>
           </div>
         </motion.div>
 

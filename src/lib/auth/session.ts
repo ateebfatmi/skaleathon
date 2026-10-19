@@ -37,12 +37,44 @@ export async function getCurrentSession(): Promise<AuthSession | null> {
   const cookieStore = cookies();
   const token = cookieStore.get(SESSION_COOKIE_NAME)?.value;
 
-  if (!token) return null;
+  let profile: Profile | null = null;
 
-  const payload = verifyToken<{ userId: string }>(token);
-  if (!payload || !payload.userId) return null;
+  if (token) {
+    const payload = verifyToken<{ userId: string }>(token);
+    if (payload && payload.userId) {
+      profile = await EventRepository.getProfile(payload.userId);
+    }
+  }
 
-  const profile = await EventRepository.getProfile(payload.userId);
+  // Fallback to Clerk authenticated user
+  if (!profile) {
+    try {
+      const { currentUser } = await import('@clerk/nextjs/server');
+      const clerkUser = await currentUser();
+      if (clerkUser) {
+        const primaryEmail =
+          clerkUser.emailAddresses.find((e) => e.id === clerkUser.primaryEmailAddressId)?.emailAddress ||
+          clerkUser.emailAddresses[0]?.emailAddress;
+
+        if (primaryEmail) {
+          profile = await EventRepository.getProfileByEmail(primaryEmail);
+          if (!profile) {
+            profile = await EventRepository.upsertProfile({
+              id: clerkUser.id,
+              email: primaryEmail,
+              full_name: clerkUser.firstName
+                ? `${clerkUser.firstName} ${clerkUser.lastName || ''}`.trim()
+                : (clerkUser.username || primaryEmail),
+              role: 'participant',
+            });
+          }
+        }
+      }
+    } catch {
+      // Clerk not active or error
+    }
+  }
+
   if (!profile) return null;
 
   // Retrieve teamId if user is leader or member

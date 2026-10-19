@@ -29,15 +29,15 @@ export default function OrganizerSection() {
 
             <div className="flex items-center gap-4">
               <div
-                className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_25px_rgba(128,89,72,0.3)]"
+                className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-[#1c1b1a] shadow-[0_0_25px_rgba(193,154,136,0.25)]"
                 style={{ width: 56, height: 56, minWidth: 56, minHeight: 56 }}
               >
                 <Image
-                  src="/images/skalekraft-logo.png"
+                  src="/images/skalekraft-mark.png"
                   alt="SkaleKraft logo"
                   width={56}
                   height={56}
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-contain"
                   style={{ width: 56, height: 56, maxWidth: 56, maxHeight: 56 }}
                 />
               </div>

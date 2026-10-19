@@ -141,28 +141,28 @@ export default function Navbar() {
               className="flex items-center gap-3 group shrink-0 select-none"
             >
               <div
-                className="relative h-10 w-10 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] p-0.5 shadow-[0_0_20px_rgba(193,154,136,0.2)] transition-all duration-300 group-hover:scale-105 group-hover:border-[#c19a88]/50 group-hover:shadow-[0_0_25px_rgba(193,154,136,0.35)]"
+                className="relative h-10 w-10 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-[#1c1b1a] shadow-[0_0_20px_rgba(193,154,136,0.18)] transition-all duration-300 group-hover:scale-105 group-hover:border-[#c19a88]/50 group-hover:shadow-[0_0_25px_rgba(193,154,136,0.35)]"
                 style={{ width: 40, height: 40, minWidth: 40, minHeight: 40 }}
               >
                 <Image
-                  src="/images/skalekraft-logo.png"
+                  src="/images/skalekraft-mark.png"
                   alt="SkaleKraft logo"
                   width={40}
                   height={40}
-                  className="h-full w-full object-cover rounded-[10px]"
+                  className="h-full w-full object-contain"
                   style={{ width: 40, height: 40, maxWidth: 40, maxHeight: 40 }}
                   priority
                 />
               </div>
-              <div className="flex flex-col">
-                <span className="text-[9px] uppercase tracking-[0.26em] text-[#c19a88] font-bold leading-none">
+              <div className="flex flex-col justify-center">
+                <span className="text-[10px] uppercase tracking-[0.24em] font-medium text-[#c19a88] leading-tight">
                   SkaleKraft Presents
                 </span>
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="text-base sm:text-lg font-black tracking-[0.14em] text-white">
+                <div className="flex items-center gap-2 mt-0.5">
+                  <span className="text-base sm:text-lg font-black tracking-[0.12em] text-white">
                     SKALE<span className="skalekraft-gradient-text">ATHON</span>
                   </span>
-                  <span className="text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded-md border border-[#c19a88]/30 bg-[#c19a88]/10 text-[#e8c5b4] shadow-sm">
+                  <span className="inline-flex items-center rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 px-2 py-0.5 text-[9px] font-mono font-medium tracking-wider text-[#e8c5b4] shadow-[0_0_12px_rgba(193,154,136,0.15)]">
                     2027
                   </span>
                 </div>

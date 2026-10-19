@@ -52,7 +52,7 @@ body {
 
 /* SkaleKraft copper, bronze & luxury gradient utilities */
 .skalekraft-gradient-text {
-  background: linear-gradient(135deg, #e8c5b4 0%, #c19a88 50%, #805948 100%);
+  background: linear-gradient(135deg, #f5ded3 0%, #e8c5b4 45%, #c19a88 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
