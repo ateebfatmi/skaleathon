@@ -114,7 +114,7 @@ export default function Footer() {
                   ? 'Administrator Command Center'
                   : pathname.startsWith('/judge')
                   ? 'Judge Evaluation Portal'
-                  : 'Participant Workspace'}
+                  : 'National Online Hackathon'}
               </span>
             </div>
 

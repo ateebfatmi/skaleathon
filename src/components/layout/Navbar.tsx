@@ -286,16 +286,6 @@ export default function Navbar() {
                             />
                             <span className="pointer-events-none absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-[#0B0B0B] shadow-[0_0_6px_#10b981]" />
                           </div>
-
-                          {/* Exit to Main Public Website */}
-                          <Link
-                            href="/"
-                            className="flex items-center gap-1.5 text-xs text-neutral-400 hover:text-white px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] transition-all"
-                            title="View Public Hackathon Site"
-                          >
-                            <span>Main Site</span>
-                            <ExternalLink className="h-3 w-3 text-neutral-400" />
-                          </Link>
                         </div>
                       ) : (
                         /* Marketing Header: Luxury Account Capsule */
@@ -477,7 +467,7 @@ export default function Navbar() {
 
                 <div className="pt-3 border-t border-white/10">
                   <div className="flex items-center gap-2 px-3 py-1 mb-1 text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-bold">
-                    <span>Public Hackathon Site</span>
+                    <span>Navigation Links</span>
                   </div>
                   <div className="grid grid-cols-2 gap-1.5">
                     {navLinks.map((link) => (
