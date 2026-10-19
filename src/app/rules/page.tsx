@@ -71,10 +71,53 @@ export default function RulesPage() {
             </ul>
           </div>
 
-          {/* Section 3: Originality & AI Tool Usage */}
+          {/* Section 3: The 4-Stage Competition Architecture */}
+          <div className="rounded-[24px] border border-[#c19a88]/40 bg-[linear-gradient(145deg,rgba(193,154,136,0.06),rgba(14,14,14,0.95))] p-7 sm:p-8 space-y-5 shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+            <h2 className="text-base font-semibold tracking-wide text-white flex items-center gap-2.5">
+              <span className="font-mono text-xs text-[#c19a88]">03.</span> The 4 Progressive Competition Stages
+            </h2>
+            <p className="text-xs text-white/60">
+              Skaleathon 2027 operates across four sequential stages designed to rigorously test technical aptitude, system design, software implementation, and live oral defense:
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
+              <div className="p-4 rounded-xl border border-white/10 bg-white/[0.02] space-y-1">
+                <span className="text-[10px] font-mono text-emerald-400 font-bold uppercase tracking-wider">Stage 1 • Quiz</span>
+                <h3 className="text-xs font-bold text-white">Online Technical Screening Quiz</h3>
+                <p className="text-[11px] text-white/50 leading-relaxed font-light">
+                  A timed technical quiz covering core CS logic, algorithmic reasoning, and domain-specific track fundamentals. High-scoring teams qualify for Stage 2.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-xl border border-white/10 bg-white/[0.02] space-y-1">
+                <span className="text-[10px] font-mono text-cyan-400 font-bold uppercase tracking-wider">Stage 2 • PPT</span>
+                <h3 className="text-xs font-bold text-white">Idea & Architecture PPT</h3>
+                <p className="text-[11px] text-white/50 leading-relaxed font-light">
+                  Shortlisted teams submit a structured slide deck detailing their problem statement, system architecture, database schema, tech stack, and feasibility.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-xl border border-white/10 bg-white/[0.02] space-y-1">
+                <span className="text-[10px] font-mono text-[#e8c5b4] font-bold uppercase tracking-wider">Stage 3 • Build</span>
+                <h3 className="text-xs font-bold text-white">Project Submission & Codebase</h3>
+                <p className="text-[11px] text-white/50 leading-relaxed font-light">
+                  The primary engineering phase. Teams build and submit a public GitHub repository, live deployed URL, walkthrough demo video, and AI tool disclosure.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-xl border border-white/10 bg-white/[0.02] space-y-1">
+                <span className="text-[10px] font-mono text-amber-400 font-bold uppercase tracking-wider">Stage 4 • Finale</span>
+                <h3 className="text-xs font-bold text-white">Grand Finale Live Q&A</h3>
+                <p className="text-[11px] text-white/50 leading-relaxed font-light">
+                  Top finalist teams defend their architecture and code in a live Q&A session with domain judges and SkaleKraft studio leadership to determine final rankings.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 4: Originality & AI Tool Usage */}
           <div className="rounded-[24px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-7 sm:p-8 space-y-4 shadow-[0_15px_40px_rgba(0,0,0,0.3)]">
             <h2 className="text-base font-semibold tracking-wide text-white flex items-center gap-2.5">
-              <span className="font-mono text-xs text-[#c19a88]">03.</span> Code Originality & AI Disclosures
+              <span className="font-mono text-xs text-[#c19a88]">04.</span> Code Originality & AI Disclosures
             </h2>
             <ul className="space-y-2.5">
               <li className="flex items-start gap-3">
@@ -92,10 +135,10 @@ export default function RulesPage() {
             </ul>
           </div>
 
-          {/* Section 4: Submission Requirements */}
+          {/* Section 5: Submission Requirements */}
           <div className="rounded-[24px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-7 sm:p-8 space-y-4 shadow-[0_15px_40px_rgba(0,0,0,0.3)]">
             <h2 className="text-base font-semibold tracking-wide text-white flex items-center gap-2.5">
-              <span className="font-mono text-xs text-[#c19a88]">04.</span> Project Submission Deliverables
+              <span className="font-mono text-xs text-[#c19a88]">05.</span> Project Submission Deliverables
             </h2>
             <ul className="space-y-2.5">
               <li className="flex items-start gap-3">

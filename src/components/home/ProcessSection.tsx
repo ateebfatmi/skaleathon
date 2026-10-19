@@ -1,45 +1,57 @@
 'use client';
 
 import React from 'react';
-import { UserPlus, Compass, Code2, Send, Award } from 'lucide-react';
+import { HelpCircle, Presentation, Code2, MessagesSquare, ArrowRight, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { SpotlightCard } from '@/components/ui/spotlight-card';
+import Link from 'next/link';
 
 export default function ProcessSection() {
-  const steps = [
+  const stages = [
     {
-      num: '01',
-      title: 'Register Team',
-      desc: 'Form a squad of 1–6 engineers and complete flat ₹99 team registration.',
-      icon: UserPlus,
+      num: 'Stage 01',
+      title: 'Online Technical Quiz',
+      subtitle: 'Screening & Aptitude Round',
+      desc: 'A timed technical quiz evaluating core computer science fundamentals, algorithmic logic, and chosen track domain knowledge.',
+      icon: HelpCircle,
+      accent: 'rgba(52, 211, 153, 0.15)',
+      badge: 'Screening',
+      badgeClass: 'text-emerald-400 border-emerald-500/30 bg-emerald-500/10',
     },
     {
-      num: '02',
-      title: 'Select Arena',
-      desc: 'Pick AI & ML, Web Architecture, or Mobile Systems and plan your system architecture.',
-      icon: Compass,
+      num: 'Stage 02',
+      title: 'Idea & Architecture PPT',
+      subtitle: 'Ideation & Blueprint Submission',
+      desc: 'Shortlisted teams submit a structured presentation deck detailing their problem statement, system architecture, tech stack, and feasibility.',
+      icon: Presentation,
+      accent: 'rgba(56, 189, 248, 0.15)',
+      badge: 'Evaluation',
+      badgeClass: 'text-cyan-400 border-cyan-500/30 bg-cyan-500/10',
     },
     {
-      num: '03',
-      title: 'Engineer Solution',
-      desc: 'Write clean code, commit frequently with meaningful git history, and build working software.',
+      num: 'Stage 03',
+      title: 'Project Submission',
+      subtitle: 'Core Engineering & Codebase',
+      desc: 'The primary building phase. Teams submit their public GitHub repository, live deployed URL, demo walkthrough video, and documentation.',
       icon: Code2,
+      accent: 'rgba(232, 197, 180, 0.18)',
+      badge: 'Build Phase',
+      badgeClass: 'text-[#e8c5b4] border-[#c19a88]/30 bg-[#c19a88]/10',
     },
     {
-      num: '04',
-      title: 'Submit Build',
-      desc: 'Submit repository link, live deployment URL, walkthrough video, and documentation.',
-      icon: Send,
-    },
-    {
-      num: '05',
-      title: 'Evaluation',
-      desc: 'Domain judges review live code and functionality. Cash prizes and Top 25 certificates awarded.',
-      icon: Award,
+      num: 'Stage 04',
+      title: 'Grand Finale Live Q&A',
+      subtitle: 'Panel Defense & Interviews',
+      desc: 'Finalist teams present and defend their working system in a live technical Q&A session with industry judges and SkaleKraft leadership.',
+      icon: MessagesSquare,
+      accent: 'rgba(251, 191, 36, 0.15)',
+      badge: 'Grand Finale',
+      badgeClass: 'text-amber-400 border-amber-500/30 bg-amber-500/10',
     },
   ];
 
   return (
-    <section className="py-20 lg:py-28 bg-[#0B0B0B] border-t border-white/10 relative overflow-hidden">
+    <section id="stages" className="py-20 lg:py-28 bg-[#0B0B0B] border-t border-white/10 relative overflow-hidden">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
@@ -51,25 +63,26 @@ export default function ProcessSection() {
           <div className="inline-flex items-center gap-2.5 mb-3">
             <span className="h-px w-6 bg-[#c19a88]/70" />
             <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
-              The Journey
+              Competition Architecture
             </p>
             <span className="h-px w-6 bg-[#c19a88]/70" />
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-white tracking-tight">
-            How Skaleathon{' '}
+            Four progressive{' '}
             <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
-              unfolds
+              stages
             </span>
             .
           </h2>
           <p className="mt-4 text-sm text-white/55 leading-relaxed font-light">
-            A frictionless, transparent path from initial enrollment to live national evaluation.
+            A comprehensive four-stage funnel designed to evaluate technical aptitude, architectural design, software execution, and live verbal defense.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 sm:gap-5">
-          {steps.map((step, idx) => {
-            const Icon = step.icon;
+        {/* 4-Column Stages Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          {stages.map((stage, idx) => {
+            const Icon = stage.icon;
             return (
               <motion.div
                 key={idx}
@@ -77,27 +90,68 @@ export default function ProcessSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{ duration: 0.45, delay: idx * 0.08 }}
-                className="rounded-[20px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-6 flex flex-col justify-between hover:border-[#c19a88]/35 transition-all duration-300 group"
+                className="h-full"
               >
-                <div>
-                  <div className="flex items-center justify-between mb-5">
-                    <span className="font-mono text-xs font-semibold text-[#c19a88] tracking-[0.2em]">
-                      {step.num}
-                    </span>
-                    <div className="p-2 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white/70 group-hover:text-[#c19a88] transition-colors">
-                      <Icon className="h-4 w-4" strokeWidth={1.8} />
+                <SpotlightCard
+                  enableTilt
+                  spotlightColor={stage.accent}
+                  className="h-full flex flex-col justify-between p-6 sm:p-7 hover:border-[#c19a88]/40 shadow-[0_20px_50px_rgba(0,0,0,0.5)] group"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-5">
+                      <span className="font-mono text-[10px] font-bold text-[#c19a88] tracking-[0.2em] uppercase">
+                        {stage.num}
+                      </span>
+                      <span className={`text-[9px] font-mono font-semibold px-2 py-0.5 rounded-full border ${stage.badgeClass}`}>
+                        {stage.badge}
+                      </span>
                     </div>
+
+                    <div className="p-3 w-fit rounded-2xl border border-white/[0.08] bg-white/[0.03] text-white/80 group-hover:text-[#c19a88] group-hover:scale-110 transition-all mb-4">
+                      <Icon className="h-5 w-5" strokeWidth={1.8} />
+                    </div>
+
+                    <h3 className="text-base font-semibold tracking-wide text-white mb-1 group-hover:text-[#c19a88] transition-colors">
+                      {stage.title}
+                    </h3>
+                    <p className="text-[11px] font-mono text-[#c19a88]/80 mb-3">
+                      {stage.subtitle}
+                    </p>
+                    <p className="text-xs text-white/50 leading-relaxed font-light">
+                      {stage.desc}
+                    </p>
                   </div>
-                  <h3 className="text-sm font-semibold tracking-wide text-white mb-2">
-                    {step.title}
-                  </h3>
-                  <p className="text-xs text-white/50 leading-relaxed font-light">
-                    {step.desc}
-                  </p>
-                </div>
+
+                  <div className="mt-6 pt-4 border-t border-white/[0.07] flex items-center justify-between">
+                    <span className="text-[10px] font-mono text-white/30">
+                      Step {idx + 1} of 4
+                    </span>
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] opacity-50 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                </SpotlightCard>
               </motion.div>
             );
           })}
+        </div>
+
+        {/* Bottom Banner */}
+        <div className="mt-12 rounded-[24px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.02),rgba(14,14,14,0.96))] p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
+          <div className="space-y-1 text-center sm:text-left">
+            <div className="flex items-center justify-center sm:justify-start gap-2 text-white font-medium text-sm">
+              <Sparkles className="h-4 w-4 text-[#c19a88]" />
+              <span>Flat ₹99 Registration Covers All 4 Stages for Your Entire Team</span>
+            </div>
+            <p className="text-xs text-white/50 font-light">
+              No hidden fees at any stage. 1 to 6 members compete with full access to the quiz, ideation review, build phase, and finale.
+            </p>
+          </div>
+          <Link
+            href="/register"
+            className="shrink-0 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] px-6 py-2.5 text-xs font-semibold text-white shadow-lg shadow-[#805948]/20 hover:scale-105 transition-all"
+          >
+            <span>Register Your Team — ₹99</span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
         </div>
       </div>
     </section>

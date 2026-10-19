@@ -7,6 +7,7 @@ import { EventData } from '@/lib/db/types';
 import GlassmorphismCta from '@/components/ui/glassmorphism-cta';
 import { motion } from 'framer-motion';
 import InteractiveTerminal from '@/components/home/InteractiveTerminal';
+import Velaris from '@/components/ui/velaris';
 
 interface HeroProps {
   event: EventData;
@@ -17,6 +18,17 @@ export default function HeroSection({ event }: HeroProps) {
 
   return (
     <section className="relative overflow-hidden pt-20 pb-20 lg:pt-28 lg:pb-32 bg-[#0B0B0B]">
+      {/* Velaris WebGL Living Gradient Ambient Background */}
+      <div className="absolute inset-0 pointer-events-none opacity-40 mix-blend-screen">
+        <Velaris
+          height="100%"
+          bg="#0B0B0B"
+          colors={['#c19a88', '#805948', '#e8c5b4', '#18121d']}
+          speed={1.4}
+          grain={0.2}
+        />
+      </div>
+
       {/* Background radial ambient copper & bronze lights */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] pointer-events-none opacity-40">
         <div className="absolute top-1/4 left-1/3 w-[450px] h-[450px] bg-[#805948]/25 rounded-full blur-[140px]" />

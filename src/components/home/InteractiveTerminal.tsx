@@ -47,12 +47,38 @@ export default function InteractiveTerminal() {
           <div className="space-y-1.5 text-xs text-neutral-300">
             <div className="text-[#c19a88] font-semibold">Available Command Instructions:</div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+              <div><span className="text-[#e8c5b4] font-mono font-bold">stages</span> — The 4 competition stages (Quiz, PPT, Build, Q&A)</div>
               <div><span className="text-[#e8c5b4] font-mono font-bold">tracks</span> — Inspect AI/ML, Web & Mobile arenas</div>
               <div><span className="text-[#e8c5b4] font-mono font-bold">prizes</span> — View ₹35,000 cash & interview tiers</div>
               <div><span className="text-[#e8c5b4] font-mono font-bold">register</span> — Fast-track team registration link (₹99)</div>
               <div><span className="text-[#e8c5b4] font-mono font-bold">verify</span> — Test SHA-256 certificate validation</div>
               <div><span className="text-[#e8c5b4] font-mono font-bold">rules</span> — Review team size & submission policies</div>
-              <div><span className="text-[#e8c5b4] font-mono font-bold">clear</span> — Reset terminal log buffer</div>
+            </div>
+          </div>
+        );
+        break;
+
+      case 'stages':
+        output = (
+          <div className="space-y-2 text-xs">
+            <div className="text-[#c19a88] font-bold">🎯 The 4 Competition Stages:</div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+              <div className="p-2 rounded-lg border border-emerald-500/20 bg-emerald-500/10">
+                <span className="text-emerald-400 font-bold block">Stage 1: Online Technical Quiz</span>
+                <span className="text-white/60 text-[10px]">Timed screening round covering core CS logic and track concepts.</span>
+              </div>
+              <div className="p-2 rounded-lg border border-cyan-500/20 bg-cyan-500/10">
+                <span className="text-cyan-400 font-bold block">Stage 2: Idea & Architecture PPT</span>
+                <span className="text-white/60 text-[10px]">Blueprint round submitting problem statement, schema, and tech stack.</span>
+              </div>
+              <div className="p-2 rounded-lg border border-[#c19a88]/30 bg-[#c19a88]/10">
+                <span className="text-[#e8c5b4] font-bold block">Stage 3: Project Submission</span>
+                <span className="text-white/60 text-[10px]">Core build phase with public GitHub repo, live deployed URL, and video.</span>
+              </div>
+              <div className="p-2 rounded-lg border border-amber-500/20 bg-amber-500/10">
+                <span className="text-amber-400 font-bold block">Stage 4: Grand Finale Live Q&A</span>
+                <span className="text-white/60 text-[10px]">Live defense with judges determining top 3 cash awards and interviews.</span>
+              </div>
             </div>
           </div>
         );
@@ -190,7 +216,7 @@ export default function InteractiveTerminal() {
     }
   }, [logs]);
 
-  const quickButtons = ['help', 'tracks', 'prizes', 'register', 'verify', 'rules'];
+  const quickButtons = ['help', 'stages', 'tracks', 'prizes', 'register', 'verify', 'rules'];
 
   return (
     <div className="relative mx-auto max-w-4xl w-full rounded-[24px] border border-white/10 bg-[#07090E]/95 shadow-[0_30px_90px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.08)] backdrop-blur-2xl overflow-hidden">

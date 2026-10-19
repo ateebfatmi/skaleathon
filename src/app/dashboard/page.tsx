@@ -157,6 +157,111 @@ export default async function DashboardPage() {
         </div>
       </div>
 
+      {/* 4-Stage Competition Progress Matrix */}
+      <div className="rounded-3xl border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.02),rgba(12,18,32,0.95))] p-6 sm:p-7 space-y-5 shadow-xl">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-white/[0.08] pb-4">
+          <div>
+            <span className="text-[10px] uppercase font-mono tracking-widest text-[#c19a88] font-bold">
+              Competition Roadmap
+            </span>
+            <h2 className="text-base sm:text-lg font-bold text-white mt-0.5">
+              Four-Stage Advancement Funnel
+            </h2>
+          </div>
+          <span className="text-xs font-mono text-white/50 px-3 py-1 rounded-full border border-white/10 bg-white/5 w-fit">
+            Team Status: {team ? (team.status === 'paid' ? 'Active Participant' : 'Payment Pending') : 'Unenrolled'}
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Stage 1 */}
+          <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4 flex flex-col justify-between space-y-3">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[10px] font-mono text-emerald-400 font-bold uppercase">Stage 01</span>
+                <span className="text-[9px] font-mono px-2 py-0.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400">
+                  {team?.status === 'paid' ? 'Registered' : 'Locked'}
+                </span>
+              </div>
+              <h3 className="text-xs font-bold text-white">Online Technical Quiz</h3>
+              <p className="text-[11px] text-white/50 mt-1 leading-relaxed">
+                Screening round covering core CS fundamentals, data structures, and track logic.
+              </p>
+            </div>
+            <div className="pt-2 border-t border-white/[0.06] text-[10px] text-white/40 font-mono">
+              Schedule: Dates to be announced
+            </div>
+          </div>
+
+          {/* Stage 2 */}
+          <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4 flex flex-col justify-between space-y-3">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[10px] font-mono text-cyan-400 font-bold uppercase">Stage 02</span>
+                <span className="text-[9px] font-mono px-2 py-0.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400">
+                  Blueprint
+                </span>
+              </div>
+              <h3 className="text-xs font-bold text-white">Idea & Architecture PPT</h3>
+              <p className="text-[11px] text-white/50 mt-1 leading-relaxed">
+                Presentation slide deck outlining problem statement, system design, and tech stack.
+              </p>
+            </div>
+            <div className="pt-2 border-t border-white/[0.06] text-[10px] text-white/40 font-mono">
+              Format: PDF / Slide Deck
+            </div>
+          </div>
+
+          {/* Stage 3 */}
+          <div className="rounded-2xl border border-[#c19a88]/30 bg-[#c19a88]/5 p-4 flex flex-col justify-between space-y-3">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[10px] font-mono text-[#e8c5b4] font-bold uppercase">Stage 03</span>
+                <span className={`text-[9px] font-mono px-2 py-0.5 rounded-full border ${
+                  submission?.status === 'submitted'
+                    ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400'
+                    : 'border-[#c19a88]/40 bg-[#c19a88]/15 text-[#e8c5b4]'
+                }`}>
+                  {submission?.status === 'submitted' ? 'Submitted' : 'Build Phase'}
+                </span>
+              </div>
+              <h3 className="text-xs font-bold text-white">Project Submission</h3>
+              <p className="text-[11px] text-white/50 mt-1 leading-relaxed">
+                Core codebase delivery: Public GitHub repo, live deployed URL, and demo video.
+              </p>
+            </div>
+            <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between">
+              <Link
+                href="/dashboard/submission"
+                className="text-[10px] font-mono text-[#c19a88] hover:text-white font-semibold flex items-center gap-1"
+              >
+                <span>Submission Portal</span>
+                <ArrowRight className="h-3 w-3" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Stage 4 */}
+          <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4 flex flex-col justify-between space-y-3">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[10px] font-mono text-amber-400 font-bold uppercase">Stage 04</span>
+                <span className="text-[9px] font-mono px-2 py-0.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400">
+                  Grand Finale
+                </span>
+              </div>
+              <h3 className="text-xs font-bold text-white">Grand Finale Live Q&A</h3>
+              <p className="text-[11px] text-white/50 mt-1 leading-relaxed">
+                Live panel defense for finalist teams with judges and SkaleKraft studio leadership.
+              </p>
+            </div>
+            <div className="pt-2 border-t border-white/[0.06] text-[10px] text-white/40 font-mono">
+              Determines ₹35,000 Prizes
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Main Grid: Details & Announcements */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left Column: Team & Track Details */}
