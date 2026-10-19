@@ -6,7 +6,7 @@ import { EventData } from '@/lib/db/types';
 import GlassmorphismCta from '@/components/ui/glassmorphism-cta';
 import { motion } from 'framer-motion';
 import InteractiveTerminal from '@/components/home/InteractiveTerminal';
-import Velaris from '@/components/ui/velaris';
+import { Starfield } from '@/components/ui/starfield-1';
 
 interface HeroProps {
   event: EventData;
@@ -23,25 +23,27 @@ export default function HeroSection({ event }: HeroProps) {
 
   return (
     <section id="top" className="relative overflow-hidden pt-20 pb-20 lg:pt-28 lg:pb-32 bg-[#0B0B0B]">
-      {/* 1. SkaleKraft Ambient Radial Copper and Bronze Halos */}
-      <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-full max-w-6xl h-[650px] pointer-events-none">
-        <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[650px] h-[380px] bg-[radial-gradient(ellipse_80%_50%_at_50%_20%,rgba(193,154,136,0.22),transparent_70%)] blur-2xl" />
-        <div className="absolute top-24 left-1/4 w-[420px] h-[420px] bg-[#805948]/20 rounded-full blur-[140px]" />
-        <div className="absolute top-36 right-1/4 w-[380px] h-[380px] bg-[#c19a88]/15 rounded-full blur-[130px]" />
+      {/* 1. Starfield Interactive Canvas Background */}
+      <div className="absolute inset-0 z-0">
+        <Starfield
+          starColor="rgba(232, 197, 180, 0.9)"
+          bgColor="rgba(11, 11, 11, 1)"
+          mouseAdjust={true}
+          tiltAdjust={true}
+          easing={2}
+          clickToWarp={true}
+          warpFactor={8}
+          opacity={0.15}
+          speed={1}
+          quantity={512}
+        />
       </div>
 
-      {/* 2. Micro 32px Dot Matrix Grid Overlay */}
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.025)_1px,transparent_0)] [background-size:32px_32px] opacity-70" />
-
-      {/* 3. Velaris WebGL living gradient canvas */}
-      <div className="absolute inset-0 pointer-events-none opacity-25 mix-blend-screen">
-        <Velaris
-          height="100%"
-          bg="#0B0B0B"
-          colors={['#c19a88', '#805948', '#e8c5b4', '#141414']}
-          speed={1.0}
-          grain={0.15}
-        />
+      {/* 2. SkaleKraft Ambient Radial Copper and Bronze Halos */}
+      <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-full max-w-6xl h-[650px] pointer-events-none z-[1]">
+        <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[650px] h-[380px] bg-[radial-gradient(ellipse_80%_50%_at_50%_20%,rgba(193,154,136,0.18),transparent_70%)] blur-2xl" />
+        <div className="absolute top-24 left-1/4 w-[420px] h-[420px] bg-[#805948]/15 rounded-full blur-[140px]" />
+        <div className="absolute top-36 right-1/4 w-[380px] h-[380px] bg-[#c19a88]/12 rounded-full blur-[130px]" />
       </div>
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">

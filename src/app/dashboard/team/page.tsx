@@ -2,7 +2,7 @@ import React from 'react';
 import { getCurrentSession } from '@/lib/auth/session';
 import { EventRepository } from '@/lib/db/repository';
 import Link from 'next/link';
-import { Users, Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Users, Sparkles, ArrowRight } from 'lucide-react';
 import TeamWorkspaceClient from '@/components/dashboard/TeamWorkspaceClient';
 
 export const revalidate = 0;
@@ -33,17 +33,18 @@ export default async function TeamPage() {
 
   if (!team) {
     return (
-      <div className="max-w-xl mx-auto rounded-[28px] border border-white/10 bg-[linear-gradient(145deg,rgba(193,154,136,0.06),rgba(14,14,14,0.98))] p-10 text-center space-y-5 shadow-[0_25px_60px_rgba(0,0,0,0.6)] backdrop-blur-2xl">
-        <div className="h-14 w-14 rounded-2xl bg-[#c19a88]/15 border border-[#c19a88]/30 flex items-center justify-center text-[#e8c5b4] mx-auto shadow-[0_0_25px_rgba(193,154,136,0.2)]">
-          <Users className="h-7 w-7" />
+      <div className="relative max-w-2xl mx-auto py-16 text-center space-y-5">
+        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-64 w-64 rounded-full bg-[#c19a88]/10 blur-[120px]" />
+        <div className="relative z-10 flex items-center justify-center text-[#c19a88] mx-auto">
+          <Users className="h-8 w-8" />
         </div>
-        <div className="space-y-2">
+        <div className="relative z-10 space-y-2">
           <h2 className="text-2xl font-bold text-white tracking-tight">No Squad Registered</h2>
           <p className="text-xs text-neutral-400 max-w-md mx-auto leading-relaxed font-light">
             You are not affiliated with an active tournament squad yet. Register your team of 1–6 engineers to access the competition arena.
           </p>
         </div>
-        <div className="pt-2">
+        <div className="relative z-10 pt-2">
           <Link
             href="/register"
             className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-7 py-3 text-xs font-bold text-white shadow-[0_4px_25px_rgba(128,89,72,0.4)] transition-all hover:scale-105"
