@@ -15,6 +15,8 @@ import {
   Sparkles,
   AlertCircle,
   HelpCircle,
+  Calendar,
+  Clock,
 } from 'lucide-react';
 import { EventTrack } from '@/lib/db/types';
 
@@ -23,9 +25,12 @@ export default function SubmissionPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const [team, setTeam] = useState<any>(null);
   const [track, setTrack] = useState<EventTrack | null>(null);
   const [isPaid, setIsPaid] = useState<boolean>(true);
+  const [isWindowOpen, setIsWindowOpen] = useState<boolean>(false);
+  const [eventStatus, setEventStatus] = useState<string>('registration_open');
 
   // Form Fields for the two submissions
   const [presentationUrl, setPresentationUrl] = useState('');
@@ -39,6 +44,13 @@ export default function SubmissionPage() {
       fetch('/api/event').then((r) => r.json()),
     ])
       .then(([subData, eventData]) => {
+        if (typeof subData.isWindowOpen === 'boolean') {
+          setIsWindowOpen(subData.isWindowOpen);
+        }
+        if (subData.eventStatus) {
+          setEventStatus(subData.eventStatus);
+        }
+
         if (subData.team) {
           setTeam(subData.team);
           setIsPaid(subData.team.status === 'paid' || subData.team.status === 'confirmed');
@@ -55,7 +67,7 @@ export default function SubmissionPage() {
           setGithubUrl(subData.submission.github_url || '');
           setDemoVideoUrl(subData.submission.demo_video_url || '');
         } else {
-          // Pre-populate with saved draft in localStorage if available
+          // Check local draft cache
           try {
             const saved = localStorage.getItem('skaleathon_submission_draft');
             if (saved) {
@@ -76,8 +88,14 @@ export default function SubmissionPage() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isWindowOpen) {
+      setSaveError('The submission window is not open yet. Submissions will be accepted on the defined dates.');
+      return;
+    }
+
     setSaving(true);
     setSaveSuccess(false);
+    setSaveError(null);
 
     try {
       // Store snapshot in localStorage for persistent client recall
@@ -92,31 +110,33 @@ export default function SubmissionPage() {
         })
       );
 
-      // Attempt to save to API if submission endpoint is active
-      try {
-        await fetch('/api/submissions', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            title: `${team?.name || 'Squad'} Deliverable`,
-            track_id: team?.track_id || track?.id || 'ai-ml',
-            problem_statement: 'Participant submission deliverable link repository for Skaleathon 2027.',
-            solution_overview: 'Working architecture PPT and prototype links.',
-            description: 'Submission links recorded via participant dashboard.',
-            tech_stack: [track?.name || 'Full Stack'],
-            presentation_url: presentationUrl,
-            live_demo_url: liveDemoUrl,
-            github_url: githubUrl,
-            demoVideoUrl: demoVideoUrl,
-            isDraft: true,
-          }),
-        });
-      } catch {
-        // Backend API window may be locked; local draft persists safely
+      const res = await fetch('/api/submissions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: `${team?.name || 'Squad'} Deliverable`,
+          track_id: team?.track_id || track?.id || 'track-ai-ml',
+          problem_statement: 'Participant submission deliverable link repository for Skaleathon 2027.',
+          solution_overview: 'Working architecture PPT and prototype links.',
+          description: 'Submission links recorded via participant dashboard.',
+          tech_stack: [track?.name || 'Full Stack'],
+          presentation_url: presentationUrl,
+          live_demo_url: liveDemoUrl,
+          github_url: githubUrl,
+          demo_video_url: demoVideoUrl,
+          isDraft: false,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to record submission.');
       }
 
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 4000);
+    } catch (err: any) {
+      setSaveError(err.message || 'Failed to submit deliverables.');
     } finally {
       setSaving(false);
     }
@@ -187,6 +207,49 @@ export default function SubmissionPage() {
         )}
       </div>
 
+      {/* 2. Window Status Alert (Only accepted on defined dates) */}
+      {!isWindowOpen ? (
+        <div className="rounded-2xl border border-amber-500/30 bg-amber-500/[0.05] p-4 sm:p-5 flex items-start gap-3.5 backdrop-blur-md">
+          <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 shrink-0 mt-0.5">
+            <Clock className="h-5 w-5" />
+          </div>
+          <div className="space-y-1 text-xs">
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-amber-300 uppercase font-mono tracking-wider text-[10px]">
+                Submission Window Scheduled
+              </span>
+              <span className="px-2 py-0.5 rounded-full bg-white/10 text-neutral-300 text-[9px] font-mono">
+                Opens on Defined Dates
+              </span>
+            </div>
+            <p className="text-neutral-300 leading-relaxed font-light">
+              Submissions will be accepted when the organizers officially open the portal on the defined competition dates following Stage 01. Please review the deliverable requirements below to prepare your assets in advance.
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/[0.05] p-4 sm:p-5 flex items-start gap-3.5 backdrop-blur-md">
+          <div className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 shrink-0 mt-0.5">
+            <CheckCircle2 className="h-5 w-5" />
+          </div>
+          <div className="space-y-1 text-xs">
+            <span className="font-bold text-emerald-300 uppercase font-mono tracking-wider text-[10px]">
+              Submission Window Open
+            </span>
+            <p className="text-neutral-300 leading-relaxed font-light">
+              The submission portal is currently accepting deliverables. Paste your verified links below and click <strong>Submit Deliverables</strong>.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {saveError && (
+        <div className="rounded-2xl border border-red-500/30 bg-red-500/[0.05] p-4 text-xs text-red-200 flex items-center gap-2.5">
+          <AlertCircle className="h-4 w-4 text-red-400 shrink-0" />
+          <span>{saveError}</span>
+        </div>
+      )}
+
       <form onSubmit={handleSave} className="space-y-6">
         {/* ========================================================================= */}
         {/* SUBMISSION 1: PDF Slide Deck (Stage 02) */}
@@ -211,6 +274,13 @@ export default function SubmissionPage() {
                 </h2>
               </div>
             </div>
+
+            {!isWindowOpen && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-[10px] font-mono font-medium">
+                <Lock className="h-3 w-3" />
+                <span>Opens on Defined Dates</span>
+              </span>
+            )}
           </div>
 
           <div className="space-y-3">
@@ -247,11 +317,16 @@ export default function SubmissionPage() {
               <input
                 type="url"
                 value={presentationUrl}
+                disabled={!isWindowOpen}
                 onChange={(e) => setPresentationUrl(e.target.value)}
-                placeholder="https://drive.google.com/file/d/.../view or Dropbox link"
-                className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:bg-white/[0.05] focus:outline-none transition-colors"
+                placeholder={
+                  isWindowOpen
+                    ? 'https://drive.google.com/file/d/.../view or Dropbox link'
+                    : 'Submissions unlock on defined competition dates (e.g. Google Drive link)'
+                }
+                className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:bg-white/[0.05] focus:outline-none transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
               />
-              {presentationUrl && (
+              {presentationUrl && isWindowOpen && (
                 <a
                   href={presentationUrl}
                   target="_blank"
@@ -292,6 +367,13 @@ export default function SubmissionPage() {
                 </h2>
               </div>
             </div>
+
+            {!isWindowOpen && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-[10px] font-mono font-medium">
+                <Lock className="h-3 w-3" />
+                <span>Opens on Defined Dates</span>
+              </span>
+            )}
           </div>
 
           <div className="space-y-1">
@@ -314,11 +396,16 @@ export default function SubmissionPage() {
                 <input
                   type="url"
                   value={liveDemoUrl}
+                  disabled={!isWindowOpen}
                   onChange={(e) => setLiveDemoUrl(e.target.value)}
-                  placeholder="https://your-app.vercel.app or https://your-demo-url.com"
-                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:bg-white/[0.05] focus:outline-none transition-colors"
+                  placeholder={
+                    isWindowOpen
+                      ? 'https://your-app.vercel.app or https://your-demo-url.com'
+                      : 'Submissions unlock on defined competition dates (e.g. Vercel deployment)'
+                  }
+                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:bg-white/[0.05] focus:outline-none transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                 />
-                {liveDemoUrl && (
+                {liveDemoUrl && isWindowOpen && (
                   <a
                     href={liveDemoUrl}
                     target="_blank"
@@ -349,11 +436,16 @@ export default function SubmissionPage() {
                 <input
                   type="url"
                   value={githubUrl}
+                  disabled={!isWindowOpen}
                   onChange={(e) => setGithubUrl(e.target.value)}
-                  placeholder="https://github.com/organization-or-user/repository"
-                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:bg-white/[0.05] focus:outline-none transition-colors"
+                  placeholder={
+                    isWindowOpen
+                      ? 'https://github.com/organization-or-user/repository'
+                      : 'Submissions unlock on defined competition dates (e.g. GitHub repo link)'
+                  }
+                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:bg-white/[0.05] focus:outline-none transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                 />
-                {githubUrl && (
+                {githubUrl && isWindowOpen && (
                   <a
                     href={githubUrl}
                     target="_blank"
@@ -383,11 +475,16 @@ export default function SubmissionPage() {
                 <input
                   type="url"
                   value={demoVideoUrl}
+                  disabled={!isWindowOpen}
                   onChange={(e) => setDemoVideoUrl(e.target.value)}
-                  placeholder="https://youtube.com/watch?v=... or https://loom.com/share/..."
-                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:bg-white/[0.05] focus:outline-none transition-colors"
+                  placeholder={
+                    isWindowOpen
+                      ? 'https://youtube.com/watch?v=... or https://loom.com/share/...'
+                      : 'Submissions unlock on defined competition dates (e.g. YouTube / Loom link)'
+                  }
+                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:bg-white/[0.05] focus:outline-none transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                 />
-                {demoVideoUrl && (
+                {demoVideoUrl && isWindowOpen && (
                   <a
                     href={demoVideoUrl}
                     target="_blank"
@@ -414,21 +511,37 @@ export default function SubmissionPage() {
             {saveSuccess ? (
               <span className="text-emerald-400 font-semibold inline-flex items-center gap-1.5">
                 <CheckCircle2 className="h-4 w-4" />
-                Submission links saved successfully!
+                Deliverables submitted successfully!
+              </span>
+            ) : !isWindowOpen ? (
+              <span className="inline-flex items-center gap-1.5 text-amber-400/90 font-medium">
+                <Clock className="h-3.5 w-3.5" />
+                The portal will accept submissions once opened on the defined competition dates.
               </span>
             ) : (
               <span>You can update and refine your links anytime before the official round deadline.</span>
             )}
           </div>
 
-          <button
-            type="submit"
-            disabled={saving}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-8 py-3 text-xs font-bold text-white shadow-lg shadow-[#805948]/30 hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
-          >
-            <Save className="h-4 w-4" />
-            <span>{saving ? 'Saving Links...' : 'Save Submission Links'}</span>
-          </button>
+          {isWindowOpen ? (
+            <button
+              type="submit"
+              disabled={saving}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-8 py-3 text-xs font-bold text-white shadow-lg shadow-[#805948]/30 hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
+            >
+              <Save className="h-4 w-4" />
+              <span>{saving ? 'Submitting...' : 'Submit Deliverables'}</span>
+            </button>
+          ) : (
+            <button
+              type="button"
+              disabled
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-8 py-3 text-xs font-semibold text-neutral-400 cursor-not-allowed select-none shadow-inner"
+            >
+              <Lock className="h-3.5 w-3.5 text-[#c19a88]" />
+              <span>Submissions Open on Defined Dates</span>
+            </button>
+          )}
         </div>
       </form>
 

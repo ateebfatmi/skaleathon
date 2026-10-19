@@ -27,8 +27,16 @@ export async function GET(req: NextRequest) {
 
     const sub = await EventRepository.getSubmissionByTeam(session.teamId);
     const team = await EventRepository.getTeam(session.teamId);
+    const event = await EventRepository.getEvent();
+    const isWindowOpen = event.status === 'hacking_live';
 
-    return NextResponse.json({ submission: sub, team });
+    return NextResponse.json({
+      submission: sub,
+      team,
+      isWindowOpen,
+      eventStatus: event.status,
+      submissionDeadline: event.submission_deadline,
+    });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: err.statusCode || 500 });
   }
@@ -40,15 +48,16 @@ export async function POST(req: NextRequest) {
 
     if (!session.teamId) {
       return NextResponse.json(
-        { error: 'You must be part of a registered team to submit a project.' },
+        { error: 'You must be part of a registered team to submit deliverables.' },
         { status: 403 }
       );
     }
 
-    const SUBMISSION_WINDOW_OPEN = false;
-    if (!SUBMISSION_WINDOW_OPEN && session.role !== 'admin') {
+    const event = await EventRepository.getEvent();
+    const isWindowOpen = event.status === 'hacking_live' || session.role === 'admin';
+    if (!isWindowOpen) {
       return NextResponse.json(
-        { error: 'The project submission window has not officially opened yet. Deliverables unlock during Phase 03.' },
+        { error: 'The submission window is not open yet. Submissions will be accepted on the defined competition dates.' },
         { status: 403 }
       );
     }

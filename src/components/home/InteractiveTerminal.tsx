@@ -208,7 +208,7 @@ export default function InteractiveTerminal() {
         output = (
           <div className="space-y-1.5 text-xs text-neutral-300 font-mono text-[11px]">
             <div className="text-emerald-400">✓ Cryptographic verification engine status: LIVE</div>
-            <div className="text-white/60">Sample verification hash query: SK2027-TEST-HASH-99F2A</div>
+            <div className="text-white/60">Sample verification hash query: SK2028-TEST-HASH-99F2A</div>
             <div className="text-white/40">Timestamp: {new Date().toISOString()}</div>
             <div className="text-[#c19a88]">Validation confirmed: Official tamper-proof certificate format ready.</div>
           </div>

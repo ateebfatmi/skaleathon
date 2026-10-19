@@ -134,8 +134,8 @@ export default function MultiStepRegistration({
       .then((res) => res.json())
       .then((data) => {
         if (data.authenticated && data.session) {
-          if (!leaderName) setLeaderName(data.session.fullName);
-          if (!leaderEmail) setLeaderEmail(data.session.email);
+          setLeaderName((prev) => prev || data.session.fullName);
+          setLeaderEmail((prev) => prev || data.session.email);
         }
       })
       .catch(() => {});
@@ -332,7 +332,7 @@ export default function MultiStepRegistration({
           key: keyId,
           amount: (paymentOrder.amount || 99) * 100,
           currency: paymentOrder.currency || 'INR',
-          name: 'SkaleKraft — Skaleathon 2027',
+          name: 'SkaleKraft — Skaleathon 2028',
           description: `Team Registration: ${teamName}`,
           image: '/icon.png',
           order_id: paymentOrder.orderId,
@@ -1188,11 +1188,11 @@ export default function MultiStepRegistration({
 
           <div className="space-y-2">
             <span className="text-[10px] font-bold uppercase tracking-widest text-[#c19a88] font-mono">
-              ✦ Authoritatively Verified // Cohort 2027
+              ✦ Authoritatively Verified // Cohort 2028
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-white">Registration Confirmed!</h1>
             <p className="text-xs sm:text-sm text-neutral-300 max-w-md mx-auto leading-relaxed">
-              Congratulations! Team <strong>{teamName}</strong> is officially registered for Skaleathon 2027 under the <strong>{currentTrackObj?.name}</strong>.
+              Congratulations! Team <strong>{teamName}</strong> is officially registered for Skaleathon 2028 under the <strong>{currentTrackObj?.name}</strong>.
             </p>
           </div>
 
