@@ -60,8 +60,8 @@ export default async function DashboardLeaderboardPage() {
         </div>
       </div>
 
-      {!isPublished ? (
-        /* Unannounced / In Progress Evaluation State */
+      {!isPublished || true ? (
+        /* Unannounced / In Progress Evaluation State - Unlocks After Quiz Onwards */
         <div className="rounded-3xl border border-white/[0.08] bg-[#0E0E0E]/90 p-8 sm:p-12 text-center space-y-6 shadow-2xl backdrop-blur-xl relative overflow-hidden">
           <div className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-80 h-48 bg-[#c19a88]/15 rounded-full blur-[90px]" />
 
@@ -73,47 +73,52 @@ export default async function DashboardLeaderboardPage() {
           <div className="space-y-3 relative z-10 max-w-xl mx-auto">
             <div className="inline-flex items-center gap-2 text-[10px] font-mono tracking-wider px-3.5 py-1 rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 text-[#e8c5b4]">
               <Sparkles className="h-3.5 w-3.5 text-[#c19a88]" />
-              <span>OFFICIAL STANDINGS LOCKED</span>
+              <span>ACTIVATES AFTER STAGE 01 QUIZ ONWARDS</span>
             </div>
 
             <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-              Rankings Unlock Post-Defense
+              Leaderboard Unlocks After Quiz Screening
             </h2>
 
             <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed font-light">
-              Scores and national podium standings will be published here in the dashboard following the <strong>Stage 04 Live Panel Defense</strong>. Every deliverable undergoes blind multi-judge evaluation across architectural rigor, code originality, and execution impact.
+              The official national leaderboard is locked during the initial registration phase. Live rankings and qualifier percentiles will officially activate starting from the <strong>Stage 01 Online Technical Quiz</strong> onwards. Teams advancing through the screening round will be continuously tracked here across all subsequent milestones.
             </p>
           </div>
 
           {/* Milestone Progression Cards */}
           <div className="pt-4 grid grid-cols-1 sm:grid-cols-3 gap-3 text-left">
-            <div className="rounded-2xl border border-white/[0.06] bg-black/40 p-4 space-y-1">
-              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-400 block">
-                Round 01
-              </span>
-              <div className="text-xs font-semibold text-white">Quiz & Screening</div>
+            <div className="rounded-2xl border border-[#c19a88]/30 bg-[#c19a88]/5 p-4 space-y-1 relative overflow-hidden">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-400 block">
+                  Stage 01
+                </span>
+                <span className="text-[9px] font-mono px-2 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+                  First Reveal
+                </span>
+              </div>
+              <div className="text-xs font-semibold text-white">Online Technical Quiz</div>
               <p className="text-[11px] text-neutral-400 font-light">
-                CS logic, algorithm complexity & track fundamentals
+                Screening scores, cutoffs & qualifier rankings officially publish here.
               </p>
             </div>
 
             <div className="rounded-2xl border border-white/[0.06] bg-black/40 p-4 space-y-1">
               <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#c19a88] block">
-                Round 02
+                Stage 02 & 03
               </span>
-              <div className="text-xs font-semibold text-white">10-Day Build Sprint</div>
+              <div className="text-xs font-semibold text-white">Blueprint & Build Sprint</div>
               <p className="text-[11px] text-neutral-400 font-light">
-                Public GitHub repo, live demo URL & video walkthrough
+                Continuous deliverable tracking, GitHub repo reviews & demo standings.
               </p>
             </div>
 
             <div className="rounded-2xl border border-white/[0.06] bg-black/40 p-4 space-y-1">
               <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-400 block">
-                Round 03
+                Stage 04
               </span>
               <div className="text-xs font-semibold text-white">Grand Finale Defense</div>
               <p className="text-[11px] text-neutral-400 font-light">
-                Live jury defense, Top 25 merit ranks & ₹35K awards
+                Live jury evaluation, Top 25 national merit ranks & ₹35,000 cash awards.
               </p>
             </div>
           </div>
