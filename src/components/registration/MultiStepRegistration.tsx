@@ -787,11 +787,30 @@ export default function MultiStepRegistration({
                     type="email"
                     required
                     value={leaderEmail}
-                    onChange={(e) => setLeaderEmail(e.target.value)}
+                    onChange={(e) => setLeaderEmail(e.target.value.trim())}
+                    onBlur={() => setLeaderEmailTouched(true)}
                     placeholder="leader@example.com"
-                    className="w-full rounded-xl border border-white/10 bg-[#141414] pl-9 pr-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20 focus:outline-none transition-all"
+                    className={`w-full rounded-xl border bg-[#141414] pl-9 pr-3 py-2 text-xs text-white placeholder-neutral-500 focus:outline-none transition-all ${
+                      (leaderEmailTouched || step2Attempted) && leaderEmail.length > 0 && !isValidEmail(leaderEmail)
+                        ? 'border-red-500/70 focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
+                        : isValidEmail(leaderEmail)
+                        ? 'border-emerald-500/50 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20'
+                        : 'border-white/10 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20'
+                    }`}
                   />
                 </div>
+                {(leaderEmailTouched || step2Attempted) && leaderEmail.length > 0 && !isValidEmail(leaderEmail) && (
+                  <p className="text-[11px] text-red-400 mt-1 flex items-center gap-1 font-medium">
+                    <AlertCircle className="h-3 w-3 shrink-0" />
+                    Please write the email in the correct format (e.g. name@example.com)
+                  </p>
+                )}
+                {isValidEmail(leaderEmail) && (
+                  <p className="text-[10px] text-emerald-400 mt-1 flex items-center gap-1">
+                    <Check className="h-3 w-3 shrink-0" />
+                    Valid email format
+                  </p>
+                )}
               </div>
 
               <div>
@@ -804,13 +823,37 @@ export default function MultiStepRegistration({
                   </div>
                   <input
                     type="tel"
+                    inputMode="numeric"
+                    maxLength={10}
                     required
                     value={leaderPhone}
-                    onChange={(e) => setLeaderPhone(e.target.value)}
+                    onChange={(e) => handleLeaderPhoneChange(e.target.value)}
+                    onBlur={() => setLeaderPhoneTouched(true)}
                     placeholder="10-digit mobile"
-                    className="w-full rounded-xl border border-white/10 bg-[#141414] pl-9 pr-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20 focus:outline-none transition-all"
+                    className={`w-full rounded-xl border bg-[#141414] pl-9 pr-14 py-2 text-xs text-white placeholder-neutral-500 focus:outline-none transition-all font-mono ${
+                      (leaderPhoneTouched || step2Attempted) && leaderPhone.length > 0 && leaderPhone.length < 10
+                        ? 'border-amber-500/70 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20'
+                        : leaderPhone.length === 10
+                        ? 'border-emerald-500/50 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20'
+                        : 'border-white/10 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20'
+                    }`}
                   />
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-mono text-neutral-500 pointer-events-none">
+                    {leaderPhone.length}/10
+                  </div>
                 </div>
+                {(leaderPhoneTouched || step2Attempted) && leaderPhone.length > 0 && leaderPhone.length < 10 && (
+                  <p className="text-[11px] text-amber-400 mt-1 flex items-center gap-1 font-medium">
+                    <AlertCircle className="h-3 w-3 shrink-0" />
+                    Phone number must be exactly 10 digits ({leaderPhone.length}/10 entered)
+                  </p>
+                )}
+                {leaderPhone.length === 10 && (
+                  <p className="text-[10px] text-emerald-400 mt-1 flex items-center gap-1">
+                    <Check className="h-3 w-3 shrink-0" />
+                    Valid 10-digit mobile number
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -852,31 +895,68 @@ export default function MultiStepRegistration({
                     />
                   </div>
 
-                  <div className="relative">
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500">
-                      <Mail className="h-3.5 w-3.5" />
+                  <div>
+                    <div className="relative">
+                      <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500">
+                        <Mail className="h-3.5 w-3.5" />
+                      </div>
+                      <input
+                        type="email"
+                        required
+                        value={member.email}
+                        onChange={(e) => updateMember(idx, 'email', e.target.value)}
+                        onBlur={() => setTouchedMemberEmails((prev) => ({ ...prev, [idx]: true }))}
+                        placeholder="Email Address *"
+                        className={`w-full rounded-xl border bg-[#141414] pl-9 pr-3 py-2 text-xs text-white placeholder-neutral-500 focus:outline-none transition-all ${
+                          (touchedMemberEmails[idx] || step2Attempted) && member.email.length > 0 && !isValidEmail(member.email)
+                            ? 'border-red-500/70 focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
+                            : isValidEmail(member.email)
+                            ? 'border-emerald-500/50 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20'
+                            : 'border-white/10 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20'
+                        }`}
+                      />
                     </div>
-                    <input
-                      type="email"
-                      required
-                      value={member.email}
-                      onChange={(e) => updateMember(idx, 'email', e.target.value)}
-                      placeholder="Email Address *"
-                      className="w-full rounded-xl border border-white/10 bg-[#141414] pl-9 pr-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20 focus:outline-none transition-all"
-                    />
+                    {(touchedMemberEmails[idx] || step2Attempted) && member.email.length > 0 && !isValidEmail(member.email) && (
+                      <p className="text-[10px] text-red-400 mt-1 flex items-center gap-1 font-medium">
+                        <AlertCircle className="h-2.5 w-2.5 shrink-0" />
+                        Please write email in correct format (name@example.com)
+                      </p>
+                    )}
                   </div>
 
-                  <div className="relative">
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500">
-                      <Phone className="h-3.5 w-3.5" />
+                  <div>
+                    <div className="relative">
+                      <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500">
+                        <Phone className="h-3.5 w-3.5" />
+                      </div>
+                      <input
+                        type="tel"
+                        inputMode="numeric"
+                        maxLength={10}
+                        value={member.phone}
+                        onChange={(e) => updateMember(idx, 'phone', e.target.value)}
+                        onBlur={() => setTouchedMemberPhones((prev) => ({ ...prev, [idx]: true }))}
+                        placeholder="Phone (10 digits)"
+                        className={`w-full rounded-xl border bg-[#141414] pl-9 pr-12 py-2 text-xs text-white placeholder-neutral-500 focus:outline-none transition-all font-mono ${
+                          (touchedMemberPhones[idx] || step2Attempted) && member.phone.length > 0 && member.phone.length < 10
+                            ? 'border-amber-500/70 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20'
+                            : member.phone.length === 10
+                            ? 'border-emerald-500/50 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20'
+                            : 'border-white/10 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20'
+                        }`}
+                      />
+                      {member.phone.length > 0 && (
+                        <div className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-mono text-neutral-500 pointer-events-none">
+                          {member.phone.length}/10
+                        </div>
+                      )}
                     </div>
-                    <input
-                      type="tel"
-                      value={member.phone}
-                      onChange={(e) => updateMember(idx, 'phone', e.target.value)}
-                      placeholder="Phone (Optional)"
-                      className="w-full rounded-xl border border-white/10 bg-[#141414] pl-9 pr-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20 focus:outline-none transition-all"
-                    />
+                    {(touchedMemberPhones[idx] || step2Attempted) && member.phone.length > 0 && member.phone.length < 10 && (
+                      <p className="text-[10px] text-amber-400 mt-1 flex items-center gap-1 font-medium">
+                        <AlertCircle className="h-2.5 w-2.5 shrink-0" />
+                        Must be 10 digits ({member.phone.length}/10)
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
