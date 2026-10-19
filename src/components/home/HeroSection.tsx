@@ -90,19 +90,29 @@ export default function HeroSection({ event }: HeroProps) {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.4, delay: 0.4 }}
-          className="mt-7 inline-flex flex-wrap items-center justify-center gap-2.5 px-5 py-2 rounded-full text-xs font-medium border border-[#c19a88]/30 bg-[#805948]/15 text-white/90 shadow-[0_4px_25px_rgba(128,89,72,0.18)] backdrop-blur-xl"
+          className="mt-7 inline-flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 px-5 py-2 rounded-full text-xs font-medium border border-[#c19a88]/30 bg-[#805948]/15 text-white/90 shadow-[0_4px_25px_rgba(128,89,72,0.18)] backdrop-blur-xl"
         >
           <span className="flex h-2 w-2 relative">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
           </span>
-          <span className="font-semibold text-emerald-400">
-            {isRegistrationOpen ? 'Registration Officially Open' : event.status.replace(/_/g, ' ').toUpperCase()}
+          <span className="font-semibold text-emerald-400 tracking-wide">
+            {isRegistrationOpen ? 'Registrations Live' : event.status.replace(/_/g, ' ').toUpperCase()}
           </span>
-          <span className="text-white/30">•</span>
-          <span className="text-white/80">Flat ₹99 per Squad (1–6 Members)</span>
-          <span className="text-white/30">•</span>
-          <span className="text-[#e8c5b4] font-mono">4 Stages: Quiz → PPT → Build → Live Q&A</span>
+
+          <span className="hidden sm:inline-block h-3 w-px bg-white/20" />
+          <span className="sm:hidden text-white/30">•</span>
+
+          <span className="text-white/85">
+            ₹99 per Team <span className="text-white/50 text-[11px]">(1–6 Engineers)</span>
+          </span>
+
+          <span className="hidden sm:inline-block h-3 w-px bg-white/20" />
+          <span className="sm:hidden text-white/30">•</span>
+
+          <span className="text-[#e8c5b4] font-medium tracking-wide">
+            Screening → Architecture → Build Sprint → Live Defense
+          </span>
         </motion.div>
 
         {/* CTA Buttons */}
