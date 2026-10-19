@@ -166,7 +166,7 @@ export default function HeroSection({ event }: HeroProps) {
             },
             {
               icon: Sparkles,
-              title: 'Studio Internship Track',
+              title: 'Internship Fast-Track',
               subtitle: 'SkaleKraft Interviews',
             },
           ].map((badge) => {

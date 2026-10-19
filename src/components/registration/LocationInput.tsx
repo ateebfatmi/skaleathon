@@ -61,6 +61,13 @@ export function LocationInput({
     );
   }, [normalizedOptions, value]);
 
+  // Check if current typed value has an exact match
+  const hasExactMatch = useMemo(() => {
+    const trimmed = value.trim().toLowerCase();
+    if (!trimmed) return false;
+    return filteredOptions.some((opt) => opt.value.toLowerCase() === trimmed);
+  }, [filteredOptions, value]);
+
   // Click outside listener
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -121,6 +128,10 @@ export function LocationInput({
       } else if (isOpen && filteredOptions.length === 1) {
         e.preventDefault();
         handleSelect(filteredOptions[0]);
+      } else if (isOpen && value.trim()) {
+        e.preventDefault();
+        onChange(value.trim());
+        setIsOpen(false);
       }
     } else if (e.key === 'Escape') {
       setIsOpen(false);
@@ -251,18 +262,27 @@ export function LocationInput({
               })
             ) : (
               <li className="px-3.5 py-3 text-center">
-                <p className="text-[11px] text-neutral-400">No matching preset found</p>
-                {value.trim() && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIsOpen(false);
-                    }}
-                    className="mt-1.5 inline-block text-[10px] font-mono text-[#c19a88] hover:underline"
-                  >
-                    Use &ldquo;{value.trim()}&rdquo; as custom entry
-                  </button>
-                )}
+                <p className="text-[11px] text-neutral-400">No preset matches for &ldquo;{value.trim()}&rdquo;</p>
+              </li>
+            )}
+
+            {/* Custom Entry Option */}
+            {value.trim() && !hasExactMatch && (
+              <li
+                onClick={() => {
+                  onChange(value.trim());
+                  setIsOpen(false);
+                  setHighlightIndex(-1);
+                }}
+                className="px-3.5 py-2.5 text-xs cursor-pointer flex items-center justify-between text-[#e8c5b4] bg-[#805948]/20 hover:bg-[#805948]/35 transition-colors border-t border-white/[0.08]"
+              >
+                <div className="flex items-center gap-2 truncate">
+                  <span className="text-xs font-bold text-[#c19a88]">+</span>
+                  <span className="truncate">Use &ldquo;{value.trim()}&rdquo; as your city</span>
+                </div>
+                <span className="text-[10px] font-mono text-[#c19a88] bg-[#c19a88]/15 px-1.5 py-0.5 rounded ml-2 flex-shrink-0">
+                  Select
+                </span>
               </li>
             )}
           </ul>
