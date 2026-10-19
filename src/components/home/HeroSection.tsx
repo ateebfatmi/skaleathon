@@ -62,21 +62,9 @@ export default function HeroSection({ event }: HeroProps) {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.08] select-none"
+          className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight text-white max-w-4xl mx-auto leading-[1.05] select-none"
         >
-          SKALEATHON{' '}
-          <motion.span
-            drag
-            dragSnapToOrigin
-            dragElastic={0.25}
-            whileHover={{ scale: 1.08, rotate: -3, cursor: 'grab' }}
-            whileDrag={{ scale: 1.22, rotate: 6, cursor: 'grabbing', zIndex: 50 }}
-            transition={{ type: 'spring', stiffness: 500, damping: 25 }}
-            className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#f5ded3] via-[#e8c5b4] to-[#c19a88] bg-clip-text text-transparent pl-1 pr-5 sm:pr-8 py-1 -mr-3 sm:-mr-5 inline-block cursor-grab active:cursor-grabbing relative touch-none overflow-visible"
-            title="Drag me!"
-          >
-            2027
-          </motion.span>
+          SKALE<span className="skalekraft-gradient-text">ATHON</span>
         </motion.h1>
 
         {/* Official Tagline */}

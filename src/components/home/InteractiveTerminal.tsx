@@ -22,7 +22,7 @@ export default function InteractiveTerminal() {
       output: (
         <div className="text-neutral-300 space-y-1">
           <div className="text-[#c19a88] font-bold">
-            SKALEATHON 2027 ARCHITECTURE KERNEL v2.7.0 [RELEASE]
+            SKALEATHON ARCHITECTURE KERNEL v2.0 [RELEASE]
           </div>
           <div>Organized by <span className="text-white font-medium">SkaleKraft</span> • National Online Hackathon</div>
           <div className="text-white/50 text-[11px]">Type <span className="text-[#e8c5b4] font-mono">help</span> or click quick actions below to explore commands.</div>

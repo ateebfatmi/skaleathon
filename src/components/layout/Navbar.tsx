@@ -162,9 +162,6 @@ export default function Navbar() {
                   <span className="text-base sm:text-lg font-black tracking-[0.12em] text-white">
                     SKALE<span className="skalekraft-gradient-text">ATHON</span>
                   </span>
-                  <span className="inline-flex items-center rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 px-2 py-0.5 text-[9px] font-mono font-medium tracking-wider text-[#e8c5b4] shadow-[0_0_12px_rgba(193,154,136,0.15)]">
-                    2027
-                  </span>
                 </div>
               </div>
             </Link>
@@ -257,34 +254,11 @@ export default function Navbar() {
 
                         {/* User Identity Info */}
                         <Link href="/dashboard" className="flex flex-col text-left group/text">
-                          <span className="text-xs font-semibold text-white/90 group-hover/text:text-[#c19a88] transition-colors max-w-[110px] truncate leading-tight">
+                          <span className="text-xs font-semibold text-white/90 group-hover/text:text-[#c19a88] transition-colors max-w-[120px] truncate leading-tight">
                             {user?.firstName || user?.fullName || 'Innovator'}
                           </span>
                           <span className="text-[9px] uppercase tracking-[0.22em] text-[#c19a88] font-bold leading-none mt-0.5">
                             Participant
-                          </span>
-                        </Link>
-
-                        {/* Micro Glass Divider */}
-                        <span className="h-4 w-[1px] bg-white/10 ml-0.5" />
-
-                        {/* Dashboard Action Link */}
-                        <Link
-                          href="/dashboard"
-                          className={`flex items-center gap-1.5 text-xs font-medium transition-colors py-0.5 group/dash ${
-                            isDashboard ? 'text-[#e8c5b4]' : 'text-neutral-300 hover:text-white'
-                          }`}
-                          title="Open Participant Dashboard"
-                        >
-                          <LayoutDashboard
-                            className={`h-3.5 w-3.5 transition-transform duration-300 group-hover/dash:scale-110 ${
-                              isDashboard ? 'text-[#c19a88]' : 'text-[#c19a88]'
-                            }`}
-                          />
-                          <span className={`hidden lg:inline transition-colors font-medium ${
-                            isDashboard ? 'text-white' : 'text-neutral-400 group-hover/dash:text-white'
-                          }`}>
-                            Dashboard
                           </span>
                         </Link>
                       </div>

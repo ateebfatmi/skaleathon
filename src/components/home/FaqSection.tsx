@@ -9,7 +9,7 @@ export default function FaqSection() {
 
   const faqs = [
     {
-      q: 'Who is eligible to participate in Skaleathon 2027?',
+      q: 'Who is eligible to participate in Skaleathon?',
       a: 'Participation is open across India to undergraduate and postgraduate students, self-taught developers, and early-career innovators. You can participate individually (team size 1) or in a team of up to 6 members.',
     },
     {

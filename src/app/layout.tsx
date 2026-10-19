@@ -11,11 +11,11 @@ import InteractiveAmbientBackground from '@/components/layout/InteractiveAmbient
 
 
 export const metadata: Metadata = {
-  title: 'Skaleathon 2027 — National Online Hackathon | SkaleKraft',
+  title: 'Skaleathon — National Online Hackathon | SkaleKraft',
   description:
-    'SkaleKraft presents Skaleathon 2027: Build. Innovate. Scale. National online hackathon across India with ₹35,000 prize pool, ₹99 registration fee, certificates for top 25 teams, and interview opportunities.',
+    'SkaleKraft presents Skaleathon: Build. Innovate. Scale. National online hackathon across India with ₹35,000 prize pool, ₹99 registration fee, certificates for top 25 teams, and interview opportunities.',
   keywords: [
-    'Skaleathon 2027',
+    'Skaleathon',
     'SkaleKraft',
     'National Online Hackathon',
     'AI ML Hackathon',
@@ -26,16 +26,16 @@ export const metadata: Metadata = {
   authors: [{ name: 'SkaleKraft', url: 'https://skalekraft.in' }],
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   openGraph: {
-    title: 'Skaleathon 2027 — National Online Hackathon | SkaleKraft',
+    title: 'Skaleathon — National Online Hackathon | SkaleKraft',
     description: 'Build. Innovate. Scale. Compete for ₹35,000 prize pool across AI/ML, Web, and App development tracks.',
     url: '/',
-    siteName: 'Skaleathon 2027',
+    siteName: 'Skaleathon',
     locale: 'en_IN',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Skaleathon 2027 — National Online Hackathon',
+    title: 'Skaleathon — National Online Hackathon',
     description: 'Build. Innovate. Scale. Presented by SkaleKraft.',
   },
   robots: {

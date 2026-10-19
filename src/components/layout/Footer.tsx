@@ -58,7 +58,7 @@ export default function Footer() {
           <div className="flex items-center gap-2">
             <span>© {currentYear} SkaleKraft. All rights reserved.</span>
             <span>•</span>
-            <span className="text-neutral-500">Skaleathon 2027</span>
+            <span className="text-neutral-500">Skaleathon</span>
           </div>
           <div className="flex items-center gap-5 text-neutral-400">
             <Link href="/terms" className="hover:text-white transition-colors">
@@ -104,7 +104,7 @@ export default function Footer() {
                   />
                 </div>
                 <span className="text-sm font-bold tracking-wide text-white">
-                  SKALE<span className="skalekraft-gradient-text">ATHON</span> <span className="text-xs font-mono font-medium text-[#c19a88] ml-0.5">2027</span>
+                  SKALE<span className="skalekraft-gradient-text">ATHON</span>
                 </span>
               </Link>
               <span className="text-neutral-600">|</span>
@@ -167,7 +167,7 @@ export default function Footer() {
                 <div className="space-y-3 max-w-2xl">
                   <div className="inline-flex items-center gap-2 rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 px-3 py-1 text-xs font-medium text-[#e8c5b4]">
                     <Sparkles className="h-3.5 w-3.5" />
-                    <span>National Hackathon 2027</span>
+                    <span>National Hackathon</span>
                   </div>
                   <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                     Ready to Build, Innovate, and Scale?
@@ -225,9 +225,6 @@ export default function Footer() {
                 <div className="flex items-center gap-2 mt-0.5">
                   <span className="text-lg font-black tracking-[0.12em] text-white">
                     SKALE<span className="skalekraft-gradient-text">ATHON</span>
-                  </span>
-                  <span className="inline-flex items-center rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 px-2 py-0.5 text-[9px] font-mono font-medium tracking-wider text-[#e8c5b4]">
-                    2027
                   </span>
                 </div>
               </div>

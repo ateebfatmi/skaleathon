@@ -65,7 +65,7 @@ export default function AboutSection() {
             </h2>
 
             <p className="text-base text-white/70 leading-relaxed font-light">
-              <strong className="text-white font-medium">Skaleathon 2027</strong> is presented by{' '}
+              <strong className="text-white font-medium">Skaleathon</strong> is presented by{' '}
               <strong className="text-[#c19a88] font-medium">SkaleKraft</strong> — an independent product studio engineering modern websites, mobile applications, and autonomous AI systems for ambitious brands.
             </p>
 

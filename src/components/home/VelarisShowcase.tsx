@@ -102,7 +102,7 @@ export default function VelarisShowcase() {
                   High-Performance Visual Engineering
                 </h3>
                 <p className="text-sm sm:text-base text-white/75 font-light leading-relaxed max-w-xl mx-auto">
-                  Built for the ambitious engineers competing in the AI/ML, Web, and Native Mobile arenas of Skaleathon 2027.
+                  Built for the ambitious engineers competing in the AI/ML, Web, and Native Mobile arenas of Skaleathon.
                 </p>
                 <div className="pt-2">
                   <Link
