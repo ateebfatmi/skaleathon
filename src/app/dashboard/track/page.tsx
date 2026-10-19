@@ -9,148 +9,59 @@ export const revalidate = 0;
 
 interface TrackMeta {
   manifesto: string;
-  domains: Array<{
-    title: string;
-    tag: string;
-    description: string;
-    iconKey: string;
-  }>;
+  coreExpectation: string;
   suggestedStack: string[];
 }
 
 const TRACK_METAS: Record<string, TrackMeta> = {
   'track-ai-ml': {
     manifesto:
-      'Harness cutting-edge generative foundation models, agentic reasoning loops, computer vision, and predictive machine learning to solve deep structural friction in modern enterprise and consumer products.',
-    domains: [
-      {
-        title: 'Autonomous Agentic Systems',
-        tag: 'Agents & Tool-Use',
-        description:
-          'Multi-agent coordination, autonomous self-reflection loops, tool-calling pipelines, and autonomous workflow automation.',
-        iconKey: 'cpu',
-      },
-      {
-        title: 'Enterprise RAG & Knowledge Graphs',
-        tag: 'Retrieval & Context',
-        description:
-          'High-precision contextual search, hybrid sparse/dense vector indexing, reranking models, and hallucination reduction.',
-        iconKey: 'database',
-      },
-      {
-        title: 'Multimodal Vision & Audio',
-        tag: 'Sensory Intelligence',
-        description:
-          'Document OCR parsing, real-time computer vision inference, voice interfaces, and generative media synthesis.',
-        iconKey: 'eye',
-      },
-      {
-        title: 'Edge & Embedded Intelligence',
-        tag: 'Low-Latency ML',
-        description:
-          'Quantized on-device models, streaming inference APIs, WASM execution, and microsecond predictive telemetry.',
-        iconKey: 'zap',
-      },
-    ],
+      'Build intelligent systems, generative workflows, predictive models, or autonomous solutions for any industry or real-world problem of your choice. There are no fixed themes—your squad has complete freedom to define your own domain and problem statement.',
+    coreExpectation:
+      'Your solution can target any sector or user need, provided Artificial Intelligence or Machine Learning forms the core engine of your architecture.',
     suggestedStack: [
       'Python',
-      'PyTorch',
+      'PyTorch / TensorFlow',
       'FastAPI',
       'LangChain / LlamaIndex',
       'Hugging Face',
-      'pgvector',
-      'OpenAI / Anthropic APIs',
-      'Next.js 14',
-      'Tailwind CSS',
+      'Vector Databases',
+      'LLM / Multimodal APIs',
+      'Next.js / React',
+      'Any Custom ML Stack',
     ],
   },
   'track-web-dev': {
     manifesto:
-      'Architect resilient, hyper-responsive web applications leveraging edge computing, modern reactive frameworks, sub-second TTFB, and scalable backend infrastructure.',
-    domains: [
-      {
-        title: 'Real-time Collaborative Surfaces',
-        tag: 'WebSockets & CRDTs',
-        description:
-          'Multiplayer live editing, conflict-free replicated data types, optimistic UI state synchronizers, and canvas rendering.',
-        iconKey: 'boxes',
-      },
-      {
-        title: 'High-Concurrency Edge Platforms',
-        tag: 'Distributed Systems',
-        description:
-          'Serverless edge functions, global cache invalidation, streaming responses, and resilient micro-architectures.',
-        iconKey: 'globe',
-      },
-      {
-        title: 'Transactional FinTech & Commerce',
-        tag: 'High Reliability',
-        description:
-          'Idempotent payment pipelines, double-entry ledgers, fraud detection heuristics, and bank-grade security protocols.',
-        iconKey: 'shield',
-      },
-      {
-        title: 'Developer Tooling & Platform APIs',
-        tag: 'DevEx & Infrastructure',
-        description:
-          'Command-line tooling, SDK generators, webhook delivery networks, and real-time observability telemetry.',
-        iconKey: 'terminal',
-      },
-    ],
+      'Architect resilient, modern full-stack web platforms, SaaS products, collaborative tools, or consumer web applications across any domain you choose. There are no fixed themes—formulate your own problem statement and build without boundaries.',
+    coreExpectation:
+      'Your project can address any industry or creator challenge, provided it is delivered as a cohesive, full-stack web application or browser-based platform.',
     suggestedStack: [
-      'TypeScript',
-      'Next.js 14 (App Router)',
-      'Node.js / Bun',
-      'PostgreSQL',
+      'TypeScript / JavaScript',
+      'Next.js / React / Vue',
+      'Node.js / Bun / Go',
+      'PostgreSQL / MongoDB',
       'Prisma / Drizzle ORM',
       'Redis / Upstash',
       'Tailwind CSS',
-      'Vercel / Railway',
-      'WebSockets',
+      'Cloud / Edge Hosting',
+      'Any Web Stack',
     ],
   },
   'track-app-dev': {
     manifesto:
-      'Build silky, fluid mobile applications that integrate deeply with hardware sensors, feature offline-first synchronization, and deliver effortless native experiences.',
-    domains: [
-      {
-        title: 'Offline-First Synchronization',
-        tag: 'Local-First DB',
-        description:
-          'Local embedded SQLite / WatermelonDB, zero-latency optimistic interactions, and seamless background cloud reconciliation.',
-        iconKey: 'database',
-      },
-      {
-        title: 'Hardware & Sensor Integration',
-        tag: 'Device Capabilities',
-        description:
-          'Camera AR vision, biometric keychain authorization, background geolocation, Bluetooth Low Energy, and haptic feedback.',
-        iconKey: 'smartphone',
-      },
-      {
-        title: 'High-Performance 120 FPS UI',
-        tag: 'Fluid Motion',
-        description:
-          'Custom physics-based spring gestures, micro-interactions, dark/light adaptive theming, and optimized render trees.',
-        iconKey: 'zap',
-      },
-      {
-        title: 'Cross-Platform Enterprise Suites',
-        tag: 'Mobile Security',
-        description:
-          'Certificate pinning, encrypted on-device vaults, push notification channels, and zero-trust authentication.',
-        iconKey: 'shield',
-      },
-    ],
+      'Craft fluid native or cross-platform mobile applications solving any consumer, community, or enterprise problem you care about. There are no predefined themes—your squad is free to invent your own domain and use case.',
+    coreExpectation:
+      'Your idea can span any vertical or everyday workflow, provided the primary experience is engineered for mobile or portable devices.',
     suggestedStack: [
       'React Native / Expo',
       'Flutter',
       'Swift / Kotlin',
-      'SQLite / WatermelonDB',
-      'TanStack Query',
-      'Reanimated 3',
-      'Supabase',
-      'Tailwind / NativeWind',
+      'SQLite / Realm',
+      'Supabase / Firebase',
+      'REST / GraphQL APIs',
+      'Native Device APIs',
+      'Any Mobile Framework',
     ],
   },
 };

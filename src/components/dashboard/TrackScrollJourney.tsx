@@ -27,27 +27,6 @@ import {
   FileCode,
 } from 'lucide-react';
 
-const DOMAIN_ICONS: Record<string, React.ComponentType<{ className?: string; style?: React.CSSProperties }>> = {
-  cpu: Cpu,
-  database: Database,
-  eye: Eye,
-  zap: Zap,
-  boxes: Boxes,
-  globe: Globe,
-  shield: ShieldCheck,
-  terminal: Terminal,
-  smartphone: Smartphone,
-  layers: Layers,
-  compass: Compass,
-};
-
-interface DomainItem {
-  title: string;
-  tag: string;
-  description: string;
-  iconKey: string;
-}
-
 interface TrackScrollJourneyProps {
   track: {
     id: string;
@@ -61,11 +40,26 @@ interface TrackScrollJourneyProps {
   } | null;
   trackMeta: {
     manifesto: string;
-    domains: DomainItem[];
+    coreExpectation: string;
     suggestedStack: string[];
   } | null;
   accentColor: string;
 }
+
+const VERSATILE_EXAMPLE_DOMAINS = [
+  'Healthcare & BioTech',
+  'FinTech & Payments',
+  'EdTech & Learning',
+  'Climate & Sustainability',
+  'AgriTech & Rural Impact',
+  'Cybersecurity & Privacy',
+  'Logistics & Supply Chain',
+  'Developer Tooling',
+  'Creator Economy & Media',
+  'Smart Cities & CivicTech',
+  'E-Commerce & Retail',
+  'Custom / Your Own Domain',
+];
 
 export default function TrackScrollJourney({
   track,
@@ -73,7 +67,7 @@ export default function TrackScrollJourney({
   trackMeta,
   accentColor: rawAccent,
 }: TrackScrollJourneyProps) {
-  const [activeSection, setActiveSection] = useState<'vectors' | 'stack' | 'deliverables' | 'rubric'>('vectors');
+  const [activeSection, setActiveSection] = useState<'scope' | 'stack' | 'deliverables' | 'rubric'>('scope');
 
   // Normalize color to SkaleKraft warm copper / champagne palette to avoid odd purple tint
   const isOddColor =
@@ -100,7 +94,7 @@ export default function TrackScrollJourney({
                 className="inline-block w-2 h-2 rounded-full animate-pulse"
                 style={{ backgroundColor: accentColor }}
               />
-              <span style={{ color: accentColor }}>Competition Arena // Technical Scope</span>
+              <span style={{ color: accentColor }}>Competition Arena // Open Innovation</span>
               <span className="text-neutral-700">•</span>
               <span className="text-neutral-400">Squad: {team ? team.name : 'Unassigned'}</span>
             </div>
@@ -130,9 +124,15 @@ export default function TrackScrollJourney({
             {/* Spec Badges */}
             <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-neutral-400">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03]">
-                <Clock className="h-3.5 w-3.5 text-[#c19a88]" />
+                <Compass className="h-3.5 w-3.5 text-[#c19a88]" />
                 <span>
-                  Final Submission Deadline: <strong className="text-white">Hard Deadline (10-Day Sprint)</strong>
+                  Problem Statement: <strong className="text-white">100% Open &amp; Self-Defined</strong>
+                </span>
+              </div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03]">
+                <Sparkles className="h-3.5 w-3.5 text-[#e8c5b4]" />
+                <span>
+                  Domain Choice: <strong className="text-white">Any Industry or Custom Domain</strong>
                 </span>
               </div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03]">
@@ -166,7 +166,7 @@ export default function TrackScrollJourney({
         {/* Section Jump Anchors */}
         <div className="flex items-center gap-2 mt-8 overflow-x-auto scrollbar-none pb-1">
           {[
-            { id: 'vectors', label: '01. Specialized Vectors' },
+            { id: 'scope', label: '01. Open Domain Freedom' },
             { id: 'stack', label: '02. Recommended Stack' },
             { id: 'deliverables', label: '03. Required Deliverables' },
             { id: 'rubric', label: '04. Jury Rubric' },
@@ -187,86 +187,116 @@ export default function TrackScrollJourney({
         </div>
       </div>
 
-      {/* 2. Specialized Technical Vectors (Scrollable Flow, NOT in Cards) */}
-      {trackMeta && (
-        <section id="vectors" className="space-y-8 scroll-mt-28">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-white/[0.06] pb-4">
-            <div>
-              <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
-                Domain Specialization
+      {/* 2. Open Problem Statement & Versatile Domain Freedom (No Restrictive Themes, No Cards) */}
+      <section id="scope" className="space-y-10 scroll-mt-28">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-white/[0.06] pb-4">
+          <div>
+            <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
+              Unrestricted Ideation
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+              Versatile Ideas &amp;{' '}
+              <span className="font-serif italic font-normal text-[#e8c5b4]">
+                Open Domain Freedom
               </span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                Specialized Technical{' '}
-                <span className="font-serif italic font-normal text-[#e8c5b4]">
-                  Vectors &amp; Themes
-                </span>
-              </h2>
+            </h2>
+          </div>
+          <p className="text-xs text-neutral-400 font-light max-w-sm">
+            No predefined themes—your squad can formulate any problem statement and create your own domain.
+          </p>
+        </div>
+
+        <div className="space-y-10">
+          {/* Principle 01 */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45 }}
+            className="relative pl-5 sm:pl-8 border-l-2 space-y-2.5"
+            style={{ borderColor: `${accentColor}50` }}
+          >
+            <div className="flex items-center gap-3">
+              <span
+                className="text-xs font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border"
+                style={{
+                  color: accentColor,
+                  borderColor: `${accentColor}35`,
+                  backgroundColor: `${accentColor}10`,
+                }}
+              >
+                No Fixed Prompts
+              </span>
+              <span className="text-xs font-mono text-neutral-500">01 // Complete Creative Autonomy</span>
             </div>
-            <p className="text-xs text-neutral-400 font-light max-w-sm">
-              Select or formulate your squad&apos;s problem statement within these technical trajectories.
+            <h3 className="text-lg sm:text-2xl font-bold text-white">
+              Define Your Own Problem Statement &amp; Domain
+            </h3>
+            <p className="text-sm text-neutral-300 font-light leading-relaxed max-w-3xl">
+              Skaleathon does not box participants into narrow themes or pre-assigned problem statements. We believe the best engineering emerges when builders tackle real-world challenges they genuinely care about. You are free to pick any existing industry or define a brand-new domain of your own.
             </p>
-          </div>
+          </motion.div>
 
-          {/* Open Scroll Stream */}
-          <div className="space-y-12 sm:space-y-16">
-            {trackMeta.domains.map((domain, idx) => {
-              const Icon = DOMAIN_ICONS[domain.iconKey] || Compass;
-              const numStr = String(idx + 1).padStart(2, '0');
+          {/* Principle 02 */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45, delay: 0.05 }}
+            className="relative pl-5 sm:pl-8 border-l-2 space-y-2.5"
+            style={{ borderColor: `${accentColor}50` }}
+          >
+            <div className="flex items-center gap-3">
+              <span
+                className="text-xs font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border"
+                style={{
+                  color: accentColor,
+                  borderColor: `${accentColor}35`,
+                  backgroundColor: `${accentColor}10`,
+                }}
+              >
+                Track Alignment
+              </span>
+              <span className="text-xs font-mono text-neutral-500">02 // How Your Track Works</span>
+            </div>
+            <h3 className="text-lg sm:text-2xl font-bold text-white">
+              Build Any Idea Using {track ? track.name : 'Your Selected Track'}
+            </h3>
+            <p className="text-sm text-neutral-300 font-light leading-relaxed max-w-3xl">
+              {trackMeta
+                ? trackMeta.coreExpectation
+                : 'Your domain is completely open—simply ensure the core technical execution aligns with your chosen competition track.'}{' '}
+              Cross-disciplinary ideas that blend multiple technologies are strongly encouraged.
+            </p>
+          </motion.div>
 
-              return (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-40px' }}
-                  transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                  className="relative group pl-5 sm:pl-8 border-l-2 transition-colors duration-300"
-                  style={{ borderColor: `${accentColor}40` }}
-                >
-                  {/* Subtle Big Watermark Number */}
-                  <span className="pointer-events-none absolute right-2 -top-6 text-6xl sm:text-8xl font-black text-white/[0.03] select-none font-mono">
-                    {numStr}
+          {/* Versatile Domain Inspiration Cloud (Non-restrictive examples) */}
+          <div className="pl-5 sm:pl-8 border-l-2 border-white/10 space-y-3 pt-1">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <span className="text-xs font-mono uppercase tracking-[0.2em] text-[#e8c5b4]">
+                Examples of Versatile Domains You Can Explore (Or Create Your Own)
+              </span>
+            </div>
+            <div className="flex flex-wrap gap-2 pt-1">
+              {VERSATILE_EXAMPLE_DOMAINS.map((item, i) => {
+                const isCustom = item.includes('Your Own Domain');
+                return (
+                  <span
+                    key={i}
+                    className={`text-xs px-3.5 py-1.5 rounded-full border transition-all ${
+                      isCustom
+                        ? 'border-[#c19a88]/50 bg-[#c19a88]/15 text-[#e8c5b4] font-semibold'
+                        : 'border-white/10 bg-white/[0.02] text-neutral-300'
+                    }`}
+                  >
+                    {item}
                   </span>
-
-                  <div className="flex flex-wrap items-center gap-3 mb-2.5">
-                    <span
-                      className="text-xs font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border"
-                      style={{
-                        color: accentColor,
-                        borderColor: `${accentColor}35`,
-                        backgroundColor: `${accentColor}10`,
-                      }}
-                    >
-                      {domain.tag}
-                    </span>
-                    <span className="text-xs font-mono text-neutral-500">Vector {numStr}</span>
-                  </div>
-
-                  <div className="flex items-start gap-3.5 mb-3">
-                    <div
-                      className="w-8 h-8 rounded-xl flex items-center justify-center border shrink-0 mt-0.5"
-                      style={{
-                        borderColor: `${accentColor}30`,
-                        backgroundColor: `${accentColor}10`,
-                        color: accentColor,
-                      }}
-                    >
-                      <Icon className="h-4 w-4" />
-                    </div>
-                    <h3 className="text-lg sm:text-2xl font-bold text-white group-hover:text-[#e8c5b4] transition-colors">
-                      {domain.title}
-                    </h3>
-                  </div>
-
-                  <p className="text-sm text-neutral-300 font-light leading-relaxed max-w-3xl">
-                    {domain.description}
-                  </p>
-                </motion.div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       {/* 3. Recommended Tech Toolkit (Open Cloud, No Card) */}
       {trackMeta && (
