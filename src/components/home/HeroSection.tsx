@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import Link from 'next/link';
 import { Sparkles, ShieldCheck, Terminal, Award } from 'lucide-react';
 import { EventData } from '@/lib/db/types';
 import GlassmorphismCta from '@/components/ui/glassmorphism-cta';
@@ -111,7 +110,7 @@ export default function HeroSection({ event }: HeroProps) {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
-          className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3.5"
+          className="mt-9 flex items-center justify-center"
         >
           {isRegistrationOpen ? (
             <GlassmorphismCta
@@ -130,22 +129,6 @@ export default function HeroSection({ event }: HeroProps) {
               Registration Currently Closed
             </button>
           )}
-
-          <Link
-            href="/tracks"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] hover:bg-white/[0.08] px-5 py-2.5 text-xs sm:text-sm font-medium text-white hover:border-[#c19a88]/40 transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
-          >
-            <Terminal className="h-4 w-4 text-[#c19a88]" />
-            <span>Explore Arenas</span>
-          </Link>
-
-          <Link
-            href="/rules"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-transparent hover:border-white/10 px-5 py-2.5 text-xs sm:text-sm font-medium text-white/60 hover:text-white transition-colors"
-          >
-            <Sparkles className="h-4 w-4 text-[#c19a88]" />
-            <span>Tournament Rules</span>
-          </Link>
         </motion.div>
 
         {/* 4 Official Trust Badges */}
