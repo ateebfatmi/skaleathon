@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { getCurrentSession } from '@/lib/auth/session';
 import { EventRepository } from '@/lib/db/repository';
+import DashboardQuickIndexBar from '@/components/dashboard/DashboardQuickIndexBar';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -43,7 +44,7 @@ export default async function DashboardPage() {
   const firstName = session?.fullName?.split(' ')[0] || 'Innovator';
 
   return (
-    <div className="relative w-full space-y-14 pb-24 text-neutral-200">
+    <div className="relative w-full space-y-10 sm:space-y-14 pb-20 sm:pb-24 text-neutral-200">
       {/* Subtle Background Ambient Glows (Blended into background) */}
       <div className="pointer-events-none absolute -top-20 right-10 h-96 w-96 rounded-full bg-[#c19a88]/15 blur-[160px]" />
       <div className="pointer-events-none absolute top-40 -left-20 h-72 w-72 rounded-full bg-[#805948]/12 blur-[140px]" />
@@ -58,13 +59,13 @@ export default async function DashboardPage() {
         </div>
 
         {/* Top Utility & Context Ribbon */}
-        <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 pb-4 mb-7 border-b border-white/[0.07]">
-          <div className="flex flex-wrap items-center gap-2.5 text-[10px] font-mono uppercase tracking-[0.25em]">
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 pb-4 mb-6 sm:mb-7 border-b border-white/[0.07]">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 text-[10px] font-mono uppercase tracking-[0.22em] sm:tracking-[0.25em]">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c19a88] opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#c19a88]" />
             </span>
-            <span className="text-[#c19a88]">Participant Workspace // Command Center</span>
+            <span className="text-[#c19a88]">Participant Workspace {'//'} Command Center</span>
             <span className="text-white/20">•</span>
             <span className="text-neutral-400">
               Squad: <strong className="text-white font-semibold">{team ? team.name : 'Unassigned'}</strong>
@@ -86,7 +87,7 @@ export default async function DashboardPage() {
           </div>
 
           {/* Right Quick Actions */}
-          <div className="flex items-center gap-5 text-xs">
+          <div className="flex items-center gap-4 sm:gap-5 text-xs">
             <Link
               href="/dashboard/team"
               className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors font-medium"
@@ -109,64 +110,30 @@ export default async function DashboardPage() {
         </div>
 
         {/* Editorial Headline & Manifesto */}
-        <div className="relative z-10 max-w-3xl space-y-5 pb-9">
-          <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold text-white tracking-tight leading-[1.06]">
+        <div className="relative z-10 max-w-3xl space-y-4 sm:space-y-5 pb-7 sm:pb-9">
+          <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-extrabold text-white tracking-tight leading-[1.08]">
             Welcome back,{' '}
             <span className="font-serif italic font-normal text-[#e8c5b4]">
               {firstName}
             </span>
           </h1>
 
-          <p className="border-l-2 border-[#c19a88]/45 pl-4 text-sm sm:text-[15px] text-neutral-300/90 leading-relaxed font-light">
+          <p className="border-l-2 border-[#c19a88]/45 pl-4 text-xs sm:text-[15px] text-neutral-300/90 leading-relaxed font-light">
             Your squad <strong className="text-white font-medium">{team ? team.name : 'workspace'}</strong> is enrolled in{' '}
             <strong className="text-[#e8c5b4] font-normal">{track ? track.name : 'Skaleathon'}</strong>. Review your active stage progression, manage your engineering roster, and prepare your technical deliverables below.
           </p>
         </div>
 
-        {/* Full-Width 4-Column Editorial Section Index Bar */}
-        <nav className="grid grid-cols-2 sm:grid-cols-4 border-t border-b border-white/[0.08] divide-y sm:divide-y-0 sm:divide-x divide-white/[0.06]">
-          {[
-            { href: '/dashboard/stages', num: '01', label: 'Stages Roadmap', active: true },
-            { href: '/dashboard/track', num: '02', label: 'Track & Scope', active: false },
-            { href: '/dashboard/team', num: '03', label: `Squad Roster (${members.length}/6)`, active: false },
-            { href: '/dashboard/submission', num: '04', label: 'Deliverables Portal', active: false },
-          ].map((item) => (
-            <Link
-              key={item.num}
-              href={item.href}
-              className={`group relative py-3.5 px-4 flex items-center justify-between text-xs transition-all ${
-                item.active
-                  ? 'text-white font-semibold bg-white/[0.02]'
-                  : 'text-neutral-400 hover:text-white hover:bg-white/[0.01]'
-              }`}
-            >
-              <div className="flex items-center gap-2.5 truncate">
-                <span className="font-mono text-[10px] text-[#c19a88] font-bold">
-                  {item.num}
-                </span>
-                <span className="truncate">{item.label}</span>
-              </div>
-              <ArrowUpRight
-                className={`h-3.5 w-3.5 shrink-0 transition-transform ${
-                  item.active
-                    ? 'text-[#e8c5b4]'
-                    : 'text-neutral-600 group-hover:text-[#e8c5b4] group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
-                }`}
-              />
-              {item.active && (
-                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4]" />
-              )}
-            </Link>
-          ))}
-        </nav>
+        {/* Full-Width 4-Column Interactive Editorial Section Index Bar with Pre-Redirect Transition */}
+        <DashboardQuickIndexBar memberCount={members.length} />
       </header>
 
       {/* 2. Section 01: Active Round & Upcoming Milestone Pillars */}
-      <section className="space-y-8">
+      <section className="space-y-6 sm:space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
           <div>
             <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
-              01 // Live Tournament Telemetry
+              01 {'//'} Live Tournament Telemetry
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
               Active Phase &amp;{' '}
@@ -181,7 +148,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Side-by-Side Architectural Pillars */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 pt-2 border-t border-white/[0.08]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 pt-2 border-t border-white/[0.08]">
           {/* Pillar 01: Stage 01 */}
           <div className="relative pt-4 space-y-3">
             <div className="flex items-center justify-between">
@@ -196,7 +163,7 @@ export default async function DashboardPage() {
             <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
               Timed 30–45 minute multiple-choice assessment evaluating core computer science fundamentals, algorithmic logic, and domain aptitude. Ensure your squad roster is finalized prior to round kickoff.
             </p>
-            <div className="pt-1 flex items-center gap-4 text-xs">
+            <div className="pt-1 flex flex-wrap items-center gap-4 text-xs">
               <span className="inline-flex items-center gap-1.5 text-emerald-400 font-mono text-[11px]">
                 <CheckCircle2 className="h-3.5 w-3.5" />
                 <span>Squad Enrolled &amp; Eligible</span>
@@ -212,7 +179,7 @@ export default async function DashboardPage() {
           </div>
 
           {/* Pillar 02: Stage 02 & 03 */}
-          <div className="relative pt-4 md:border-l md:border-white/[0.08] md:pl-8 lg:pl-12 space-y-3">
+          <div className="relative pt-4 border-t border-white/[0.06] md:border-t-0 md:border-l md:border-white/[0.08] md:pl-8 lg:pl-12 space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#e8c5b4] font-bold">
                 Phase 02 &amp; 03 • Blueprint &amp; Build
@@ -239,11 +206,11 @@ export default async function DashboardPage() {
       </section>
 
       {/* 3. Section 02: Workspace Command Directory */}
-      <section className="space-y-6 pt-10 border-t border-white/[0.08]">
+      <section className="space-y-6 pt-8 sm:pt-10 border-t border-white/[0.08]">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
           <div>
             <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
-              02 // Workspace Navigation
+              02 {'//'} Workspace Navigation
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
               Tournament Command{' '}

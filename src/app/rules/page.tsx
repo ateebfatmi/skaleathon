@@ -1,191 +1,257 @@
 import React from 'react';
 import Link from 'next/link';
-import { ShieldCheck, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 
 export default function RulesPage() {
   return (
-    <div className="py-10 sm:py-20 lg:py-28 bg-[#0B0B0B] min-h-screen relative overflow-hidden">
-      {/* Background ambient light */}
-      <div className="pointer-events-none absolute left-1/2 top-20 -translate-x-1/2 w-full max-w-7xl h-96 bg-[#805948]/10 rounded-full blur-[160px]" />
+    <div className="py-10 sm:py-16 bg-[#0B0B0B] min-h-screen relative overflow-hidden">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="relative w-full space-y-14 pb-24 text-neutral-200">
+          {/* Subtle Background Ambient Glows */}
+          <div className="pointer-events-none absolute -top-20 right-10 h-96 w-96 rounded-full bg-[#c19a88]/15 blur-[160px]" />
+          <div className="pointer-events-none absolute top-40 -left-20 h-72 w-72 rounded-full bg-[#805948]/12 blur-[140px]" />
 
-      <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="mb-8 sm:mb-14">
-          <div className="flex items-center gap-2.5 mb-2.5 sm:mb-3">
-            <span className="h-px w-6 bg-[#c19a88]/70" />
-            <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
-              Competition Protocol
-            </p>
-          </div>
-          <h1 className="text-3xl sm:text-5xl font-medium text-white tracking-tight leading-tight">
-            Rules &{' '}
-            <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
-              eligibility
-            </span>
-            .
-          </h1>
-          <p className="mt-3 sm:mt-4 text-xs sm:text-base text-white/55 leading-relaxed font-light">
-            Please read these official rules carefully prior to team registration. Compliance with all requirements is mandatory for evaluation eligibility and certificate conferral.
-          </p>
-        </div>
+          {/* 1. Open Luxury Editorial Hero */}
+          <header className="relative pt-1">
+            <div className="pointer-events-none select-none absolute right-2 top-8 hidden xl:block overflow-hidden">
+              <span className="font-mono text-[110px] font-black tracking-tighter text-white/[0.02] leading-none uppercase">
+                PROTOCOL
+              </span>
+            </div>
 
-        <div className="space-y-4 sm:space-y-6 text-xs sm:text-sm text-white/65 leading-relaxed font-light">
-          {/* Section 1: Eligibility */}
-          <div className="rounded-2xl sm:rounded-[24px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-5 sm:p-8 space-y-3.5 sm:space-y-4 shadow-[0_15px_40px_rgba(0,0,0,0.3)]">
-            <h2 className="text-sm sm:text-base font-semibold tracking-wide text-white flex items-baseline gap-2.5">
-              <span className="font-mono text-xs text-[#c19a88] shrink-0">01.</span>
-              <span>Eligibility Standards</span>
-            </h2>
-            <ul className="space-y-2.5">
-              <li className="flex items-start gap-2.5 sm:gap-3">
-                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
-                <span>Participation is open across India to undergraduate and graduate students, boot camp graduates, and independent software builders.</span>
-              </li>
-              <li className="flex items-start gap-2.5 sm:gap-3">
-                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
-                <span>There is no minimum age requirement; participants under 18 must have parental/guardian consent to receive official cash prizes.</span>
-              </li>
-              <li className="flex items-start gap-2.5 sm:gap-3">
-                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
-                <span>Members of the SkaleKraft core organizing team or judging panels are ineligible to enter the competition as participants.</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Section 2: Team Formation */}
-          <div className="rounded-2xl sm:rounded-[24px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-5 sm:p-8 space-y-3.5 sm:space-y-4 shadow-[0_15px_40px_rgba(0,0,0,0.3)]">
-            <h2 className="text-sm sm:text-base font-semibold tracking-wide text-white flex items-baseline gap-2.5">
-              <span className="font-mono text-xs text-[#c19a88] shrink-0">02.</span>
-              <span>Team Composition & Registration</span>
-            </h2>
-            <ul className="space-y-2.5">
-              <li className="flex items-start gap-2.5 sm:gap-3">
-                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
-                <span>Teams must have between <strong className="text-white font-medium">1 and 6 members</strong>. Solo developers may register as a 1-person team.</span>
-              </li>
-              <li className="flex items-start gap-2.5 sm:gap-3">
-                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
-                <span><strong className="text-white font-medium">No duplicate memberships:</strong> An individual can only belong to one registered team in Skaleathon 2028.</span>
-              </li>
-              <li className="flex items-start gap-2.5 sm:gap-3">
-                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
-                <span>The registration fee is a flat <strong className="text-white font-medium">₹99 per team</strong>, paid securely via Razorpay to participate in competition stages.</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Section 3: The 4-Stage Competition Architecture */}
-          <div className="rounded-2xl sm:rounded-[24px] border border-[#c19a88]/40 bg-[linear-gradient(145deg,rgba(193,154,136,0.06),rgba(14,14,14,0.95))] p-5 sm:p-8 space-y-4 sm:space-y-5 shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
-            <h2 className="text-sm sm:text-base font-semibold tracking-wide text-white flex items-baseline gap-2.5">
-              <span className="font-mono text-xs text-[#c19a88] shrink-0">03.</span>
-              <span>The 4 Progressive Competition Stages</span>
-            </h2>
-            <p className="text-xs text-white/60">
-              Skaleathon 2028 operates across four sequential stages designed to rigorously test technical aptitude, system design, software implementation, and live oral defense:
-            </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-3.5 pt-1">
-                <div className="p-3.5 sm:p-4 rounded-xl border border-white/10 bg-white/[0.02] space-y-1">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-emerald-400 font-bold uppercase tracking-wider">Stage 1 • Quiz</span>
-                    <span className="text-[10px] font-mono text-emerald-400/80">Jan 08, 2028</span>
-                  </div>
-                  <h3 className="text-xs font-bold text-white">Online Technical Screening Quiz</h3>
-                  <p className="text-[11px] text-white/50 leading-relaxed font-light">
-                    A timed technical quiz covering core CS logic, algorithmic reasoning, and domain-specific track fundamentals. High-scoring teams qualify for Stage 2.
-                  </p>
-                </div>
-
-                <div className="p-3.5 sm:p-4 rounded-xl border border-white/10 bg-white/[0.02] space-y-1">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-[#c19a88] font-bold uppercase tracking-wider">Stage 2 • PPT</span>
-                    <span className="text-[10px] font-mono text-[#c19a88]/80">Jan 10–14, 2028</span>
-                  </div>
-                  <h3 className="text-xs font-bold text-white">Idea & Architecture PPT</h3>
-                  <p className="text-[11px] text-white/50 leading-relaxed font-light">
-                    Shortlisted teams submit a structured slide deck detailing their problem statement, system architecture, database schema, tech stack, and feasibility.
-                  </p>
-                </div>
-
-                <div className="p-3.5 sm:p-4 rounded-xl border border-white/10 bg-white/[0.02] space-y-1">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-[#e8c5b4] font-bold uppercase tracking-wider">Stage 3 • Build</span>
-                    <span className="text-[10px] font-mono text-[#e8c5b4]/80">Jan 17–26, 2028</span>
-                  </div>
-                  <h3 className="text-xs font-bold text-white">Engineering Sprint & Codebase</h3>
-                  <p className="text-[11px] text-white/50 leading-relaxed font-light">
-                    The primary engineering phase. Teams build and submit a public GitHub repository and live deployed URL. A video walkthrough demo is not necessary, but will give your team a distinct evaluation advantage.
-                  </p>
-                </div>
-
-                <div className="p-3.5 sm:p-4 rounded-xl border border-white/10 bg-white/[0.02] space-y-1">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-amber-400 font-bold uppercase tracking-wider">Stage 4 • Finale</span>
-                    <span className="text-[10px] font-mono text-amber-400/80">Jan 29–30, 2028</span>
-                  </div>
-                  <h3 className="text-xs font-bold text-white">Grand Finale Live Q&A</h3>
-                  <p className="text-[11px] text-white/50 leading-relaxed font-light">
-                    Top finalist teams defend their architecture and code in a live Q&A session with domain judges and SkaleKraft leadership to determine final rankings.
-                  </p>
-                </div>
+            {/* Top Utility & Context Ribbon */}
+            <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 pb-4 mb-7 border-b border-white/[0.07]">
+              <div className="flex flex-wrap items-center gap-2.5 text-[10px] font-mono uppercase tracking-[0.25em]">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c19a88] opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#c19a88]" />
+                </span>
+                <span className="text-[#c19a88]">Competition Protocol // Governance &amp; Eligibility</span>
+                <span className="text-white/20">•</span>
+                <span className="text-neutral-400">
+                  Team Size: <strong className="text-white font-semibold">1 to 6 Members</strong>
+                </span>
+                <span className="text-white/20">•</span>
+                <span className="text-[#e8c5b4] font-semibold">[FLAT ₹99 PASS]</span>
               </div>
-          </div>
 
-          {/* Section 4: Originality & AI Tool Usage */}
-          <div className="rounded-2xl sm:rounded-[24px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-5 sm:p-8 space-y-3.5 sm:space-y-4 shadow-[0_15px_40px_rgba(0,0,0,0.3)]">
-            <h2 className="text-sm sm:text-base font-semibold tracking-wide text-white flex items-baseline gap-2.5">
-              <span className="font-mono text-xs text-[#c19a88] shrink-0">04.</span>
-              <span>Code Originality & AI Disclosures</span>
-            </h2>
-            <ul className="space-y-2.5">
-              <li className="flex items-start gap-2.5 sm:gap-3">
-                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
-                <span>All core system logic must be original software created for this hackathon. Pre-existing turnkey templates or verbatim clones are strictly disqualified.</span>
-              </li>
-              <li className="flex items-start gap-2.5 sm:gap-3">
-                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
-                <span>Public open-source libraries, UI component primitives (Tailwind, Radix, Lucide), and cloud platforms are permitted with proper attribution.</span>
-              </li>
-              <li className="flex items-start gap-2.5 sm:gap-3">
-                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
-                <span><strong className="text-white font-medium">AI Disclosure:</strong> Generative AI coding tools (Claude, Cursor, GitHub Copilot) are welcomed; teams must disclose usage in their submission manifesto.</span>
-              </li>
-            </ul>
-          </div>
+              <div className="flex items-center gap-5 text-xs">
+                <Link
+                  href="/tracks"
+                  className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors font-medium"
+                >
+                  <span>Explore Tracks</span>
+                </Link>
+                <span className="text-white/15">|</span>
+                <Link
+                  href="/register"
+                  className="group inline-flex items-center gap-1.5 text-[#e8c5b4] hover:text-white transition-colors font-semibold"
+                >
+                  <span>Register Squad</span>
+                  <ArrowRight className="h-3 w-3 text-[#c19a88] group-hover:translate-x-0.5 transition-transform" />
+                </Link>
+              </div>
+            </div>
 
-          {/* Section 5: Submission Requirements */}
-          <div className="rounded-2xl sm:rounded-[24px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-5 sm:p-8 space-y-3.5 sm:space-y-4 shadow-[0_15px_40px_rgba(0,0,0,0.3)]">
-            <h2 className="text-sm sm:text-base font-semibold tracking-wide text-white flex items-baseline gap-2.5">
-              <span className="font-mono text-xs text-[#c19a88] shrink-0">05.</span>
-              <span>Submission Deliverables (Stages 02 & 03)</span>
-            </h2>
-            <ul className="space-y-2.5">
-              <li className="flex items-start gap-2.5 sm:gap-3">
-                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
-                <span><strong className="text-white font-medium">Stage 02 Architecture PPT:</strong> A structured slide deck (PDF, max 10 slides) submitted directly through the portal outlining system architecture, database schema, and feasibility.</span>
-              </li>
-              <li className="flex items-start gap-2.5 sm:gap-3">
-                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
-                <span><strong className="text-white font-medium">Stage 03 Codebase:</strong> A publicly accessible GitHub repository with an informative README, architecture overview, and commit history.</span>
-              </li>
-              <li className="flex items-start gap-2.5 sm:gap-3">
-                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
-                <span><strong className="text-white font-medium">Stage 03 Live URL:</strong> A working deployed web URL or mobile application demo link/screencast demonstrating core user flows.</span>
-              </li>
-              <li className="flex items-start gap-2.5 sm:gap-3">
-                <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
-                <span><strong className="text-white font-medium">Video Walkthrough (Optional Advantage):</strong> A 2–3 minute video demonstration is not strictly necessary, but will give your team a strong evaluation advantage during judge scoring.</span>
-              </li>
-            </ul>
-          </div>
-        </div>
+            {/* Editorial Headline & Manifesto */}
+            <div className="relative z-10 max-w-3xl space-y-5 pb-9">
+              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold text-white tracking-tight leading-[1.06]">
+                Rules &amp;{' '}
+                <span className="font-serif italic font-normal text-[#e8c5b4]">
+                  Eligibility
+                </span>
+              </h1>
 
-        <div className="mt-8 sm:mt-12 text-center">
-          <Link
-            href="/register"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] px-8 py-3.5 text-xs font-semibold tracking-wide text-white shadow-[0_4px_25px_rgba(128,89,72,0.35)] hover:scale-105 transition-all"
-          >
-            <span>Agree & Register Team — ₹99</span>
-            <ArrowRight className="h-4 w-4" />
-          </Link>
+              <p className="border-l-2 border-[#c19a88]/45 pl-4 text-sm sm:text-[15px] text-neutral-300/90 leading-relaxed font-light">
+                Official governance standards for Skaleathon. Compliance with these engineering, originality, and submission guidelines is required for evaluation and prize conferral.
+              </p>
+            </div>
+
+            {/* Full-Width 4-Column Editorial Section Index Bar */}
+            <nav className="grid grid-cols-2 sm:grid-cols-4 border-t border-b border-white/[0.08] divide-y sm:divide-y-0 sm:divide-x divide-white/[0.06]">
+              {[
+                { href: '#eligibility', num: '01', label: 'Eligibility & Squads', active: true },
+                { href: '#stages', num: '02', label: '4 Competition Stages', active: false },
+                { href: '#originality', num: '03', label: 'Code & AI Disclosure', active: false },
+                { href: '#deliverables', num: '04', label: 'Mandatory Deliverables', active: false },
+              ].map((sec) => (
+                <a
+                  key={sec.num}
+                  href={sec.href}
+                  className={`group relative py-3.5 px-4 flex items-center justify-between text-xs transition-all ${
+                    sec.active
+                      ? 'text-white font-semibold bg-white/[0.02]'
+                      : 'text-neutral-500 hover:text-neutral-200 hover:bg-white/[0.01]'
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5 truncate">
+                    <span className="font-mono text-[10px] text-[#c19a88] font-bold">
+                      {sec.num}
+                    </span>
+                    <span className="truncate">{sec.label}</span>
+                  </div>
+                  <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-[#e8c5b4]" />
+                  {sec.active && (
+                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4]" />
+                  )}
+                </a>
+              ))}
+            </nav>
+          </header>
+
+          {/* 2. Section 01: Eligibility & Squad Composition */}
+          <section id="eligibility" className="space-y-8 scroll-mt-28">
+            <div>
+              <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
+                01 // Participant Standards
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                Eligibility &amp;{' '}
+                <span className="font-serif italic font-normal text-[#e8c5b4]">
+                  Squad Formation
+                </span>
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 pt-2 border-t border-white/[0.08]">
+              <div className="relative pt-4 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#c19a88] font-bold">
+                    Pillar 01 • Who Can Compete
+                  </span>
+                  <span className="font-mono text-2xl font-light text-white/10 select-none">01</span>
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                  Open to Builders Across India
+                </h3>
+                <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+                  Participation is open to undergraduate and graduate students, bootcamp learners, and independent software developers across India. Cross-college and cross-organization squads are fully permitted.
+                </p>
+              </div>
+
+              <div className="relative pt-4 md:border-l md:border-white/[0.08] md:pl-8 lg:pl-12 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#e8c5b4] font-bold">
+                    Pillar 02 • Squad Size &amp; Registration
+                  </span>
+                  <span className="font-mono text-2xl font-light text-white/10 select-none">02</span>
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                  1 to 6 Engineers • Flat ₹99 Pass
+                </h3>
+                <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+                  Squads may consist of 1 to 6 members (solo builders welcome). Each participant may belong to only one squad. A single flat ₹99 registration fee covers the entire squad.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* 3. Section 02: The 4 Sequential Competition Stages */}
+          <section id="stages" className="space-y-6 pt-10 border-t border-white/[0.08] scroll-mt-28">
+            <div>
+              <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
+                02 // Tournament Progression
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                The 4 Progressive{' '}
+                <span className="font-serif italic font-normal text-[#e8c5b4]">
+                  Competition Stages
+                </span>
+              </h2>
+            </div>
+
+            <div className="divide-y divide-white/[0.06] border-t border-b border-white/[0.06]">
+              {[
+                {
+                  num: '01',
+                  title: 'Online Technical Screening Quiz',
+                  date: 'Jan 08, 2028',
+                  desc: 'Timed 30–45 minute assessment evaluating CS fundamentals, algorithmic reasoning, and track domain aptitude.',
+                },
+                {
+                  num: '02',
+                  title: 'Idea & Architecture PPT (PDF)',
+                  date: 'Jan 10–14, 2028',
+                  desc: 'Shortlisted squads submit a 10-slide PDF deck detailing their self-defined problem statement, architecture diagram, and schema.',
+                },
+                {
+                  num: '03',
+                  title: 'Engineering Sprint & Codebase',
+                  date: 'Jan 16–25, 2028',
+                  desc: 'Squads build and submit a public GitHub repository and live deployed cloud URL (plus an optional 2–3 min demo walkthrough).',
+                },
+                {
+                  num: '04',
+                  title: 'Grand Finale Live Jury Defense',
+                  date: 'Jan 29–30, 2028',
+                  desc: 'Top finalist squads defend their system architecture and live prototype before the SkaleKraft jury panel.',
+                },
+              ].map((st) => (
+                <div
+                  key={st.num}
+                  className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                >
+                  <div className="flex items-start sm:items-center gap-4">
+                    <span className="font-mono text-xs font-bold text-[#c19a88] w-6 shrink-0">
+                      {st.num}
+                    </span>
+                    <div className="space-y-0.5">
+                      <h3 className="text-sm sm:text-base font-bold text-white">{st.title}</h3>
+                      <p className="text-xs text-neutral-400 font-light">{st.desc}</p>
+                    </div>
+                  </div>
+                  <span className="font-mono text-xs text-[#e8c5b4] shrink-0">{st.date}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* 4. Section 03 & 04: Originality & Deliverables */}
+          <section id="originality" className="space-y-8 pt-10 border-t border-white/[0.08] scroll-mt-28">
+            <div>
+              <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
+                03 // Engineering Integrity
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                Code Originality &amp;{' '}
+                <span className="font-serif italic font-normal text-[#e8c5b4]">
+                  Deliverable Standards
+                </span>
+              </h2>
+            </div>
+
+            <div id="deliverables" className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 pt-2 border-t border-white/[0.08]">
+              <div className="relative pt-4 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#c19a88] font-bold">
+                    Pillar 01 • Originality &amp; AI Disclosure
+                  </span>
+                  <span className="font-mono text-2xl font-light text-white/10 select-none">01</span>
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                  Fresh Sprint Engineering
+                </h3>
+                <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+                  Core system logic must be authored during the competition window. Open-source frameworks, UI libraries, and AI coding assistants are permitted with transparent disclosure in your repository README.
+                </p>
+              </div>
+
+              <div className="relative pt-4 md:border-l md:border-white/[0.08] md:pl-8 lg:pl-12 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#e8c5b4] font-bold">
+                    Pillar 02 • Mandatory Artifacts
+                  </span>
+                  <span className="font-mono text-2xl font-light text-white/10 select-none">02</span>
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                  PDF Blueprint + GitHub + Live URL
+                </h3>
+                <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+                  Stage 02 requires a 10-slide PDF architecture deck. Stage 03 requires a public GitHub repository and a live deployed prototype URL. A 2–3 minute video walkthrough is optional and provides an evaluation advantage.
+                </p>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </div>

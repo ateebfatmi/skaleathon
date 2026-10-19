@@ -1,9 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Bot, Globe, Smartphone, CheckCircle, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import { Bot, Globe, Smartphone, ArrowRight, ArrowUpRight, Sparkles } from 'lucide-react';
 import { EventTrack } from '@/lib/db/types';
 import RegistrationModal from '@/components/registration/RegistrationModal';
+import { motion } from 'framer-motion';
 
 interface TracksPageClientProps {
   tracks: EventTrack[];
@@ -12,6 +14,7 @@ interface TracksPageClientProps {
 export default function TracksPageClient({ tracks }: TracksPageClientProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedTrackId, setSelectedTrackId] = useState<string>('track-ai-ml');
+  const [activeTab, setActiveTab] = useState<string>('track-ai-ml');
 
   const handleOpenRegistration = (trackId: string) => {
     setSelectedTrackId(trackId);
@@ -53,89 +56,215 @@ export default function TracksPageClient({ tracks }: TracksPageClientProps) {
 
   return (
     <>
-      <div className="space-y-6 sm:space-y-10">
-        {tracks.map((track, idx) => {
-          const Icon = iconMap[track.id] || Bot;
-          const extra = details[track.id] || { deliverables: [], recommendedTech: [] };
+      <div className="relative w-full space-y-14 pb-24 text-neutral-200">
+        {/* Subtle Background Ambient Glows */}
+        <div className="pointer-events-none absolute -top-20 right-10 h-96 w-96 rounded-full bg-[#c19a88]/15 blur-[160px]" />
+        <div className="pointer-events-none absolute top-40 -left-20 h-72 w-72 rounded-full bg-[#805948]/12 blur-[140px]" />
 
-          return (
-            <div
-              key={track.id}
-              className="rounded-2xl sm:rounded-[28px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.035),rgba(14,14,14,0.96))] p-5 sm:p-10 lg:p-12 relative overflow-hidden shadow-[0_25px_70px_rgba(0,0,0,0.4)] hover:border-[#c19a88]/30 transition-all duration-300 group"
-            >
-              <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6 sm:gap-8">
-                <div className="space-y-4 sm:space-y-5 max-w-2xl">
-                  <div className="flex items-center gap-3.5 sm:gap-4">
-                    <div className="flex h-11 w-11 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-xl sm:rounded-2xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88] shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
-                      <Icon className="h-5 w-5 sm:h-7 sm:w-7" strokeWidth={1.7} />
-                    </div>
-                    <div>
-                      <span className="font-mono text-[10px] sm:text-xs tracking-[0.2em] text-[#c19a88]/80 uppercase">
-                        ARENA 0{idx + 1}
-                      </span>
-                      <h2 className="text-xl sm:text-3xl font-medium tracking-tight text-white">
-                        {track.name}
+        {/* 1. Open Luxury Editorial Hero */}
+        <header className="relative pt-1">
+          {/* Faint Oversized Architectural Watermark */}
+          <div className="pointer-events-none select-none absolute right-2 top-8 hidden xl:block overflow-hidden">
+            <span className="font-mono text-[110px] font-black tracking-tighter text-white/[0.02] leading-none uppercase">
+              ARENAS
+            </span>
+          </div>
+
+          {/* Top Utility & Context Ribbon */}
+          <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 pb-4 mb-7 border-b border-white/[0.07]">
+            <div className="flex flex-wrap items-center gap-2.5 text-[10px] font-mono uppercase tracking-[0.25em]">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c19a88] opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#c19a88]" />
+              </span>
+              <span className="text-[#c19a88]">Curated Arenas // Open Innovation</span>
+              <span className="text-white/20">•</span>
+              <span className="text-neutral-400">
+                Scope: <strong className="text-white font-semibold">100% Self-Defined Problem Statement</strong>
+              </span>
+              <span className="text-white/20">•</span>
+              <span className="text-[#e8c5b4] font-semibold">[3 ARENAS]</span>
+            </div>
+
+            <div className="flex items-center gap-5 text-xs">
+              <Link
+                href="/prizes"
+                className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors font-medium"
+              >
+                <span>Prizes (₹35,000)</span>
+              </Link>
+              <span className="text-white/15">|</span>
+              <Link
+                href="/rules"
+                className="group inline-flex items-center gap-1.5 text-[#e8c5b4] hover:text-white transition-colors font-semibold"
+              >
+                <span>Tournament Rules</span>
+                <ArrowRight className="h-3 w-3 text-[#c19a88] group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Editorial Headline & Manifesto */}
+          <div className="relative z-10 max-w-3xl space-y-5 pb-9">
+            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold text-white tracking-tight leading-[1.06]">
+              Competition{' '}
+              <span className="font-serif italic font-normal text-[#e8c5b4]">
+                Tracks
+              </span>
+            </h1>
+
+            <p className="border-l-2 border-[#c19a88]/45 pl-4 text-sm sm:text-[15px] text-neutral-300/90 leading-relaxed font-light">
+              Skaleathon features three specialized technology arenas with complete open-domain freedom. There are no fixed themes—your squad is free to formulate any problem statement and build for any industry.
+            </p>
+          </div>
+
+          {/* Full-Width 3-Column Editorial Track Index Bar */}
+          <nav className="grid grid-cols-1 sm:grid-cols-3 border-t border-b border-white/[0.08] divide-y sm:divide-y-0 sm:divide-x divide-white/[0.06]">
+            {tracks.map((t, idx) => {
+              const num = String(idx + 1).padStart(2, '0');
+              const isActive = activeTab === t.id;
+              return (
+                <a
+                  key={t.id}
+                  href={`#${t.id}`}
+                  onClick={() => setActiveTab(t.id)}
+                  className={`group relative py-3.5 px-4 flex items-center justify-between text-xs transition-all ${
+                    isActive
+                      ? 'text-white font-semibold bg-white/[0.02]'
+                      : 'text-neutral-500 hover:text-neutral-200 hover:bg-white/[0.01]'
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5 truncate">
+                    <span className="font-mono text-[10px] text-[#c19a88] font-bold">
+                      {num}
+                    </span>
+                    <span className="truncate">{t.name}</span>
+                  </div>
+                  <ArrowUpRight
+                    className={`h-3.5 w-3.5 shrink-0 transition-transform ${
+                      isActive
+                        ? 'text-[#e8c5b4]'
+                        : 'text-neutral-600 group-hover:text-neutral-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
+                    }`}
+                  />
+                  {isActive && (
+                    <motion.span
+                      layoutId="publicTrackUnderline"
+                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4]"
+                    />
+                  )}
+                </a>
+              );
+            })}
+          </nav>
+        </header>
+
+        {/* 2. Open Track Sections (Blended into Background, No Boxy Cards) */}
+        <div className="space-y-16">
+          {tracks.map((track, idx) => {
+            const Icon = iconMap[track.id] || Bot;
+            const extra = details[track.id] || { deliverables: [], recommendedTech: [] };
+            const num = String(idx + 1).padStart(2, '0');
+
+            return (
+              <section
+                id={track.id}
+                key={track.id}
+                className={`space-y-8 scroll-mt-28 ${
+                  idx > 0 ? 'pt-12 border-t border-white/[0.08]' : ''
+                }`}
+              >
+                <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                  <div className="space-y-1">
+                    <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block">
+                      {num} {'//'} Arena Specification • [{track.slug.toUpperCase()}]
+                    </span>
+                    <div className="flex items-center gap-3">
+                      <Icon className="h-5 w-5 text-[#c19a88] shrink-0" />
+                      <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                        {track.name.includes('&') ? (
+                          <>
+                            {track.name.split('&')[0].trim()} &amp;{' '}
+                            <span className="font-serif italic font-normal text-[#e8c5b4]">
+                              {track.name.split('&')[1].trim()}
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            {track.name.split(' ').slice(0, -1).join(' ')}{' '}
+                            <span className="font-serif italic font-normal text-[#e8c5b4]">
+                              {track.name.split(' ').slice(-1)}
+                            </span>
+                          </>
+                        )}
                       </h2>
                     </div>
                   </div>
 
-                  <p className="text-xs sm:text-base text-white/60 leading-relaxed font-light">
-                    {track.description}
-                  </p>
-
-                  <div className="pt-1 sm:pt-2">
-                    <h3 className="text-[11px] sm:text-xs font-semibold uppercase tracking-[0.16em] text-white/80 mb-2.5 sm:mb-3">
-                      Expected Deliverables:
-                    </h3>
-                    <ul className="space-y-2 sm:space-y-2.5">
-                      {extra.deliverables.map((item, dIdx) => (
-                        <li key={dIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-white/55 font-light">
-                          <CheckCircle className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleOpenRegistration(track.id)}
+                    className="w-fit inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-6 py-2.5 text-xs font-bold text-white shadow-[0_4px_20px_rgba(128,89,72,0.3)] hover:scale-105 transition-all cursor-pointer"
+                  >
+                    <span>Register Squad (₹99)</span>
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </button>
                 </div>
 
-                <div className="lg:w-80 space-y-5 sm:space-y-6 lg:border-l lg:border-white/[0.07] lg:pl-8 flex flex-col justify-between pt-4 lg:pt-0 border-t border-white/[0.07] lg:border-t-0">
-                  <div>
-                    <h4 className="text-[11px] sm:text-xs font-semibold uppercase tracking-[0.16em] text-white/80 mb-2.5 sm:mb-3">
-                      Recommended Technologies:
-                    </h4>
-                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                      {extra.recommendedTech.map((tech, tIdx) => (
-                        <span
-                          key={tIdx}
-                          className="text-[11px] sm:text-xs font-mono px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full border border-white/[0.08] bg-white/[0.03] text-white/70"
-                        >
-                          {tech}
-                        </span>
+                <p className="border-l-2 border-[#c19a88]/40 pl-4 text-sm text-neutral-300 font-light leading-relaxed max-w-3xl">
+                  {track.description}
+                </p>
+
+                {/* Side-by-Side Architectural Pillars */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 pt-2 border-t border-white/[0.08]">
+                  {/* Pillar 01: Expected Deliverables */}
+                  <div className="relative pt-4 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#c19a88] font-bold">
+                        Pillar 01 • Expected Deliverables
+                      </span>
+                      <span className="font-mono text-2xl font-light text-white/10 select-none">01</span>
+                    </div>
+                    <div className="space-y-2.5 pt-1">
+                      {extra.deliverables.map((item, dIdx) => (
+                        <div key={dIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-300 font-light">
+                          <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] shrink-0 mt-2" />
+                          <span>{item}</span>
+                        </div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="pt-3 sm:pt-4 border-t border-white/[0.07]">
-                    <button
-                      type="button"
-                      onClick={() => handleOpenRegistration(track.id)}
-                      className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] px-6 py-3 sm:py-3.5 text-xs font-semibold tracking-wide text-white shadow-[0_4px_25px_rgba(128,89,72,0.35)] hover:scale-[1.02] transition-transform cursor-pointer"
-                    >
-                      <span>Register for Track</span>
-                      <ArrowRight className="h-4 w-4" />
-                    </button>
-                    <p className="text-center text-[11px] font-mono text-white/40 mt-2">
-                      ₹99 Flat Registration per Team
+                  {/* Pillar 02: Recommended Stack */}
+                  <div className="relative pt-4 md:border-l md:border-white/[0.08] md:pl-8 lg:pl-12 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#e8c5b4] font-bold">
+                        Pillar 02 • Recommended Stack
+                      </span>
+                      <span className="font-mono text-2xl font-light text-white/10 select-none">02</span>
+                    </div>
+                    <p className="text-xs text-neutral-400 font-light">
+                      100% stack-agnostic—use any framework or library of your choice. Popular choices for this arena include:
                     </p>
+                    <div className="flex flex-wrap gap-x-6 gap-y-2.5 pt-1">
+                      {extra.recommendedTech.map((tech, tIdx) => (
+                        <span
+                          key={tIdx}
+                          className="inline-flex items-center gap-2 text-xs font-mono text-neutral-200"
+                        >
+                          <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88]" />
+                          <span>{tech}</span>
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          );
-        })}
+              </section>
+            );
+          })}
+        </div>
       </div>
 
-      {/* Pop-up Candidate & Team Registration Modal */}
       <RegistrationModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}

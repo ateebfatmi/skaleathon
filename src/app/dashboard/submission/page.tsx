@@ -12,14 +12,15 @@ import {
   Lock,
   ExternalLink,
   Save,
-  Sparkles,
   AlertCircle,
-  HelpCircle,
   Clock,
-  Calendar,
   Layers,
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
 } from 'lucide-react';
 import { EventTrack } from '@/lib/db/types';
+import { motion } from 'framer-motion';
 
 export default function SubmissionPage() {
   const router = useRouter();
@@ -27,9 +28,9 @@ export default function SubmissionPage() {
   const [team, setTeam] = useState<any>(null);
   const [track, setTrack] = useState<EventTrack | null>(null);
   const [isPaid, setIsPaid] = useState<boolean>(true);
+  const [activeSection, setActiveSection] = useState<'stage2' | 'stage3' | 'guidelines'>('stage2');
 
   // Independent window controls for Stage 02 and Stage 03
-  // Submissions will open on their respective defined competition dates
   const [stage2WindowOpen, setStage2WindowOpen] = useState<boolean>(false);
   const [stage3WindowOpen, setStage3WindowOpen] = useState<boolean>(false);
 
@@ -53,7 +54,6 @@ export default function SubmissionPage() {
       fetch('/api/event').then((r) => r.json()),
     ])
       .then(([subData, eventData]) => {
-        // Event lifecycle status activates windows on defined dates
         if (subData.eventStatus === 'hacking_live') {
           setStage2WindowOpen(true);
           setStage3WindowOpen(true);
@@ -75,7 +75,6 @@ export default function SubmissionPage() {
           setGithubUrl(subData.submission.github_url || '');
           setDemoVideoUrl(subData.submission.demo_video_url || '');
         } else {
-          // Check local draft cache
           try {
             const saved = localStorage.getItem('skaleathon_submission_draft');
             if (saved) {
@@ -94,7 +93,6 @@ export default function SubmissionPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  // Handler for Stage 02 PPT Submission (submitted on Stage 02 dates)
   const handleStage2Submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!stage2WindowOpen) {
@@ -139,7 +137,6 @@ export default function SubmissionPage() {
     }
   };
 
-  // Handler for Stage 03 Prototype & Codebase Submission (submitted on Stage 03 dates)
   const handleStage3Submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!stage3WindowOpen) {
@@ -188,292 +185,368 @@ export default function SubmissionPage() {
 
   if (loading) {
     return (
-      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E]/90 p-16 text-center space-y-3 backdrop-blur-xl">
-        <div className="h-8 w-8 mx-auto rounded-full border-2 border-[#c19a88] border-t-transparent animate-spin" />
-        <p className="text-xs text-neutral-400 font-mono tracking-wider">Loading submission portal...</p>
+      <div className="py-24 text-center space-y-3">
+        <div className="h-7 w-7 mx-auto rounded-full border-2 border-[#c19a88] border-t-transparent animate-spin" />
+        <p className="text-xs text-neutral-400 font-mono tracking-wider uppercase">
+          Loading deliverables portal...
+        </p>
       </div>
     );
   }
 
-  // If unpaid, display registration requirement
   if (!isPaid) {
     return (
-      <div className="rounded-3xl border border-[#c19a88]/30 bg-gradient-to-b from-[#181310] to-[#0A0A0A] p-8 sm:p-12 text-center space-y-5 shadow-2xl max-w-2xl mx-auto">
-        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#c19a88]/15 border border-[#c19a88]/40 text-[#c19a88] mx-auto shadow-lg shadow-[#805948]/20">
-          <Lock className="h-7 w-7" />
+      <div className="relative max-w-2xl mx-auto py-16 text-center space-y-5">
+        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-64 w-64 rounded-full bg-[#c19a88]/10 blur-[120px]" />
+        <div className="relative z-10 flex items-center justify-center text-[#c19a88] mx-auto">
+          <Lock className="h-8 w-8" />
         </div>
-        <div className="space-y-2">
-          <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-[#c19a88] font-bold">
+        <div className="relative z-10 space-y-2">
+          <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-[#c19a88] font-bold block">
             Access Restricted
           </span>
-          <h2 className="text-2xl font-black text-white">Verified Registration Required</h2>
-          <p className="text-xs sm:text-sm text-neutral-400 max-w-md mx-auto leading-relaxed">
-            In accordance with Skaleathon 2027 rules, only teams with confirmed ₹99 registration fee are authorized to submit deliverables.
+          <h2 className="text-2xl font-bold text-white tracking-tight">Verified Registration Required</h2>
+          <p className="text-xs text-neutral-400 max-w-md mx-auto leading-relaxed font-light">
+            In accordance with Skaleathon rules, only squads with a confirmed ₹99 registration pass are authorized to submit stage deliverables.
           </p>
         </div>
-        <button
-          onClick={() => router.push('/register')}
-          className="rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-8 py-3 text-xs font-bold text-white shadow-lg shadow-[#805948]/30 hover:scale-105 transition-all"
-        >
-          Complete ₹99 Team Registration
-        </button>
+        <div className="relative z-10 pt-2">
+          <button
+            onClick={() => router.push('/register')}
+            className="rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-7 py-3 text-xs font-bold text-white shadow-lg shadow-[#805948]/30 hover:scale-105 transition-all"
+          >
+            Complete ₹99 Team Registration
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-8 max-w-4xl mx-auto pb-16">
-      {/* 1. Header */}
-      <div className="space-y-2 text-center sm:text-left sm:flex sm:items-center sm:justify-between border-b border-white/10 pb-6">
-        <div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 px-3 py-1 text-[10px] font-mono uppercase tracking-wider text-[#e8c5b4] mb-2">
-            <Sparkles className="h-3 w-3 text-[#c19a88]" />
-            <span>Independent Stage Deliverables</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-            Submissions
-          </h1>
-          <p className="text-xs sm:text-sm text-neutral-400 mt-1 max-w-xl font-light leading-relaxed">
-            The Idea &amp; Architecture PPT (Stage 02) and the Prototype Links (Stage 03) will be submitted on their respective scheduled dates.
-          </p>
-        </div>
+    <div className="relative w-full space-y-14 pb-24 text-neutral-200">
+      {/* Subtle Background Ambient Glows (Blended into background) */}
+      <div className="pointer-events-none absolute -top-20 right-10 h-96 w-96 rounded-full bg-[#c19a88]/15 blur-[160px]" />
+      <div className="pointer-events-none absolute top-40 -left-20 h-72 w-72 rounded-full bg-[#805948]/12 blur-[140px]" />
 
-        {team && (
-          <div className="mt-4 sm:mt-0 inline-flex flex-col items-center sm:items-end gap-1 px-4 py-2.5 rounded-2xl border border-white/10 bg-white/[0.02]">
-            <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider">Submitting as</span>
-            <span className="text-xs font-bold text-white">{team.name}</span>
-            {track && (
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#c19a88]/15 border border-[#c19a88]/30 text-[#e8c5b4]">
-                {track.name}
-              </span>
-            )}
-          </div>
-        )}
-      </div>
-
-      {/* 2. Timeline Alert Clarifying Separate Dates */}
-      <div className="rounded-2xl border border-[#c19a88]/20 bg-[#c19a88]/[0.03] p-4 sm:p-5 flex items-start gap-3.5 backdrop-blur-md">
-        <div className="p-2 rounded-xl bg-[#c19a88]/15 border border-[#c19a88]/30 text-[#e8c5b4] shrink-0 mt-0.5">
-          <Calendar className="h-5 w-5" />
-        </div>
-        <div className="space-y-1 text-xs">
-          <span className="font-bold text-white uppercase font-mono tracking-wider text-[10px]">
-            Separate Submission Schedules
+      {/* 1. Open Luxury Editorial Hero */}
+      <header className="relative pt-1">
+        {/* Faint Oversized Architectural Watermark */}
+        <div className="pointer-events-none select-none absolute right-2 top-8 hidden xl:block overflow-hidden">
+          <span className="font-mono text-[110px] font-black tracking-tighter text-white/[0.02] leading-none uppercase">
+            DELIVER
           </span>
-          <p className="text-neutral-300 leading-relaxed font-light">
-            <strong>Stage 02 (PPT Submission)</strong> and <strong>Stage 03 (Project Prototype Submission)</strong> occur on different dates. Each stage has its own independent submission window and submit action below.
-          </p>
         </div>
-      </div>
 
-      {/* ========================================================================= */}
-      {/* SECTION 1: STAGE 02 — ARCHITECTURE PRESENTATION (PDF) */}
-      {/* ========================================================================= */}
-      <form
-        onSubmit={handleStage2Submit}
-        className="rounded-3xl border border-white/10 bg-[#0E0E0E]/90 p-6 sm:p-8 space-y-6 shadow-xl backdrop-blur-xl"
-      >
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/[0.08] pb-4">
-          <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#c19a88]/15 border border-[#c19a88]/40 text-[#c19a88] shadow-md">
-              <FileText className="h-5 w-5" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#c19a88]">
-                  Stage 02 • Ideation &amp; Blueprint
+        {/* Top Utility & Context Ribbon */}
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 pb-4 mb-7 border-b border-white/[0.07]">
+          <div className="flex flex-wrap items-center gap-2.5 text-[10px] font-mono uppercase tracking-[0.25em]">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c19a88] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#c19a88]" />
+            </span>
+            <span className="text-[#c19a88]">Milestone Artifacts // Deliverables Portal</span>
+            {team && (
+              <>
+                <span className="text-white/20">•</span>
+                <span className="text-neutral-400">
+                  Squad: <strong className="text-white font-semibold">{team.name}</strong>
                 </span>
-                <span className="text-[9px] font-mono px-2 py-0.5 rounded-md border border-white/10 bg-white/5 text-neutral-300">
-                  PDF Deck
+              </>
+            )}
+            {track && (
+              <>
+                <span className="text-white/20">•</span>
+                <span className="text-[#e8c5b4] font-semibold">
+                  [{track.slug.toUpperCase()}]
                 </span>
-              </div>
-              <h2 className="text-base sm:text-lg font-bold text-white mt-0.5">
-                1. Idea &amp; Architecture Presentation (PDF)
-              </h2>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            {stage2WindowOpen ? (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-[10px] font-mono font-medium">
-                <CheckCircle2 className="h-3 w-3" />
-                <span>Window Open</span>
-              </span>
-            ) : (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-[10px] font-mono font-medium">
-                <Lock className="h-3 w-3" />
-                <span>Stage 02 Opens on Defined Date</span>
-              </span>
+              </>
             )}
           </div>
-        </div>
 
-        <div className="space-y-3">
-          <p className="text-xs text-neutral-300 leading-relaxed font-light">
-            Submitted during <strong>Stage 02</strong>. Submit your team&apos;s architectural presentation deck exported as a <strong>PDF (maximum 10 slides)</strong>.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-neutral-400">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-3.5 w-3.5 text-[#c19a88] shrink-0" />
-              <span>Problem Statement &amp; Solution Overview</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-3.5 w-3.5 text-[#c19a88] shrink-0" />
-              <span>System Architecture &amp; Data Flow Diagram</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-3.5 w-3.5 text-[#c19a88] shrink-0" />
-              <span>Database Schema &amp; Key API / AI Integrations</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-3.5 w-3.5 text-[#c19a88] shrink-0" />
-              <span>Slide Deck Length: Max 10 slides</span>
-            </div>
+          {/* Right Quick Actions */}
+          <div className="flex items-center gap-5 text-xs">
+            <Link
+              href="/dashboard"
+              className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors font-medium"
+            >
+              <ArrowLeft className="h-3.5 w-3.5 text-[#c19a88]" />
+              <span>Overview</span>
+            </Link>
+
+            <span className="text-white/15">|</span>
+
+            <Link
+              href="/dashboard/stages"
+              className="group inline-flex items-center gap-1.5 text-[#e8c5b4] hover:text-white transition-colors font-semibold"
+            >
+              <Layers className="h-3.5 w-3.5 text-[#c19a88]" />
+              <span>Stage Roadmap</span>
+              <ArrowRight className="h-3 w-3 text-[#c19a88] group-hover:translate-x-0.5 transition-transform" />
+            </Link>
           </div>
         </div>
 
-        {/* Input Field */}
-        <div className="space-y-1.5 pt-1">
-          <label className="text-xs font-semibold text-white flex items-center justify-between">
-            <span>Presentation PDF Link (Google Drive / Dropbox / Canva)</span>
-            <span className="text-[10px] font-mono text-[#c19a88] font-normal">Public View Link</span>
-          </label>
-          <div className="relative">
-            <input
-              type="url"
-              value={presentationUrl}
-              disabled={!stage2WindowOpen}
-              onChange={(e) => setPresentationUrl(e.target.value)}
-              placeholder={
-                stage2WindowOpen
-                  ? 'https://drive.google.com/file/d/.../view or Dropbox link'
-                  : 'Stage 02 PPT link will be accepted on the scheduled Stage 02 date'
-              }
-              className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:bg-white/[0.05] focus:outline-none transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
-            />
-            {presentationUrl && stage2WindowOpen && (
+        {/* Editorial Headline & Manifesto */}
+        <div className="relative z-10 max-w-3xl space-y-5 pb-9">
+          <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold text-white tracking-tight leading-[1.06]">
+            Milestone{' '}
+            <span className="font-serif italic font-normal text-[#e8c5b4]">
+              Deliverables
+            </span>
+          </h1>
+
+          <p className="border-l-2 border-[#c19a88]/45 pl-4 text-sm sm:text-[15px] text-neutral-300/90 leading-relaxed font-light">
+            Stage 02 (Idea &amp; Architecture PPT) and Stage 03 (Working Prototype &amp; GitHub Repository) occur on separate competition dates. Each phase features its own independent submission window below.
+          </p>
+        </div>
+
+        {/* Full-Width 4-Column Editorial Section Index Bar */}
+        <nav className="grid grid-cols-2 sm:grid-cols-4 border-t border-b border-white/[0.08] divide-y sm:divide-y-0 sm:divide-x divide-white/[0.06]">
+          {[
+            { id: 'stage2', href: '#stage-02', num: '01', label: 'Stage 02: Architecture PDF' },
+            { id: 'stage3', href: '#stage-03', num: '02', label: 'Stage 03: Prototype & Code' },
+            { id: 'guidelines', href: '#guidelines', num: '03', label: 'Submission Protocol' },
+            { id: 'rubric', href: '/dashboard/track#rubric', num: '04', label: 'Jury Rubric' },
+          ].map((sec) => {
+            const isActive = activeSection === sec.id;
+            return (
               <a
-                href={presentationUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white"
-                title="Preview link"
+                key={sec.id}
+                href={sec.href}
+                onClick={() => {
+                  if (sec.id !== 'rubric') setActiveSection(sec.id as any);
+                }}
+                className={`group relative py-3.5 px-4 flex items-center justify-between text-xs transition-all ${
+                  isActive
+                    ? 'text-white font-semibold bg-white/[0.02]'
+                    : 'text-neutral-500 hover:text-neutral-200 hover:bg-white/[0.01]'
+                }`}
               >
-                <ExternalLink className="h-4 w-4" />
+                <div className="flex items-center gap-2.5 truncate">
+                  <span className="font-mono text-[10px] text-[#c19a88] font-bold">
+                    {sec.num}
+                  </span>
+                  <span className="truncate">{sec.label}</span>
+                </div>
+                <ArrowUpRight
+                  className={`h-3.5 w-3.5 shrink-0 transition-transform ${
+                    isActive
+                      ? 'text-[#e8c5b4]'
+                      : 'text-neutral-600 group-hover:text-neutral-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
+                  }`}
+                />
+                {isActive && (
+                  <motion.span
+                    layoutId="submissionSectionUnderline"
+                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4]"
+                  />
+                )}
               </a>
+            );
+          })}
+        </nav>
+      </header>
+
+      {/* 2. Section 01: STAGE 02 — ARCHITECTURE PRESENTATION (PDF) */}
+      <form
+        id="stage-02"
+        onSubmit={handleStage2Submit}
+        className="space-y-8 scroll-mt-28"
+      >
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+          <div>
+            <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
+              01 // Stage 02 Blueprint • Jan 10–14, 2028
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+              Idea &amp; Architecture{' '}
+              <span className="font-serif italic font-normal text-[#e8c5b4]">
+                Presentation (PDF)
+              </span>
+            </h2>
+          </div>
+
+          <div className="flex items-center gap-2 text-xs font-mono">
+            {stage2WindowOpen ? (
+              <span className="inline-flex items-center gap-1.5 text-emerald-400 font-semibold">
+                <CheckCircle2 className="h-3.5 w-3.5" />
+                <span>WINDOW OPEN</span>
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1.5 text-amber-400/90">
+                <Lock className="h-3.5 w-3.5" />
+                <span>OPENS ON STAGE 02 DATE</span>
+              </span>
             )}
           </div>
-          <p className="text-[10px] text-neutral-400">
-            Ensure sharing permission is set to <strong>&ldquo;Anyone with link can view&rdquo;</strong> for jury evaluation.
-          </p>
         </div>
 
-        {stage2Error && (
-          <div className="rounded-xl border border-red-500/30 bg-red-500/[0.05] p-3 text-xs text-red-200 flex items-center gap-2">
-            <AlertCircle className="h-4 w-4 text-red-400 shrink-0" />
-            <span>{stage2Error}</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 pt-2 border-t border-white/[0.08]">
+          {/* Pillar 01: Blueprint Specs */}
+          <div className="relative pt-4 space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#c19a88] font-bold">
+                Pillar 01 • Required Slide Deck Scope
+              </span>
+              <span className="font-mono text-2xl font-light text-white/10 select-none">01</span>
+            </div>
+            <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+              10-Slide System Architecture Blueprint
+            </h3>
+            <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+              Export your presentation as a PDF (maximum 10 slides) covering your self-defined problem statement, high-level system architecture, database schema, and API/AI integrations.
+            </p>
+            <div className="grid grid-cols-2 gap-2 pt-1 text-xs font-mono text-neutral-300">
+              <span className="inline-flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88]" />
+                Problem &amp; Domain Fit
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88]" />
+                Architecture Diagram
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88]" />
+                Schema &amp; Data Flow
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88]" />
+                Max 10 PDF Slides
+              </span>
+            </div>
           </div>
-        )}
 
-        {/* Stage 02 Independent Action */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 border-t border-white/[0.06]">
-          <div className="text-xs text-neutral-400">
-            {stage2Success ? (
-              <span className="text-emerald-400 font-semibold inline-flex items-center gap-1.5">
-                <CheckCircle2 className="h-4 w-4" />
-                Stage 02 PPT submitted successfully!
+          {/* Pillar 02: Submission Field */}
+          <div className="relative pt-4 md:border-l md:border-white/[0.08] md:pl-8 lg:pl-12 space-y-4">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#e8c5b4] font-bold">
+                Pillar 02 • PDF Deck URL
               </span>
-            ) : stage2WindowOpen ? (
-              <span>Stage 02 portal is active. You can submit or update your PPT link.</span>
-            ) : (
-              <span className="text-amber-400/90 font-mono text-[11px] inline-flex items-center gap-1.5">
-                <Clock className="h-3.5 w-3.5" />
-                Stage 02 PPT submission opens on the defined checkpoint date.
-              </span>
+              <span className="font-mono text-2xl font-light text-white/10 select-none">02</span>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs font-semibold text-white flex items-center justify-between">
+                <span>Presentation PDF Link (Google Drive / Dropbox / Canva)</span>
+                <span className="text-[10px] font-mono text-[#c19a88] font-normal">Public View</span>
+              </label>
+              <div className="relative">
+                <input
+                  type="url"
+                  value={presentationUrl}
+                  disabled={!stage2WindowOpen}
+                  onChange={(e) => setPresentationUrl(e.target.value)}
+                  placeholder={
+                    stage2WindowOpen
+                      ? 'https://drive.google.com/file/d/.../view'
+                      : 'Accepted when Stage 02 window opens'
+                  }
+                  className="w-full border-b border-white/20 bg-transparent py-2.5 pr-8 text-xs sm:text-sm text-white placeholder-neutral-500 focus:border-[#c19a88] focus:outline-none transition-colors disabled:opacity-60 disabled:cursor-not-allowed font-mono"
+                />
+                {presentationUrl && stage2WindowOpen && (
+                  <a
+                    href={presentationUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute right-1 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white"
+                    title="Preview link"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                )}
+              </div>
+              <p className="text-[11px] text-neutral-500 font-light">
+                Ensure link sharing permission is set to &ldquo;Anyone with the link can view&rdquo;.
+              </p>
+            </div>
+
+            {stage2Error && (
+              <div className="border-l-2 border-red-400 pl-3 py-1 text-xs text-red-300 flex items-center gap-2">
+                <AlertCircle className="h-3.5 w-3.5 text-red-400 shrink-0" />
+                <span>{stage2Error}</span>
+              </div>
             )}
-          </div>
 
-          {stage2WindowOpen ? (
-            <button
-              type="submit"
-              disabled={stage2Saving}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/30 hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
-            >
-              <Save className="h-3.5 w-3.5" />
-              <span>{stage2Saving ? 'Submitting PPT...' : 'Submit Stage 02 PPT'}</span>
-            </button>
-          ) : (
-            <button
-              type="button"
-              disabled
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-6 py-2.5 text-xs font-semibold text-neutral-400 cursor-not-allowed select-none shadow-inner"
-            >
-              <Lock className="h-3.5 w-3.5 text-[#c19a88]" />
-              <span>Stage 02 Opens on Defined Date</span>
-            </button>
-          )}
+            <div className="pt-2 flex flex-wrap items-center justify-between gap-3">
+              {stage2Success ? (
+                <span className="text-emerald-400 text-xs font-semibold inline-flex items-center gap-1.5">
+                  <CheckCircle2 className="h-4 w-4" />
+                  Stage 02 PPT submitted!
+                </span>
+              ) : (
+                <span className="text-[11px] font-mono text-neutral-500">
+                  {stage2WindowOpen ? 'Ready for submission' : 'Scheduled for Stage 02 window'}
+                </span>
+              )}
+
+              {stage2WindowOpen ? (
+                <button
+                  type="submit"
+                  disabled={stage2Saving}
+                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] px-5 py-2 text-xs font-bold text-white shadow-lg shadow-[#805948]/30 hover:scale-105 transition-all disabled:opacity-50"
+                >
+                  <Save className="h-3.5 w-3.5" />
+                  <span>{stage2Saving ? 'Submitting...' : 'Submit Stage 02 PPT'}</span>
+                </button>
+              ) : (
+                <span className="inline-flex items-center gap-1.5 text-xs font-mono text-neutral-400">
+                  <Clock className="h-3.5 w-3.5 text-[#c19a88]" />
+                  <span>Unlocks on Stage 02 Date</span>
+                </span>
+              )}
+            </div>
+          </div>
         </div>
       </form>
 
-      {/* ========================================================================= */}
-      {/* SECTION 2: STAGE 03 — PROJECT PROTOTYPE & CODEBASE */}
-      {/* ========================================================================= */}
+      {/* 3. Section 02: STAGE 03 — PROJECT PROTOTYPE & CODEBASE */}
       <form
+        id="stage-03"
         onSubmit={handleStage3Submit}
-        className="rounded-3xl border border-white/10 bg-[#0E0E0E]/90 p-6 sm:p-8 space-y-6 shadow-xl backdrop-blur-xl"
+        className="space-y-8 pt-10 border-t border-white/[0.08] scroll-mt-28"
       >
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/[0.08] pb-4">
-          <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#c19a88]/15 border border-[#c19a88]/40 text-[#c19a88] shadow-md">
-              <Globe className="h-5 w-5" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#c19a88]">
-                  Stage 03 • Engineering Sprint
-                </span>
-                <span className="text-[9px] font-mono px-2 py-0.5 rounded-md border border-white/10 bg-white/5 text-neutral-300">
-                  Live Prototype &amp; Code
-                </span>
-              </div>
-              <h2 className="text-base sm:text-lg font-bold text-white mt-0.5">
-                2. Project &amp; Prototype Links
-              </h2>
-            </div>
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+          <div>
+            <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
+              02 // Stage 03 Build Sprint • Jan 16–25, 2028
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+              Working Prototype &amp;{' '}
+              <span className="font-serif italic font-normal text-[#e8c5b4]">
+                Codebase Links
+              </span>
+            </h2>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 text-xs font-mono">
             {stage3WindowOpen ? (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-[10px] font-mono font-medium">
-                <CheckCircle2 className="h-3 w-3" />
-                <span>Window Open</span>
+              <span className="inline-flex items-center gap-1.5 text-emerald-400 font-semibold">
+                <CheckCircle2 className="h-3.5 w-3.5" />
+                <span>WINDOW OPEN</span>
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-[10px] font-mono font-medium">
-                <Lock className="h-3 w-3" />
-                <span>Stage 03 Opens on Defined Date</span>
+              <span className="inline-flex items-center gap-1.5 text-amber-400/90">
+                <Lock className="h-3.5 w-3.5" />
+                <span>OPENS ON STAGE 03 DATE</span>
               </span>
             )}
           </div>
         </div>
 
-        <div className="space-y-1">
-          <p className="text-xs text-neutral-300 leading-relaxed font-light">
-            Submitted during <strong>Stage 03</strong> build sprint. Submit your live deployed prototype link, public GitHub repository, and optional demo video.
-          </p>
-        </div>
-
-        <div className="space-y-4 pt-1">
-          {/* 1. Working Prototype / Live URL */}
-          <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-white flex items-center justify-between">
-              <div className="flex items-center gap-1.5">
-                <Globe className="h-3.5 w-3.5 text-[#c19a88]" />
-                <span>Working Prototype / Live Deployed URL</span>
+        <div className="divide-y divide-white/[0.06] border-t border-b border-white/[0.06]">
+          {/* Row 01: Live URL */}
+          <div className="py-5 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+            <div className="md:col-span-5 space-y-1">
+              <div className="flex items-center gap-2.5">
+                <span className="font-mono text-xs font-bold text-[#c19a88]">01</span>
+                <Globe className="h-4 w-4 text-emerald-400" />
+                <span className="text-sm font-bold text-white">Live Production Prototype URL</span>
               </div>
-              <span className="text-[10px] font-mono text-emerald-400 font-normal">Live Cloud Deployment</span>
-            </label>
-            <div className="relative">
+              <p className="text-xs text-neutral-400 font-light pl-6">
+                Deployed cloud application (Vercel, Railway, Render, AWS, or APK/TestFlight).
+              </p>
+            </div>
+            <div className="md:col-span-7">
               <input
                 type="url"
                 value={liveDemoUrl}
@@ -481,38 +554,27 @@ export default function SubmissionPage() {
                 onChange={(e) => setLiveDemoUrl(e.target.value)}
                 placeholder={
                   stage3WindowOpen
-                    ? 'https://your-app.vercel.app or https://your-demo-url.com'
-                    : 'Stage 03 prototype link will be accepted on the scheduled Stage 03 date'
+                    ? 'https://your-project.vercel.app'
+                    : 'Stage 03 prototype URL will be accepted during the build sprint'
                 }
-                className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:bg-white/[0.05] focus:outline-none transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full border-b border-white/20 bg-transparent py-2 text-xs sm:text-sm text-white placeholder-neutral-500 focus:border-[#c19a88] focus:outline-none transition-colors disabled:opacity-60 disabled:cursor-not-allowed font-mono"
               />
-              {liveDemoUrl && stage3WindowOpen && (
-                <a
-                  href={liveDemoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white"
-                  title="Open live prototype"
-                >
-                  <ExternalLink className="h-4 w-4" />
-                </a>
-              )}
             </div>
-            <p className="text-[10px] text-neutral-400">
-              Working URLs hosted on Vercel, Netlify, Railway, or AWS receive bonus technical execution marks from judges.
-            </p>
           </div>
 
-          {/* 2. Public GitHub Repository */}
-          <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-white flex items-center justify-between">
-              <div className="flex items-center gap-1.5">
-                <Github className="h-3.5 w-3.5 text-[#c19a88]" />
-                <span>Public GitHub Repository URL</span>
+          {/* Row 02: GitHub URL */}
+          <div className="py-5 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+            <div className="md:col-span-5 space-y-1">
+              <div className="flex items-center gap-2.5">
+                <span className="font-mono text-xs font-bold text-[#c19a88]">02</span>
+                <Github className="h-4 w-4 text-[#c19a88]" />
+                <span className="text-sm font-bold text-white">Public GitHub Repository</span>
               </div>
-              <span className="text-[10px] font-mono text-neutral-400 font-normal">Source Code</span>
-            </label>
-            <div className="relative">
+              <p className="text-xs text-neutral-400 font-light pl-6">
+                Source code repository with a documented README and clean commit history.
+              </p>
+            </div>
+            <div className="md:col-span-7">
               <input
                 type="url"
                 value={githubUrl}
@@ -520,38 +582,27 @@ export default function SubmissionPage() {
                 onChange={(e) => setGithubUrl(e.target.value)}
                 placeholder={
                   stage3WindowOpen
-                    ? 'https://github.com/organization-or-user/repository'
-                    : 'Stage 03 GitHub link will be accepted on the scheduled Stage 03 date'
+                    ? 'https://github.com/organization/repository'
+                    : 'Stage 03 GitHub URL will be accepted during the build sprint'
                 }
-                className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:bg-white/[0.05] focus:outline-none transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full border-b border-white/20 bg-transparent py-2 text-xs sm:text-sm text-white placeholder-neutral-500 focus:border-[#c19a88] focus:outline-none transition-colors disabled:opacity-60 disabled:cursor-not-allowed font-mono"
               />
-              {githubUrl && stage3WindowOpen && (
-                <a
-                  href={githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white"
-                  title="Open repository"
-                >
-                  <ExternalLink className="h-4 w-4" />
-                </a>
-              )}
             </div>
-            <p className="text-[10px] text-neutral-400">
-              Ensure repository is public with an informative README and clean commit history.
-            </p>
           </div>
 
-          {/* 3. Demo Video Link (Optional) */}
-          <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-white flex items-center justify-between">
-              <div className="flex items-center gap-1.5">
-                <Video className="h-3.5 w-3.5 text-[#c19a88]" />
-                <span>2–3 Min Video Walkthrough (Optional)</span>
+          {/* Row 03: Demo Video */}
+          <div className="py-5 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+            <div className="md:col-span-5 space-y-1">
+              <div className="flex items-center gap-2.5">
+                <span className="font-mono text-xs font-bold text-[#c19a88]">03</span>
+                <Video className="h-4 w-4 text-[#e8c5b4]" />
+                <span className="text-sm font-bold text-white">Video Walkthrough (Optional)</span>
               </div>
-              <span className="text-[10px] font-mono text-[#c19a88] font-normal">Evaluation Advantage</span>
-            </label>
-            <div className="relative">
+              <p className="text-xs text-neutral-400 font-light pl-6">
+                2–3 minute YouTube or Loom walkthrough demonstrating real-time execution.
+              </p>
+            </div>
+            <div className="md:col-span-7">
               <input
                 type="url"
                 value={demoVideoUrl}
@@ -559,88 +610,107 @@ export default function SubmissionPage() {
                 onChange={(e) => setDemoVideoUrl(e.target.value)}
                 placeholder={
                   stage3WindowOpen
-                    ? 'https://youtube.com/watch?v=... or https://loom.com/share/...'
-                    : 'Stage 03 video walkthrough link will be accepted on the scheduled Stage 03 date'
+                    ? 'https://youtu.be/... or https://loom.com/share/...'
+                    : 'Optional video walkthrough URL accepted during Stage 03'
                 }
-                className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:bg-white/[0.05] focus:outline-none transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full border-b border-white/20 bg-transparent py-2 text-xs sm:text-sm text-white placeholder-neutral-500 focus:border-[#c19a88] focus:outline-none transition-colors disabled:opacity-60 disabled:cursor-not-allowed font-mono"
               />
-              {demoVideoUrl && stage3WindowOpen && (
-                <a
-                  href={demoVideoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white"
-                  title="Open video"
-                >
-                  <ExternalLink className="h-4 w-4" />
-                </a>
-              )}
             </div>
-            <p className="text-[10px] text-neutral-400">
-              A video walkthrough is not mandatory, but gives your team an evaluation advantage during scoring.
-            </p>
           </div>
         </div>
 
         {stage3Error && (
-          <div className="rounded-xl border border-red-500/30 bg-red-500/[0.05] p-3 text-xs text-red-200 flex items-center gap-2">
-            <AlertCircle className="h-4 w-4 text-red-400 shrink-0" />
+          <div className="border-l-2 border-red-400 pl-3 py-1 text-xs text-red-300 flex items-center gap-2">
+            <AlertCircle className="h-3.5 w-3.5 text-red-400 shrink-0" />
             <span>{stage3Error}</span>
           </div>
         )}
 
-        {/* Stage 03 Independent Action */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 border-t border-white/[0.06]">
-          <div className="text-xs text-neutral-400">
-            {stage3Success ? (
-              <span className="text-emerald-400 font-semibold inline-flex items-center gap-1.5">
-                <CheckCircle2 className="h-4 w-4" />
-                Stage 03 prototype links submitted successfully!
-              </span>
-            ) : stage3WindowOpen ? (
-              <span>Stage 03 portal is active. You can submit or update your prototype links.</span>
-            ) : (
-              <span className="text-amber-400/90 font-mono text-[11px] inline-flex items-center gap-1.5">
-                <Clock className="h-3.5 w-3.5" />
-                Stage 03 Prototype submission opens on the defined sprint date.
-              </span>
-            )}
-          </div>
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          {stage3Success ? (
+            <span className="text-emerald-400 text-xs font-semibold inline-flex items-center gap-1.5">
+              <CheckCircle2 className="h-4 w-4" />
+              Stage 03 prototype links submitted!
+            </span>
+          ) : (
+            <span className="text-xs text-neutral-400 font-light">
+              Both mandatory links (GitHub &amp; Live Prototype) can be updated anytime while the Stage 03 window is active.
+            </span>
+          )}
 
           {stage3WindowOpen ? (
             <button
               type="submit"
               disabled={stage3Saving}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/30 hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/30 hover:scale-105 transition-all disabled:opacity-50"
             >
               <Save className="h-3.5 w-3.5" />
-              <span>{stage3Saving ? 'Submitting Links...' : 'Submit Stage 03 Prototype Links'}</span>
+              <span>{stage3Saving ? 'Submitting...' : 'Submit Stage 03 Deliverables'}</span>
             </button>
           ) : (
-            <button
-              type="button"
-              disabled
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-6 py-2.5 text-xs font-semibold text-neutral-400 cursor-not-allowed select-none shadow-inner"
-            >
-              <Lock className="h-3.5 w-3.5 text-[#c19a88]" />
-              <span>Stage 03 Opens on Defined Date</span>
-            </button>
+            <span className="inline-flex items-center gap-1.5 text-xs font-mono text-neutral-400">
+              <Clock className="h-3.5 w-3.5 text-[#c19a88]" />
+              <span>Unlocks on Stage 03 Sprint Date</span>
+            </span>
           )}
         </div>
       </form>
 
-      {/* 3. Non-Confusing Quick Tips */}
-      <div className="rounded-2xl border border-white/[0.06] bg-white/[0.01] p-5 space-y-3 text-xs text-neutral-400">
-        <div className="flex items-center gap-2 text-white font-semibold text-xs">
-          <HelpCircle className="h-4 w-4 text-[#c19a88]" />
-          <span>Stage Submission Guidelines</span>
+      {/* 4. Section 03: Submission Protocol & Guidelines */}
+      <section id="guidelines" className="space-y-6 pt-10 border-t border-white/[0.08] scroll-mt-28">
+        <div>
+          <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
+            03 // Verification Standards
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+            Submission Protocol &amp;{' '}
+            <span className="font-serif italic font-normal text-[#e8c5b4]">
+              Guidelines
+            </span>
+          </h2>
         </div>
-        <ul className="space-y-1.5 text-[11px] list-disc list-inside">
-          <li><strong>Different Deadlines:</strong> Stage 02 (PPT deck) and Stage 03 (working prototype &amp; codebase) are evaluated in sequence on separate dates.</li>
-          <li><strong>Independent Submissions:</strong> You do not need to submit both at the same time; each stage submission operates on its own schedule.</li>
-          <li><strong>Public Permissions:</strong> Ensure all links (Google Drive, live cloud prototype, GitHub) are set to public view for the judges.</li>
-        </ul>
-      </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-2 border-t border-white/[0.08]">
+          <div className="pt-4 space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-[#c19a88] font-bold">
+                Independent Windows
+              </span>
+              <span className="font-mono text-xl font-light text-white/10">01</span>
+            </div>
+            <h3 className="text-base font-bold text-white">Sequential Checkpoints</h3>
+            <p className="text-xs text-neutral-400 font-light leading-relaxed">
+              Stage 02 (Architecture PDF) and Stage 03 (Prototype &amp; Codebase) are evaluated in sequence on separate dates. You do not submit both at once.
+            </p>
+          </div>
+
+          <div className="pt-4 md:border-l md:border-white/[0.08] md:pl-8 space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-[#e8c5b4] font-bold">
+                Access Permissions
+              </span>
+              <span className="font-mono text-xl font-light text-white/10">02</span>
+            </div>
+            <h3 className="text-base font-bold text-white">Public Jury Visibility</h3>
+            <p className="text-xs text-neutral-400 font-light leading-relaxed">
+              Ensure all links (Google Drive PDF, GitHub repository, and cloud deployment) are publicly accessible without login walls for jury review.
+            </p>
+          </div>
+
+          <div className="pt-4 md:border-l md:border-white/[0.08] md:pl-8 space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-emerald-400 font-bold">
+                Code Authenticity
+              </span>
+              <span className="font-mono text-xl font-light text-white/10">03</span>
+            </div>
+            <h3 className="text-base font-bold text-white">Sprint Commit History</h3>
+            <p className="text-xs text-neutral-400 font-light leading-relaxed">
+              Repositories must maintain a clean commit history authored during the official sprint window along with a clear setup README.
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

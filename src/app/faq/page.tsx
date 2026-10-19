@@ -1,33 +1,76 @@
 import React from 'react';
+import Link from 'next/link';
 import FaqSection from '@/components/home/FaqSection';
-import { ArrowRight, MessageSquare } from 'lucide-react';
+import { ArrowRight, Mail } from 'lucide-react';
 
 export default function FaqPage() {
   return (
-    <div className="py-10 sm:py-24 bg-[#0B0B0B] min-h-screen relative overflow-hidden">
-      {/* Background ambient light */}
-      <div className="pointer-events-none absolute left-1/2 top-20 -translate-x-1/2 w-full max-w-7xl h-96 bg-[#805948]/10 rounded-full blur-[160px]" />
+    <div className="py-10 sm:py-16 bg-[#0B0B0B] min-h-screen relative overflow-hidden">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="relative w-full space-y-12 pb-24 text-neutral-200">
+          {/* Subtle Background Ambient Glows */}
+          <div className="pointer-events-none absolute -top-20 right-10 h-96 w-96 rounded-full bg-[#c19a88]/15 blur-[160px]" />
 
-      <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <FaqSection />
+          {/* Top Utility & Context Ribbon */}
+          <header className="relative pt-1">
+            <div className="pointer-events-none select-none absolute right-2 top-8 hidden xl:block overflow-hidden">
+              <span className="font-mono text-[110px] font-black tracking-tighter text-white/[0.02] leading-none uppercase">
+                SUPPORT
+              </span>
+            </div>
 
-        <div className="mt-8 sm:mt-12 rounded-2xl sm:rounded-[28px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-5 sm:p-10 text-center space-y-3.5 sm:space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
-          <div className="p-2.5 sm:p-3 w-fit mx-auto rounded-xl sm:rounded-2xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88]">
-            <MessageSquare className="h-5 w-5" strokeWidth={1.8} />
-          </div>
-          <h3 className="text-lg sm:text-xl font-medium text-white">Still have questions?</h3>
-          <p className="text-xs sm:text-sm text-white/50 max-w-md mx-auto font-light leading-relaxed">
-            Our engineering and operations team is available to assist you with registration queries, track adjustments, or submission guidelines.
-          </p>
-          <div className="pt-1 sm:pt-2">
+            <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 pb-4 mb-2 border-b border-white/[0.07]">
+              <div className="flex flex-wrap items-center gap-2.5 text-[10px] font-mono uppercase tracking-[0.25em]">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c19a88] opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#c19a88]" />
+                </span>
+                <span className="text-[#c19a88]">Knowledge Base // Participant FAQ</span>
+                <span className="text-white/20">•</span>
+                <span className="text-[#e8c5b4] font-semibold">[SKALEATHON]</span>
+              </div>
+
+              <div className="flex items-center gap-5 text-xs">
+                <Link
+                  href="/rules"
+                  className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors font-medium"
+                >
+                  <span>Tournament Rules</span>
+                </Link>
+                <span className="text-white/15">|</span>
+                <Link
+                  href="/register"
+                  className="group inline-flex items-center gap-1.5 text-[#e8c5b4] hover:text-white transition-colors font-semibold"
+                >
+                  <span>Register Squad (₹99)</span>
+                  <ArrowRight className="h-3 w-3 text-[#c19a88] group-hover:translate-x-0.5 transition-transform" />
+                </Link>
+              </div>
+            </div>
+          </header>
+
+          <FaqSection />
+
+          {/* Open Support Footer Strip (No Boxy Card) */}
+          <footer className="pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#c19a88] font-bold block">
+                Direct Organizer Line
+              </span>
+              <h3 className="text-lg font-bold text-white">
+                Still have questions regarding registration or deliverables?
+              </h3>
+            </div>
+
             <a
               href="mailto:skalekraft@gmail.com"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] px-6 py-3 text-xs font-semibold tracking-wide text-white shadow-[0_4px_25px_rgba(128,89,72,0.35)] hover:scale-105 transition-all"
+              className="w-fit inline-flex items-center gap-2 text-xs font-mono font-semibold text-[#e8c5b4] hover:text-white transition-colors"
             >
-              <span>Email: skalekraft@gmail.com</span>
-              <ArrowRight className="h-3.5 w-3.5" />
+              <Mail className="h-4 w-4 text-[#c19a88]" />
+              <span>skalekraft@gmail.com</span>
+              <ArrowRight className="h-3.5 w-3.5 text-[#c19a88]" />
             </a>
-          </div>
+          </footer>
         </div>
       </div>
     </div>

@@ -6,14 +6,10 @@ import {
   Trophy,
   Award,
   Lock,
-  Sparkles,
   Layers,
-  Code2,
-  Users,
+  ArrowLeft,
   ArrowRight,
-  ExternalLink,
-  ShieldCheck,
-  CheckCircle2,
+  ArrowUpRight,
 } from 'lucide-react';
 
 export const revalidate = 0;
@@ -29,154 +25,277 @@ export default async function DashboardLeaderboardPage() {
   const isPublished = event.status === 'results_announced' && results.length > 0;
 
   return (
-    <div className="space-y-6 sm:space-y-8 max-w-5xl mx-auto pb-12">
-      
-      {/* Header Banner */}
-      <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-[#120F0D]/90 via-[#0B0C12]/90 to-[#120F0D]/90 p-6 sm:p-8 backdrop-blur-2xl relative overflow-hidden shadow-2xl">
-        <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 bg-[#c19a88]/15 rounded-full blur-3xl" />
+    <div className="relative w-full space-y-14 pb-24 text-neutral-200">
+      {/* Subtle Background Ambient Glows (Blended into background) */}
+      <div className="pointer-events-none absolute -top-20 right-10 h-96 w-96 rounded-full bg-[#c19a88]/15 blur-[160px]" />
+      <div className="pointer-events-none absolute top-40 -left-20 h-72 w-72 rounded-full bg-[#805948]/12 blur-[140px]" />
 
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
-          <div className="space-y-1.5">
-            <div className="flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88]" />
-              <span className="text-[10px] uppercase tracking-[0.2em] text-[#c19a88] font-bold">
-                Participant Workspace Standings
-              </span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-              Competition Leaderboard
-            </h1>
-            <p className="text-xs text-neutral-400">
-              Official national standings and scoring breakdowns evaluated by the SkaleKraft technical jury.
-            </p>
-          </div>
-
-          {team && (
-            <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/10 text-right shrink-0">
-              <span className="text-[10px] text-neutral-400 font-mono block">Enrolled Team</span>
-              <span className="text-xs font-bold text-[#e8c5b4]">{team.name}</span>
-            </div>
-          )}
+      {/* 1. Open Luxury Editorial Hero */}
+      <header className="relative pt-1">
+        {/* Faint Oversized Architectural Watermark */}
+        <div className="pointer-events-none select-none absolute right-2 top-8 hidden xl:block overflow-hidden">
+          <span className="font-mono text-[110px] font-black tracking-tighter text-white/[0.02] leading-none uppercase">
+            RANKINGS
+          </span>
         </div>
-      </div>
 
-      {!isPublished || true ? (
-        /* Unannounced / In Progress Evaluation State - Unlocks After Quiz Onwards */
-        <div className="rounded-3xl border border-white/[0.08] bg-[#0E0E0E]/90 p-8 sm:p-12 text-center space-y-6 shadow-2xl backdrop-blur-xl relative overflow-hidden">
-          <div className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-80 h-48 bg-[#c19a88]/15 rounded-full blur-[90px]" />
-
-          {/* Lock & Trophy Badge */}
-          <div className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-[#c19a88]/40 bg-[#805948]/20 text-[#e8c5b4] shadow-[0_0_30px_rgba(193,154,136,0.25)]">
-            <Lock className="h-7 w-7 text-[#c19a88]" strokeWidth={1.8} />
+        {/* Top Utility & Context Ribbon */}
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 pb-4 mb-7 border-b border-white/[0.07]">
+          <div className="flex flex-wrap items-center gap-2.5 text-[10px] font-mono uppercase tracking-[0.25em]">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c19a88] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#c19a88]" />
+            </span>
+            <span className="text-[#c19a88]">National Standings // Jury Evaluation</span>
+            <span className="text-white/20">•</span>
+            <span className="text-neutral-400">
+              Squad: <strong className="text-white font-semibold">{team ? team.name : 'Unassigned'}</strong>
+            </span>
+            <span className="text-white/20">•</span>
+            <span className="text-[#e8c5b4] font-semibold">
+              {isPublished ? '[PUBLISHED]' : '[UNLOCKS STAGE 01]'}
+            </span>
           </div>
 
-          <div className="space-y-3 relative z-10 max-w-xl mx-auto">
-            <div className="inline-flex items-center gap-2 text-[10px] font-mono tracking-wider px-3.5 py-1 rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 text-[#e8c5b4]">
-              <Sparkles className="h-3.5 w-3.5 text-[#c19a88]" />
-              <span>ACTIVATES AFTER STAGE 01 QUIZ ONWARDS</span>
-            </div>
+          {/* Right Quick Actions */}
+          <div className="flex items-center gap-5 text-xs">
+            <Link
+              href="/dashboard"
+              className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors font-medium"
+            >
+              <ArrowLeft className="h-3.5 w-3.5 text-[#c19a88]" />
+              <span>Overview</span>
+            </Link>
 
-            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-              Leaderboard Unlocks After Quiz Screening
-            </h2>
+            <span className="text-white/15">|</span>
 
-            <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed font-light">
-              The official national leaderboard is locked during the initial registration phase. Live rankings and qualifier percentiles will officially activate starting from the <strong>Stage 01 Online Technical Quiz</strong> onwards. Teams advancing through the screening round will be continuously tracked here across all subsequent milestones.
-            </p>
-          </div>
-
-          {/* Milestone Progression Cards */}
-          <div className="pt-4 grid grid-cols-1 sm:grid-cols-3 gap-3 text-left">
-            <div className="rounded-2xl border border-[#c19a88]/30 bg-[#c19a88]/5 p-4 space-y-1 relative overflow-hidden">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-400 block">
-                  Stage 01
-                </span>
-                <span className="text-[9px] font-mono px-2 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
-                  First Reveal
-                </span>
-              </div>
-              <div className="text-xs font-semibold text-white">Online Technical Quiz</div>
-              <p className="text-[11px] text-neutral-400 font-light">
-                Screening scores, cutoffs & qualifier rankings officially publish here.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-white/[0.06] bg-black/40 p-4 space-y-1">
-              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#c19a88] block">
-                Stage 02 & 03
-              </span>
-              <div className="text-xs font-semibold text-white">Blueprint & Build Sprint</div>
-              <p className="text-[11px] text-neutral-400 font-light">
-                Continuous deliverable tracking, GitHub repo reviews & demo standings.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-white/[0.06] bg-black/40 p-4 space-y-1">
-              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-400 block">
-                Stage 04
-              </span>
-              <div className="text-xs font-semibold text-white">Grand Finale Defense</div>
-              <p className="text-[11px] text-neutral-400 font-light">
-                Live jury evaluation, Top 25 national merit ranks & ₹35,000 cash awards.
-              </p>
-            </div>
-          </div>
-
-          {/* Quick Action Buttons */}
-          <div className="pt-6 border-t border-white/[0.08] flex flex-wrap items-center justify-center gap-3">
             <Link
               href="/dashboard/stages"
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/30 hover:scale-105 transition-all"
+              className="group inline-flex items-center gap-1.5 text-[#e8c5b4] hover:text-white transition-colors font-semibold"
             >
-              <Layers className="h-4 w-4" />
-              <span>Explore Stages</span>
-            </Link>
-
-            <Link
-              href="/dashboard/track"
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] px-6 py-2.5 text-xs font-semibold text-neutral-200 transition-colors"
-            >
-              <Code2 className="h-4 w-4 text-[#c19a88]" />
-              <span>Track Specifications</span>
-            </Link>
-
-            <Link
-              href="/dashboard/team"
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] px-6 py-2.5 text-xs font-semibold text-neutral-200 transition-colors"
-            >
-              <Users className="h-4 w-4 text-[#c19a88]" />
-              <span>Manage My Team</span>
+              <Layers className="h-3.5 w-3.5 text-[#c19a88]" />
+              <span>Stage Roadmap</span>
+              <ArrowRight className="h-3 w-3 text-[#c19a88] group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </div>
         </div>
+
+        {/* Editorial Headline & Manifesto */}
+        <div className="relative z-10 max-w-3xl space-y-5 pb-9">
+          <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold text-white tracking-tight leading-[1.06]">
+            Competition{' '}
+            <span className="font-serif italic font-normal text-[#e8c5b4]">
+              Leaderboard
+            </span>
+          </h1>
+
+          <p className="border-l-2 border-[#c19a88]/45 pl-4 text-sm sm:text-[15px] text-neutral-300/90 leading-relaxed font-light">
+            Official national standings and weighted evaluation scores adjudicated by the SkaleKraft technical jury. Live qualifier percentiles activate immediately following the Stage 01 Online Technical Quiz.
+          </p>
+        </div>
+
+        {/* Full-Width 4-Column Editorial Section Index Bar */}
+        <nav className="grid grid-cols-2 sm:grid-cols-4 border-t border-b border-white/[0.08] divide-y sm:divide-y-0 sm:divide-x divide-white/[0.06]">
+          {[
+            { href: '#progression', num: '01', label: 'Stage 01: First Reveal', active: true },
+            { href: '#progression', num: '02', label: 'Stage 02 & 03: Sprint Ranks', active: false },
+            { href: '#honors', num: '03', label: 'National Honors & Prizes', active: false },
+            { href: '/dashboard/track#rubric', num: '04', label: 'Jury Scoring Rubric', active: false },
+          ].map((sec) => (
+            <Link
+              key={sec.num}
+              href={sec.href}
+              className={`group relative py-3.5 px-4 flex items-center justify-between text-xs transition-all ${
+                sec.active
+                  ? 'text-white font-semibold bg-white/[0.02]'
+                  : 'text-neutral-500 hover:text-neutral-200 hover:bg-white/[0.01]'
+              }`}
+            >
+              <div className="flex items-center gap-2.5 truncate">
+                <span className="font-mono text-[10px] text-[#c19a88] font-bold">
+                  {sec.num}
+                </span>
+                <span className="truncate">{sec.label}</span>
+              </div>
+              <ArrowUpRight
+                className={`h-3.5 w-3.5 shrink-0 transition-transform ${
+                  sec.active
+                    ? 'text-[#e8c5b4]'
+                    : 'text-neutral-600 group-hover:text-neutral-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
+                }`}
+              />
+              {sec.active && (
+                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4]" />
+              )}
+            </Link>
+          ))}
+        </nav>
+      </header>
+
+      {!isPublished ? (
+        <>
+          {/* 2. Section 01: Leaderboard Activation Protocol */}
+          <section id="progression" className="space-y-8 scroll-mt-28">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
+                  01 // Standings Activation Protocol
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                  Unlocks After{' '}
+                  <span className="font-serif italic font-normal text-[#e8c5b4]">
+                    Stage 01 Screening
+                  </span>
+                </h2>
+              </div>
+              <div className="inline-flex items-center gap-1.5 text-xs font-mono text-amber-400/90">
+                <Lock className="h-3.5 w-3.5" />
+                <span>AWAITING STAGE 01 QUIZ COMPLETION</span>
+              </div>
+            </div>
+
+            {/* Side-by-Side Architectural Pillars */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 pt-2 border-t border-white/[0.08]">
+              {/* Pillar 01 */}
+              <div className="relative pt-4 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#c19a88] font-bold">
+                    Pillar 01 • Stage 01 Screening Reveal
+                  </span>
+                  <span className="font-mono text-2xl font-light text-white/10 select-none">01</span>
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                  Initial Seeding &amp; Qualifier Cutoffs
+                </h3>
+                <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+                  The national leaderboard remains locked during the registration window. Once the Stage 01 Online Technical Quiz concludes on January 8, 2028, official screening percentiles and advancing squad seeds publish directly on this page.
+                </p>
+              </div>
+
+              {/* Pillar 02 */}
+              <div className="relative pt-4 md:border-l md:border-white/[0.08] md:pl-8 lg:pl-12 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#e8c5b4] font-bold">
+                    Pillar 02 • Cumulative Stage Progression
+                  </span>
+                  <span className="font-mono text-2xl font-light text-white/10 select-none">02</span>
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                  Blueprint, Build Sprint &amp; Finale Standings
+                </h3>
+                <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+                  Qualifying squads are tracked across Stage 02 (Architecture Blueprint), Stage 03 (10-Day Build Sprint), and Stage 04 (Live Grand Finale Defense) to determine the Top 25 National Merit Roster and podium champions.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* 3. Section 02: National Honors & Prize Structure */}
+          <section id="honors" className="space-y-6 pt-10 border-t border-white/[0.08] scroll-mt-28">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
+                  02 // Recognition &amp; Bounty Pool
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                  National Podium &amp;{' '}
+                  <span className="font-serif italic font-normal text-[#e8c5b4]">
+                    Merit Distinctions
+                  </span>
+                </h2>
+              </div>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[#e8c5b4]">
+                ₹35,000 Total Cash Pool
+              </span>
+            </div>
+
+            <div className="divide-y divide-white/[0.06] border-t border-b border-white/[0.06]">
+              {[
+                {
+                  rank: '01',
+                  title: 'National Champion (1st Place)',
+                  desc: 'Highest cumulative score across technical architecture, innovation, and live jury defense.',
+                  reward: '₹20,000 Cash + Winner Citation',
+                  accent: 'text-[#e8c5b4]',
+                },
+                {
+                  rank: '02',
+                  title: 'First Runner-Up (2nd Place)',
+                  desc: 'Exceptional engineering execution, production readiness, and real-world domain scalability.',
+                  reward: '₹10,000 Cash + Runner-Up Citation',
+                  accent: 'text-white',
+                },
+                {
+                  rank: '03',
+                  title: 'Second Runner-Up (3rd Place)',
+                  desc: 'Outstanding technical prototype, problem formulation, and interface craft.',
+                  reward: '₹5,000 Cash + Finalist Citation',
+                  accent: 'text-[#c19a88]',
+                },
+                {
+                  rank: '25',
+                  title: 'Top 25 National Merit Roster',
+                  desc: 'Official national rank citation and verified achievement credentials for the top 25 squads.',
+                  reward: 'Top 25 Merit Distinction',
+                  accent: 'text-emerald-400',
+                },
+              ].map((tier) => (
+                <div
+                  key={tier.rank}
+                  className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                >
+                  <div className="flex items-start sm:items-center gap-4">
+                    <span className="font-mono text-xs font-bold text-[#c19a88] w-6 shrink-0 pt-0.5 sm:pt-0">
+                      #{tier.rank}
+                    </span>
+                    <div className="space-y-0.5">
+                      <h3 className="text-sm sm:text-base font-bold text-white">{tier.title}</h3>
+                      <p className="text-xs text-neutral-400 font-light">{tier.desc}</p>
+                    </div>
+                  </div>
+
+                  <span className={`font-mono text-xs sm:text-sm font-bold shrink-0 ${tier.accent}`}>
+                    {tier.reward}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </section>
+        </>
       ) : (
-        /* Published Leaderboard Table */
-        <div className="rounded-3xl border border-white/10 bg-[#0E0E0E]/90 overflow-hidden shadow-2xl backdrop-blur-xl">
-          <div className="p-6 border-b border-white/[0.08] flex items-center justify-between">
+        /* Published Leaderboard Ledger (Open Hairline Table, No Box) */
+        <section className="space-y-6">
+          <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-white">National Standings & Merit Scores</h2>
-              <p className="text-xs text-neutral-400">Final verified scores calculated across all judging criteria.</p>
+              <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
+                01 // Verified Jury Standings
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                National Standings &amp;{' '}
+                <span className="font-serif italic font-normal text-[#e8c5b4]">
+                  Merit Scores
+                </span>
+              </h2>
             </div>
             <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-mono">
               <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Official Results Published</span>
+              <span>OFFICIAL RESULTS</span>
             </div>
           </div>
 
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto border-t border-b border-white/[0.08]">
             <table className="w-full text-left text-xs">
-              <thead className="border-b border-white/[0.08] bg-white/[0.02] text-neutral-400 font-mono text-[10px] uppercase tracking-wider">
+              <thead className="border-b border-white/[0.08] text-neutral-400 font-mono text-[10px] uppercase tracking-wider">
                 <tr>
-                  <th className="py-3 px-6">Rank</th>
-                  <th className="py-3 px-6">Team Name</th>
-                  <th className="py-3 px-6">Project Title</th>
-                  <th className="py-3 px-6">Track</th>
-                  <th className="py-3 px-6 text-right">Score</th>
-                  <th className="py-3 px-6 text-center">Merit Status</th>
+                  <th className="py-3.5 pr-4">Rank</th>
+                  <th className="py-3.5 px-4">Squad</th>
+                  <th className="py-3.5 px-4">Project</th>
+                  <th className="py-3.5 px-4">Track</th>
+                  <th className="py-3.5 px-4 text-right">Score</th>
+                  <th className="py-3.5 pl-4 text-right">Distinction</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/[0.05]">
+              <tbody className="divide-y divide-white/[0.06]">
                 {results.map((entry, index) => {
                   const rank = index + 1;
                   const isTop3 = rank <= 3;
@@ -185,61 +304,45 @@ export default async function DashboardLeaderboardPage() {
                   return (
                     <tr
                       key={entry.team_id}
-                      className={`hover:bg-white/[0.02] transition-colors ${
-                        entry.team_id === session?.teamId ? 'bg-[#c19a88]/10' : ''
+                      className={`transition-colors ${
+                        entry.team_id === session?.teamId ? 'bg-[#c19a88]/[0.06]' : 'hover:bg-white/[0.02]'
                       }`}
                     >
-                      <td className="py-4 px-6 font-mono font-bold">
-                        {isTop3 ? (
-                          <span
-                            className={`inline-flex items-center justify-center h-6 w-6 rounded-full text-black font-bold text-xs ${
-                              rank === 1
-                                ? 'bg-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.5)]'
-                                : rank === 2
-                                ? 'bg-slate-300 shadow-[0_0_12px_rgba(203,213,225,0.4)]'
-                                : 'bg-amber-600 shadow-[0_0_12px_rgba(217,119,6,0.4)]'
-                            }`}
-                          >
-                            {rank}
-                          </span>
-                        ) : (
-                          <span className="text-neutral-400">#{rank}</span>
-                        )}
+                      <td className="py-4 pr-4 font-mono font-bold text-[#c19a88]">
+                        #{String(rank).padStart(2, '0')}
                       </td>
-                      <td className="py-4 px-6 font-semibold text-white">
+                      <td className="py-4 px-4 font-semibold text-white">
                         <div className="flex items-center gap-2">
                           <span>{entry.team_name}</span>
                           {entry.team_id === session?.teamId && (
-                            <span className="text-[9px] font-mono uppercase px-2 py-0.5 rounded-full bg-[#c19a88]/20 text-[#e8c5b4] border border-[#c19a88]/40">
-                              Your Team
+                            <span className="text-[9px] font-mono uppercase text-[#e8c5b4]">
+                              • Your Squad
                             </span>
                           )}
                         </div>
                       </td>
-                      <td className="py-4 px-6 text-neutral-300 font-medium">
+                      <td className="py-4 px-4 text-neutral-300 font-light">
                         {entry.project_title || 'Untitled Project'}
                       </td>
-                      <td className="py-4 px-6">
-                        <span className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono border border-white/10 bg-white/[0.03] text-neutral-300">
-                          {entry.track_name}
-                        </span>
+                      <td className="py-4 px-4 font-mono text-[11px] text-neutral-400">
+                        {entry.track_name}
                       </td>
-                      <td className="py-4 px-6 text-right font-mono font-bold text-[#e8c5b4]">
-                        {(entry.final_score ?? 0).toFixed(1)} / 100
+                      <td className="py-4 px-4 text-right font-mono font-bold text-[#e8c5b4]">
+                        {(entry.final_score ?? 0).toFixed(1)}
                       </td>
-                      <td className="py-4 px-6 text-center">
+                      <td className="py-4 pl-4 text-right font-mono text-[11px]">
                         {isTop3 ? (
-                          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-300 bg-amber-500/10 border border-amber-500/30 px-2.5 py-0.5 rounded-full">
+                          <span className="inline-flex items-center gap-1 text-amber-300 font-semibold">
                             <Trophy className="h-3 w-3" />
-                            <span>Podium Winner</span>
+                            <span>Podium</span>
                           </span>
                         ) : isTop25 ? (
-                          <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
+                          <span className="inline-flex items-center gap-1 text-emerald-400 font-semibold">
                             <Award className="h-3 w-3" />
                             <span>Top 25 Merit</span>
                           </span>
                         ) : (
-                          <span className="text-[10px] text-neutral-500 font-mono">Participant</span>
+                          <span className="text-neutral-500">Participant</span>
                         )}
                       </td>
                     </tr>
@@ -248,7 +351,7 @@ export default async function DashboardLeaderboardPage() {
               </tbody>
             </table>
           </div>
-        </div>
+        </section>
       )}
     </div>
   );
