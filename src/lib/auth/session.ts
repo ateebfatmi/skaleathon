@@ -104,10 +104,10 @@ const resolveCurrentSession = async (): Promise<AuthSession | null> => {
 
   // Retrieve teamId if user is leader or member
   let teamId: string | null = null;
-  const [teamAsLeader, teamAsMember] = await Promise.all([
-    EventRepository.getTeamByLeader(profile.id),
-    EventRepository.getTeamByMemberEmail(profile.email),
-  ]);
+  const teamAsLeader = await EventRepository.getTeamByLeader(profile.id);
+  const teamAsMember = teamAsLeader
+    ? null
+    : await EventRepository.getTeamByMemberEmail(profile.email);
   if (teamAsLeader) {
     teamId = teamAsLeader.id;
   } else if (teamAsMember) {

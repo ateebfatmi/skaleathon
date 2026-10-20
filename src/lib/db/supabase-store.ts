@@ -30,6 +30,19 @@ export class SupabaseStore {
     return client;
   }
 
+  private static mapTeamRow(teamData: any): Team {
+    return {
+      id: teamData.id,
+      event_id: teamData.event_id,
+      name: teamData.team_name,
+      track_id: teamData.track_id,
+      leader_id: teamData.leader_id,
+      status: teamData.status === 'confirmed' ? 'paid' : teamData.status,
+      created_at: teamData.created_at,
+      updated_at: teamData.updated_at,
+    };
+  }
+
   // --- EVENTS ---
   static async getEvent(eventId: string = 'skaleathon-2027'): Promise<EventData | null> {
     const client = this.getClient();
@@ -421,16 +434,13 @@ export class SupabaseStore {
 
     if (teamErr || !teamData) return null;
 
-    const { data: membersData } = await client
-      .from('team_members')
-      .select('*')
-      .eq('team_id', teamId);
+    const [membersResult, trackObj] = await Promise.all([
+      client.from('team_members').select('*').eq('team_id', teamId),
+      teamData.track_id ? this.getTrack(teamData.track_id) : Promise.resolve(null),
+    ]);
 
-    let track: EventTrack | undefined;
-    if (teamData.track_id) {
-      const trackObj = await this.getTrack(teamData.track_id);
-      if (trackObj) track = trackObj;
-    }
+    const membersData = membersResult.data;
+    const track = trackObj || undefined;
 
     const members: TeamMember[] = (membersData || []).map((m) => ({
       id: m.id,
@@ -446,20 +456,13 @@ export class SupabaseStore {
     }));
 
     return {
-      id: teamData.id,
-      event_id: teamData.event_id,
-      name: teamData.team_name,
-      track_id: teamData.track_id,
-      leader_id: teamData.leader_id,
-      status: teamData.status === 'confirmed' ? 'paid' : teamData.status,
-      created_at: teamData.created_at,
-      updated_at: teamData.updated_at,
+      ...this.mapTeamRow(teamData),
       members,
       track,
     };
   }
 
-  static async getTeamByLeader(leaderId: string): Promise<(Team & { members: TeamMember[] }) | null> {
+  static async getTeamByLeader(leaderId: string): Promise<Team | null> {
     const client = this.getClient();
     const { data: teamData, error } = await client
       .from('teams')
@@ -470,10 +473,10 @@ export class SupabaseStore {
       .maybeSingle();
 
     if (error || !teamData) return null;
-    return this.getTeam(teamData.id);
+    return this.mapTeamRow(teamData);
   }
 
-  static async getTeamByMemberEmail(email: string): Promise<(Team & { members: TeamMember[] }) | null> {
+  static async getTeamByMemberEmail(email: string): Promise<Team | null> {
     const client = this.getClient();
     const { data: memberData, error } = await client
       .from('team_members')
@@ -483,7 +486,15 @@ export class SupabaseStore {
       .maybeSingle();
 
     if (error || !memberData) return null;
-    return this.getTeam(memberData.team_id);
+
+    const { data: teamData, error: teamError } = await client
+      .from('teams')
+      .select('*')
+      .eq('id', memberData.team_id)
+      .maybeSingle();
+
+    if (teamError || !teamData) return null;
+    return this.mapTeamRow(teamData);
   }
 
   static async updateTeamStatus(teamId: string, status: Team['status'], actorId: string): Promise<Team> {

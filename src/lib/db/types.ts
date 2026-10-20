@@ -88,6 +88,11 @@ export interface TeamMember {
   updated_at: string;
 }
 
+export interface TeamDetails extends Team {
+  members: TeamMember[];
+  track?: EventTrack;
+}
+
 export type PaymentOrderStatus = 'created' | 'attempted' | 'paid' | 'failed' | 'refunded' | 'cancelled';
 
 export interface PaymentOrder {

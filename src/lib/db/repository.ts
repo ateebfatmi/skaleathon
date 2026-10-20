@@ -5,6 +5,7 @@ import {
   EventTrack,
   Profile,
   Team,
+  TeamDetails,
   TeamMember,
   PaymentOrder,
   PaymentWebhookEvent,
@@ -31,18 +32,20 @@ export class EventRepository {
   private static readonly publicReadCacheMs = 60_000;
   private static eventReadCache = new Map<string, ReadCacheEntry<EventData>>();
   private static tracksReadCache = new Map<string, ReadCacheEntry<EventTrack[]>>();
+  private static teamReadCache = new Map<string, ReadCacheEntry<TeamDetails | null>>();
 
   private static cachedRead<T>(
     cache: Map<string, ReadCacheEntry<T>>,
     key: string,
-    loader: () => Promise<T>
+    loader: () => Promise<T>,
+    ttlMs: number = this.publicReadCacheMs
   ): Promise<T> {
     const now = Date.now();
     const existing = cache.get(key);
     if (existing && existing.expiresAt > now) return existing.promise;
 
     const entry: ReadCacheEntry<T> = {
-      expiresAt: now + this.publicReadCacheMs,
+      expiresAt: now + ttlMs,
       promise: loader(),
     };
     cache.set(key, entry);
@@ -383,7 +386,16 @@ export class EventRepository {
     return { team, members: teamMembers };
   }
 
-  static async getTeam(teamId: string): Promise<Team | null> {
+  static async getTeam(teamId: string): Promise<TeamDetails | null> {
+    return this.cachedRead(
+      this.teamReadCache,
+      teamId,
+      () => this.loadTeam(teamId),
+      15_000
+    );
+  }
+
+  private static async loadTeam(teamId: string): Promise<TeamDetails | null> {
     if (this.isSupabaseEnabled()) {
       try {
         const team = await SupabaseStore.getTeam(teamId);
@@ -393,7 +405,11 @@ export class EventRepository {
       }
     }
     const state = this.store.getState();
-    return state.teams.find((t) => t.id === teamId) || null;
+    const team = state.teams.find((t) => t.id === teamId);
+    if (!team) return null;
+    const members = state.teamMembers.filter((member) => member.team_id === teamId);
+    const track = state.tracks.find((candidate) => candidate.id === team.track_id);
+    return { ...team, members, ...(track ? { track } : {}) };
   }
 
   static async getTeamByLeader(leaderId: string): Promise<Team | null> {
@@ -425,16 +441,8 @@ export class EventRepository {
   }
 
   static async getTeamMembers(teamId: string): Promise<TeamMember[]> {
-    if (this.isSupabaseEnabled()) {
-      try {
-        const team = await SupabaseStore.getTeam(teamId);
-        if (team?.members && team.members.length > 0) return team.members;
-      } catch (err) {
-        this.handleSupabaseError('getTeamMembers', err);
-      }
-    }
-    const state = this.store.getState();
-    return state.teamMembers.filter((m) => m.team_id === teamId);
+    const team = await this.getTeam(teamId);
+    return team?.members || [];
   }
 
   static async listTeams(filters?: { status?: Team['status']; trackId?: string; search?: string }): Promise<
@@ -561,6 +569,7 @@ export class EventRepository {
         });
         if (order?.team_id) {
           await SupabaseStore.updateTeamStatus(order.team_id, 'paid', order.team_id);
+          this.teamReadCache.delete(order.team_id);
         }
         return order;
       } catch (err) {
@@ -584,6 +593,7 @@ export class EventRepository {
     if (teamIndex >= 0) {
       state.teams[teamIndex].status = 'paid';
       state.teams[teamIndex].updated_at = new Date().toISOString();
+      this.teamReadCache.delete(order.team_id);
     }
 
     await this.logAudit({

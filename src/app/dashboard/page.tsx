@@ -20,12 +20,8 @@ export const revalidate = 0;
 export default async function DashboardPage() {
   const session = await getCurrentSession();
   const team = session?.teamId ? await EventRepository.getTeam(session.teamId) : null;
-  const [rawMembers, track] = team
-    ? await Promise.all([
-        EventRepository.getTeamMembers(team.id),
-        team.track_id ? EventRepository.getTrack(team.track_id) : Promise.resolve(null),
-      ])
-    : [[], null];
+  const rawMembers = team?.members || [];
+  const track = team?.track || null;
 
   const members =
     rawMembers.length > 0

@@ -69,7 +69,7 @@ const TRACK_METAS: Record<string, TrackMeta> = {
 export default async function DashboardTrackPage() {
   const session = await getCurrentSession();
   const team = session?.teamId ? await EventRepository.getTeam(session.teamId) : null;
-  const track = team?.track_id ? await EventRepository.getTrack(team.track_id) : null;
+  const track = team?.track || null;
   const allTracks = await EventRepository.getTracks();
 
   const trackMeta = track

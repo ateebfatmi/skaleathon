@@ -45,10 +45,8 @@ export default function DashboardQuickIndexBar({ memberCount }: DashboardQuickIn
     setSelectedNum(item.num);
     setNavigatingItem(item);
 
-    // Allow the spring indicator slide + shimmer sweep + transition veil to play smoothly before redirecting
-    setTimeout(() => {
-      router.push(item.href);
-    }, 420);
+    // Begin loading immediately; the transition accompanies real loading instead of delaying it.
+    router.push(item.href);
   };
 
   return (
@@ -104,7 +102,7 @@ export default function DashboardQuickIndexBar({ memberCount }: DashboardQuickIn
                     initial={{ x: '-100%', opacity: 0.9 }}
                     animate={{ x: '100%', opacity: 0 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
                     className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-[#e8c5b4]/30 to-transparent"
                   />
                 )}
@@ -166,7 +164,7 @@ export default function DashboardQuickIndexBar({ memberCount }: DashboardQuickIn
               initial={{ scaleX: 0, opacity: 1 }}
               animate={{ scaleX: 1, opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
               className="fixed top-0 left-0 right-0 z-[100] h-[2.5px] origin-left bg-gradient-to-r from-[#805948] via-[#e8c5b4] to-[#c19a88] shadow-[0_0_16px_#e8c5b4]"
             />
 
@@ -175,14 +173,14 @@ export default function DashboardQuickIndexBar({ memberCount }: DashboardQuickIn
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.28, ease: 'easeOut' }}
+              transition={{ duration: 0.14, ease: 'easeOut' }}
               className="fixed inset-0 z-[90] pointer-events-none flex items-center justify-center bg-[#0B0B0B]/45 backdrop-blur-[3px]"
             >
               <motion.div
                 initial={{ opacity: 0, y: 10, scale: 0.96 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -8, scale: 0.96 }}
-                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
                 className="flex items-center gap-3 rounded-full border border-[#c19a88]/40 bg-[#120F0D]/95 px-5 py-2.5 shadow-[0_12px_40px_rgba(0,0,0,0.75),0_0_25px_rgba(193,154,136,0.2)] backdrop-blur-2xl"
               >
                 <span className="font-mono text-[10px] font-bold text-[#c19a88]">

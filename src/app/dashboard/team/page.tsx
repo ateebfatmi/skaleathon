@@ -10,8 +10,8 @@ export const revalidate = 0;
 export default async function TeamPage() {
   const session = await getCurrentSession();
   const team = session?.teamId ? await EventRepository.getTeam(session.teamId) : null;
-  const rawMembers = team ? await EventRepository.getTeamMembers(team.id) : [];
-  const track = team?.track_id ? await EventRepository.getTrack(team.track_id) : null;
+  const rawMembers = team?.members || [];
+  const track = team?.track || null;
   const paymentOrder = team ? await EventRepository.getPaymentOrderByTeam(team.id) : null;
 
   const members =

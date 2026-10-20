@@ -102,7 +102,7 @@ body {
     radial-gradient(circle, rgba(255, 255, 255, 0.35) 0 0.55px, transparent 0.8px);
   background-position: 9px 17px, 71px 43px, 131px 89px, 37px 121px;
   background-size: 97px 109px, 157px 139px, 211px 193px, 73px 83px;
-  animation: starfield-drift 12s linear infinite;
+  animation: starfield-drift 7.5s linear infinite;
   will-change: transform;
 }
 
@@ -117,8 +117,8 @@ body {
   background-size: 263px 227px, 181px 167px;
   opacity: 0.55;
   animation:
-    starfield-parallax 8s ease-in-out infinite alternate,
-    starfield-twinkle 2.6s ease-in-out infinite alternate;
+    starfield-parallax 5.5s ease-in-out infinite alternate,
+    starfield-twinkle 1.8s ease-in-out infinite alternate;
   will-change: transform, opacity;
 }
 
@@ -127,16 +127,16 @@ body {
     transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translate3d(-2.5%, -14%, 0);
+    transform: translate3d(-4%, -18%, 0) scale(1.03);
   }
 }
 
 @keyframes starfield-parallax {
   from {
-    transform: translate3d(-3%, 2%, 0) scale(1);
+    transform: translate3d(-4%, 3%, 0) scale(1);
   }
   to {
-    transform: translate3d(3%, -5%, 0) scale(1.025);
+    transform: translate3d(4%, -7%, 0) scale(1.035);
   }
 }
 
