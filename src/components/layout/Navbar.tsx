@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { motion, useScroll, useSpring } from 'framer-motion';
 import {
   Menu,
   X,
@@ -26,8 +25,10 @@ import {
   useUser,
 } from '@clerk/nextjs';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
+import type { EventData } from '@/lib/db/types';
+import { formatINR } from '@/lib/utils';
 
-export default function Navbar() {
+export default function Navbar({ event }: { event: EventData }) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -35,13 +36,6 @@ export default function Navbar() {
   const { user } = useUser();
 
   const isDashboard = pathname.startsWith('/dashboard');
-
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
 
   useEffect(() => {
     setMounted(true);
@@ -105,7 +99,7 @@ export default function Navbar() {
         <Sparkles className="h-3.5 w-3.5 text-[#c19a88] group-hover:rotate-12 transition-transform duration-300" />
         <span>Register Team</span>
         <span className="rounded-full bg-[#c19a88]/20 border border-[#c19a88]/30 px-2 py-0.5 text-[10px] font-mono font-bold text-[#e8c5b4] shadow-sm">
-          ₹99
+          {formatINR(event.registration_fee_inr)}
         </span>
         <ArrowRight className="h-3.5 w-3.5 text-neutral-400 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
       </span>
@@ -115,9 +109,8 @@ export default function Navbar() {
   return (
     <>
       {/* Top scroll progress bar */}
-      <motion.div
+      <div
         className="fixed left-0 right-0 top-0 z-[60] h-[2px] origin-left bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4] pointer-events-none"
-        style={{ scaleX }}
       />
 
       <header
@@ -177,6 +170,7 @@ export default function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  prefetch={true}
                   onClick={item.href === '/' ? handleHomeClick : undefined}
                   className={`relative flex h-8 items-center rounded-full px-3 text-xs font-medium tracking-wide transition-colors duration-200 ${
                     active
@@ -185,18 +179,14 @@ export default function Navbar() {
                   }`}
                 >
                   {active && (
-                    <motion.div
-                      layoutId="active-nav-indicator"
+                    <div
                       className="absolute inset-0 rounded-full bg-gradient-to-r from-white/[0.14] to-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_0_15px_rgba(193,154,136,0.18)]"
-                      transition={{ type: 'spring', stiffness: 400, damping: 32 }}
                     />
                   )}
                   <span className="relative z-10 flex items-center">
                     {active && (
-                      <motion.span
-                        layoutId="active-nav-dot"
+                      <span
                         className="h-1.5 w-1.5 rounded-full bg-[#c19a88] shadow-[0_0_8px_#c19a88] mr-2 inline-block"
-                        transition={{ type: 'spring', stiffness: 400, damping: 32 }}
                       />
                     )}
                     <span>{item.name}</span>
@@ -388,6 +378,7 @@ export default function Navbar() {
                   <Link
                     key={link.name}
                     href={link.href}
+                    prefetch={true}
                     onClick={(e) => {
                       setMobileMenuOpen(false);
                       if (link.href === '/' && pathname === '/') {
@@ -427,7 +418,7 @@ export default function Navbar() {
                       className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-4 py-3 text-center text-sm font-bold text-white shadow-[0_4px_25px_rgba(128,89,72,0.4)] active:scale-[0.99] transition-transform"
                     >
                       <Sparkles className="h-4 w-4" />
-                      <span>Register Team — ₹99</span>
+                      <span>Register Team — {formatINR(event.registration_fee_inr)}</span>
                       <ArrowRight className="h-4 w-4" />
                     </Link>
                   </>
@@ -492,7 +483,7 @@ export default function Navbar() {
                         className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-4 py-3 text-center text-sm font-bold text-white shadow-[0_4px_25px_rgba(128,89,72,0.4)] active:scale-[0.99] transition-transform"
                       >
                         <Sparkles className="h-4 w-4" />
-                        <span>Register Team — ₹99</span>
+                        <span>Register Team — {formatINR(event.registration_fee_inr)}</span>
                         <ArrowRight className="h-4 w-4" />
                       </Link>
                     </SignedOut>
@@ -512,7 +503,7 @@ export default function Navbar() {
                       className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-4 py-3 text-center text-sm font-bold text-white shadow-[0_4px_25px_rgba(128,89,72,0.4)] active:scale-[0.99] transition-transform"
                     >
                       <Sparkles className="h-4 w-4" />
-                      <span>Register Team — ₹99</span>
+                      <span>Register Team — {formatINR(event.registration_fee_inr)}</span>
                       <ArrowRight className="h-4 w-4" />
                     </Link>
                   </>

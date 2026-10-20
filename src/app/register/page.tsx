@@ -16,16 +16,24 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import Velaris from '@/components/ui/velaris';
+import { formatDate, formatINR, REGISTRATION_DEADLINE } from '@/lib/utils';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Register Your Team | Skaleathon',
+  description: 'Sign in, choose a competition track, register your team, and securely pay the event fee.',
+};
 
 export const revalidate = 0;
 
 interface RegisterPageProps {
-  searchParams?: {
+  searchParams?: Promise<{
     new?: string;
-  };
+  }>;
 }
 
 export default async function RegisterPage({ searchParams }: RegisterPageProps) {
+  const resolvedSearchParams = await searchParams;
   const [event, tracks, session] = await Promise.all([
     EventRepository.getEvent(),
     EventRepository.getTracks(),
@@ -52,7 +60,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
   }
 
   const isClosed = event.status !== 'registration_open';
-  const showRegistrationForm = !registeredTeam || searchParams?.new === 'true';
+  const showRegistrationForm = !registeredTeam || resolvedSearchParams?.new === 'true';
 
   return (
     <div className="min-h-screen bg-[#0B0B0B] text-white relative overflow-hidden pt-12 pb-24 sm:pt-16 sm:pb-32 selection:bg-[#805948]/30">
@@ -90,7 +98,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
 
           <div className="hidden sm:flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-[#c19a88] bg-[#805948]/10 border border-[#c19a88]/20 px-3 py-1 rounded-full">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Official Portal • January 2028</span>
+            <span>Official Portal • Registration closes {formatDate(event.registration_end_at || REGISTRATION_DEADLINE)}</span>
           </div>
         </div>
 
@@ -113,7 +121,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
             </h1>
 
             <p className="mt-4 text-xs sm:text-sm text-neutral-400 max-w-xl mx-auto leading-relaxed font-light">
-              Welcome back, <strong className="text-white font-medium">{session?.fullName || registeredTeam.name}</strong>. Your squad is authoritatively enrolled and verified for Skaleathon (January 2028). Below is your digital team pass, roster details, and competition roadmap.
+              Welcome back, <strong className="text-white font-medium">{session?.fullName || registeredTeam.name}</strong>. Your squad is enrolled for {event.name}. Below is your digital team pass, roster details, and competition roadmap.
             </p>
           </div>
         ) : (
@@ -139,7 +147,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
             </h1>
 
             <p className="mt-4 text-xs sm:text-sm text-neutral-400 max-w-xl mx-auto leading-relaxed font-light">
-              Form your team of 1–6 engineers, choose your technical arena, and finalize the flat ₹99 entry fee to compete for ₹35,000 in cash prizes, certificates for Top 25 teams, and fast-track interviews at SkaleKraft.
+              Form your team of {event.min_team_size}–{event.max_team_size} engineers, choose your technical arena, and finalize the flat {formatINR(event.registration_fee_inr)} entry fee to compete for {formatINR(event.prize_pool_inr)} in cash prizes, certificates for the Top {event.certificates_top_n} teams, and fast-track interviews at SkaleKraft.
             </p>
 
             {/* Value Highlights Strip */}
@@ -149,8 +157,8 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
                   <Shield className="h-4 w-4" />
                 </div>
                 <div>
-                  <div className="text-[11px] font-bold text-white">Flat ₹99 Entry</div>
-                  <div className="text-[10px] text-neutral-400">1 to 6 members</div>
+                  <div className="text-[11px] font-bold text-white">Flat {formatINR(event.registration_fee_inr)} Entry</div>
+                  <div className="text-[10px] text-neutral-400">{event.min_team_size} to {event.max_team_size} members</div>
                 </div>
               </div>
 
@@ -159,7 +167,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
                   <Trophy className="h-4 w-4" />
                 </div>
                 <div>
-                  <div className="text-[11px] font-bold text-white">₹35,000 Pool</div>
+                  <div className="text-[11px] font-bold text-white">{formatINR(event.prize_pool_inr)} Pool</div>
                   <div className="text-[10px] text-neutral-400">Top 3 Cash Awards</div>
                 </div>
               </div>
@@ -169,7 +177,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
                   <Award className="h-4 w-4" />
                 </div>
                 <div>
-                  <div className="text-[11px] font-bold text-white">Top 25 Merit</div>
+                  <div className="text-[11px] font-bold text-white">Top {event.certificates_top_n} Merit</div>
                   <div className="text-[10px] text-neutral-400">Certificates</div>
                 </div>
               </div>
@@ -188,7 +196,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
         )}
 
         {/* If user is registering another team while already having an active team */}
-        {searchParams?.new === 'true' && registeredTeam && (
+        {resolvedSearchParams?.new === 'true' && registeredTeam && (
           <div className="max-w-3xl mx-auto mb-8 rounded-2xl border border-[#c19a88]/30 bg-[#c19a88]/10 p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs backdrop-blur-md">
             <div className="flex items-center gap-2 text-white">
               <Sparkles className="h-4 w-4 text-[#c19a88] shrink-0" />
@@ -215,6 +223,20 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
             userName={session?.fullName}
             userEmail={session?.email}
           />
+        ) : !session ? (
+          <div className="max-w-xl mx-auto rounded-[28px] border border-[#c19a88]/25 bg-[linear-gradient(145deg,rgba(193,154,136,0.08),rgba(14,14,14,0.95))] p-8 sm:p-10 text-center space-y-5 shadow-[0_20px_50px_rgba(0,0,0,0.4)] backdrop-blur-xl">
+            <Lock className="mx-auto h-8 w-8 text-[#c19a88]" aria-hidden="true" />
+            <h2 className="text-xl font-medium text-white">Sign in before registering your team</h2>
+            <p className="text-sm text-white/55 leading-relaxed font-light">
+              We verify the team leader&apos;s email before creating a registration. This protects team records, payments, and submissions from impersonation.
+            </p>
+            <Link
+              href="/sign-in?redirect_url=/register"
+              className="inline-flex rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] px-7 py-3 text-xs font-semibold text-white shadow-lg hover:scale-105 transition-all"
+            >
+              Sign in to continue
+            </Link>
+          </div>
         ) : isClosed ? (
           <div className="max-w-xl mx-auto rounded-[28px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-10 text-center space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.4)] backdrop-blur-xl">
             <h2 className="text-xl font-medium text-white">Registration is Currently Closed</h2>
@@ -230,7 +252,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
           </div>
         ) : (
           <div className="relative">
-            <MultiStepRegistration tracks={tracks} />
+            <MultiStepRegistration tracks={tracks} event={event} />
 
             {/* Bottom Trust & Assurance Note */}
             <div className="mt-8 text-center text-[11px] text-neutral-500 font-mono flex flex-wrap items-center justify-center gap-4">

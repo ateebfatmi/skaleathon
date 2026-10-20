@@ -21,21 +21,61 @@ import {
   AuditLog,
 } from './types';
 
+type ReadCacheEntry<T> = {
+  expiresAt: number;
+  promise: Promise<T>;
+};
+
 export class EventRepository {
   private static store = FileStore.getInstance();
+  private static readonly publicReadCacheMs = 60_000;
+  private static eventReadCache = new Map<string, ReadCacheEntry<EventData>>();
+  private static tracksReadCache = new Map<string, ReadCacheEntry<EventTrack[]>>();
+
+  private static cachedRead<T>(
+    cache: Map<string, ReadCacheEntry<T>>,
+    key: string,
+    loader: () => Promise<T>
+  ): Promise<T> {
+    const now = Date.now();
+    const existing = cache.get(key);
+    if (existing && existing.expiresAt > now) return existing.promise;
+
+    const entry: ReadCacheEntry<T> = {
+      expiresAt: now + this.publicReadCacheMs,
+      promise: loader(),
+    };
+    cache.set(key, entry);
+    entry.promise.catch(() => {
+      if (cache.get(key) === entry) cache.delete(key);
+    });
+    return entry.promise;
+  }
 
   private static isSupabaseEnabled(): boolean {
     return !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
   }
 
+  private static handleSupabaseError(operation: string, error: unknown): void {
+    if (process.env.NODE_ENV === 'production') {
+      console.error(`Supabase ${operation} failed. Refusing local fallback in production.`, error);
+      throw new Error(`Database operation failed: ${operation}`);
+    }
+    console.warn(`Supabase ${operation} error, using local development fallback:`, error);
+  }
+
   // --- EVENTS ---
   static async getEvent(eventId: string = 'skaleathon-2027'): Promise<EventData> {
+    return this.cachedRead(this.eventReadCache, eventId, () => this.loadEvent(eventId));
+  }
+
+  private static async loadEvent(eventId: string): Promise<EventData> {
     if (this.isSupabaseEnabled()) {
       try {
         const ev = await SupabaseStore.getEvent(eventId);
         if (ev) return ev;
       } catch (err) {
-        console.warn('SupabaseStore.getEvent error, using fallback:', err);
+        this.handleSupabaseError('getEvent', err);
       }
     }
     const state = this.store.getState();
@@ -51,11 +91,12 @@ export class EventRepository {
     actorId: string,
     eventId: string = 'skaleathon-2027'
   ): Promise<EventData> {
+    this.eventReadCache.delete(eventId);
     if (this.isSupabaseEnabled()) {
       try {
         return await SupabaseStore.updateEvent(updates, actorId, eventId);
       } catch (err) {
-        console.warn('SupabaseStore.updateEvent error, using fallback:', err);
+        this.handleSupabaseError('updateEvent', err);
       }
     }
     const state = this.store.getState();
@@ -94,12 +135,16 @@ export class EventRepository {
 
   // --- TRACKS ---
   static async getTracks(eventId: string = 'skaleathon-2027'): Promise<EventTrack[]> {
+    return this.cachedRead(this.tracksReadCache, eventId, () => this.loadTracks(eventId));
+  }
+
+  private static async loadTracks(eventId: string): Promise<EventTrack[]> {
     if (this.isSupabaseEnabled()) {
       try {
         const tracks = await SupabaseStore.getTracks(eventId);
         if (tracks.length > 0) return tracks;
       } catch (err) {
-        console.warn('SupabaseStore.getTracks error, using fallback:', err);
+        this.handleSupabaseError('getTracks', err);
       }
     }
     const state = this.store.getState();
@@ -112,7 +157,7 @@ export class EventRepository {
         const track = await SupabaseStore.getTrack(trackId);
         if (track) return track;
       } catch (err) {
-        console.warn('SupabaseStore.getTrack error, using fallback:', err);
+        this.handleSupabaseError('getTrack', err);
       }
     }
     const state = this.store.getState();
@@ -126,7 +171,7 @@ export class EventRepository {
         const profile = await SupabaseStore.getProfile(userId);
         if (profile) return profile;
       } catch (err) {
-        console.warn('SupabaseStore.getProfile error, using fallback:', err);
+        this.handleSupabaseError('getProfile', err);
       }
     }
     const state = this.store.getState();
@@ -139,7 +184,7 @@ export class EventRepository {
         const profile = await SupabaseStore.getProfileByEmail(email);
         if (profile) return profile;
       } catch (err) {
-        console.warn('SupabaseStore.getProfileByEmail error, using fallback:', err);
+        this.handleSupabaseError('getProfileByEmail', err);
       }
     }
     const state = this.store.getState();
@@ -161,7 +206,7 @@ export class EventRepository {
         const profile = await SupabaseStore.upsertProfile(data);
         return profile;
       } catch (err) {
-        console.warn('SupabaseStore.upsertProfile error, using fallback:', err);
+        this.handleSupabaseError('upsertProfile', err);
       }
     }
     const state = this.store.getState();
@@ -169,7 +214,7 @@ export class EventRepository {
       (p) => p.id === data.id || p.email.toLowerCase() === data.email.toLowerCase()
     );
 
-    const adminEmails = (process.env.ADMIN_EMAILS || 'skalekraft@gmail.com')
+    const adminEmails = (process.env.ADMIN_EMAILS || '')
       .split(',')
       .map((e) => e.trim().toLowerCase());
 
@@ -205,7 +250,7 @@ export class EventRepository {
       try {
         return await SupabaseStore.checkDuplicateMembership(email, excludeTeamId);
       } catch (err) {
-        console.warn('SupabaseStore.checkDuplicateMembership error, using fallback:', err);
+        this.handleSupabaseError('checkDuplicateMembership', err);
       }
     }
     const state = this.store.getState();
@@ -234,7 +279,7 @@ export class EventRepository {
         const res = await SupabaseStore.createTeam(params);
         return res;
       } catch (err) {
-        console.warn('SupabaseStore.createTeam error, using fallback:', err);
+        this.handleSupabaseError('createTeam', err);
       }
     }
     const state = this.store.getState();
@@ -344,7 +389,7 @@ export class EventRepository {
         const team = await SupabaseStore.getTeam(teamId);
         if (team) return team;
       } catch (err) {
-        console.warn('SupabaseStore.getTeam error, using fallback:', err);
+        this.handleSupabaseError('getTeam', err);
       }
     }
     const state = this.store.getState();
@@ -357,7 +402,7 @@ export class EventRepository {
         const team = await SupabaseStore.getTeamByLeader(leaderId);
         if (team) return team;
       } catch (err) {
-        console.warn('SupabaseStore.getTeamByLeader error, using fallback:', err);
+        this.handleSupabaseError('getTeamByLeader', err);
       }
     }
     const state = this.store.getState();
@@ -370,7 +415,7 @@ export class EventRepository {
         const team = await SupabaseStore.getTeamByMemberEmail(email);
         if (team) return team;
       } catch (err) {
-        console.warn('SupabaseStore.getTeamByMemberEmail error, using fallback:', err);
+        this.handleSupabaseError('getTeamByMemberEmail', err);
       }
     }
     const state = this.store.getState();
@@ -385,7 +430,7 @@ export class EventRepository {
         const team = await SupabaseStore.getTeam(teamId);
         if (team?.members && team.members.length > 0) return team.members;
       } catch (err) {
-        console.warn('SupabaseStore.getTeamMembers error, using fallback:', err);
+        this.handleSupabaseError('getTeamMembers', err);
       }
     }
     const state = this.store.getState();
@@ -414,7 +459,7 @@ export class EventRepository {
           return filtered;
         }
       } catch (err) {
-        console.warn('SupabaseStore.getTeams error, using fallback:', err);
+        this.handleSupabaseError('getTeams', err);
       }
     }
     const state = this.store.getState();
@@ -460,7 +505,7 @@ export class EventRepository {
           status: 'created',
         });
       } catch (err) {
-        console.warn('SupabaseStore.createPaymentOrder error, using fallback:', err);
+        this.handleSupabaseError('createPaymentOrder', err);
       }
     }
     const state = this.store.getState();
@@ -490,7 +535,7 @@ export class EventRepository {
         const order = await SupabaseStore.getPaymentOrder(orderId);
         if (order) return order;
       } catch (err) {
-        console.warn('SupabaseStore.getPaymentOrder error, using fallback:', err);
+        this.handleSupabaseError('getPaymentOrder', err);
       }
     }
     const state = this.store.getState();
@@ -519,7 +564,7 @@ export class EventRepository {
         }
         return order;
       } catch (err) {
-        console.warn('SupabaseStore.completePaymentOrder error, using fallback:', err);
+        this.handleSupabaseError('completePaymentOrder', err);
       }
     }
     const state = this.store.getState();
@@ -605,7 +650,7 @@ export class EventRepository {
         const sub = await SupabaseStore.getSubmissionByTeam(teamId);
         if (sub) return sub;
       } catch (err) {
-        console.warn('SupabaseStore.getSubmissionByTeam error, using fallback:', err);
+        this.handleSupabaseError('getSubmissionByTeam', err);
       }
     }
     const state = this.store.getState();
@@ -618,7 +663,7 @@ export class EventRepository {
         const sub = await SupabaseStore.getSubmission(submissionId);
         if (sub) return sub;
       } catch (err) {
-        console.warn('SupabaseStore.getSubmission error, using fallback:', err);
+        this.handleSupabaseError('getSubmission', err);
       }
     }
     const state = this.store.getState();
@@ -668,7 +713,7 @@ export class EventRepository {
         );
         return sub;
       } catch (err) {
-        console.warn('SupabaseStore.createSubmission error, using fallback:', err);
+        this.handleSupabaseError('createSubmission', err);
       }
     }
     const state = this.store.getState();
@@ -769,7 +814,7 @@ export class EventRepository {
         const criteria = await SupabaseStore.getJudgingCriteria();
         if (criteria.length > 0) return criteria;
       } catch (err) {
-        console.warn('SupabaseStore.getJudgingCriteria error, using fallback:', err);
+        this.handleSupabaseError('getJudgingCriteria', err);
       }
     }
     const state = this.store.getState();
@@ -784,7 +829,7 @@ export class EventRepository {
       try {
         return await SupabaseStore.updateJudgingCriteria(criteria, actorId);
       } catch (err) {
-        console.warn('SupabaseStore.updateJudgingCriteria error, using fallback:', err);
+        this.handleSupabaseError('updateJudgingCriteria', err);
       }
     }
     const totalWeight = criteria.reduce((sum, c) => sum + c.weight_percentage, 0);
@@ -812,7 +857,7 @@ export class EventRepository {
         const judges = await SupabaseStore.getJudges();
         if (judges.length > 0) return judges;
       } catch (err) {
-        console.warn('SupabaseStore.getJudges error, using fallback:', err);
+        this.handleSupabaseError('getJudges', err);
       }
     }
     const state = this.store.getState();
@@ -994,7 +1039,7 @@ export class EventRepository {
         const res = await SupabaseStore.getLeaderboard('skaleathon-2027', true);
         if (res.length > 0) return res;
       } catch (err) {
-        console.warn('SupabaseStore.publishLeaderboard error, using fallback:', err);
+        this.handleSupabaseError('publishLeaderboard', err);
       }
     }
     const results = await this.calculateAndPreviewLeaderboard();
@@ -1069,7 +1114,7 @@ export class EventRepository {
         const res = await SupabaseStore.getLeaderboard('skaleathon-2027', true);
         if (res.length > 0) return res;
       } catch (err) {
-        console.warn('SupabaseStore.getLeaderboard error, using fallback:', err);
+        this.handleSupabaseError('getLeaderboard', err);
       }
     }
     const state = this.store.getState();
@@ -1169,7 +1214,7 @@ export class EventRepository {
         const cert = await SupabaseStore.getCertificateByCode(code);
         if (cert) return cert;
       } catch (err) {
-        console.warn('SupabaseStore.getCertificateByCode error, using fallback:', err);
+        this.handleSupabaseError('getCertificateByCode', err);
       }
     }
     const state = this.store.getState();
@@ -1182,7 +1227,7 @@ export class EventRepository {
         const certs = await SupabaseStore.getCertificatesByTeam(teamId);
         if (certs.length > 0) return certs;
       } catch (err) {
-        console.warn('SupabaseStore.getCertificatesByTeam error, using fallback:', err);
+        this.handleSupabaseError('getCertificatesByTeam', err);
       }
     }
     const state = this.store.getState();
@@ -1218,7 +1263,7 @@ export class EventRepository {
         const ann = await SupabaseStore.getAnnouncements();
         if (ann.length > 0) return ann;
       } catch (err) {
-        console.warn('SupabaseStore.getAnnouncements error, using fallback:', err);
+        this.handleSupabaseError('getAnnouncements', err);
       }
     }
     const state = this.store.getState();
@@ -1298,7 +1343,7 @@ export class EventRepository {
         const logs = await SupabaseStore.getAuditLogs(limit);
         if (logs.length > 0) return logs;
       } catch (err) {
-        console.warn('SupabaseStore.getAuditLogs error, using fallback:', err);
+        this.handleSupabaseError('getAuditLogs', err);
       }
     }
     const state = this.store.getState();
@@ -1311,7 +1356,7 @@ export class EventRepository {
       try {
         return await SupabaseStore.getAdminOverview();
       } catch (err) {
-        console.warn('SupabaseStore.getAdminOverview error, using fallback:', err);
+        this.handleSupabaseError('getAdminOverview', err);
       }
     }
     const state = this.store.getState();

@@ -1,12 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy | Skaleathon',
+  description: 'How Skaleathon collects, uses, protects, and retains participant information.',
+};
 
 export default function PrivacyPage() {
   const sections = [
     {
       heading: '1. Information We Collect',
-      body: 'Skaleathon 2027 operates under a data minimization principle. We collect only the information necessary to register teams, coordinate project evaluations, process the ₹99 team entry fee securely via Razorpay, and issue certificates. We do not store payment card details, UPI PINs, or bank account numbers.',
+      body: 'Skaleathon operates under a data minimization principle. We collect only the information necessary to register teams, coordinate project evaluations, process the published team entry fee securely via Razorpay, and issue certificates. We do not store payment card details, UPI PINs, or bank account numbers.',
     },
     {
       heading: '2. Use of Information',
@@ -23,7 +29,7 @@ export default function PrivacyPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#0B0B0B] px-5 pb-24 pt-28 text-white md:px-10 md:pt-32">
+    <div className="min-h-screen bg-[#0B0B0B] px-5 pb-24 pt-28 text-white md:px-10 md:pt-32">
       <section className="mx-auto max-w-3xl">
         <Link
           href="/"
@@ -58,6 +64,6 @@ export default function PrivacyPage() {
           </p>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

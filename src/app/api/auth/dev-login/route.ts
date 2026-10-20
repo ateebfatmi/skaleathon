@@ -2,9 +2,22 @@ import { NextRequest, NextResponse } from 'next/server';
 import { EventRepository } from '@/lib/db/repository';
 import { createSessionCookie } from '@/lib/auth/session';
 import { UserRole } from '@/lib/db/types';
+import { checkRateLimit } from '@/lib/security/rate-limit';
 
 export async function POST(req: NextRequest) {
   try {
+    if (process.env.NODE_ENV === 'production' || process.env.ENABLE_DEV_LOGIN !== 'true') {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    }
+
+    const rateLimit = checkRateLimit(req, 'dev-login', 10, 60_000);
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: 'Too many login attempts. Please try again shortly.' },
+        { status: 429, headers: { 'Retry-After': String(rateLimit.retryAfterSeconds) } }
+      );
+    }
+
     const body = await req.json();
     const { email, fullName, role = 'participant' } = body;
 
@@ -13,11 +26,16 @@ export async function POST(req: NextRequest) {
     }
 
     const cleanEmail = email.toLowerCase().trim();
-    const adminEmails = (process.env.ADMIN_EMAILS || 'skalekraft@gmail.com')
+    const adminEmails = (process.env.ADMIN_EMAILS || '')
       .split(',')
       .map((e) => e.trim().toLowerCase());
 
     // Role security check: public login cannot set admin unless email is in ADMIN_EMAILS
+    const allowedRoles: UserRole[] = ['participant', 'team_leader', 'judge', 'admin'];
+    if (!allowedRoles.includes(role)) {
+      return NextResponse.json({ error: 'Invalid development role.' }, { status: 400 });
+    }
+
     let assignedRole: UserRole = role;
     if (assignedRole === 'admin' && !adminEmails.includes(cleanEmail)) {
       return NextResponse.json(

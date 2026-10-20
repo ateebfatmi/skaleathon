@@ -5,10 +5,10 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { ClerkProvider } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
-import Script from 'next/script';
 import AudioToggle from '@/components/layout/AudioToggle';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 import InteractiveAmbientBackground from '@/components/layout/InteractiveAmbientBackground';
+import { EventRepository } from '@/lib/db/repository';
 
 const instrumentSerif = Instrument_Serif({
   weight: '400',
@@ -21,7 +21,7 @@ const instrumentSerif = Instrument_Serif({
 export const metadata: Metadata = {
   title: 'Skaleathon',
   description:
-    'SkaleKraft presents Skaleathon: Build. Innovate. Scale. National online hackathon across India with ₹35,000 prize pool, ₹99 registration fee, certificates for top 25 teams, and interview opportunities.',
+    'SkaleKraft presents Skaleathon: a national online hackathon for builders across India.',
   keywords: [
     'Skaleathon',
     'SkaleKraft',
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   openGraph: {
     title: 'Skaleathon',
-    description: 'Build. Innovate. Scale. Compete for ₹35,000 prize pool across AI/ML, Web, and App development tracks.',
+    description: 'Build. Innovate. Scale. Compete across AI/ML, Web, and App development tracks.',
     url: '/',
     siteName: 'Skaleathon',
     locale: 'en_IN',
@@ -56,11 +56,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const event = await EventRepository.getEvent();
+
   return (
     <ClerkProvider
       appearance={{
@@ -91,23 +93,17 @@ export default function RootLayout({
 
 
           <ErrorBoundary fallback={null}>
-            <Navbar />
+            <Navbar event={event} />
           </ErrorBoundary>
           <ErrorBoundary fallback={null}>
             <main className="relative z-10 flex-1">{children}</main>
           </ErrorBoundary>
           <ErrorBoundary fallback={null}>
-            <Footer />
+            <Footer event={event} />
           </ErrorBoundary>
           <ErrorBoundary fallback={null}>
             <AudioToggle />
           </ErrorBoundary>
-
-          {/* Razorpay Standard Checkout SDK */}
-          <Script
-            src="https://checkout.razorpay.com/v1/checkout.js"
-            strategy="lazyOnload"
-          />
         </body>
       </html>
     </ClerkProvider>

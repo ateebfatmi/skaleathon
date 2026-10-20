@@ -2,9 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireJudge } from '@/lib/auth/server-guard';
 import { EventRepository } from '@/lib/db/repository';
 import { judgingScoreSchema } from '@/lib/validation/schemas';
+import { checkRateLimit } from '@/lib/security/rate-limit';
 
 export async function POST(req: NextRequest) {
   try {
+    const rateLimit = checkRateLimit(req, 'judging-score', 30, 60_000);
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: 'Too many scoring requests. Please retry shortly.' },
+        { status: 429, headers: { 'Retry-After': String(rateLimit.retryAfterSeconds) } }
+      );
+    }
     const session = await requireJudge();
     const body = await req.json();
 

@@ -10,7 +10,7 @@ declare global {
 }
 
 interface RazorpayCheckoutButtonProps {
-  amountPaise?: number; // amount in paise (default: 9900 paise = ₹99)
+  amountPaise?: number;
   currency?: string; // currency code (default: INR)
   name?: string; // customer or team name
   email?: string;
@@ -100,7 +100,7 @@ export default function RazorpayCheckoutButton({
         key: keyId,
         amount: orderData.amount,
         currency: orderData.currency || currency,
-        name: 'SkaleKraft — Skaleathon 2028',
+        name: 'SkaleKraft — Skaleathon',
         description: 'Team Registration Fee',
         image: '/icon.png',
         order_id: orderData.order_id,
@@ -111,7 +111,7 @@ export default function RazorpayCheckoutButton({
         },
         notes: {
           ...notes,
-          platform: 'Skaleathon 2028 Web Checkout',
+          platform: 'Skaleathon Web Checkout',
         },
         theme: {
           color: '#805948',

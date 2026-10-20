@@ -8,9 +8,9 @@ export const revalidate = 0;
 export default async function VerifyCertificatePage({
   params,
 }: {
-  params: { certificateId: string };
+  params: Promise<{ certificateId: string }>;
 }) {
-  const code = params.certificateId;
+  const { certificateId: code } = await params;
   const cert = await EventRepository.getCertificateByCode(code);
 
   return (

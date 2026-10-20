@@ -72,7 +72,7 @@ export default function AdminRegistrationsPage() {
             className="w-full sm:w-48 rounded-xl border border-white/10 bg-[#141414] px-3 py-2 text-xs text-white focus:border-brand-500 focus:outline-none"
           >
             <option value="">All Payment States</option>
-            <option value="paid">Verified Paid (₹99)</option>
+            <option value="paid">Verified Paid</option>
             <option value="registered">Registered (Pending)</option>
             <option value="disqualified">Disqualified</option>
           </select>

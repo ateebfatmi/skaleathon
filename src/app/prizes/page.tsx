@@ -4,6 +4,12 @@ import { EventRepository } from '@/lib/db/repository';
 import { Trophy, Award, ArrowRight } from 'lucide-react';
 import { formatINR } from '@/lib/utils';
 import { EditorialIndexBar } from '@/components/ui/EditorialIndexBar';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Prizes and Recognition | Skaleathon',
+  description: 'Review Skaleathon prizes, merit certificates, and finalist opportunities.',
+};
 
 export const revalidate = 0;
 
@@ -54,7 +60,7 @@ export default async function PrizesPage() {
                   href="/register"
                   className="group inline-flex items-center gap-1.5 text-[#e8c5b4] hover:text-white transition-colors font-semibold"
                 >
-                  <span>Register Squad (₹99)</span>
+                  <span>Register Squad ({formatINR(event.registration_fee_inr)})</span>
                   <ArrowRight className="h-3 w-3 text-[#c19a88] group-hover:translate-x-0.5 transition-transform" />
                 </Link>
               </div>
@@ -70,7 +76,7 @@ export default async function PrizesPage() {
               </h1>
 
               <p className="border-l-2 border-[#c19a88]/45 pl-4 text-sm sm:text-[15px] text-neutral-300/90 leading-relaxed font-light">
-                SkaleKraft has allocated an official cash prize pool of {formatINR(event.prize_pool_inr || 35000)} alongside Top 25 National Merit Citations and direct engineering interview opportunities.
+                SkaleKraft has allocated an official cash prize pool of {formatINR(event.prize_pool_inr)} alongside top {event.certificates_top_n} National Merit Citations and direct engineering interview opportunities.
               </p>
             </div>
 
@@ -81,7 +87,7 @@ export default async function PrizesPage() {
                 { num: '01', label: `1st Prize: ${formatINR(event.first_prize_inr || 20000)}`, href: '#podium' },
                 { num: '02', label: `2nd Prize: ${formatINR(event.second_prize_inr || 10000)}`, href: '#podium' },
                 { num: '03', label: `3rd Prize: ${formatINR(event.third_prize_inr || 5000)}`, href: '#podium' },
-                { num: '04', label: 'Top 25 Merit & Careers', href: '#career' },
+                { num: '04', label: `Top ${event.certificates_top_n} Merit & Careers`, href: '#career' },
               ]}
             />
           </header>
@@ -190,10 +196,10 @@ export default async function PrizesPage() {
                   <span className="font-mono text-2xl font-light text-white/10 select-none">01</span>
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-                  Top 25 Squads — Verified Merit Citations
+                  Top {event.certificates_top_n} Squads — Verified Merit Citations
                 </h3>
                 <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-                  All enrolled members of the Top 25 ranked squads receive an official, verifiable Certificate of Engineering Merit issued by SkaleKraft.
+                  All enrolled members of the top {event.certificates_top_n} ranked squads receive an official, verifiable Certificate of Engineering Merit issued by SkaleKraft.
                 </p>
               </div>
 

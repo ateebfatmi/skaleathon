@@ -2,12 +2,23 @@ import React from 'react';
 import Link from 'next/link';
 import FaqSection from '@/components/home/FaqSection';
 import { ArrowRight, Mail } from 'lucide-react';
+import type { Metadata } from 'next';
+import { EventRepository } from '@/lib/db/repository';
+import { formatINR } from '@/lib/utils';
 
-export default function FaqPage() {
+export const metadata: Metadata = {
+  title: 'Frequently Asked Questions | Skaleathon',
+  description: 'Answers about Skaleathon registration, teams, tracks, judging, prizes, and certificates.',
+};
+
+export default async function FaqPage() {
+  const event = await EventRepository.getEvent();
+
   return (
     <div className="py-10 sm:py-16 bg-[#0B0B0B] min-h-screen relative overflow-hidden">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="relative w-full space-y-12 pb-24 text-neutral-200">
+          <h1 className="sr-only">Skaleathon frequently asked questions</h1>
           {/* Subtle Background Ambient Glows */}
           <div className="pointer-events-none absolute -top-20 right-10 h-96 w-96 rounded-full bg-[#c19a88]/15 blur-[160px]" />
 
@@ -42,14 +53,14 @@ export default function FaqPage() {
                   href="/register"
                   className="group inline-flex items-center gap-1.5 text-[#e8c5b4] hover:text-white transition-colors font-semibold"
                 >
-                  <span>Register Squad (₹99)</span>
+                  <span>Register Squad ({formatINR(event.registration_fee_inr)})</span>
                   <ArrowRight className="h-3 w-3 text-[#c19a88] group-hover:translate-x-0.5 transition-transform" />
                 </Link>
               </div>
             </div>
           </header>
 
-          <FaqSection />
+          <FaqSection event={event} />
 
           {/* Open Support Footer Strip (No Boxy Card) */}
           <footer className="pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-4">

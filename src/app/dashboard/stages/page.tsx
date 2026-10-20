@@ -62,7 +62,7 @@ export default async function DashboardStagesPage() {
       description:
         'The primary development sprint. Deliver a production-grade codebase in a public GitHub repository and a live deployed URL on cloud hosting. A 2–3 minute video walkthrough is not strictly necessary, but will give your team a distinct evaluation advantage.',
       format: 'GitHub + Live Demo URL (Video Link Optional Advantage)',
-      schedule: 'Jan 17–26, 2028',
+      schedule: 'Jan 16/17–25/26, 2028',
       weightage: 'Primary Evaluation (60% Weight)',
       criteria: 'Code cleanliness, architecture resilience, live functionality, UX finish, cloud deployment',
       deliverables: [
@@ -86,7 +86,7 @@ export default async function DashboardStagesPage() {
         'Top finalist teams are invited to present their solution live before an esteemed jury panel composed of SkaleKraft leaders, senior engineers, and industry venture scouts. Teams defend their architecture and respond to live judge inquiries.',
       format: 'Live Video Presentation & Judge Q&A (10 mins)',
       schedule: 'Jan 29–30, 2028',
-      weightage: 'Determines ₹35,000 Prize Distribution',
+      weightage: 'Determines Configured Prize Distribution',
       criteria: 'Live demonstration efficacy, technical depth under questioning, commercial readiness',
       deliverables: [
         'Live Screen-Share Demonstration',

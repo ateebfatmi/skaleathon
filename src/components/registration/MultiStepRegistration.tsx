@@ -28,7 +28,7 @@ import {
   Shield,
   UserCheck,
 } from 'lucide-react';
-import { EventTrack } from '@/lib/db/types';
+import { EventData, EventTrack } from '@/lib/db/types';
 import { LocationInput } from './LocationInput';
 import { INDIAN_STATES, MAJOR_INDIAN_CITIES } from '@/data/indiaLocations';
 
@@ -39,13 +39,40 @@ interface Member {
   college_or_org: string;
 }
 
+let razorpayLoader: Promise<boolean> | null = null;
+
+function loadRazorpayCheckout(): Promise<boolean> {
+  if (typeof window === 'undefined') return Promise.resolve(false);
+  if (window.Razorpay) return Promise.resolve(true);
+  if (razorpayLoader) return razorpayLoader;
+
+  razorpayLoader = new Promise((resolve) => {
+    const existing = document.querySelector<HTMLScriptElement>(
+      'script[src="https://checkout.razorpay.com/v1/checkout.js"]'
+    );
+    const script = existing || document.createElement('script');
+
+    script.addEventListener('load', () => resolve(Boolean(window.Razorpay)), { once: true });
+    script.addEventListener('error', () => resolve(false), { once: true });
+    if (!existing) {
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.async = true;
+      document.head.appendChild(script);
+    }
+  });
+
+  return razorpayLoader;
+}
+
 export default function MultiStepRegistration({
   tracks,
+  event,
   initialTrackId,
   isModal = false,
   onClose,
 }: {
   tracks: EventTrack[];
+  event: EventData;
   initialTrackId?: string;
   isModal?: boolean;
   onClose?: () => void;
@@ -142,7 +169,7 @@ export default function MultiStepRegistration({
   }, []);
 
   const addMember = () => {
-    if (members.length < 5) {
+    if (members.length < event.max_team_size - 1) {
       setMembers([...members, { name: '', email: '', phone: '', college_or_org: '' }]);
     }
   };
@@ -321,18 +348,24 @@ export default function MultiStepRegistration({
     };
 
     try {
+      const checkoutLoaded = await loadRazorpayCheckout();
+
       // Check if window.Razorpay is available for Standard Web Checkout
-      if (typeof window !== 'undefined' && window.Razorpay) {
+      if (checkoutLoaded && typeof window !== 'undefined' && window.Razorpay) {
         const keyId =
           paymentOrder.keyId ||
           process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ||
-          'rzp_test_TprfRK3zhNYH43';
+          '';
+
+        if (!keyId) {
+          throw new Error('Payment gateway is not configured. Please contact the organizer.');
+        }
 
         const rzp = new window.Razorpay({
           key: keyId,
-          amount: (paymentOrder.amount || 99) * 100,
+          amount: (paymentOrder.amount || event.registration_fee_inr) * 100,
           currency: paymentOrder.currency || 'INR',
-          name: 'SkaleKraft — Skaleathon 2028',
+          name: `SkaleKraft — ${event.name}`,
           description: `Team Registration: ${teamName}`,
           image: '/icon.png',
           order_id: paymentOrder.orderId,
@@ -386,12 +419,7 @@ export default function MultiStepRegistration({
         return;
       }
 
-      // Fallback sandbox simulation if Razorpay script is blocked or in offline sandbox
-      await executeVerification({
-        orderId: paymentOrder.orderId,
-        paymentId: `pay_${Math.random().toString(36).substring(2, 12)}`,
-        signature: `sandbox_sig_${Math.random().toString(36).substring(2, 16)}`,
-      });
+      throw new Error('Unable to load Razorpay Checkout. Please check your connection and try again.');
     } catch (err: any) {
       setErrorMessage(err.message);
     } finally {
@@ -511,7 +539,7 @@ export default function MultiStepRegistration({
 
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-neutral-300 mb-1.5 flex items-center justify-between">
+              <label htmlFor="team-name" className="block text-xs font-semibold text-neutral-300 mb-1.5 flex items-center justify-between">
                 <span>Team Name <span className="text-red-400">*</span></span>
                 <span className="text-[10px] text-neutral-500 font-normal">Unique squad handle</span>
               </label>
@@ -520,6 +548,7 @@ export default function MultiStepRegistration({
                   <Users className="h-4 w-4" />
                 </div>
                 <input
+                  id="team-name"
                   type="text"
                   required
                   value={teamName}
@@ -532,9 +561,9 @@ export default function MultiStepRegistration({
 
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-xs font-semibold text-neutral-300">
+                <span className="block text-xs font-semibold text-neutral-300" id="track-label">
                   Competition Track <span className="text-red-400">*</span>
-                </label>
+                </span>
                 {hasPreselectedTrack && !isChangingTrack && (
                   <button
                     type="button"
@@ -585,6 +614,8 @@ export default function MultiStepRegistration({
                       <button
                         key={track.id}
                         type="button"
+                        aria-describedby="track-label"
+                        aria-pressed={isSelected}
                         onClick={() => {
                           setSelectedTrack(track.id);
                           if (hasPreselectedTrack) setIsChangingTrack(false);
@@ -662,7 +693,7 @@ export default function MultiStepRegistration({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-neutral-300 mb-1.5 flex items-center justify-between">
+              <label htmlFor="college-or-org" className="block text-xs font-semibold text-neutral-300 mb-1.5 flex items-center justify-between">
                 <span>College or Organization <span className="text-neutral-500 font-normal">(Optional)</span></span>
               </label>
               <div className="relative">
@@ -670,6 +701,7 @@ export default function MultiStepRegistration({
                   <Building className="h-4 w-4" />
                 </div>
                 <input
+                  id="college-or-org"
                   type="text"
                   value={collegeOrOrg}
                   onChange={(e) => setCollegeOrOrg(e.target.value)}
@@ -680,7 +712,7 @@ export default function MultiStepRegistration({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-neutral-300 mb-1.5 flex items-center justify-between">
+              <label htmlFor="team-description" className="block text-xs font-semibold text-neutral-300 mb-1.5 flex items-center justify-between">
                 <span>Short Team Description <span className="text-neutral-500 font-normal">(Optional)</span></span>
               </label>
               <div className="relative">
@@ -688,6 +720,7 @@ export default function MultiStepRegistration({
                   <FileText className="h-4 w-4" />
                 </div>
                 <textarea
+                  id="team-description"
                   rows={isModal ? 2 : 2}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
@@ -731,15 +764,15 @@ export default function MultiStepRegistration({
                 <span className="text-[10px] font-mono text-neutral-400">Roster Setup</span>
               </div>
               <h2 className={`${isModal ? 'text-base sm:text-lg' : 'text-xl sm:text-2xl'} font-bold text-white tracking-tight`}>
-                Team Members (1–6 Builders)
+                Team Members ({event.min_team_size}–{event.max_team_size} Builders)
               </h2>
               <p className="text-xs text-neutral-400 mt-0.5">
-                Participate as an individual engineer or add up to 5 teammates (flat ₹99 covers entire squad).
+                Participate individually or add up to {event.max_team_size - 1} teammates. The flat ₹{event.registration_fee_inr} fee covers the entire squad.
               </p>
             </div>
             <div className="inline-flex items-center gap-1.5 text-[11px] font-mono text-[#e8c5b4] bg-[#805948]/20 border border-[#c19a88]/30 px-3 py-1 rounded-full self-start sm:self-auto">
               <UserCheck className="h-3.5 w-3.5 text-[#c19a88]" />
-              <span>{1 + members.length} of 6 Enrolled</span>
+              <span>{1 + members.length} of {event.max_team_size} Enrolled</span>
             </div>
           </div>
 
@@ -757,7 +790,7 @@ export default function MultiStepRegistration({
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div>
-                <label className="block text-[11px] font-semibold text-neutral-300 mb-1">
+                <label htmlFor="leader-name" className="block text-[11px] font-semibold text-neutral-300 mb-1">
                   Full Name <span className="text-red-400">*</span>
                 </label>
                 <div className="relative">
@@ -765,6 +798,7 @@ export default function MultiStepRegistration({
                     <Users className="h-3.5 w-3.5" />
                   </div>
                   <input
+                    id="leader-name"
                     type="text"
                     required
                     value={leaderName}
@@ -776,7 +810,7 @@ export default function MultiStepRegistration({
               </div>
 
               <div>
-                <label className="block text-[11px] font-semibold text-neutral-300 mb-1">
+                <label htmlFor="leader-email" className="block text-[11px] font-semibold text-neutral-300 mb-1">
                   Email Address <span className="text-red-400">*</span>
                 </label>
                 <div className="relative">
@@ -784,6 +818,7 @@ export default function MultiStepRegistration({
                     <Mail className="h-3.5 w-3.5" />
                   </div>
                   <input
+                    id="leader-email"
                     type="email"
                     required
                     value={leaderEmail}
@@ -814,7 +849,7 @@ export default function MultiStepRegistration({
               </div>
 
               <div>
-                <label className="block text-[11px] font-semibold text-neutral-300 mb-1">
+                <label htmlFor="leader-phone" className="block text-[11px] font-semibold text-neutral-300 mb-1">
                   Phone Number <span className="text-red-400">*</span>
                 </label>
                 <div className="relative">
@@ -822,6 +857,7 @@ export default function MultiStepRegistration({
                     <Phone className="h-3.5 w-3.5" />
                   </div>
                   <input
+                    id="leader-phone"
                     type="tel"
                     inputMode="numeric"
                     maxLength={10}
@@ -886,6 +922,7 @@ export default function MultiStepRegistration({
                       <Users className="h-3.5 w-3.5" />
                     </div>
                     <input
+                      aria-label={`Member ${idx + 2} full name`}
                       type="text"
                       required
                       value={member.name}
@@ -901,6 +938,7 @@ export default function MultiStepRegistration({
                         <Mail className="h-3.5 w-3.5" />
                       </div>
                       <input
+                        aria-label={`Member ${idx + 2} email address`}
                         type="email"
                         required
                         value={member.email}
@@ -930,6 +968,7 @@ export default function MultiStepRegistration({
                         <Phone className="h-3.5 w-3.5" />
                       </div>
                       <input
+                        aria-label={`Member ${idx + 2} phone number`}
                         type="tel"
                         inputMode="numeric"
                         maxLength={10}
@@ -1053,7 +1092,7 @@ export default function MultiStepRegistration({
 
             <div className="flex items-center justify-between pt-2">
               <span className="text-neutral-300 font-bold">Total Registration Fee</span>
-              <span className="text-lg font-black text-[#e8c5b4] font-mono">₹99.00 (Flat Per Team)</span>
+              <span className="text-lg font-black text-[#e8c5b4] font-mono">₹{event.registration_fee_inr.toFixed(2)} (Flat Per Team)</span>
             </div>
           </div>
 
@@ -1068,10 +1107,10 @@ export default function MultiStepRegistration({
               />
               <span className="text-xs text-neutral-300 leading-relaxed">
                 I hereby certify that all information provided is accurate and all team members consent to participation. I accept the{' '}
-                <a href="/rules" target="_blank" className="text-[#c19a88] hover:text-[#e8c5b4] underline">Official Rules</a>,{' '}
-                <a href="/terms" target="_blank" className="text-[#c19a88] hover:text-[#e8c5b4] underline">Terms & Conditions</a>,{' '}
-                <a href="/privacy" target="_blank" className="text-[#c19a88] hover:text-[#e8c5b4] underline">Privacy Policy</a>, and the{' '}
-                <a href="/refund-policy" target="_blank" className="text-[#c19a88] hover:text-[#e8c5b4] underline">Refund Policy</a>.
+                <a href="/rules" target="_blank" rel="noopener noreferrer" className="text-[#c19a88] hover:text-[#e8c5b4] underline">Official Rules</a>,{' '}
+                <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-[#c19a88] hover:text-[#e8c5b4] underline">Terms & Conditions</a>,{' '}
+                <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-[#c19a88] hover:text-[#e8c5b4] underline">Privacy Policy</a>, and the{' '}
+                <a href="/refund-policy" target="_blank" rel="noopener noreferrer" className="text-[#c19a88] hover:text-[#e8c5b4] underline">Refund Policy</a>.
               </span>
             </label>
           </div>
@@ -1092,7 +1131,7 @@ export default function MultiStepRegistration({
               onClick={handleRegisterAndPay}
               className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#805948] via-[#9c6d58] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-7 py-3 text-xs font-bold text-white shadow-xl shadow-[#805948]/30 hover:shadow-[0_0_30px_rgba(193,154,136,0.35)] hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 transition-all"
             >
-              <span>{loading ? 'Registering Team...' : 'Proceed to Payment (₹99)'}</span>
+              <span>{loading ? 'Registering Team...' : `Proceed to Payment (₹${event.registration_fee_inr})`}</span>
               <ArrowRight className="h-4 w-4" />
             </button>
           </div>
@@ -1119,7 +1158,7 @@ export default function MultiStepRegistration({
                 Secure Razorpay Payment
               </h2>
               <p className="text-xs text-neutral-400 mt-0.5">
-                Finalize your team registration fee of ₹99 via Razorpay.
+                Finalize your team registration fee of ₹{event.registration_fee_inr} via Razorpay.
               </p>
             </div>
             <div className="flex items-center gap-1.5 text-xs font-semibold text-[#c19a88] bg-[#805948]/20 border border-[#c19a88]/30 px-3 py-1 rounded-full self-start sm:self-auto">
@@ -1166,7 +1205,7 @@ export default function MultiStepRegistration({
               className="w-full inline-flex items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-[#805948] via-[#9c6d58] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-7 py-3.5 text-sm font-bold text-white shadow-xl shadow-[#805948]/30 hover:shadow-[0_0_30px_rgba(193,154,136,0.35)] hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 transition-all cursor-pointer"
             >
               <CreditCard className="h-4 w-4" />
-              <span>{loading ? 'Verifying Gateway Signature...' : 'Pay ₹99 & Verify Signature'}</span>
+              <span>{loading ? 'Verifying Gateway Signature...' : `Pay ₹${event.registration_fee_inr} & Verify Signature`}</span>
             </button>
             <p className="text-center text-[10px] text-neutral-500 font-mono">
               * In sandbox mode without live merchant keys, the system executes an automated cryptographic signature exchange with server-side audit logging.
@@ -1188,11 +1227,11 @@ export default function MultiStepRegistration({
 
           <div className="space-y-2">
             <span className="text-[10px] font-bold uppercase tracking-widest text-[#c19a88] font-mono">
-              ✦ Authoritatively Verified // Cohort 2028
+              ✦ Authoritatively Verified // {event.name}
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-white">Registration Confirmed!</h1>
             <p className="text-xs sm:text-sm text-neutral-300 max-w-md mx-auto leading-relaxed">
-              Congratulations! Team <strong>{teamName}</strong> is officially registered for Skaleathon 2028 under the <strong>{currentTrackObj?.name}</strong>.
+              Congratulations! Team <strong>{teamName}</strong> is officially registered for {event.name} under the <strong>{currentTrackObj?.name}</strong>.
             </p>
           </div>
 
@@ -1208,7 +1247,7 @@ export default function MultiStepRegistration({
             </div>
             <div className="flex justify-between pb-2 border-b border-white/10">
               <span className="text-neutral-400">Payment Status:</span>
-              <span className="font-bold text-[#c19a88]">Verified Paid (₹99.00)</span>
+              <span className="font-bold text-[#c19a88]">Verified Paid (₹{event.registration_fee_inr.toFixed(2)})</span>
             </div>
             <div className="flex justify-between">
               <span className="text-neutral-400">Registered Members:</span>

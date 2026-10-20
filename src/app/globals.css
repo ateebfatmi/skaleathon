@@ -91,6 +91,64 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+/* GPU-composited star layers keep the hero lively without a per-frame canvas loop. */
+.hero-starfield {
+  pointer-events: none;
+  opacity: 0.72;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.78) 0 0.7px, transparent 0.9px),
+    radial-gradient(circle, rgba(232, 197, 180, 0.62) 0 0.9px, transparent 1.1px),
+    radial-gradient(circle, rgba(193, 154, 136, 0.46) 0 1px, transparent 1.25px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.35) 0 0.55px, transparent 0.8px);
+  background-position: 9px 17px, 71px 43px, 131px 89px, 37px 121px;
+  background-size: 97px 109px, 157px 139px, 211px 193px, 73px 83px;
+  animation: starfield-drift 12s linear infinite;
+  will-change: transform;
+}
+
+.hero-starfield::after {
+  content: '';
+  position: absolute;
+  inset: -5%;
+  background-image:
+    radial-gradient(circle, rgba(232, 197, 180, 0.8) 0 1.1px, transparent 1.4px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.54) 0 0.75px, transparent 1px);
+  background-position: 41px 23px, 113px 67px;
+  background-size: 263px 227px, 181px 167px;
+  opacity: 0.55;
+  animation:
+    starfield-parallax 8s ease-in-out infinite alternate,
+    starfield-twinkle 2.6s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+@keyframes starfield-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-2.5%, -14%, 0);
+  }
+}
+
+@keyframes starfield-parallax {
+  from {
+    transform: translate3d(-3%, 2%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(3%, -5%, 0) scale(1.025);
+  }
+}
+
+@keyframes starfield-twinkle {
+  from {
+    opacity: 0.32;
+  }
+  to {
+    opacity: 0.72;
+  }
+}
+
 @keyframes borderBeamRotation {
   0% {
     transform: translate(-50%, -50%) rotate(0deg);
@@ -134,5 +192,20 @@ body {
       height 160ms cubic-bezier(0.16, 1, 0.3, 1),
       opacity 140ms ease,
       border-color 200ms ease;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }

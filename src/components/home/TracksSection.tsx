@@ -1,25 +1,23 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { Bot, Globe, Smartphone, ArrowRight } from 'lucide-react';
-import { EventTrack } from '@/lib/db/types';
-import { motion } from 'framer-motion';
+import { EventData, EventTrack } from '@/lib/db/types';
 import { SpotlightCard } from '@/components/ui/spotlight-card';
-import RegistrationModal from '@/components/registration/RegistrationModal';
+
+const RegistrationModal = dynamic(
+  () => import('@/components/registration/RegistrationModal'),
+  { ssr: false }
+);
 
 interface TracksProps {
   tracks: EventTrack[];
+  event: EventData;
 }
 
-export default function TracksSection({ tracks }: TracksProps) {
-  const [registerModalOpen, setRegisterModalOpen] = useState(false);
-  const [selectedTrackForModal, setSelectedTrackForModal] = useState<string>('track-ai-ml');
-
-  const handleOpenRegistration = (trackId: string) => {
-    setSelectedTrackForModal(trackId);
-    setRegisterModalOpen(true);
-  };
+export default function TracksSection({ tracks, event }: TracksProps) {
+  const [selectedTrackId, setSelectedTrackId] = useState<string | null>(null);
 
   const iconMap: Record<string, any> = {
     'track-ai-ml': Bot,
@@ -33,13 +31,7 @@ export default function TracksSection({ tracks }: TracksProps) {
       <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-80 w-[70%] rounded-full bg-[#805948]/10 blur-[140px]" />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5 }}
-          className="text-center max-w-2xl mx-auto mb-16"
-        >
+        <div className="text-center max-w-2xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2.5 mb-3">
             <span className="h-px w-6 bg-[#c19a88]/70" />
             <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
@@ -57,7 +49,7 @@ export default function TracksSection({ tracks }: TracksProps) {
           <p className="mt-4 text-sm text-white/55 leading-relaxed font-light">
             Choose your arena. Build focused, production-grade solutions evaluated by domain experts according to uncompromising engineering criteria.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {tracks.map((track, idx) => {
@@ -70,14 +62,7 @@ export default function TracksSection({ tracks }: TracksProps) {
             const currentStack = techStacks[track.id] || ['Full-Stack', 'APIs', 'Cloud'];
 
             return (
-              <motion.div
-                key={track.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="h-full"
-              >
+              <div key={track.id} className="h-full">
                 <SpotlightCard
                   enableTilt
                   spotlightColor={idx === 0 ? 'rgba(52,211,153,0.12)' : idx === 1 ? 'rgba(56,189,248,0.12)' : 'rgba(251,191,36,0.12)'}
@@ -117,28 +102,30 @@ export default function TracksSection({ tracks }: TracksProps) {
                   <div className="mt-auto pt-6 border-t border-white/[0.07] flex items-center justify-between">
                     <button
                       type="button"
-                      onClick={() => handleOpenRegistration(track.id)}
+                      onClick={() => setSelectedTrackId(track.id)}
                       className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#c19a88] hover:text-white transition-colors cursor-pointer group/btn"
                     >
                       <span>Register for Track</span>
                       <ArrowRight className="h-3.5 w-3.5 group-hover/btn:translate-x-1.5 transition-transform" />
                     </button>
-                    <span className="text-[10px] font-mono text-white/30">₹99 / Team</span>
+                    <span className="text-[10px] font-mono text-white/30">₹{event.registration_fee_inr} / Team</span>
                   </div>
                 </SpotlightCard>
-              </motion.div>
+              </div>
             );
           })}
         </div>
       </div>
 
-      {/* Pop-up Candidate & Team Registration Modal */}
-      <RegistrationModal
-        isOpen={registerModalOpen}
-        onClose={() => setRegisterModalOpen(false)}
-        tracks={tracks}
-        selectedTrackId={selectedTrackForModal}
-      />
+      {selectedTrackId !== null && (
+        <RegistrationModal
+          isOpen
+          onClose={() => setSelectedTrackId(null)}
+          tracks={tracks}
+          event={event}
+          selectedTrackId={selectedTrackId}
+        />
+      )}
     </section>
   );
 }

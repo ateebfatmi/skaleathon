@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useId, useState, useRef, useEffect, useMemo } from 'react';
 import { ChevronDown, Check, MapPin, X } from 'lucide-react';
 
 interface LocationInputProps {
@@ -26,6 +26,7 @@ export function LocationInput({
   onSelectOption,
   helperText,
 }: LocationInputProps) {
+  const inputId = useId();
   const [isOpen, setIsOpen] = useState(false);
   const [highlightIndex, setHighlightIndex] = useState<number>(-1);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -140,7 +141,7 @@ export function LocationInput({
 
   return (
     <div ref={containerRef} className="relative w-full">
-      <label className="block text-xs font-semibold text-neutral-300 mb-1.5 flex items-center justify-between">
+      <label htmlFor={inputId} className="block text-xs font-semibold text-neutral-300 mb-1.5 flex items-center justify-between">
         <span>
           {label} {required && <span className="text-red-400">*</span>}
         </span>
@@ -151,6 +152,7 @@ export function LocationInput({
 
       <div className="relative">
         <input
+          id={inputId}
           ref={inputRef}
           type="text"
           required={required}
@@ -171,6 +173,10 @@ export function LocationInput({
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
           autoComplete="off"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-expanded={isOpen}
+          aria-controls={`${inputId}-options`}
           className={`w-full rounded-xl border border-white/10 pl-3.5 pr-10 py-2.5 text-xs text-white placeholder-neutral-500 transition-colors ${
             disabled
               ? 'bg-[#101010]/90 opacity-50 cursor-not-allowed border-white/5 select-none text-neutral-500'
@@ -219,6 +225,7 @@ export function LocationInput({
       {isOpen && !disabled && (
         <div className="absolute left-0 right-0 top-full mt-1.5 z-50 rounded-xl border border-white/10 bg-[#141414] shadow-2xl shadow-black/90 backdrop-blur-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-100">
           <ul
+            id={`${inputId}-options`}
             ref={listRef}
             className="max-h-56 overflow-y-auto py-1 divide-y divide-white/[0.04] scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent"
           >

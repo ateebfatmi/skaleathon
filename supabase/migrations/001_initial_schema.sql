@@ -294,7 +294,8 @@ CREATE INDEX IF NOT EXISTS idx_audit_logs_created ON audit_logs(created_at DESC)
 INSERT INTO events (
     id, name, tagline, organizer_name, organizer_website, status,
     registration_fee_inr, min_team_size, max_team_size, prize_pool_inr,
-    first_prize_inr, second_prize_inr, third_prize_inr, certificates_top_n
+    first_prize_inr, second_prize_inr, third_prize_inr, certificates_top_n,
+    registration_end_at, submission_deadline, results_announced_at
 ) VALUES (
     'skaleathon-2027',
     'Skaleathon 2027',
@@ -303,7 +304,10 @@ INSERT INTO events (
     'https://skalekraft.in',
     'registration_open',
     99.00, 1, 6, 35000.00,
-    20000.00, 10000.00, 5000.00, 25
+    20000.00, 10000.00, 5000.00, 25,
+    '2027-12-31T18:29:59.000Z',
+    '2028-01-26T18:29:59.000Z',
+    '2028-01-30T13:30:00.000Z'
 ) ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO event_tracks (id, event_id, name, slug, description, color_accent) VALUES

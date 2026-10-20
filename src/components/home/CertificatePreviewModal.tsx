@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
+import type { EventData } from '@/lib/db/types';
 import { Award, QrCode, ShieldCheck, Sparkles, X, CheckCircle2 } from 'lucide-react';
 import { cyberAudio } from '@/lib/cyber-sound';
 
-export default function CertificatePreviewModal() {
+export default function CertificatePreviewModal({ event }: { event: EventData }) {
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState('Alex Rivers');
   const [team, setTeam] = useState('NeuralCraft Lab');
@@ -43,7 +44,7 @@ export default function CertificatePreviewModal() {
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold text-white">Certificate Preview</h3>
-                  <p className="text-[11px] text-white/50">Preview official Skaleathon 2028 Top 25 certificate</p>
+                  <p className="text-[11px] text-white/50">Preview official {event.name} top {event.certificates_top_n} certificate</p>
                 </div>
               </div>
               <button
@@ -93,7 +94,7 @@ export default function CertificatePreviewModal() {
                   CERTIFICATE OF MERIT & DISTINCTION
                 </span>
                 <h4 className="text-xl sm:text-2xl font-bold font-serif italic text-white mt-1">
-                  Skaleathon 2028
+                  {event.name}
                 </h4>
               </div>
 
@@ -104,14 +105,14 @@ export default function CertificatePreviewModal() {
               </div>
 
               <p className="text-[11px] text-white/60 max-w-md mx-auto leading-relaxed font-light">
-                representing team <span className="text-white font-semibold">{team || 'Team Name'}</span>, achieved top honors among the Top 25 National Teams in the <span className="text-[#e8c5b4] font-medium">{track}</span>.
+                representing team <span className="text-white font-semibold">{team || 'Team Name'}</span>, achieved top honors among the top {event.certificates_top_n} national teams in the <span className="text-[#e8c5b4] font-medium">{track}</span>.
               </p>
 
               {/* Certificate Bottom Telemetry */}
               <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-left">
                 <div className="space-y-0.5">
                   <div className="text-[9px] font-mono text-white/40 uppercase tracking-wider">Certificate ID</div>
-                  <div className="text-[10px] font-mono text-[#c19a88] font-bold">SK2028-T25-99A8F4</div>
+                  <div className="text-[10px] font-mono text-[#c19a88] font-bold">SK-MERIT-PREVIEW</div>
                 </div>
 
                 <div className="flex items-center gap-2">

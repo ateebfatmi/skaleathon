@@ -6,9 +6,9 @@ import { Sparkles, Terminal, Cpu, Globe, Smartphone, ShieldCheck, Zap } from 'lu
 export default function TechMarquee() {
   const items = [
     { label: 'AI & Machine Learning Track', icon: Cpu, highlight: true },
-    { label: '₹35,000 Authorized Prize Pool', icon: Sparkles, highlight: false },
+    { label: 'Authorized Prize Pool', icon: Sparkles, highlight: false },
     { label: 'Web Architecture Track', icon: Globe, highlight: true },
-    { label: '₹99 Flat Team Registration', icon: Zap, highlight: false },
+    { label: 'Flat Team Registration', icon: Zap, highlight: false },
     { label: 'Mobile Systems Track', icon: Smartphone, highlight: true },
     { label: 'Top 25 Cryptographic Certificates', icon: ShieldCheck, highlight: false },
     { label: 'SkaleKraft Interview Opportunities', icon: Terminal, highlight: true },

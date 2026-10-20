@@ -1,13 +1,22 @@
-import { describe, it, expect } from 'vitest';
+import { afterEach, describe, it, expect } from 'vitest';
 import crypto from 'crypto';
 import { EventRepository } from '../src/lib/db/repository';
 import { verifyPaymentSignature, verifyWebhookSignature } from '../src/lib/razorpay/client';
 
 describe('Payment & Webhook Security Verification', () => {
+  const originalPaymentSecret = process.env.RAZORPAY_KEY_SECRET;
+  const originalWebhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
+
+  afterEach(() => {
+    process.env.RAZORPAY_KEY_SECRET = originalPaymentSecret;
+    process.env.RAZORPAY_WEBHOOK_SECRET = originalWebhookSecret;
+  });
+
   it('strictly validates payment signature using HMAC SHA-256', () => {
     const orderId = 'order_test_12345';
     const paymentId = 'pay_test_67890';
-    const secret = 'skaleathon_sandbox_payment_secret';
+    const secret = 'test_payment_secret_32_characters_long';
+    process.env.RAZORPAY_KEY_SECRET = secret;
 
     const text = `${orderId}|${paymentId}`;
     const validSignature = crypto.createHmac('sha256', secret).update(text).digest('hex');
@@ -25,6 +34,21 @@ describe('Payment & Webhook Security Verification', () => {
       signature: 'forged_fake_signature_abc',
     });
     expect(isInvalid).toBe(false);
+  });
+
+  it('fails closed when the webhook secret is missing', () => {
+    delete process.env.RAZORPAY_WEBHOOK_SECRET;
+    expect(verifyWebhookSignature('{"event":"payment.captured"}', 'forged')).toBe(false);
+  });
+
+  it('accepts only a valid webhook HMAC', () => {
+    const secret = 'test_webhook_secret_32_characters_long';
+    const body = '{"event":"payment.captured"}';
+    process.env.RAZORPAY_WEBHOOK_SECRET = secret;
+    const signature = crypto.createHmac('sha256', secret).update(body).digest('hex');
+
+    expect(verifyWebhookSignature(body, signature)).toBe(true);
+    expect(verifyWebhookSignature(`${body} `, signature)).toBe(false);
   });
 
   it('handles duplicate webhook events idempotently', async () => {

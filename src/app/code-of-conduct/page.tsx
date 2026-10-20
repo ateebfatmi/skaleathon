@@ -1,12 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Code of Conduct | Skaleathon',
+  description: 'Standards of integrity, safety, inclusion, and respectful participation at Skaleathon.',
+};
 
 export default function CodeOfConductPage() {
   const sections = [
     {
       heading: '1. Our Collective Standard',
-      body: 'Skaleathon 2028 is dedicated to providing a safe, respectful, and harassment-free arena for everyone, regardless of gender identity, orientation, physical appearance, background, or skill level.',
+      body: 'Skaleathon is dedicated to providing a safe, respectful, and harassment-free arena for everyone, regardless of gender identity, orientation, physical appearance, background, or skill level.',
     },
     {
       heading: '2. Expected Conduct',
@@ -23,7 +29,7 @@ export default function CodeOfConductPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#0B0B0B] px-5 pb-24 pt-28 text-white md:px-10 md:pt-32">
+    <div className="min-h-screen bg-[#0B0B0B] px-5 pb-24 pt-28 text-white md:px-10 md:pt-32">
       <section className="mx-auto max-w-3xl">
         <Link
           href="/"
@@ -36,7 +42,7 @@ export default function CodeOfConductPage() {
         <h1 className="mt-3 text-4xl font-medium tracking-tight sm:text-6xl text-white">Code of Conduct</h1>
         <p className="mt-3 text-sm text-white/40">Last updated: October 2026 • Version 1.0</p>
         <p className="mt-6 text-base leading-relaxed text-white/65 font-light">
-          Standards of integrity, safety, and respect for all competitors, evaluators, and partners in Skaleathon 2028.
+          Standards of integrity, safety, and respect for all competitors, evaluators, and partners in Skaleathon.
         </p>
 
         <div className="mt-12 space-y-10">
@@ -58,6 +64,6 @@ export default function CodeOfConductPage() {
           </p>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

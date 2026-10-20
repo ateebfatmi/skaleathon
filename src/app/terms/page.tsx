@@ -1,12 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Terms and Conditions | Skaleathon',
+  description: 'Terms governing registration, participation, intellectual property, and event operations.',
+};
 
 export default function TermsPage() {
   const sections = [
     {
       heading: '1. Agreement to Terms',
-      body: 'By accessing the Skaleathon 2028 platform, registering a team, or completing fee payment, you agree to be bound by these Terms and Conditions and our Official Competition Rules.',
+      body: 'By accessing the Skaleathon platform, registering a team, or completing fee payment, you agree to be bound by these Terms and Conditions and our Official Competition Rules.',
     },
     {
       heading: '2. Team Responsibilities',
@@ -14,7 +20,7 @@ export default function TermsPage() {
     },
     {
       heading: '3. Intellectual Property Rights',
-      body: 'Participants retain 100% intellectual property ownership of the software, design, and code they build during Skaleathon 2028. SkaleKraft claims zero ownership over your code repository or product. By submitting, teams grant SkaleKraft a non-exclusive license to showcase the project title, team name, and public demonstration video for event promotional purposes.',
+      body: 'Participants retain 100% intellectual property ownership of the software, design, and code they build during Skaleathon. SkaleKraft claims zero ownership over your code repository or product. By submitting, teams grant SkaleKraft a non-exclusive license to showcase the project title, team name, and public demonstration video for event promotional purposes.',
     },
     {
       heading: '4. Internship Opportunity Disclaimer',
@@ -27,7 +33,7 @@ export default function TermsPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#0B0B0B] px-5 pb-24 pt-28 text-white md:px-10 md:pt-32">
+    <div className="min-h-screen bg-[#0B0B0B] px-5 pb-24 pt-28 text-white md:px-10 md:pt-32">
       <section className="mx-auto max-w-3xl">
         <Link
           href="/"
@@ -40,7 +46,7 @@ export default function TermsPage() {
         <h1 className="mt-3 text-4xl font-medium tracking-tight sm:text-6xl text-white">Terms & Conditions</h1>
         <p className="mt-3 text-sm text-white/40">Last updated: October 2026 • Version 1.0</p>
         <p className="mt-6 text-base leading-relaxed text-white/65 font-light">
-          These Terms govern team registration, participation, and intellectual property rights for Skaleathon 2028.
+          These Terms govern team registration, participation, and intellectual property rights for Skaleathon.
         </p>
 
         <div className="mt-12 space-y-10">
@@ -62,6 +68,6 @@ export default function TermsPage() {
           </p>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

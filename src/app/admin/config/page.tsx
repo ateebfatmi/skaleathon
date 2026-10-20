@@ -128,7 +128,7 @@ export default function AdminConfigPage() {
           >
             <option value="draft">Draft (Private Testing)</option>
             <option value="upcoming">Upcoming (Dates Announced)</option>
-            <option value="registration_open">Registration Open (Accepting Teams & ₹99 Fees)</option>
+            <option value="registration_open">Registration Open (Accepting Teams & Fees)</option>
             <option value="registration_closed">Registration Closed (Roster Frozen)</option>
             <option value="hacking_live">Hacking Live (Building Phase)</option>
             <option value="submission_closed">Submission Closed (Cutoff Enforced)</option>

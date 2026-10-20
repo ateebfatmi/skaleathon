@@ -2,8 +2,17 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { EditorialIndexBar } from '@/components/ui/EditorialIndexBar';
+import type { Metadata } from 'next';
+import { EventRepository } from '@/lib/db/repository';
+import { formatINR } from '@/lib/utils';
 
-export default function RulesPage() {
+export const metadata: Metadata = {
+  title: 'Official Rules | Skaleathon',
+  description: 'Read the official eligibility, team, submission, judging, and conduct rules for Skaleathon.',
+};
+
+export default async function RulesPage() {
+  const event = await EventRepository.getEvent();
   return (
     <div className="py-10 sm:py-16 bg-[#0B0B0B] min-h-screen relative overflow-hidden">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
@@ -30,10 +39,10 @@ export default function RulesPage() {
                 <span className="text-[#c19a88]">Competition Protocol {'//'} Governance &amp; Eligibility</span>
                 <span className="text-white/20">•</span>
                 <span className="text-neutral-400">
-                  Team Size: <strong className="text-white font-semibold">1 to 6 Members</strong>
+                  Team Size: <strong className="text-white font-semibold">{event.min_team_size} to {event.max_team_size} Members</strong>
                 </span>
                 <span className="text-white/20">•</span>
-                <span className="text-[#e8c5b4] font-semibold">[FLAT ₹99 PASS]</span>
+                <span className="text-[#e8c5b4] font-semibold">[FLAT {formatINR(event.registration_fee_inr)} PASS]</span>
               </div>
 
               <div className="flex items-center gap-5 text-xs">
@@ -118,10 +127,10 @@ export default function RulesPage() {
                   <span className="font-mono text-2xl font-light text-white/10 select-none">02</span>
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-                  1 to 6 Engineers • Flat ₹99 Pass
+                  {event.min_team_size} to {event.max_team_size} Engineers • Flat {formatINR(event.registration_fee_inr)} Pass
                 </h3>
                 <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-                  Squads may consist of 1 to 6 members (solo builders welcome). Each participant may belong to only one squad. A single flat ₹99 registration fee covers the entire squad.
+                  Squads may consist of {event.min_team_size} to {event.max_team_size} members. Each participant may belong to only one squad. A single flat {formatINR(event.registration_fee_inr)} registration fee covers the entire squad.
                 </p>
               </div>
             </div>
@@ -146,25 +155,25 @@ export default function RulesPage() {
                 {
                   num: '01',
                   title: 'Online Technical Screening Quiz',
-                  date: 'Jan 08, 2028',
+                  date: '8 Jan 2028',
                   desc: 'Timed 30–45 minute assessment evaluating CS fundamentals, algorithmic reasoning, and track domain aptitude.',
                 },
                 {
                   num: '02',
                   title: 'Idea & Architecture PPT (PDF)',
-                  date: 'Jan 10–14, 2028',
+                  date: '10–14 Jan 2028',
                   desc: 'Shortlisted squads submit a 10-slide PDF deck detailing their self-defined problem statement, architecture diagram, and schema.',
                 },
                 {
                   num: '03',
                   title: 'Engineering Sprint & Codebase',
-                  date: 'Jan 16–25, 2028',
+                  date: '16/17–25/26 Jan 2028',
                   desc: 'Squads build and submit a public GitHub repository and live deployed cloud URL (plus an optional 2–3 min demo walkthrough).',
                 },
                 {
                   num: '04',
                   title: 'Grand Finale Live Jury Defense',
-                  date: 'Jan 29–30, 2028',
+                  date: '29–30 Jan 2028',
                   desc: 'Top finalist squads defend their system architecture and live prototype before the SkaleKraft jury panel.',
                 },
               ].map((st) => (

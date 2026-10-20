@@ -11,6 +11,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { EditorialIndexBar } from '@/components/ui/EditorialIndexBar';
+import { formatINR } from '@/lib/utils';
 
 export const revalidate = 0;
 
@@ -142,7 +143,7 @@ export default async function DashboardLeaderboardPage() {
                   Initial Seeding &amp; Qualifier Cutoffs
                 </h3>
                 <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-                  The national leaderboard remains locked during the registration window. Once the Stage 01 Online Technical Quiz concludes on January 8, 2028, official screening percentiles and advancing squad seeds publish directly on this page.
+                  The national leaderboard remains locked during registration. Once the Stage 01 Online Technical Quiz concludes, official screening percentiles and advancing squad seeds publish directly on this page.
                 </p>
               </div>
 
@@ -158,7 +159,7 @@ export default async function DashboardLeaderboardPage() {
                   Blueprint, Build Sprint &amp; Finale Standings
                 </h3>
                 <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-                  Qualifying squads are tracked across Stage 02 (Architecture Blueprint), Stage 03 (10-Day Build Sprint), and Stage 04 (Live Grand Finale Defense) to determine the Top 25 National Merit Roster and podium champions.
+                  Qualifying squads are tracked across Stage 02 (Architecture Blueprint), Stage 03 (Build Sprint), and Stage 04 (Live Grand Finale Defense) to determine the top {event.certificates_top_n} National Merit Roster and podium champions.
                 </p>
               </div>
             </div>
@@ -179,7 +180,7 @@ export default async function DashboardLeaderboardPage() {
                 </h2>
               </div>
               <span className="text-[10px] font-mono uppercase tracking-widest text-[#e8c5b4]">
-                ₹35,000 Total Cash Pool
+                {formatINR(event.prize_pool_inr)} Total Cash Pool
               </span>
             </div>
 
@@ -189,28 +190,28 @@ export default async function DashboardLeaderboardPage() {
                   rank: '01',
                   title: 'National Champion (1st Place)',
                   desc: 'Highest cumulative score across technical architecture, innovation, and live jury defense.',
-                  reward: '₹20,000 Cash + Winner Citation',
+                  reward: `${formatINR(event.first_prize_inr)} Cash + Winner Citation`,
                   accent: 'text-[#e8c5b4]',
                 },
                 {
                   rank: '02',
                   title: 'First Runner-Up (2nd Place)',
                   desc: 'Exceptional engineering execution, production readiness, and real-world domain scalability.',
-                  reward: '₹10,000 Cash + Runner-Up Citation',
+                  reward: `${formatINR(event.second_prize_inr)} Cash + Runner-Up Citation`,
                   accent: 'text-white',
                 },
                 {
                   rank: '03',
                   title: 'Second Runner-Up (3rd Place)',
                   desc: 'Outstanding technical prototype, problem formulation, and interface craft.',
-                  reward: '₹5,000 Cash + Finalist Citation',
+                  reward: `${formatINR(event.third_prize_inr)} Cash + Finalist Citation`,
                   accent: 'text-[#c19a88]',
                 },
                 {
-                  rank: '25',
-                  title: 'Top 25 National Merit Roster',
-                  desc: 'Official national rank citation and verified achievement credentials for the top 25 squads.',
-                  reward: 'Top 25 Merit Distinction',
+                  rank: String(event.certificates_top_n).padStart(2, '0'),
+                  title: `Top ${event.certificates_top_n} National Merit Roster`,
+                  desc: `Official national rank citation and verified achievement credentials for the top ${event.certificates_top_n} squads.`,
+                  reward: `Top ${event.certificates_top_n} Merit Distinction`,
                   accent: 'text-emerald-400',
                 },
               ].map((tier) => (
@@ -273,7 +274,7 @@ export default async function DashboardLeaderboardPage() {
                 {results.map((entry, index) => {
                   const rank = index + 1;
                   const isTop3 = rank <= 3;
-                  const isTop25 = rank <= 25;
+                  const isTop25 = rank <= event.certificates_top_n;
 
                   return (
                     <tr
@@ -313,7 +314,7 @@ export default async function DashboardLeaderboardPage() {
                         ) : isTop25 ? (
                           <span className="inline-flex items-center gap-1 text-emerald-400 font-semibold">
                             <Award className="h-3 w-3" />
-                            <span>Top 25 Merit</span>
+                            <span>Top {event.certificates_top_n} Merit</span>
                           </span>
                         ) : (
                           <span className="text-neutral-500">Participant</span>

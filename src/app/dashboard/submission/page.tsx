@@ -208,7 +208,7 @@ export default function SubmissionPage() {
           </span>
           <h2 className="text-2xl font-bold text-white tracking-tight">Verified Registration Required</h2>
           <p className="text-xs text-neutral-400 max-w-md mx-auto leading-relaxed font-light">
-            In accordance with Skaleathon rules, only squads with a confirmed ₹99 registration pass are authorized to submit stage deliverables.
+            In accordance with Skaleathon rules, only squads with a confirmed paid registration pass are authorized to submit stage deliverables.
           </p>
         </div>
         <div className="relative z-10 pt-2">
@@ -216,7 +216,7 @@ export default function SubmissionPage() {
             onClick={() => router.push('/register')}
             className="rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-7 py-3 text-xs font-bold text-white shadow-lg shadow-[#805948]/30 hover:scale-105 transition-all"
           >
-            Complete ₹99 Team Registration
+            Complete Team Registration
           </button>
         </div>
       </div>
@@ -480,7 +480,7 @@ export default function SubmissionPage() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div>
             <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
-              02 // Stage 03 Build Sprint • Jan 16–25, 2028
+              02 // Stage 03 Build Sprint • Jan 16/17–25/26, 2028
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
               Working Prototype &amp;{' '}

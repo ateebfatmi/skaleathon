@@ -4,10 +4,10 @@ import { generateCertificatePDF } from '@/lib/certificates/generator';
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const code = params.id;
+    const { id: code } = await params;
     const cert = await EventRepository.getCertificateByCode(code);
 
     if (!cert) {

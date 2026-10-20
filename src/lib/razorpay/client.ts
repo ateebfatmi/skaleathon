@@ -61,7 +61,11 @@ export async function createRazorpayOrder(params: {
     }
   }
 
-  // Deterministic Sandbox Mock Order for local development / testing
+  if (process.env.NODE_ENV === 'production' || process.env.ENABLE_PAYMENT_SANDBOX !== 'true') {
+    throw new Error('Razorpay is not configured. Set gateway credentials before accepting payments.');
+  }
+
+  // Explicit local-development sandbox order.
   const sandboxOrderId = `order_sbx_${Math.random().toString(36).substring(2, 12)}`;
   return {
     orderId: sandboxOrderId,
@@ -81,14 +85,15 @@ export function verifyPaymentSignature(params: {
 }): boolean {
   const keySecret = process.env.RAZORPAY_KEY_SECRET;
 
-  // In sandbox dev mode if secret is placeholder or omitted:
+  // Explicit local-only sandbox mode. Production always fails closed.
   if (!keySecret || keySecret.includes('placeholder')) {
-    // Check sandbox signature convention or sha256 with fallback secret
+    if (process.env.NODE_ENV === 'production' || process.env.ENABLE_PAYMENT_SANDBOX !== 'true') {
+      return false;
+    }
     const secret = 'skaleathon_sandbox_payment_secret';
     const text = `${params.orderId}|${params.paymentId}`;
     const expected = crypto.createHmac('sha256', secret).update(text).digest('hex');
-    // Accept either sandbox generated sig or simple test match
-    return params.signature === expected || params.signature.startsWith('sandbox_sig_');
+    return params.signature === expected;
   }
 
   const text = `${params.orderId}|${params.paymentId}`;
@@ -97,9 +102,11 @@ export function verifyPaymentSignature(params: {
     .update(text)
     .digest('hex');
 
-  return crypto.timingSafeEqual(
-    Buffer.from(generatedSignature),
-    Buffer.from(params.signature)
+  const expectedBuffer = Buffer.from(generatedSignature);
+  const actualBuffer = Buffer.from(params.signature);
+  return (
+    expectedBuffer.length === actualBuffer.length &&
+    crypto.timingSafeEqual(expectedBuffer, actualBuffer)
   );
 }
 
@@ -109,7 +116,7 @@ export function verifyPaymentSignature(params: {
 export function verifyWebhookSignature(payloadRaw: string, signature: string): boolean {
   const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
   if (!webhookSecret || webhookSecret.includes('placeholder')) {
-    return true; // Dev fallback
+    return false;
   }
 
   const expectedSignature = crypto
@@ -117,8 +124,10 @@ export function verifyWebhookSignature(payloadRaw: string, signature: string): b
     .update(payloadRaw)
     .digest('hex');
 
-  return crypto.timingSafeEqual(
-    Buffer.from(expectedSignature),
-    Buffer.from(signature)
+  const expectedBuffer = Buffer.from(expectedSignature);
+  const actualBuffer = Buffer.from(signature);
+  return (
+    expectedBuffer.length === actualBuffer.length &&
+    crypto.timingSafeEqual(expectedBuffer, actualBuffer)
   );
 }

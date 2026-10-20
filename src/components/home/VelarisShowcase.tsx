@@ -109,7 +109,7 @@ export default function VelarisShowcase() {
                     href="/register"
                     className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-6 py-3 text-xs sm:text-sm font-bold text-white shadow-[0_4px_25px_rgba(128,89,72,0.4)] hover:scale-105 transition-transform"
                   >
-                    <span>Register Team — ₹99</span>
+                    <span>Register Team</span>
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </div>

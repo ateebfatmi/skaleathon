@@ -1,10 +1,7 @@
-'use client';
-
 import React from 'react';
 import { Trophy, Award, Briefcase, Sparkles, CheckCircle2 } from 'lucide-react';
 import { formatINR } from '@/lib/utils';
 import { EventData } from '@/lib/db/types';
-import { motion } from 'framer-motion';
 import { SpotlightCard } from '@/components/ui/spotlight-card';
 import CertificatePreviewModal from '@/components/home/CertificatePreviewModal';
 
@@ -50,13 +47,7 @@ export default function PrizesSection({ event }: PrizesProps) {
       <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-[75%] rounded-full bg-[#805948]/10 blur-[150px]" />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5 }}
-          className="text-center max-w-2xl mx-auto mb-16"
-        >
+        <div className="text-center max-w-2xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2.5 mb-3">
             <span className="h-px w-6 bg-[#c19a88]/70" />
             <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
@@ -72,21 +63,14 @@ export default function PrizesSection({ event }: PrizesProps) {
             .
           </h2>
           <p className="mt-4 text-sm text-white/55 leading-relaxed font-light">
-            ₹35,000 cash rewards, certificates for Top 25 teams, and internship opportunities for selected candidates with the SkaleKraft product team.
+            {formatINR(event.prize_pool_inr)} in cash rewards, certificates for the top {event.certificates_top_n} teams, and internship opportunities for selected candidates with the SkaleKraft product team.
           </p>
-        </motion.div>
+        </div>
 
         {/* Podium Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end max-w-5xl mx-auto mb-12">
           {prizes.map((prize, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className={`h-full ${prize.order} ${prize.isGrand ? 'md:-translate-y-4 z-10' : ''}`}
-            >
+            <div key={idx} className={`h-full ${prize.order} ${prize.isGrand ? 'md:-translate-y-4 z-10' : ''}`}>
               <SpotlightCard
                 enableTilt
                 spotlightColor={prize.spotlight}
@@ -133,20 +117,14 @@ export default function PrizesSection({ event }: PrizesProps) {
                   <span className="text-[#c19a88] font-mono text-[10px]">+ Certificate</span>
                 </div>
               </SpotlightCard>
-            </motion.div>
+            </div>
           ))}
         </div>
 
         {/* Additional Rewards Cards: Certificates & Internship */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {/* Top 25 Certificates */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5 }}
-            className="h-full"
-          >
+          <div className="h-full">
             <SpotlightCard
               spotlightColor="rgba(193,154,136,0.18)"
               className="h-full flex flex-col justify-between"
@@ -157,7 +135,7 @@ export default function PrizesSection({ event }: PrizesProps) {
                 </div>
                 <div>
                   <h3 className="text-sm sm:text-base font-semibold tracking-wide text-white">
-                    Top 25 Teams — Certificates
+                    Top {event.certificates_top_n} Teams — Certificates
                   </h3>
                   <p className="mt-1 text-xs text-white/50 leading-relaxed font-light">
                     All confirmed members of top 25 teams receive an official digital certificate of merit.
@@ -166,23 +144,17 @@ export default function PrizesSection({ event }: PrizesProps) {
               </div>
 
               <div className="mt-6 pt-4 border-t border-white/[0.08] flex items-center justify-between">
-                <CertificatePreviewModal />
+                <CertificatePreviewModal event={event} />
                 <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1">
                   <CheckCircle2 className="h-3 w-3" />
                   <span>Official</span>
                 </span>
               </div>
             </SpotlightCard>
-          </motion.div>
+          </div>
 
           {/* Internship Opportunity */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="h-full"
-          >
+          <div className="h-full">
             <SpotlightCard
               spotlightColor="rgba(193,154,136,0.18)"
               className="h-full flex flex-col justify-between"
@@ -208,7 +180,7 @@ export default function PrizesSection({ event }: PrizesProps) {
                 <span className="text-[10px] font-mono text-[#c19a88]">Selected Candidates</span>
               </div>
             </SpotlightCard>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

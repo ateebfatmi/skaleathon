@@ -20,7 +20,12 @@ export const revalidate = 0;
 export default async function DashboardPage() {
   const session = await getCurrentSession();
   const team = session?.teamId ? await EventRepository.getTeam(session.teamId) : null;
-  const rawMembers = team ? await EventRepository.getTeamMembers(team.id) : [];
+  const [rawMembers, track] = team
+    ? await Promise.all([
+        EventRepository.getTeamMembers(team.id),
+        team.track_id ? EventRepository.getTrack(team.track_id) : Promise.resolve(null),
+      ])
+    : [[], null];
 
   const members =
     rawMembers.length > 0
@@ -39,7 +44,6 @@ export default async function DashboardPage() {
         ]
       : [];
 
-  const track = team?.track_id ? await EventRepository.getTrack(team.track_id) : null;
   const isPaid = team?.status === 'paid' || (team as any)?.status === 'confirmed';
   const firstName = session?.fullName?.split(' ')[0] || 'Innovator';
 

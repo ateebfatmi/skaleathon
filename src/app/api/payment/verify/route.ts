@@ -2,9 +2,19 @@ import { NextRequest, NextResponse } from 'next/server';
 import { EventRepository } from '@/lib/db/repository';
 import { verifyPaymentSignature } from '@/lib/razorpay/client';
 import { NotificationService } from '@/lib/notifications/service';
+import { requireTeamLeader } from '@/lib/auth/server-guard';
+import { checkRateLimit } from '@/lib/security/rate-limit';
 
 export async function POST(req: NextRequest) {
   try {
+    const rateLimit = checkRateLimit(req, 'payment-verify', 15, 60_000);
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: 'Too many verification attempts. Please try again shortly.' },
+        { status: 429, headers: { 'Retry-After': String(rateLimit.retryAfterSeconds) } }
+      );
+    }
+
     const body = await req.json().catch(() => ({}));
     const orderId = body.orderId || body.razorpay_order_id;
     const paymentId = body.paymentId || body.razorpay_payment_id;
@@ -21,6 +31,8 @@ export async function POST(req: NextRequest) {
     if (!order) {
       return NextResponse.json({ error: `Order ${orderId} does not exist.` }, { status: 404 });
     }
+
+    await requireTeamLeader(order.team_id);
 
     if (order.status === 'paid') {
       return NextResponse.json({
@@ -73,6 +85,9 @@ export async function POST(req: NextRequest) {
     });
   } catch (err: any) {
     console.error('Payment verification error:', err);
-    return NextResponse.json({ error: err.message || 'Payment verification failed' }, { status: 500 });
+    return NextResponse.json(
+      { error: err.message || 'Payment verification failed' },
+      { status: err.statusCode || 500 }
+    );
   }
 }

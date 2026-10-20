@@ -3,6 +3,7 @@ import { requireAuth } from '@/lib/auth/server-guard';
 import { EventRepository } from '@/lib/db/repository';
 import { submissionSchema } from '@/lib/validation/schemas';
 import { NotificationService } from '@/lib/notifications/service';
+import { checkRateLimit } from '@/lib/security/rate-limit';
 
 export async function GET(req: NextRequest) {
   try {
@@ -44,6 +45,13 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
+    const rateLimit = checkRateLimit(req, 'submission-write', 20, 60_000);
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: 'Too many submission requests. Please retry shortly.' },
+        { status: 429, headers: { 'Retry-After': String(rateLimit.retryAfterSeconds) } }
+      );
+    }
     const session = await requireAuth();
 
     if (!session.teamId) {

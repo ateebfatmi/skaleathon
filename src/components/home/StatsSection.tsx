@@ -1,10 +1,7 @@
-'use client';
-
 import React from 'react';
 import { Trophy, Users, Tag, Award, CheckCircle2 } from 'lucide-react';
 import { formatINR } from '@/lib/utils';
 import { EventData } from '@/lib/db/types';
-import { motion } from 'framer-motion';
 
 interface StatsProps {
   event: EventData;
@@ -37,7 +34,7 @@ export default function StatsSection({ event }: StatsProps) {
       label: 'TEAM SIZE RANGE',
       value: `${event.min_team_size}–${event.max_team_size}`,
       suffix: ' Innovators',
-      sublabel: 'Compete as a solo engineer or collaborate up to 6',
+      sublabel: `Compete solo or collaborate with up to ${event.max_team_size} builders`,
       badge: 'Flexible Roster',
       icon: Users,
       accentColor: '#c19a88',
@@ -48,7 +45,7 @@ export default function StatsSection({ event }: StatsProps) {
       label: 'OFFICIAL CERTIFICATES',
       value: `Top ${event.certificates_top_n || 25}`,
       suffix: ' Teams',
-      sublabel: 'Merit certificates awarded to Top 25 teams',
+      sublabel: `Merit certificates awarded to the top ${event.certificates_top_n} teams`,
       badge: 'Official',
       icon: Award,
       accentColor: '#805948',
@@ -62,11 +59,7 @@ export default function StatsSection({ event }: StatsProps) {
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-56 w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(128,89,72,0.12),transparent_70%)] blur-3xl" />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5 }}
+        <div
           className="mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4"
         >
           <div>
@@ -85,21 +78,17 @@ export default function StatsSection({ event }: StatsProps) {
             </h2>
           </div>
           <p className="text-xs text-white/40 max-w-xs sm:text-right">
-            Measurable prize pool, accessible flat registration, and certificates for Top 25 teams.
+            Measurable prize pool, accessible flat registration, and certificates for the top {event.certificates_top_n} teams.
           </p>
-        </motion.div>
+        </div>
 
         {/* 4-Column Capsule Grid matching SkaleKraft ImpactMetricsBar */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 overflow-hidden rounded-[24px] border border-white/[0.09] bg-[linear-gradient(145deg,rgba(255,255,255,0.04),rgba(12,12,12,0.94)_38%,rgba(7,7,7,0.98))] shadow-[0_28px_90px_rgba(0,0,0,0.4)]">
           {stats.map((stat, idx) => {
             const Icon = stat.icon;
             return (
-              <motion.div
+              <div
                 key={stat.id}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ duration: 0.5, delay: idx * 0.08 }}
                 className={`group relative flex min-h-[190px] flex-col p-6 transition-all duration-300 hover:bg-white/[0.02] ${
                   idx === 0 ? 'border-b sm:border-b-0 border-r border-white/[0.08]' : ''
                 } ${
@@ -154,7 +143,7 @@ export default function StatsSection({ event }: StatsProps) {
                     {stat.sublabel}
                   </p>
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </div>

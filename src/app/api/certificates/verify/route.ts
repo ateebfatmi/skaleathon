@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { EventRepository } from '@/lib/db/repository';
+import { checkRateLimit } from '@/lib/security/rate-limit';
 
 export async function GET(req: NextRequest) {
   try {
+    const rateLimit = checkRateLimit(req, 'certificate-verify', 30, 60_000);
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: 'Too many verification attempts. Please try again shortly.' },
+        { status: 429, headers: { 'Retry-After': String(rateLimit.retryAfterSeconds) } }
+      );
+    }
     const code = req.nextUrl.searchParams.get('code');
     if (!code) {
       return NextResponse.json({ error: 'Certificate code is required' }, { status: 400 });

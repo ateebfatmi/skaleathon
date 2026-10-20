@@ -50,7 +50,7 @@ export default async function TeamPage() {
             className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-7 py-3 text-xs font-bold text-white shadow-[0_4px_25px_rgba(128,89,72,0.4)] transition-all hover:scale-105"
           >
             <Sparkles className="h-4 w-4" />
-            <span>Register Squad — Flat ₹99</span>
+            <span>Register Squad</span>
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>

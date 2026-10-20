@@ -1,12 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Refund Policy | Skaleathon',
+  description: 'Refund and cancellation terms for Skaleathon team registration.',
+};
 
 export default function RefundPolicyPage() {
   const sections = [
     {
       heading: '1. General Registration Policy',
-      body: 'The Skaleathon 2027 flat team fee of ₹99 is a nominal entry contribution committed to hosting infrastructure, judge synchronization, and certificate issuance. Once verified, the fee is generally non-refundable as computational allocations are reserved immediately.',
+      body: 'The published Skaleathon flat team fee is a nominal entry contribution committed to hosting infrastructure, judge synchronization, and certificate issuance. Once verified, the fee is generally non-refundable as computational allocations are reserved immediately.',
     },
     {
       heading: '2. Eligible Refund Circumstances',
@@ -23,7 +29,7 @@ export default function RefundPolicyPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#0B0B0B] px-5 pb-24 pt-28 text-white md:px-10 md:pt-32">
+    <div className="min-h-screen bg-[#0B0B0B] px-5 pb-24 pt-28 text-white md:px-10 md:pt-32">
       <section className="mx-auto max-w-3xl">
         <Link
           href="/"
@@ -36,7 +42,7 @@ export default function RefundPolicyPage() {
         <h1 className="mt-3 text-4xl font-medium tracking-tight sm:text-6xl text-white">Refund Policy</h1>
         <p className="mt-3 text-sm text-white/40">Last updated: October 2026 • Version 1.0</p>
         <p className="mt-6 text-base leading-relaxed text-white/65 font-light">
-          This policy defines refund and cancellation guidelines for the nominal ₹99 team registration fee.
+          This policy defines refund and cancellation guidelines for the published team registration fee.
         </p>
 
         <div className="mt-12 space-y-10">
@@ -58,6 +64,6 @@ export default function RefundPolicyPage() {
           </p>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

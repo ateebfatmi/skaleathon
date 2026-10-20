@@ -65,7 +65,7 @@ const INITIAL_STATE: DatabaseState = {
       third_prize_inr: 5000.0,
       certificates_top_n: 25,
       registration_start_at: '2028-01-01T00:00:00.000Z',
-      registration_end_at: '2028-01-07T18:29:59.000Z',
+      registration_end_at: '2027-12-31T18:29:59.000Z',
       submission_deadline: '2028-01-26T18:29:59.000Z',
       results_announced_at: '2028-01-30T13:30:00.000Z',
       created_at: new Date().toISOString(),
@@ -226,6 +226,9 @@ export class FileStore {
   }
 
   private loadState(): DatabaseState {
+    if (process.env.NODE_ENV === 'production') {
+      return INITIAL_STATE;
+    }
     try {
       if (!fs.existsSync(DATA_DIR)) {
         fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -242,6 +245,9 @@ export class FileStore {
   }
 
   public saveState(newState?: DatabaseState): void {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('Local JSON persistence is disabled in production.');
+    }
     if (newState) {
       this.state = newState;
     }
@@ -256,6 +262,9 @@ export class FileStore {
   }
 
   public getState(): DatabaseState {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('Local JSON fallback is disabled in production.');
+    }
     return this.state;
   }
 }

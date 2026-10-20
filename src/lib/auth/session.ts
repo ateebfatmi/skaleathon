@@ -1,10 +1,23 @@
 import { cookies } from 'next/headers';
 import crypto from 'crypto';
+import { cache } from 'react';
 import { Profile, UserRole } from '../db/types';
 import { EventRepository } from '../db/repository';
 
 const SESSION_COOKIE_NAME = 'skale_session';
-const APP_SECRET = process.env.APP_SECRET || 'skaleathon_2027_secure_development_signing_secret_99inr';
+const SESSION_TTL_SECONDS = 60 * 60 * 24 * 7;
+const DEVELOPMENT_SECRET = crypto.randomBytes(32).toString('hex');
+
+function getAppSecret(): string {
+  const secret = process.env.APP_SECRET;
+  if (secret && secret.length >= 32) return secret;
+
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('APP_SECRET must be configured with at least 32 characters in production.');
+  }
+
+  return DEVELOPMENT_SECRET;
+}
 
 export interface AuthSession {
   userId: string;
@@ -15,8 +28,11 @@ export interface AuthSession {
 }
 
 export function signToken(payload: Record<string, unknown>): string {
-  const data = Buffer.from(JSON.stringify(payload)).toString('base64url');
-  const signature = crypto.createHmac('sha256', APP_SECRET).update(data).digest('base64url');
+  const now = Math.floor(Date.now() / 1000);
+  const data = Buffer.from(
+    JSON.stringify({ ...payload, iat: now, exp: now + SESSION_TTL_SECONDS })
+  ).toString('base64url');
+  const signature = crypto.createHmac('sha256', getAppSecret()).update(data).digest('base64url');
   return `${data}.${signature}`;
 }
 
@@ -24,17 +40,26 @@ export function verifyToken<T>(token: string): T | null {
   try {
     const [data, signature] = token.split('.');
     if (!data || !signature) return null;
-    const expectedSig = crypto.createHmac('sha256', APP_SECRET).update(data).digest('base64url');
-    if (signature !== expectedSig) return null;
+    const expectedSig = crypto.createHmac('sha256', getAppSecret()).update(data).digest('base64url');
+    const actualBuffer = Buffer.from(signature);
+    const expectedBuffer = Buffer.from(expectedSig);
+    if (
+      actualBuffer.length !== expectedBuffer.length ||
+      !crypto.timingSafeEqual(actualBuffer, expectedBuffer)
+    ) {
+      return null;
+    }
     const jsonStr = Buffer.from(data, 'base64url').toString('utf-8');
-    return JSON.parse(jsonStr) as T;
+    const parsed = JSON.parse(jsonStr) as T & { exp?: number };
+    if (!parsed.exp || parsed.exp <= Math.floor(Date.now() / 1000)) return null;
+    return parsed;
   } catch {
     return null;
   }
 }
 
-export async function getCurrentSession(): Promise<AuthSession | null> {
-  const cookieStore = cookies();
+const resolveCurrentSession = async (): Promise<AuthSession | null> => {
+  const cookieStore = await cookies();
   const token = cookieStore.get(SESSION_COOKIE_NAME)?.value;
 
   let profile: Profile | null = null;
@@ -79,18 +104,18 @@ export async function getCurrentSession(): Promise<AuthSession | null> {
 
   // Retrieve teamId if user is leader or member
   let teamId: string | null = null;
-  const teamAsLeader = await EventRepository.getTeamByLeader(profile.id);
+  const [teamAsLeader, teamAsMember] = await Promise.all([
+    EventRepository.getTeamByLeader(profile.id),
+    EventRepository.getTeamByMemberEmail(profile.email),
+  ]);
   if (teamAsLeader) {
     teamId = teamAsLeader.id;
-  } else {
-    const teamAsMember = await EventRepository.getTeamByMemberEmail(profile.email);
-    if (teamAsMember) {
-      teamId = teamAsMember.id;
-    }
+  } else if (teamAsMember) {
+    teamId = teamAsMember.id;
   }
 
   // Double check admin allowlist
-  const adminEmails = (process.env.ADMIN_EMAILS || 'skalekraft@gmail.com')
+  const adminEmails = (process.env.ADMIN_EMAILS || '')
     .split(',')
     .map((e) => e.trim().toLowerCase());
 
@@ -108,10 +133,14 @@ export async function getCurrentSession(): Promise<AuthSession | null> {
     role: effectiveRole,
     teamId,
   };
-}
+};
+
+// Layouts and pages frequently ask for the same session during one render.
+// React's request cache keeps that authentication/database work single-flight.
+export const getCurrentSession = cache(resolveCurrentSession);
 
 export function createSessionCookie(userId: string): { name: string; value: string; options: any } {
-  const token = signToken({ userId, iat: Date.now() });
+  const token = signToken({ userId });
   return {
     name: SESSION_COOKIE_NAME,
     value: token,
@@ -120,7 +149,7 @@ export function createSessionCookie(userId: string): { name: string; value: stri
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 60 * 60 * 24 * 7, // 7 days
+      maxAge: SESSION_TTL_SECONDS,
     },
   };
 }

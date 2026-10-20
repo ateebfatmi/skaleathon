@@ -121,7 +121,7 @@ export default function TeamWorkspaceClient({
             </span>
             <span className="text-[#c19a88]">Official Squad Pass // Active Roster</span>
             <span className="text-white/20">•</span>
-            <span className="text-emerald-400 font-semibold">STATUS: PAID (₹99)</span>
+            <span className="text-emerald-400 font-semibold">STATUS: REGISTRATION PAID</span>
             <span className="text-white/20">•</span>
             <button
               onClick={() => copyToClipboard(team.id, 'pass')}
@@ -254,7 +254,7 @@ export default function TeamWorkspaceClient({
             </h3>
             <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
               Primary correspondence and stage updates are dispatched to{' '}
-              <span className="text-white font-mono text-xs">{leaderMember?.email || userEmail}</span>. Flat ₹99 team registration is verified (Ref:{' '}
+              <span className="text-white font-mono text-xs">{leaderMember?.email || userEmail}</span>. The flat team registration is verified (Ref:{' '}
               <span className="font-mono text-[#e8c5b4]">
                 {paymentOrder?.razorpay_payment_id || 'RZP_SETTLED'}
               </span>

@@ -3,23 +3,22 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Bot, Globe, Smartphone, ArrowRight, ArrowUpRight, Sparkles } from 'lucide-react';
-import { EventTrack } from '@/lib/db/types';
-import RegistrationModal from '@/components/registration/RegistrationModal';
+import { EventData, EventTrack } from '@/lib/db/types';
 import { motion } from 'framer-motion';
 import { EditorialIndexBar } from '@/components/ui/EditorialIndexBar';
+import RegistrationModal from '@/components/registration/RegistrationModal';
 
 interface TracksPageClientProps {
   tracks: EventTrack[];
+  event: EventData;
 }
 
-export default function TracksPageClient({ tracks }: TracksPageClientProps) {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedTrackId, setSelectedTrackId] = useState<string>('track-ai-ml');
+export default function TracksPageClient({ tracks, event }: TracksPageClientProps) {
   const [activeTab, setActiveTab] = useState<string>('track-ai-ml');
+  const [selectedTrackId, setSelectedTrackId] = useState<string | null>(null);
 
   const handleOpenRegistration = (trackId: string) => {
     setSelectedTrackId(trackId);
-    setModalOpen(true);
   };
 
   const details: Record<string, { deliverables: string[]; recommendedTech: string[] }> = {
@@ -92,7 +91,7 @@ export default function TracksPageClient({ tracks }: TracksPageClientProps) {
                 href="/prizes"
                 className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors font-medium"
               >
-                <span>Prizes (₹35,000)</span>
+                <span>Prizes (₹{event.prize_pool_inr.toLocaleString('en-IN')})</span>
               </Link>
               <span className="text-white/15">|</span>
               <Link
@@ -183,7 +182,7 @@ export default function TracksPageClient({ tracks }: TracksPageClientProps) {
                     onClick={() => handleOpenRegistration(track.id)}
                     className="w-fit inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-6 py-2.5 text-xs font-bold text-white shadow-[0_4px_20px_rgba(128,89,72,0.3)] hover:scale-105 transition-all cursor-pointer"
                   >
-                    <span>Register Squad (₹99)</span>
+                    <span>Register Squad (₹{event.registration_fee_inr})</span>
                     <ArrowRight className="h-3.5 w-3.5" />
                   </button>
                 </div>
@@ -243,10 +242,11 @@ export default function TracksPageClient({ tracks }: TracksPageClientProps) {
       </div>
 
       <RegistrationModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
+        isOpen={selectedTrackId !== null}
+        onClose={() => setSelectedTrackId(null)}
         tracks={tracks}
-        selectedTrackId={selectedTrackId}
+        event={event}
+        selectedTrackId={selectedTrackId ?? undefined}
       />
     </>
   );

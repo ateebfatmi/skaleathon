@@ -86,7 +86,7 @@ export default function RegisteredTeamView({
               </span>
             )}
             <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-mono font-bold text-white/90">
-              ₹99 Paid
+              ₹{paymentOrder?.amount_inr ?? '—'} Paid
             </span>
           </div>
         </div>
@@ -144,7 +144,7 @@ export default function RegisteredTeamView({
             <span className="text-white/40 text-[10px] uppercase tracking-wider block">Payment Verification</span>
             <span className="font-semibold text-emerald-400 flex items-center gap-1.5">
               <CheckCircle2 className="h-3.5 w-3.5" />
-              <span>₹99 Verified Paid</span>
+              <span>₹{paymentOrder?.amount_inr ?? '—'} Verified Paid</span>
             </span>
             <span className="text-white/40 text-[10px] font-mono truncate block">
               Ref: {paymentOrder?.razorpay_payment_id || 'RZP_CONFIRMED'}
@@ -154,7 +154,7 @@ export default function RegisteredTeamView({
           <div className="p-3.5 rounded-xl border border-white/[0.08] bg-black/40 space-y-1">
             <span className="text-white/40 text-[10px] uppercase tracking-wider block">Enrollment Date</span>
             <span className="font-semibold text-white block">{formattedDate}</span>
-            <span className="text-white/40 text-[10px] block">January 2028 Batch</span>
+            <span className="text-white/40 text-[10px] block">Official Event Entry</span>
           </div>
         </div>
 

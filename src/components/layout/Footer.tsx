@@ -18,8 +18,10 @@ import {
   Shield,
   Award,
 } from 'lucide-react';
+import type { EventData } from '@/lib/db/types';
+import { formatINR } from '@/lib/utils';
 
-export default function Footer() {
+export default function Footer({ event }: { event: EventData }) {
   const pathname = usePathname();
   const currentYear = new Date().getFullYear();
 
@@ -176,7 +178,7 @@ export default function Footer() {
                     Ready to Build, Innovate, and Scale?
                   </h3>
                   <p className="text-xs sm:text-base text-neutral-400 font-light leading-relaxed">
-                    Join hundreds of forward-thinking engineers across India. Register your team for ₹99 and compete for the ₹35,000 prize pool, certificates for Top 25 teams, and interview opportunities.
+                    Join forward-thinking engineers across India. Register your team for {formatINR(event.registration_fee_inr)} and compete for the {formatINR(event.prize_pool_inr)} prize pool, certificates for the top {event.certificates_top_n} teams, and interview opportunities.
                   </p>
                 </div>
 
@@ -185,7 +187,7 @@ export default function Footer() {
                     href="/register"
                     className="group flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-6 py-3 sm:py-3.5 text-xs sm:text-sm font-bold text-white shadow-[0_4px_25px_rgba(128,89,72,0.4)] hover:scale-[1.03] transition-all"
                   >
-                    <span>Register Team — ₹99</span>
+                    <span>Register Team — {formatINR(event.registration_fee_inr)}</span>
                     <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Link>
                   <Link

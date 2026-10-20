@@ -1,10 +1,6 @@
-'use client';
-
 import React from 'react';
-import { Calendar, Clock } from 'lucide-react';
-import { formatDate } from '@/lib/utils';
+import { formatDateOnly, REGISTRATION_DEADLINE } from '@/lib/utils';
 import { EventData } from '@/lib/db/types';
-import { motion } from 'framer-motion';
 
 interface TimelineProps {
   event: EventData;
@@ -15,36 +11,36 @@ export default function TimelineSection({ event }: TimelineProps) {
     {
       num: '01',
       title: 'Team Enrollment & Verification',
-      date: 'Live Now — Closes Jan 07, 2028',
-      desc: 'Form teams of 1–6 members and complete verification via ₹99 flat team fee.',
+      date: `Closes ${formatDateOnly(event.registration_end_at || REGISTRATION_DEADLINE)}`,
+      desc: `Form teams of ${event.min_team_size}–${event.max_team_size} members and complete verification via the ₹${event.registration_fee_inr} flat team fee.`,
       badge: 'Prerequisite',
     },
     {
       num: '02',
       title: 'Stage 1 — Online Technical Quiz',
-      date: 'Jan 08, 2028',
+      date: '8 Jan 2028',
       desc: 'Screening round: Timed online quiz covering core CS logic and chosen track fundamentals.',
       badge: 'Stage 1',
     },
     {
       num: '03',
       title: 'Stage 2 — Idea & Architecture PPT',
-      date: 'Jan 10–14, 2028',
+      date: '10–14 Jan 2028',
       desc: 'Ideation round: Submit problem statement, architectural diagram, and technical feasibility deck.',
       badge: 'Stage 2',
     },
     {
       num: '04',
       title: 'Stage 3 — Project Codebase & Demo',
-      date: 'Jan 17–26, 2028',
+      date: '16/17–25/26 Jan 2028',
       desc: 'Building round: Submit public GitHub repo and live deployed URL (optional video walkthrough for an evaluation advantage).',
       badge: 'Stage 3',
     },
     {
       num: '05',
       title: 'Stage 4 — Grand Finale Live Q&A & Results',
-      date: 'Jan 29–30, 2028',
-      desc: 'Live panel defense for finalist teams, followed by ₹35,000 prize pool grants, Top 25 certificates, and interviews.',
+      date: '29–30 Jan 2028',
+      desc: `Live panel defense for finalist teams, followed by ₹${event.prize_pool_inr.toLocaleString('en-IN')} in prizes, certificates for the top ${event.certificates_top_n} teams, and interviews.`,
       badge: 'Stage 4',
     },
   ];
@@ -52,13 +48,7 @@ export default function TimelineSection({ event }: TimelineProps) {
   return (
     <section className="py-20 lg:py-28 relative bg-[#0B0B0B] border-t border-white/10">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5 }}
-          className="text-center max-w-2xl mx-auto mb-16"
-        >
+        <div className="text-center max-w-2xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2.5 mb-3">
             <span className="h-px w-6 bg-[#c19a88]/70" />
             <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
@@ -76,18 +66,11 @@ export default function TimelineSection({ event }: TimelineProps) {
           <p className="mt-4 text-sm text-white/55 leading-relaxed font-light">
             Authoritative dates and operational deadlines. No artificial countdown timers.
           </p>
-        </motion.div>
+        </div>
 
         <div className="max-w-4xl mx-auto space-y-3.5">
           {milestones.map((m, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.45, delay: idx * 0.07 }}
-              className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-6 rounded-[20px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] hover:border-[#c19a88]/30 transition-all duration-300 gap-4"
-            >
+            <div key={idx} className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-6 rounded-[20px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] hover:border-[#c19a88]/30 transition-all duration-300 gap-4">
               <div className="flex items-start gap-4">
                 <span className="font-mono text-xs font-semibold text-[#c19a88] tracking-[0.16em] mt-1 shrink-0">
                   {m.num}
@@ -103,7 +86,7 @@ export default function TimelineSection({ event }: TimelineProps) {
                   {m.date}
                 </span>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

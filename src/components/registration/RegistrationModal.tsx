@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { X, Sparkles, ShieldCheck } from 'lucide-react';
-import { EventTrack } from '@/lib/db/types';
+import { EventData, EventTrack } from '@/lib/db/types';
 import MultiStepRegistration from '@/components/registration/MultiStepRegistration';
 import { cyberAudio } from '@/lib/cyber-sound';
 
@@ -11,6 +11,7 @@ interface RegistrationModalProps {
   isOpen: boolean;
   onClose: () => void;
   tracks: EventTrack[];
+  event: EventData;
   selectedTrackId?: string;
 }
 
@@ -18,6 +19,7 @@ export default function RegistrationModal({
   isOpen,
   onClose,
   tracks,
+  event,
   selectedTrackId,
 }: RegistrationModalProps) {
   const [mounted, setMounted] = useState(false);
@@ -89,7 +91,7 @@ export default function RegistrationModal({
           <div className="flex items-center gap-2 shrink-0">
             <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-mono text-emerald-400 mr-1.5">
               <ShieldCheck className="h-3.5 w-3.5" />
-              <span>₹99 / Team</span>
+              <span>₹{event.registration_fee_inr} / Team</span>
             </span>
             <button
               onClick={onClose}
@@ -105,6 +107,7 @@ export default function RegistrationModal({
         <div className="flex-1 overflow-y-auto p-4 sm:p-6 custom-scrollbar">
           <MultiStepRegistration
             tracks={tracks}
+            event={event}
             initialTrackId={selectedTrackId}
             isModal={true}
             onClose={onClose}

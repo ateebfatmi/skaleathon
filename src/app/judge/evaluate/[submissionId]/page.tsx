@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
   Award,
@@ -18,12 +18,9 @@ import {
 } from 'lucide-react';
 import { JudgingCriterion, Submission } from '@/lib/db/types';
 
-export default function EvaluateProjectPage({
-  params,
-}: {
-  params: { submissionId: string };
-}) {
+export default function EvaluateProjectPage() {
   const router = useRouter();
+  const params = useParams<{ submissionId: string }>();
   const subId = params.submissionId;
 
   const [loading, setLoading] = useState(true);

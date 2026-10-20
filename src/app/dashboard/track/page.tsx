@@ -109,7 +109,7 @@ export default async function DashboardTrackPage() {
               href="/register"
               className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/20 transition-all hover:scale-105 shrink-0"
             >
-              <span>Register Squad (₹99)</span>
+              <span>Register Squad</span>
               <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>

@@ -1,9 +1,6 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
 import { Target, Zap, Globe2, ShieldCheck, ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { SpotlightCard } from '@/components/ui/spotlight-card';
 
 export default function AboutSection() {
@@ -42,13 +39,7 @@ export default function AboutSection() {
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left Column: Mission Narrative */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-6 space-y-6"
-          >
+          <div className="lg:col-span-6 space-y-6">
             <div className="flex items-center gap-2.5">
               <span className="h-px w-6 bg-[#c19a88]/70" />
               <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
@@ -82,21 +73,14 @@ export default function AboutSection() {
                 <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
-          </motion.div>
+          </div>
 
           {/* Right Column: 4 Key Tenets Cards */}
           <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {highlights.map((item, i) => {
               const Icon = item.icon;
               return (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.15 }}
-                  transition={{ duration: 0.5, delay: i * 0.08 }}
-                  className="h-full"
-                >
+                <div key={i} className="h-full">
                   <SpotlightCard
                     spotlightColor="rgba(193, 154, 136, 0.12)"
                     className="h-full p-6 hover:border-[#c19a88]/30 group"
@@ -116,7 +100,7 @@ export default function AboutSection() {
                       {item.desc}
                     </p>
                   </SpotlightCard>
-                </motion.div>
+                </div>
               );
             })}
           </div>

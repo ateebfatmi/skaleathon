@@ -1,30 +1,12 @@
-'use client';
-
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 
 export default function InteractiveAmbientBackground() {
-  const spotlightRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!spotlightRef.current) return;
-      const x = (e.clientX / window.innerWidth) * 100;
-      const y = (e.clientY / window.innerHeight) * 100;
-      spotlightRef.current.style.left = `${x}%`;
-      spotlightRef.current.style.top = `${y}%`;
-    };
-
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
   return (
     <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden select-none">
-      {/* 1. Dynamic Cursor-Followed Copper Spotlight (Exact SkaleKraft signature) */}
+      {/* Static spotlight avoids a global pointer listener and continuous compositing. */}
       <div
-        ref={spotlightRef}
         style={{ left: '50%', top: '35%', transform: 'translate(-50%, -50%)' }}
-        className="pointer-events-none fixed h-[580px] w-[580px] rounded-full bg-[radial-gradient(circle_at_center,rgba(193,154,136,0.16)_0%,rgba(128,89,72,0.05)_45%,transparent_70%)] blur-3xl hidden md:block transition-[left,top] duration-150 ease-out will-change-[left,top]"
+        className="pointer-events-none fixed h-[580px] w-[580px] rounded-full bg-[radial-gradient(circle_at_center,rgba(193,154,136,0.12)_0%,rgba(128,89,72,0.04)_45%,transparent_70%)] blur-3xl hidden md:block"
       />
 
       {/* 2. Top & Bottom Ambient Radial Ellipses from SkaleKraft */}

@@ -2,19 +2,20 @@
 
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import type { EventData } from '@/lib/db/types';
+import { formatINR } from '@/lib/utils';
 
-export default function FaqSection() {
+export default function FaqSection({ event }: { event: EventData }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const faqs = [
     {
       q: 'Who is eligible to participate in Skaleathon?',
-      a: 'Participation is open across India to undergraduate and postgraduate students, self-taught developers, and early-career innovators. You can participate individually (team size 1) or in a team of up to 6 members.',
+      a: `Participation is open across India to undergraduate and postgraduate students, self-taught developers, and early-career innovators. Teams may have ${event.min_team_size} to ${event.max_team_size} members.`,
     },
     {
       q: 'What is the team registration fee and how is it processed?',
-      a: 'The registration fee is a flat ₹99 per team (not per member). Payment is completed securely via Razorpay supporting UPI, Debit/Credit Cards, and Net Banking. Once verified, your team is fully authorized.',
+      a: `The registration fee is a flat ${formatINR(event.registration_fee_inr)} per team (not per member). Payment is completed securely via Razorpay. Once verified, your team is fully authorized.`,
     },
     {
       q: 'What are the technical tracks available?',
@@ -22,11 +23,11 @@ export default function FaqSection() {
     },
     {
       q: 'When are the competition rounds conducted?',
-      a: 'All 4 rounds are conducted throughout January 2028: Team Registration closes Jan 07; Round 1 (Online Technical Quiz) takes place on Saturday, Jan 08; Round 2 (Idea & Architecture PPT) runs Jan 10–14; Round 3 (Core Build Sprint) spans Jan 17–26 (Republic Day submission); and Round 4 (Grand Finale Live Q&A Defense & Award Ceremony) is held on Jan 29–30.',
+      a: 'The competition runs in four stages: an online technical quiz, an idea and architecture review, a core build sprint, and a live grand-finale defense. Current deadlines are published on the event timeline and participant dashboard.',
     },
     {
       q: 'What are the prizes and certificate recognitions?',
-      a: 'The total authorized prize pool is ₹35,000 (1st Prize: ₹20,000, 2nd Prize: ₹10,000, 3rd Prize: ₹5,000). Official merit certificates are awarded to confirmed members of the Top 25 teams. Additionally, there are internship opportunities for selected candidates at SkaleKraft.',
+      a: `The authorized prize pool is ${formatINR(event.prize_pool_inr)} (first: ${formatINR(event.first_prize_inr)}, second: ${formatINR(event.second_prize_inr)}, third: ${formatINR(event.third_prize_inr)}). Merit certificates are awarded to confirmed members of the top ${event.certificates_top_n} teams.`,
     },
     {
       q: 'Are generative AI tools like Copilot, Cursor, or ChatGPT allowed?',
@@ -34,20 +35,14 @@ export default function FaqSection() {
     },
     {
       q: 'How are digital certificates issued?',
-      a: 'Eligible members of the Top 25 teams receive an official digital certificate of merit directly in their participant dashboard after the Grand Finale.',
+      a: `Eligible members of the top ${event.certificates_top_n} teams receive an official digital certificate of merit in their participant dashboard after results are finalized.`,
     },
   ];
 
   return (
     <section id="faq" className="py-6 sm:py-16 lg:py-24 relative bg-[#0B0B0B] border-t border-white/10 overflow-hidden">
       <div className="container mx-auto max-w-4xl px-1 sm:px-6 lg:px-8 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5 }}
-          className="text-center max-w-2xl mx-auto mb-8 sm:mb-16"
-        >
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">
           <div className="inline-flex items-center gap-2.5 mb-2.5 sm:mb-3">
             <span className="h-px w-6 bg-[#c19a88]/70" />
             <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
@@ -65,7 +60,7 @@ export default function FaqSection() {
           <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-white/55 leading-relaxed font-light">
             Clear, authoritative answers to ensure your team experiences a seamless competition.
           </p>
-        </motion.div>
+        </div>
 
         <div className="space-y-2.5 sm:space-y-3">
           {faqs.map((faq, idx) => {
@@ -77,6 +72,9 @@ export default function FaqSection() {
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-panel-${idx}`}
+                  id={`faq-trigger-${idx}`}
                   className="w-full flex items-center justify-between p-4 sm:p-6 text-left cursor-pointer"
                 >
                   <span className="text-xs sm:text-base font-medium text-white pr-3 sm:pr-4 leading-snug">{faq.q}</span>
@@ -86,21 +84,18 @@ export default function FaqSection() {
                     }`}
                   />
                 </button>
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
+                {isOpen && (
+                    <div
+                      id={`faq-panel-${idx}`}
+                      role="region"
+                      aria-labelledby={`faq-trigger-${idx}`}
                       className="overflow-hidden"
                     >
                       <div className="px-4 pb-4 sm:px-6 sm:pb-6 text-xs sm:text-sm text-white/55 leading-relaxed font-light border-t border-white/[0.06] pt-3 sm:pt-4">
                         {faq.a}
                       </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                    </div>
+                )}
               </div>
             );
           })}

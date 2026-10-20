@@ -1,21 +1,12 @@
-'use client';
-
 import React from 'react';
 import Image from 'next/image';
 import { ExternalLink, Sparkles, Globe } from 'lucide-react';
-import { motion } from 'framer-motion';
 
 export default function OrganizerSection() {
   return (
     <section className="py-20 lg:py-28 bg-[#0B0B0B] border-t border-white/10 relative overflow-hidden">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6 }}
-          className="rounded-[32px] border border-white/[0.09] bg-[linear-gradient(145deg,rgba(255,255,255,0.035),rgba(17,14,13,0.96))] p-8 sm:p-12 lg:p-16 relative overflow-hidden shadow-[0_30px_90px_rgba(0,0,0,0.5)]"
-        >
+        <div className="rounded-[32px] border border-white/[0.09] bg-[linear-gradient(145deg,rgba(255,255,255,0.035),rgba(17,14,13,0.96))] p-8 sm:p-12 lg:p-16 relative overflow-hidden shadow-[0_30px_90px_rgba(0,0,0,0.5)]">
           {/* Ambient copper corner glow */}
           <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#805948]/20 blur-[100px]" />
 
@@ -80,7 +71,7 @@ export default function OrganizerSection() {
               </a>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -2,8 +2,6 @@ import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://skaleathon.in';
-  const now = new Date();
-
   const routes = [
     '',
     '/tracks',
@@ -14,14 +12,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/terms',
     '/refund-policy',
     '/code-of-conduct',
-    '/sign-in',
     '/register',
+    '/leaderboard',
   ];
 
   return routes.map((route) => ({
     url: `${baseUrl}${route}`,
-    lastModified: now,
-    changeFrequency: 'daily',
-    priority: route === '' ? 1.0 : 0.8,
+    changeFrequency: route === '' || route === '/leaderboard' ? 'daily' : 'weekly',
+    priority: route === '' ? 1.0 : route === '/register' ? 0.9 : 0.7,
   }));
 }

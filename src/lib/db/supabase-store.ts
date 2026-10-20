@@ -216,7 +216,7 @@ export class SupabaseStore {
     role?: Profile['role'];
   }): Promise<Profile> {
     const client = this.getClient();
-    const adminEmails = (process.env.ADMIN_EMAILS || 'skalekraft@gmail.com')
+    const adminEmails = (process.env.ADMIN_EMAILS || '')
       .split(',')
       .map((e) => e.trim().toLowerCase());
 

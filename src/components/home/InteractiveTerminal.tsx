@@ -4,6 +4,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Terminal, Play, RotateCcw, CornerDownLeft, Sparkles, Shield, Cpu, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import { cyberAudio } from '@/lib/cyber-sound';
+import type { EventData } from '@/lib/db/types';
+import { formatDate, formatINR, REGISTRATION_DEADLINE } from '@/lib/utils';
 
 interface CommandLog {
   id: string;
@@ -12,7 +14,7 @@ interface CommandLog {
   time: string;
 }
 
-export default function InteractiveTerminal() {
+export default function InteractiveTerminal({ event }: { event: EventData }) {
   const [inputVal, setInputVal] = useState('');
   const [activeTab, setActiveTab] = useState<'cli' | 'telemetry'>('cli');
   const [logs, setLogs] = useState<CommandLog[]>([
@@ -47,12 +49,12 @@ export default function InteractiveTerminal() {
           <div className="space-y-1.5 text-xs text-neutral-300">
             <div className="text-[#c19a88] font-semibold">Available Command Instructions:</div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
-              <div><span className="text-[#e8c5b4] font-mono font-bold">schedule</span> — January 2028 operational dates & milestones</div>
+              <div><span className="text-[#e8c5b4] font-mono font-bold">schedule</span> — Current operational dates & milestones</div>
               <div><span className="text-[#e8c5b4] font-mono font-bold">stages</span> — The 4 competition stages (Quiz, PPT, Build, Q&A)</div>
               <div><span className="text-[#e8c5b4] font-mono font-bold">tracks</span> — Inspect AI/ML, Web & Mobile arenas</div>
-              <div><span className="text-[#e8c5b4] font-mono font-bold">prizes</span> — View ₹35,000 cash & interview tiers</div>
-              <div><span className="text-[#e8c5b4] font-mono font-bold">register</span> — Fast-track team registration link (₹99)</div>
-              <div><span className="text-[#e8c5b4] font-mono font-bold">certificates</span> — View Top 25 merit certificate policy</div>
+              <div><span className="text-[#e8c5b4] font-mono font-bold">prizes</span> — View {formatINR(event.prize_pool_inr)} cash & interview tiers</div>
+              <div><span className="text-[#e8c5b4] font-mono font-bold">register</span> — Fast-track team registration link ({formatINR(event.registration_fee_inr)})</div>
+              <div><span className="text-[#e8c5b4] font-mono font-bold">certificates</span> — View top {event.certificates_top_n} merit certificate policy</div>
               <div><span className="text-[#e8c5b4] font-mono font-bold">rules</span> — Review team size & submission policies</div>
             </div>
           </div>
@@ -63,31 +65,31 @@ export default function InteractiveTerminal() {
       case 'timeline':
         output = (
           <div className="space-y-2 text-xs">
-            <div className="text-[#c19a88] font-bold">📅 January 2028 Master Schedule:</div>
+            <div className="text-[#c19a88] font-bold">📅 Current Master Schedule:</div>
             <div className="space-y-1.5 text-[11px] font-mono">
               <div className="flex flex-wrap items-center justify-between gap-1 border-b border-white/10 pb-1">
                 <span className="text-white/70">Registration Closes:</span>
-                <span className="text-emerald-400 font-bold">Jan 07, 2028 (11:59 PM IST)</span>
+                <span className="text-emerald-400 font-bold">{formatDate(event.registration_end_at || REGISTRATION_DEADLINE)}</span>
               </div>
               <div className="flex flex-wrap items-center justify-between gap-1 border-b border-white/10 pb-1">
                 <span className="text-white/70">Stage 1 — Technical Quiz:</span>
-                <span className="text-emerald-400 font-bold">Jan 08, 2028 (10 AM–8 PM)</span>
+                <span className="text-emerald-400 font-bold">8 Jan 2028</span>
               </div>
               <div className="flex flex-wrap items-center justify-between gap-1 border-b border-white/10 pb-1">
                 <span className="text-white/70">Stage 2 — Architecture PPT:</span>
-                <span className="text-[#c19a88] font-bold">Jan 10 – Jan 14, 2028</span>
+                <span className="text-[#c19a88] font-bold">10–14 Jan 2028</span>
               </div>
               <div className="flex flex-wrap items-center justify-between gap-1 border-b border-white/10 pb-1">
                 <span className="text-white/70">Stage 3 — Build Sprint:</span>
-                <span className="text-[#e8c5b4] font-bold">Jan 17 – Jan 26, 2028</span>
+                <span className="text-[#e8c5b4] font-bold">16/17–25/26 Jan 2028</span>
               </div>
               <div className="flex flex-wrap items-center justify-between gap-1 border-b border-white/10 pb-1">
                 <span className="text-white/70">Stage 4 — Grand Finale Live Q&A:</span>
-                <span className="text-amber-400 font-bold">Jan 29, 2028 (10:30 AM)</span>
+                <span className="text-amber-400 font-bold">29–30 Jan 2028</span>
               </div>
               <div className="flex flex-wrap items-center justify-between gap-1">
                 <span className="text-white/70">Award Ceremony & Certificates:</span>
-                <span className="text-amber-300 font-bold">Jan 30 – Jan 31, 2028</span>
+                <span className="text-amber-300 font-bold">30 Jan 2028</span>
               </div>
             </div>
           </div>
@@ -97,7 +99,7 @@ export default function InteractiveTerminal() {
       case 'stages':
         output = (
           <div className="space-y-2 text-xs">
-            <div className="text-[#c19a88] font-bold">🎯 The 4 Competition Stages (January 2028):</div>
+            <div className="text-[#c19a88] font-bold">🎯 The 4 Competition Stages:</div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
               <div className="p-2 rounded-lg border border-emerald-500/20 bg-emerald-500/10">
                 <div className="flex items-center justify-between mb-0.5">
@@ -116,7 +118,7 @@ export default function InteractiveTerminal() {
               <div className="p-2 rounded-lg border border-[#c19a88]/30 bg-[#c19a88]/10">
                 <div className="flex items-center justify-between mb-0.5">
                   <span className="text-[#e8c5b4] font-bold block">Stage 3: Build Sprint</span>
-                  <span className="text-[9px] font-mono text-[#e8c5b4] bg-[#c19a88]/20 px-1 rounded">Jan 17–26</span>
+                  <span className="text-[9px] font-mono text-[#e8c5b4] bg-[#c19a88]/20 px-1 rounded">Jan 16/17–25/26</span>
                 </div>
                 <span className="text-white/60 text-[10px]">Core build phase with public GitHub repo, live deployed URL, and video.</span>
               </div>
@@ -157,22 +159,22 @@ export default function InteractiveTerminal() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px] pt-1">
               <div className="p-2 rounded-lg border border-amber-500/20 bg-amber-500/10">
                 <span className="text-amber-300 font-bold block">1st Place Champion</span>
-                <span className="text-white font-mono text-sm font-bold">₹20,000</span>
+                <span className="text-white font-mono text-sm font-bold">{formatINR(event.first_prize_inr)}</span>
                 <span className="block text-white/50 text-[10px] mt-0.5">Top Grant + Interviews</span>
               </div>
               <div className="p-2 rounded-lg border border-slate-400/20 bg-slate-400/10">
                 <span className="text-slate-200 font-bold block">2nd Place Runner-Up</span>
-                <span className="text-white font-mono text-sm font-bold">₹10,000</span>
+                <span className="text-white font-mono text-sm font-bold">{formatINR(event.second_prize_inr)}</span>
                 <span className="block text-white/50 text-[10px] mt-0.5">Excellence Grant</span>
               </div>
               <div className="p-2 rounded-lg border border-[#c19a88]/20 bg-[#c19a88]/10">
                 <span className="text-[#e8c5b4] font-bold block">3rd Place Runner-Up</span>
-                <span className="text-white font-mono text-sm font-bold">₹5,000</span>
+                <span className="text-white font-mono text-sm font-bold">{formatINR(event.third_prize_inr)}</span>
                 <span className="block text-white/50 text-[10px] mt-0.5">Innovation Grant</span>
               </div>
             </div>
             <div className="text-[11px] text-white/60 pt-1">
-              • Top 25 Teams: Official certificates of merit.
+              • Top {event.certificates_top_n} Teams: Official certificates of merit.
               <br />• Selected Candidates: Internship opportunities & fast-track interview evaluation at SkaleKraft.
             </div>
           </div>
@@ -187,8 +189,8 @@ export default function InteractiveTerminal() {
               <span>Registration Gateway Initialized</span>
             </div>
             <div className="text-white/70 text-[11px]">
-              • Fee: <span className="text-[#e8c5b4] font-mono font-bold">₹99 flat</span> per team (not per member)
-              <br />• Team Size: 1 to 6 members
+              • Fee: <span className="text-[#e8c5b4] font-mono font-bold">{formatINR(event.registration_fee_inr)} flat</span> per team (not per member)
+              <br />• Team Size: {event.min_team_size} to {event.max_team_size} members
               <br />• Payment: Razorpay Instant UPI, Cards, NetBanking
             </div>
             <div className="pt-1">
@@ -209,7 +211,7 @@ export default function InteractiveTerminal() {
         output = (
           <div className="space-y-1.5 text-xs text-neutral-300 font-mono text-[11px]">
             <div className="text-emerald-400">✓ Certificate status: ACTIVE</div>
-            <div className="text-white/60">Eligibility: Confirmed members of Top 25 finalist teams</div>
+            <div className="text-white/60">Eligibility: Confirmed members of the top {event.certificates_top_n} finalist teams</div>
             <div className="text-[#c19a88]">Official digital certificates issued directly in participant dashboard.</div>
           </div>
         );
@@ -220,7 +222,7 @@ export default function InteractiveTerminal() {
           <div className="space-y-1 text-xs text-neutral-300 text-[11px]">
             <div className="text-[#c19a88] font-semibold">Official Skaleathon Guidelines:</div>
             <div>• Open across India for undergraduate, postgraduate, and independent developers.</div>
-            <div>• Team size: 1–6 members. Teams can compete across any 1 track.</div>
+            <div>• Team size: {event.min_team_size}–{event.max_team_size} members. Teams compete in one track.</div>
             <div>• GenAI tooling allowed with transparent disclosure in submission README.</div>
             <div>• Final review conducted via verified GitHub repo, demo video, and live deployment.</div>
           </div>
@@ -365,6 +367,7 @@ export default function InteractiveTerminal() {
               <span>$</span>
             </div>
             <input
+              aria-label="Terminal command"
               type="text"
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
@@ -373,6 +376,7 @@ export default function InteractiveTerminal() {
             />
             <button
               type="submit"
+              aria-label="Run terminal command"
               className="p-1.5 rounded-lg border border-white/10 bg-white/[0.04] text-neutral-300 hover:text-white hover:bg-[#c19a88]/20 transition-all shrink-0"
             >
               <CornerDownLeft className="h-3.5 w-3.5" />
@@ -393,19 +397,19 @@ export default function InteractiveTerminal() {
 
           <div className="p-3.5 sm:p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
             <div className="text-white/50 text-[10px]">TOTAL PRIZE ALLOCATION</div>
-            <div className="text-[#c19a88] font-bold text-sm">₹35,000 INR</div>
-            <p className="text-white/40 text-[10px]">1st: ₹20k | 2nd: ₹10k | 3rd: ₹5k</p>
+            <div className="text-[#c19a88] font-bold text-sm">{formatINR(event.prize_pool_inr)}</div>
+            <p className="text-white/40 text-[10px]">1st: {formatINR(event.first_prize_inr)} | 2nd: {formatINR(event.second_prize_inr)} | 3rd: {formatINR(event.third_prize_inr)}</p>
           </div>
 
           <div className="p-3.5 sm:p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
             <div className="text-white/50 text-[10px]">ENTRY STIPULATION</div>
-            <div className="text-white font-bold text-sm">₹99 FLAT / TEAM</div>
-            <p className="text-white/40 text-[10px]">1 to 6 members inclusive</p>
+            <div className="text-white font-bold text-sm">{formatINR(event.registration_fee_inr)} FLAT / TEAM</div>
+            <p className="text-white/40 text-[10px]">{event.min_team_size} to {event.max_team_size} members inclusive</p>
           </div>
 
           <div className="p-3.5 sm:p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
             <div className="text-white/50 text-[10px]">MERIT CERTIFICATES</div>
-            <div className="text-emerald-400 font-bold text-sm">TOP 25 TEAMS</div>
+            <div className="text-emerald-400 font-bold text-sm">TOP {event.certificates_top_n} TEAMS</div>
             <p className="text-white/40 text-[10px]">Official digital certificates</p>
           </div>
 

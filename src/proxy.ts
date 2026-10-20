@@ -16,34 +16,24 @@ const isPublicRoute = createRouteMatcher([
   '/sign-in(.*)',
   '/sign-up(.*)',
   '/register(.*)',
-  '/checkout(.*)',
   '/demo(.*)',
   '/api/event(.*)',
   '/api/certificates/verify(.*)',
   '/api/certificates/download(.*)',
   '/api/auth/(.*)',
-  '/api/create-order(.*)',
-  '/api/verify-payment(.*)',
   '/api/payment/(.*)',
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
-  // If user has active custom skale_session cookie or accessing a public route, allow through
-  const hasSkaleSession = req.cookies.has('skale_session');
-  if (hasSkaleSession || isPublicRoute(req)) {
-    return NextResponse.next();
-  }
+  if (isPublicRoute(req)) return NextResponse.next();
 
   const clerkKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
-  if (!clerkKey || clerkKey.includes('placeholder')) {
-    return NextResponse.next();
-  }
+  if (!clerkKey || clerkKey.includes('placeholder')) return NextResponse.next();
 
   try {
     await auth.protect();
   } catch {
-    const signInUrl = new URL('/sign-in', req.url);
-    return NextResponse.redirect(signInUrl);
+    return NextResponse.redirect(new URL('/sign-in', req.url));
   }
 
   return NextResponse.next();
@@ -51,9 +41,7 @@ export default clerkMiddleware(async (auth, req) => {
 
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
     '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    // Always run for API routes
     '/(api|trpc)(.*)',
   ],
 };
