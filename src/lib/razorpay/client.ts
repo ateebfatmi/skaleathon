@@ -3,9 +3,21 @@ import Razorpay from 'razorpay';
 
 export interface RazorpayOrderResult {
   orderId: string;
-  amount: number;
+  amountPaise: number;
   currency: string;
   keyId: string;
+}
+
+const MINIMUM_ORDER_AMOUNT_PAISE = 100;
+
+export class RazorpayOrderError extends Error {
+  constructor(
+    message: string,
+    public readonly statusCode: number
+  ) {
+    super(message);
+    this.name = 'RazorpayOrderError';
+  }
 }
 
 export function getRazorpayClient(): Razorpay | null {
@@ -23,7 +35,8 @@ export function getRazorpayClient(): Razorpay | null {
 }
 
 /**
- * Creates an order in Razorpay (or sandbox fallback order if keys are unconfigured)
+ * Creates an order in Razorpay (or sandbox fallback order if keys are unconfigured).
+ * The amount is accepted in INR by the application and sent to Razorpay in paise.
  */
 export async function createRazorpayOrder(params: {
   amountInr: number;
@@ -31,10 +44,12 @@ export async function createRazorpayOrder(params: {
   teamName: string;
 }): Promise<RazorpayOrderResult> {
   const keyId = process.env.RAZORPAY_KEY_ID || 'rzp_test_skaleathon_sandbox';
-  const keySecret = process.env.RAZORPAY_KEY_SECRET;
   const client = getRazorpayClient();
 
   const amountPaise = Math.round(params.amountInr * 100);
+  if (!Number.isFinite(amountPaise) || amountPaise < MINIMUM_ORDER_AMOUNT_PAISE) {
+    throw new RazorpayOrderError('Payment amount must be at least 100 paise.', 400);
+  }
 
   if (client) {
     try {
@@ -51,13 +66,22 @@ export async function createRazorpayOrder(params: {
 
       return {
         orderId: order.id,
-        amount: params.amountInr,
+        amountPaise: Number(order.amount),
         currency: 'INR',
         keyId,
       };
     } catch (err: any) {
-      console.error('Razorpay live order creation failed:', err);
-      throw new Error(`Razorpay order creation failed: ${err.message || 'Gateway error'}`);
+      const statusCode = Number(err?.statusCode) === 401 ? 401 : 500;
+      console.error('Razorpay order creation failed:', {
+        statusCode,
+        message: err?.message || 'Gateway error',
+      });
+      throw new RazorpayOrderError(
+        statusCode === 401
+          ? 'Razorpay rejected the configured API credentials.'
+          : 'Razorpay could not create the payment order. Please try again.',
+        statusCode
+      );
     }
   }
 
@@ -69,7 +93,7 @@ export async function createRazorpayOrder(params: {
   const sandboxOrderId = `order_sbx_${Math.random().toString(36).substring(2, 12)}`;
   return {
     orderId: sandboxOrderId,
-    amount: params.amountInr,
+    amountPaise,
     currency: 'INR',
     keyId: 'rzp_test_skaleathon_sandbox',
   };

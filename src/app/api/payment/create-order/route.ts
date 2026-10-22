@@ -52,9 +52,12 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
+      order_id: paymentOrder.id,
       orderId: paymentOrder.id,
-      amount: fixedAmount,
-      currency: 'INR',
+      amount: rzpOrder.amountPaise,
+      amount_inr: fixedAmount,
+      currency: rzpOrder.currency,
+      key_id: rzpOrder.keyId,
       keyId: rzpOrder.keyId,
       teamName: team.name,
     });

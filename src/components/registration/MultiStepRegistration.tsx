@@ -302,7 +302,7 @@ export default function MultiStepRegistration({
       setCreatedTeam(regData.team);
 
       // 2. Create Razorpay Payment Order
-      const orderRes = await fetch('/api/payment/create-order', {
+      const orderRes = await fetch('/api/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ teamId: regData.team.id }),
@@ -332,7 +332,7 @@ export default function MultiStepRegistration({
       paymentId: string;
       signature: string;
     }) => {
-      const verifyRes = await fetch('/api/payment/verify', {
+      const verifyRes = await fetch('/api/verify-payment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(verifyPayload),
@@ -363,7 +363,7 @@ export default function MultiStepRegistration({
 
         const rzp = new window.Razorpay({
           key: keyId,
-          amount: (paymentOrder.amount || event.registration_fee_inr) * 100,
+          amount: paymentOrder.amount || event.registration_fee_inr * 100,
           currency: paymentOrder.currency || 'INR',
           name: `SkaleKraft — ${event.name}`,
           description: `Team Registration: ${teamName}`,
@@ -383,6 +383,7 @@ export default function MultiStepRegistration({
           },
           modal: {
             ondismiss: function () {
+              setErrorMessage('Payment cancelled. Your team details are saved; you can try again.');
               setLoading(false);
             },
           },
@@ -1179,7 +1180,9 @@ export default function MultiStepRegistration({
             </div>
             <div className="flex items-center justify-between text-xs pt-1">
               <span className="text-neutral-400">Amount Due</span>
-              <span className="text-2xl font-black text-[#e8c5b4] font-mono">₹{paymentOrder.amount}.00</span>
+              <span className="text-2xl font-black text-[#e8c5b4] font-mono">
+                ₹{((paymentOrder.amount || event.registration_fee_inr * 100) / 100).toFixed(2)}
+              </span>
             </div>
           </div>
 
@@ -1208,7 +1211,7 @@ export default function MultiStepRegistration({
               <span>{loading ? 'Verifying Gateway Signature...' : `Pay ₹${event.registration_fee_inr} & Verify Signature`}</span>
             </button>
             <p className="text-center text-[10px] text-neutral-500 font-mono">
-              * In sandbox mode without live merchant keys, the system executes an automated cryptographic signature exchange with server-side audit logging.
+              * Razorpay Test Mode opens a simulated checkout. No real money is charged with test credentials.
             </p>
           </div>
         </div>

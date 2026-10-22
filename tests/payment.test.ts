@@ -1,7 +1,11 @@
 import { afterEach, describe, it, expect } from 'vitest';
 import crypto from 'crypto';
 import { EventRepository } from '../src/lib/db/repository';
-import { verifyPaymentSignature, verifyWebhookSignature } from '../src/lib/razorpay/client';
+import {
+  createRazorpayOrder,
+  verifyPaymentSignature,
+  verifyWebhookSignature,
+} from '../src/lib/razorpay/client';
 
 describe('Payment & Webhook Security Verification', () => {
   const originalPaymentSecret = process.env.RAZORPAY_KEY_SECRET;
@@ -34,6 +38,19 @@ describe('Payment & Webhook Security Verification', () => {
       signature: 'forged_fake_signature_abc',
     });
     expect(isInvalid).toBe(false);
+  });
+
+  it('rejects Razorpay orders below the 100 paise minimum', async () => {
+    await expect(
+      createRazorpayOrder({
+        amountInr: 0.99,
+        teamId: 'team_minimum_test',
+        teamName: 'Minimum Amount Test',
+      })
+    ).rejects.toMatchObject({
+      message: 'Payment amount must be at least 100 paise.',
+      statusCode: 400,
+    });
   });
 
   it('fails closed when the webhook secret is missing', () => {
