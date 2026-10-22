@@ -9,6 +9,7 @@ import AudioToggle from '@/components/layout/AudioToggle';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 import InteractiveAmbientBackground from '@/components/layout/InteractiveAmbientBackground';
 import { EventRepository } from '@/lib/db/repository';
+import AuthStateSynchronizer from '@/components/auth/AuthStateSynchronizer';
 
 const instrumentSerif = Instrument_Serif({
   weight: '400',
@@ -86,6 +87,7 @@ export default async function RootLayout({
     >
       <html lang="en" className="dark">
         <body className={`min-h-screen bg-[#0B0B0B] text-white flex flex-col antialiased selection:bg-[#805948]/30 selection:text-white relative overflow-x-clip ${instrumentSerif.variable}`}>
+          <AuthStateSynchronizer />
           {/* SkaleKraft Signature Interactive Background Architecture */}
           <InteractiveAmbientBackground />
 

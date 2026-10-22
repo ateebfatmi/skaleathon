@@ -74,8 +74,15 @@ const resolveCurrentSession = async (): Promise<AuthSession | null> => {
   // Fallback to Clerk authenticated user
   if (!profile) {
     try {
-      const { currentUser } = await import('@clerk/nextjs/server');
-      const clerkUser = await currentUser();
+      const { auth, currentUser } = await import('@clerk/nextjs/server');
+      const clerkAuth = await auth();
+
+      // Existing Clerk users can resolve locally without another Clerk API call.
+      if (clerkAuth.userId) {
+        profile = await EventRepository.getProfile(clerkAuth.userId);
+      }
+
+      const clerkUser = profile ? null : await currentUser();
       if (clerkUser) {
         const primaryEmail =
           clerkUser.emailAddresses.find((e) => e.id === clerkUser.primaryEmailAddressId)?.emailAddress ||
@@ -95,8 +102,8 @@ const resolveCurrentSession = async (): Promise<AuthSession | null> => {
           }
         }
       }
-    } catch {
-      // Clerk not active or error
+    } catch (error) {
+      console.error('Unable to synchronize the Clerk session with the application profile.', error);
     }
   }
 
