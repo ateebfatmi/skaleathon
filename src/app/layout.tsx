@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { connection } from 'next/server';
 import { Instrument_Serif } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/layout/Navbar';
@@ -62,6 +63,9 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // Shared event data is read at request time, including for the 404 route.
+  // Production builds must not require a live database to prerender this layout.
+  await connection();
   const event = await EventRepository.getEvent();
 
   return (

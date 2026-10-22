@@ -29,6 +29,13 @@ Skaleathon 2027 is a standalone, full-stack, production-ready national online ha
 
 ## 2. Architecture & Technology Stack
 
+Local development applies `scripts/patch-clerk-keyless.cjs` automatically after
+dependency installation. This fixes Clerk 6.39.7 passing React children to its
+keyless cookie-sync server action; only the required scalar inputs are sent.
+After upgrading Clerk, review this patch and its regression test before removing it.
+If dependencies were installed with `--ignore-scripts`, run `npm run postinstall`
+before starting the development server.
+
 | Component | Technology | Rationale |
 | :--- | :--- | :--- |
 | **Framework** | Next.js 14 (App Router) | High-performance React server components & API route handlers |
@@ -138,6 +145,16 @@ npm run build
 ```
 
 The application will be live at `http://localhost:3000`.
+
+### Production deployment
+
+The shared layout reads event data at request time, so `npm run build` does not
+need a live database to prerender the not-found page. Production requests still
+require Supabase: set `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`
+in the Vercel project's environment variables, apply
+`supabase/migrations/001_initial_schema.sql`, and ensure the `skaleathon-2027`
+event exists. Configure Clerk and payment credentials before using those flows.
+Local JSON storage remains disabled in production.
 
 ---
 
