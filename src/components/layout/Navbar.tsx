@@ -118,7 +118,7 @@ export default function Navbar({ event }: { event: EventData }) {
             : 'border-b border-white/[0.05] bg-[#07090E]/70 backdrop-blur-xl'
         }`}
       >
-        <div className="container mx-auto grid h-16 sm:h-20 max-w-7xl grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto flex h-16 sm:h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:px-8">
           
           {/* Logo & Brand Cluster */}
           <div className="flex min-w-0 items-center gap-3 justify-self-start">
