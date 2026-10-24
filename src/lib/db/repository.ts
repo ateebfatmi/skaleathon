@@ -172,7 +172,9 @@ export class EventRepository {
     if (this.isSupabaseEnabled()) {
       try {
         const profile = await SupabaseStore.getProfile(userId);
-        if (profile) return profile;
+        // A missing production row is a valid result for a newly authenticated
+        // Clerk user. Do not fall through to the development-only JSON store.
+        if (profile || process.env.NODE_ENV === 'production') return profile;
       } catch (err) {
         this.handleSupabaseError('getProfile', err);
       }
@@ -185,7 +187,7 @@ export class EventRepository {
     if (this.isSupabaseEnabled()) {
       try {
         const profile = await SupabaseStore.getProfileByEmail(email);
-        if (profile) return profile;
+        if (profile || process.env.NODE_ENV === 'production') return profile;
       } catch (err) {
         this.handleSupabaseError('getProfileByEmail', err);
       }
@@ -416,7 +418,9 @@ export class EventRepository {
     if (this.isSupabaseEnabled()) {
       try {
         const team = await SupabaseStore.getTeamByLeader(leaderId);
-        if (team) return team;
+        // Users may legitimately have no team yet. In production, Supabase is
+        // authoritative and a null result must not trigger the local fallback.
+        if (team || process.env.NODE_ENV === 'production') return team;
       } catch (err) {
         this.handleSupabaseError('getTeamByLeader', err);
       }
@@ -429,7 +433,7 @@ export class EventRepository {
     if (this.isSupabaseEnabled()) {
       try {
         const team = await SupabaseStore.getTeamByMemberEmail(email);
-        if (team) return team;
+        if (team || process.env.NODE_ENV === 'production') return team;
       } catch (err) {
         this.handleSupabaseError('getTeamByMemberEmail', err);
       }
