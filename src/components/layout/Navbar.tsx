@@ -156,14 +156,13 @@ export default function Navbar({ event }: { event: EventData }) {
 
           {/* Center Navigation Capsule */}
           <nav
-            aria-label={isDashboard ? 'Dashboard Navigation' : 'Main Navigation'}
+            aria-label="Main Navigation"
             className="hidden w-[min(44vw,34rem)] lg:flex items-center rounded-full border border-white/[0.08] bg-white/[0.02] p-1.5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.06),0_8px_24px_rgba(0,0,0,0.4)] backdrop-blur-2xl"
           >
-            {(isDashboard ? dashboardNavLinks : navLinks).map((item) => {
-              const rootHref = isDashboard ? '/dashboard' : '/';
+            {navLinks.map((item) => {
               const active =
-                item.href === rootHref
-                  ? pathname === rootHref
+                item.href === '/'
+                  ? pathname === '/'
                   : pathname.startsWith(item.href);
               return (
                 <Link
