@@ -118,10 +118,10 @@ export default function Navbar({ event }: { event: EventData }) {
             : 'border-b border-white/[0.05] bg-[#07090E]/70 backdrop-blur-xl'
         }`}
       >
-        <div className="container mx-auto flex h-16 sm:h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto grid h-16 sm:h-20 max-w-7xl grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center px-4 sm:px-6 lg:px-8">
           
           {/* Logo & Brand Cluster */}
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex min-w-0 items-center gap-3 justify-self-start">
             <Link
               href="/"
               onClick={handleHomeClick}
@@ -156,13 +156,14 @@ export default function Navbar({ event }: { event: EventData }) {
 
           {/* Center Navigation Capsule */}
           <nav
-            aria-label="Main Navigation"
-            className="hidden lg:flex items-center rounded-full border border-white/[0.08] bg-white/[0.02] p-1.5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.06),0_8px_24px_rgba(0,0,0,0.4)] backdrop-blur-2xl"
+            aria-label={isDashboard ? 'Dashboard Navigation' : 'Main Navigation'}
+            className="hidden w-[min(44vw,34rem)] lg:flex items-center rounded-full border border-white/[0.08] bg-white/[0.02] p-1.5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.06),0_8px_24px_rgba(0,0,0,0.4)] backdrop-blur-2xl"
           >
-            {navLinks.map((item) => {
+            {(isDashboard ? dashboardNavLinks : navLinks).map((item) => {
+              const rootHref = isDashboard ? '/dashboard' : '/';
               const active =
-                item.href === '/'
-                  ? pathname === '/'
+                item.href === rootHref
+                  ? pathname === rootHref
                   : pathname.startsWith(item.href);
               return (
                 <Link
@@ -170,7 +171,7 @@ export default function Navbar({ event }: { event: EventData }) {
                   href={item.href}
                   prefetch={true}
                   onClick={item.href === '/' ? handleHomeClick : undefined}
-                  className={`relative flex h-8 items-center rounded-full px-3 text-xs font-medium tracking-wide transition-colors duration-200 ${
+                  className={`relative flex h-8 min-w-0 flex-1 items-center justify-center rounded-full px-2 text-xs font-medium tracking-wide transition-colors duration-200 ${
                     active
                       ? 'text-white font-semibold'
                       : 'text-neutral-400 hover:text-white hover:bg-white/[0.04]'
@@ -181,13 +182,14 @@ export default function Navbar({ event }: { event: EventData }) {
                       className="absolute inset-0 rounded-full bg-gradient-to-r from-white/[0.14] to-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_0_15px_rgba(193,154,136,0.18)]"
                     />
                   )}
-                  <span className="relative z-10 flex items-center">
-                    {active && (
-                      <span
-                        className="h-1.5 w-1.5 rounded-full bg-[#c19a88] shadow-[0_0_8px_#c19a88] mr-2 inline-block"
-                      />
-                    )}
-                    <span>{item.name}</span>
+                  <span className="relative z-10 flex min-w-0 items-center justify-center">
+                    <span
+                      aria-hidden="true"
+                      className={`mr-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[#c19a88] shadow-[0_0_8px_#c19a88] transition-opacity duration-200 ${
+                        active ? 'opacity-100' : 'opacity-0'
+                      }`}
+                    />
+                    <span className="truncate">{item.name}</span>
                   </span>
                 </Link>
               );
@@ -195,7 +197,7 @@ export default function Navbar({ event }: { event: EventData }) {
           </nav>
 
           {/* Right Action Cluster */}
-          <div className="hidden shrink-0 md:flex items-center space-x-3">
+          <div className="hidden min-w-0 items-center justify-self-end space-x-3 md:flex">
             <ErrorBoundary
               fallback={
                 <div className="flex items-center space-x-3">
@@ -285,48 +287,6 @@ export default function Navbar({ event }: { event: EventData }) {
             </button>
           </div>
         </div>
-
-        {/* Dashboard Navigation in Navbar */}
-        {isDashboard && (
-          <div className="border-t border-white/[0.08] bg-[#07090E]/95 backdrop-blur-2xl">
-            <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <nav
-                aria-label="Dashboard Navigation"
-                className="flex items-center space-x-1 sm:space-x-2 py-2 overflow-x-auto scrollbar-none"
-              >
-                {dashboardNavLinks.map((link) => {
-                  const Icon = link.icon;
-                  const isActive =
-                    link.href === '/dashboard'
-                      ? pathname === '/dashboard'
-                      : pathname.startsWith(link.href);
-
-                  return (
-                    <Link
-                      key={link.name}
-                      href={link.href}
-                      className={`relative flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-medium whitespace-nowrap transition-all duration-200 ${
-                        isActive
-                          ? 'bg-gradient-to-r from-white/[0.12] to-white/[0.07] text-white border border-[#c19a88]/40 shadow-[0_0_15px_rgba(193,154,136,0.18)] font-semibold'
-                          : 'text-neutral-400 hover:text-white hover:bg-white/[0.05] border border-transparent'
-                      }`}
-                    >
-                      <Icon
-                        className={`h-3.5 w-3.5 ${
-                          isActive ? 'text-[#c19a88]' : 'text-neutral-400'
-                        }`}
-                      />
-                      <span>{link.name}</span>
-                      {isActive && (
-                        <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] shadow-[0_0_8px_#c19a88] animate-pulse" />
-                      )}
-                    </Link>
-                  );
-                })}
-              </nav>
-            </div>
-          </div>
-        )}
 
         {/* Mobile Menu Dropdown */}
         {mobileMenuOpen && (
