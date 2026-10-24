@@ -73,13 +73,13 @@ export default async function AdminOverviewPage() {
   return (
     <div className="space-y-8">
       {/* Metrics Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="mobile-card-grid grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
         {cards.map((c, i) => {
           const Icon = c.icon;
           return (
             <div
               key={i}
-              className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-6 space-y-4 hover:border-white/20 transition-all"
+              className="mobile-card rounded-2xl sm:rounded-3xl border border-white/10 bg-[#0E0E0E] p-4 sm:p-6 space-y-4 hover:border-white/20 transition-all"
             >
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">

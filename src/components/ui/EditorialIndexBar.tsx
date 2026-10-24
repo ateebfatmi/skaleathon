@@ -78,14 +78,14 @@ export function EditorialIndexBar({
 
   const gridColsClass =
     columns === 3
-      ? 'grid-cols-1 sm:grid-cols-3'
+      ? 'grid-cols-2 sm:grid-cols-3'
       : 'grid-cols-2 sm:grid-cols-4';
 
   return (
     <>
       <nav
         aria-label="Section Index Navigation"
-        className={`relative grid ${gridColsClass} border-t border-b border-white/[0.08] divide-y sm:divide-y-0 sm:divide-x divide-white/[0.06]`}
+        className={`relative grid ${gridColsClass} border border-white/[0.08] rounded-2xl sm:rounded-none overflow-hidden divide-x divide-y sm:divide-y-0 divide-white/[0.06]`}
       >
         {items.map((item) => {
           const itemKey = item.id || item.num;

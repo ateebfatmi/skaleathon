@@ -26,12 +26,12 @@ export default function TracksSection({ tracks, event }: TracksProps) {
   };
 
   return (
-    <section id="tracks" className="py-20 lg:py-28 bg-[#0B0B0B] border-t border-white/10 relative overflow-hidden">
+    <section id="tracks" className="py-14 sm:py-20 lg:py-28 bg-[#0B0B0B] border-t border-white/10 relative overflow-hidden">
       {/* Ambient background glow */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-80 w-[70%] rounded-full bg-[#805948]/10 blur-[140px]" />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="mobile-section-heading text-center max-w-2xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2.5 mb-3">
             <span className="h-px w-6 bg-[#c19a88]/70" />
             <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
@@ -51,7 +51,7 @@ export default function TracksSection({ tracks, event }: TracksProps) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+        <div className="mobile-card-grid grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-8">
           {tracks.map((track, idx) => {
             const Icon = iconMap[track.id] || Bot;
             const techStacks: Record<string, string[]> = {
@@ -62,11 +62,11 @@ export default function TracksSection({ tracks, event }: TracksProps) {
             const currentStack = techStacks[track.id] || ['Full-Stack', 'APIs', 'Cloud'];
 
             return (
-              <div key={track.id} className="h-full">
+              <div key={track.id} className={`h-full ${idx === 0 ? 'mobile-grid-wide' : ''}`}>
                 <SpotlightCard
                   enableTilt
                   spotlightColor={idx === 0 ? 'rgba(52,211,153,0.12)' : idx === 1 ? 'rgba(56,189,248,0.12)' : 'rgba(251,191,36,0.12)'}
-                  className="h-full flex flex-col justify-between group hover:border-[#c19a88]/50 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+                  className="mobile-card h-full flex flex-col justify-between p-4 sm:p-6 group hover:border-[#c19a88]/50 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-7">
@@ -82,12 +82,12 @@ export default function TracksSection({ tracks, event }: TracksProps) {
                       {track.name}
                     </h3>
 
-                    <p className="text-xs sm:text-sm text-white/50 leading-relaxed font-light mb-6">
+                    <p className="mobile-card-copy text-[11px] sm:text-sm text-white/50 leading-relaxed font-light mb-5 sm:mb-6">
                       {track.description}
                     </p>
 
                     {/* Tech Pills */}
-                    <div className="flex flex-wrap gap-1.5 mb-6">
+                    <div className="flex flex-wrap gap-1.5 mb-5 sm:mb-6">
                       {currentStack.map((tech) => (
                         <span
                           key={tech}
@@ -99,7 +99,7 @@ export default function TracksSection({ tracks, event }: TracksProps) {
                     </div>
                   </div>
 
-                  <div className="mt-auto pt-6 border-t border-white/[0.07] flex items-center justify-between">
+                  <div className="mt-auto pt-5 sm:pt-6 border-t border-white/[0.07] flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
                     <button
                       type="button"
                       onClick={() => setSelectedTrackId(track.id)}

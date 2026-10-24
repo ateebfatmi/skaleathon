@@ -278,6 +278,8 @@ export default function Navbar({ event }: { event: EventData }) {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-300 transition-all hover:border-[#c19a88]/40 hover:text-white active:scale-95"
               aria-label="Toggle navigation menu"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-navigation"
             >
               {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -328,7 +330,7 @@ export default function Navbar({ event }: { event: EventData }) {
 
         {/* Mobile Menu Dropdown */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-b border-white/10 bg-[#07090E]/98 px-5 pt-3 pb-8 space-y-4 backdrop-blur-2xl animate-in fade-in slide-in-from-top-3 duration-200">
+          <div id="mobile-navigation" className="md:hidden max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-b border-white/10 bg-[#07090E]/98 px-4 pt-3 pb-[max(2rem,env(safe-area-inset-bottom))] space-y-4 backdrop-blur-2xl animate-in fade-in slide-in-from-top-3 duration-200">
             {isDashboard && (
               <div className="pb-3 border-b border-white/10 space-y-2">
                 <div className="px-1 text-[10px] uppercase tracking-[0.2em] text-[#c19a88] font-bold">

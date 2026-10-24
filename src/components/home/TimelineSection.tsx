@@ -46,9 +46,9 @@ export default function TimelineSection({ event }: TimelineProps) {
   ];
 
   return (
-    <section className="py-20 lg:py-28 relative bg-[#0B0B0B] border-t border-white/10">
+    <section className="py-14 sm:py-20 lg:py-28 relative bg-[#0B0B0B] border-t border-white/10">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="mobile-section-heading text-center max-w-2xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2.5 mb-3">
             <span className="h-px w-6 bg-[#c19a88]/70" />
             <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
@@ -70,7 +70,7 @@ export default function TimelineSection({ event }: TimelineProps) {
 
         <div className="max-w-4xl mx-auto space-y-3.5">
           {milestones.map((m, idx) => (
-            <div key={idx} className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-6 rounded-[20px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] hover:border-[#c19a88]/30 transition-all duration-300 gap-4">
+            <div key={idx} className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 sm:p-6 rounded-[18px] sm:rounded-[20px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] hover:border-[#c19a88]/30 transition-all duration-300 gap-3 sm:gap-4">
               <div className="flex items-start gap-4">
                 <span className="font-mono text-xs font-semibold text-[#c19a88] tracking-[0.16em] mt-1 shrink-0">
                   {m.num}
@@ -81,7 +81,7 @@ export default function TimelineSection({ event }: TimelineProps) {
                 </div>
               </div>
 
-              <div className="sm:text-right shrink-0">
+              <div className="sm:text-right shrink-0 pl-8 sm:pl-0">
                 <span className="inline-block text-[11px] font-mono tracking-wide px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] text-[#c19a88]">
                   {m.date}
                 </span>

@@ -34,6 +34,89 @@ body {
   min-height: 100vh;
 }
 
+/* Mobile layout primitives -------------------------------------------------
+   The public experience is intentionally dense and editorial. On phones we
+   keep that character, but use a repeatable two-column rhythm for scannable
+   card collections instead of turning every section into a very long stack. */
+.mobile-card-grid {
+  min-width: 0;
+}
+
+.mobile-card-grid > * {
+  min-width: 0;
+}
+
+@media (max-width: 639px) {
+  :root {
+    --mobile-gutter: 1rem;
+    --mobile-grid-gap: 0.75rem;
+  }
+
+  html {
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .container {
+    width: 100%;
+    padding-left: max(var(--mobile-gutter), env(safe-area-inset-left));
+    padding-right: max(var(--mobile-gutter), env(safe-area-inset-right));
+  }
+
+  .mobile-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--mobile-grid-gap);
+  }
+
+  .mobile-card-grid > .mobile-grid-wide {
+    grid-column: 1 / -1;
+  }
+
+  .mobile-card {
+    min-height: 0 !important;
+    padding: 1rem !important;
+    border-radius: 1rem !important;
+  }
+
+  .mobile-card-copy {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+  }
+
+  .mobile-section-heading {
+    margin-bottom: 2rem !important;
+  }
+
+  .mobile-utility-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  main h1,
+  main h2,
+  main h3,
+  main p,
+  main a,
+  main span {
+    overflow-wrap: break-word;
+  }
+
+  main table {
+    min-width: 42rem;
+  }
+
+  main .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+}
+
 /* Custom scrollbars */
 ::-webkit-scrollbar {
   width: 8px;

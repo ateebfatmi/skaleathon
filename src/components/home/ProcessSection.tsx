@@ -54,9 +54,9 @@ export default function ProcessSection({ event }: { event: EventData }) {
   ];
 
   return (
-    <section id="stages" className="py-20 lg:py-28 bg-[#0B0B0B] border-t border-white/10 relative overflow-hidden">
+    <section id="stages" className="py-14 sm:py-20 lg:py-28 bg-[#0B0B0B] border-t border-white/10 relative overflow-hidden">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="mobile-section-heading text-center max-w-2xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2.5 mb-3">
             <span className="h-px w-6 bg-[#c19a88]/70" />
             <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
@@ -77,7 +77,7 @@ export default function ProcessSection({ event }: { event: EventData }) {
         </div>
 
         {/* 4-Column Stages Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="mobile-card-grid grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
           {stages.map((stage, idx) => {
             const Icon = stage.icon;
             return (
@@ -85,14 +85,14 @@ export default function ProcessSection({ event }: { event: EventData }) {
                 <SpotlightCard
                   enableTilt
                   spotlightColor={stage.accent}
-                  className="h-full flex flex-col justify-between p-6 sm:p-7 hover:border-[#c19a88]/40 shadow-[0_20px_50px_rgba(0,0,0,0.5)] group"
+                  className="mobile-card h-full flex flex-col justify-between p-4 sm:p-7 hover:border-[#c19a88]/40 shadow-[0_20px_50px_rgba(0,0,0,0.5)] group"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-5">
                       <span className="font-mono text-[10px] font-bold text-[#c19a88] tracking-[0.2em] uppercase">
                         {stage.num}
                       </span>
-                      <span className={`text-[9px] font-mono font-semibold px-2 py-0.5 rounded-full border ${stage.badgeClass}`}>
+                      <span className={`hidden sm:inline-flex text-[9px] font-mono font-semibold px-2 py-0.5 rounded-full border ${stage.badgeClass}`}>
                         {stage.badge}
                       </span>
                     </div>
@@ -107,7 +107,7 @@ export default function ProcessSection({ event }: { event: EventData }) {
                     <p className="text-[11px] font-mono text-[#c19a88]/80 mb-3">
                       {stage.subtitle}
                     </p>
-                    <p className="text-xs text-white/50 leading-relaxed font-light">
+                    <p className="mobile-card-copy text-[10px] sm:text-xs text-white/50 leading-relaxed font-light">
                       {stage.desc}
                     </p>
                   </div>
@@ -116,7 +116,7 @@ export default function ProcessSection({ event }: { event: EventData }) {
                     <span className="text-[10px] font-mono text-[#c19a88] font-medium tracking-wide">
                       {stage.date}
                     </span>
-                    <div className="flex items-center gap-1.5">
+                    <div className="hidden sm:flex items-center gap-1.5">
                       <span className="text-[10px] font-mono text-white/30">
                         Round {idx + 1}
                       </span>

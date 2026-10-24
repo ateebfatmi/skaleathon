@@ -32,12 +32,12 @@ export default function AboutSection() {
   ];
 
   return (
-    <section className="py-20 lg:py-28 relative overflow-hidden bg-[#0B0B0B]">
+    <section className="py-14 sm:py-20 lg:py-28 relative overflow-hidden bg-[#0B0B0B]">
       {/* Background ambient light */}
       <div className="pointer-events-none absolute right-0 top-1/3 h-96 w-96 rounded-full bg-[#805948]/10 blur-[130px]" />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-9 sm:gap-12 lg:gap-16 items-center">
           {/* Left Column: Mission Narrative */}
           <div className="lg:col-span-6 space-y-6">
             <div className="flex items-center gap-2.5">
@@ -76,14 +76,14 @@ export default function AboutSection() {
           </div>
 
           {/* Right Column: 4 Key Tenets Cards */}
-          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="mobile-card-grid lg:col-span-6 grid grid-cols-2 gap-3 sm:gap-4">
             {highlights.map((item, i) => {
               const Icon = item.icon;
               return (
                 <div key={i} className="h-full">
                   <SpotlightCard
                     spotlightColor="rgba(193, 154, 136, 0.12)"
-                    className="h-full p-6 hover:border-[#c19a88]/30 group"
+                    className="mobile-card h-full p-4 sm:p-6 hover:border-[#c19a88]/30 group"
                   >
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88] shadow-[0_4px_16px_rgba(0,0,0,0.3)] group-hover:scale-105 transition-transform">
@@ -96,7 +96,7 @@ export default function AboutSection() {
                     <h3 className="text-sm font-semibold tracking-wide text-white mb-2 group-hover:text-[#c19a88] transition-colors">
                       {item.title}
                     </h3>
-                    <p className="text-xs text-white/45 leading-relaxed font-light">
+                    <p className="mobile-card-copy text-[11px] sm:text-xs text-white/45 leading-relaxed font-light">
                       {item.desc}
                     </p>
                   </SpotlightCard>

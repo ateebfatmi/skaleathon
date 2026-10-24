@@ -119,7 +119,7 @@ export default function RegisteredTeamView({
         </div>
 
         {/* Details Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pt-2 pb-6 border-b border-white/10 relative z-10 text-xs">
+        <div className="mobile-card-grid grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3.5 pt-2 pb-6 border-b border-white/10 relative z-10 text-xs">
           <div className="p-3.5 rounded-xl border border-white/[0.08] bg-black/40 space-y-1">
             <span className="text-white/40 text-[10px] uppercase tracking-wider block">Team Leader</span>
             <span className="font-semibold text-white block truncate">
@@ -173,7 +173,7 @@ export default function RegisteredTeamView({
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div className="mobile-card-grid grid grid-cols-2 gap-2.5">
             {/* Leader Card */}
             {leaderMember && (
               <div className="flex items-center justify-between p-3 rounded-xl border border-[#c19a88]/30 bg-[#c19a88]/[0.06]">

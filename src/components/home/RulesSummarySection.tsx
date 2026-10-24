@@ -16,9 +16,9 @@ export default function RulesSummarySection({ event }: { event: EventData }) {
   ];
 
   return (
-    <section className="py-20 lg:py-28 bg-[#0B0B0B] border-t border-white/10 relative overflow-hidden">
+    <section className="py-14 sm:py-20 lg:py-28 bg-[#0B0B0B] border-t border-white/10 relative overflow-hidden">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-9 sm:gap-12 items-center">
           <div className="lg:col-span-5 space-y-6">
             <div className="flex items-center gap-2.5">
               <span className="h-px w-6 bg-[#c19a88]/70" />
@@ -47,7 +47,7 @@ export default function RulesSummarySection({ event }: { event: EventData }) {
             </div>
           </div>
 
-          <div className="lg:col-span-7 rounded-[24px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-7 sm:p-9 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+          <div className="lg:col-span-7 rounded-[20px] sm:rounded-[24px] border border-white/[0.08] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(14,14,14,0.95))] p-5 sm:p-9 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
             {rules.map((rule, idx) => (
               <div key={idx} className="flex items-start gap-3.5">
                 <CheckCircle2 className="h-4 w-4 text-[#c19a88] shrink-0 mt-0.5" strokeWidth={2} />

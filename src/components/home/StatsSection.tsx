@@ -60,7 +60,7 @@ export default function StatsSection({ event }: StatsProps) {
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div
-          className="mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4"
+          className="mobile-section-heading mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4"
         >
           <div>
             <div className="flex items-center gap-2.5">
@@ -83,19 +83,13 @@ export default function StatsSection({ event }: StatsProps) {
         </div>
 
         {/* 4-Column Capsule Grid matching SkaleKraft ImpactMetricsBar */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 overflow-hidden rounded-[24px] border border-white/[0.09] bg-[linear-gradient(145deg,rgba(255,255,255,0.04),rgba(12,12,12,0.94)_38%,rgba(7,7,7,0.98))] shadow-[0_28px_90px_rgba(0,0,0,0.4)]">
+        <div className="mobile-card-grid grid grid-cols-2 lg:grid-cols-4 gap-px overflow-hidden rounded-[20px] sm:rounded-[24px] border border-white/[0.09] bg-white/[0.08] shadow-[0_28px_90px_rgba(0,0,0,0.4)]">
           {stats.map((stat, idx) => {
             const Icon = stat.icon;
             return (
               <div
                 key={stat.id}
-                className={`group relative flex min-h-[190px] flex-col p-6 transition-all duration-300 hover:bg-white/[0.02] ${
-                  idx === 0 ? 'border-b sm:border-b-0 border-r border-white/[0.08]' : ''
-                } ${
-                  idx === 1 ? 'border-b lg:border-b-0 lg:border-r border-white/[0.08]' : ''
-                } ${
-                  idx === 2 ? 'border-b sm:border-b-0 sm:border-r border-white/[0.08]' : ''
-                }`}
+                className="group relative flex min-h-[176px] flex-col bg-[linear-gradient(145deg,rgba(255,255,255,0.04),rgba(10,10,10,0.98))] p-4 sm:min-h-[190px] sm:p-6 transition-all duration-300 hover:bg-white/[0.04]"
               >
                 {/* Ambient hover light */}
                 <div
@@ -114,20 +108,20 @@ export default function StatsSection({ event }: StatsProps) {
                     </span>
                   </div>
 
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-black/30 px-2.5 py-1 text-[8px] font-medium uppercase tracking-[0.14em] text-[#c19a88] backdrop-blur-xl">
+                  <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-black/30 px-2.5 py-1 text-[8px] font-medium uppercase tracking-[0.14em] text-[#c19a88] backdrop-blur-xl">
                     <CheckCircle2 className="h-2.5 w-2.5 text-[#c19a88]" strokeWidth={2} />
                     {stat.badge}
                   </span>
                 </div>
 
                 {/* Metric Value */}
-                <div className="relative pb-2 pt-6">
+                <div className="relative pb-2 pt-5 sm:pt-6">
                   <span
-                    className={`bg-gradient-to-br ${stat.gradientClass} bg-clip-text font-mono text-2xl sm:text-3xl lg:text-[2.35rem] font-bold leading-none tracking-[-0.03em] text-transparent`}
+                    className={`bg-gradient-to-br ${stat.gradientClass} bg-clip-text font-mono text-xl sm:text-3xl lg:text-[2.35rem] font-bold leading-none tracking-[-0.03em] text-transparent`}
                   >
                     {stat.value}
                     {stat.suffix && (
-                      <span className="text-base sm:text-lg font-sans font-normal text-white/50 tracking-normal ml-1">
+                      <span className="block sm:inline text-[11px] sm:text-lg font-sans font-normal text-white/50 tracking-normal mt-1 sm:mt-0 sm:ml-1">
                         {stat.suffix}
                       </span>
                     )}
@@ -136,10 +130,10 @@ export default function StatsSection({ event }: StatsProps) {
 
                 {/* Footer labels */}
                 <div className="relative mt-auto border-t border-white/[0.07] pt-3">
-                  <h3 className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/85">
+                  <h3 className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.12em] sm:tracking-[0.14em] text-white/85">
                     {stat.label}
                   </h3>
-                  <p className="mt-1 text-[11px] font-light leading-snug text-white/45">
+                  <p className="mobile-card-copy mt-1 text-[10px] sm:text-[11px] font-light leading-snug text-white/45">
                     {stat.sublabel}
                   </p>
                 </div>
