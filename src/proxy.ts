@@ -26,24 +26,32 @@ const isPublicRoute = createRouteMatcher([
   '/api/payment/(.*)',
 ]);
 
-export default clerkMiddleware(async (auth, req) => {
-  if (isPublicRoute(req)) return NextResponse.next();
+export default clerkMiddleware(
+  async (auth, req) => {
+    if (isPublicRoute(req)) return NextResponse.next();
 
-  const clerkKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
-  if (!clerkKey || clerkKey.includes('placeholder')) return NextResponse.next();
+    const clerkKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+    if (!clerkKey || clerkKey.includes('placeholder')) return NextResponse.next();
 
-  try {
-    await auth.protect();
-  } catch {
-    return NextResponse.redirect(new URL('/sign-in', req.url));
-  }
+    try {
+      await auth.protect();
+    } catch {
+      return NextResponse.redirect(new URL('/sign-in', req.url));
+    }
 
-  return NextResponse.next();
-});
+    return NextResponse.next();
+  },
+  {
+    frontendApiProxy: {
+      enabled: true,
+    },
+  },
+);
 
 export const config = {
   matcher: [
     '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
     '/(api|trpc)(.*)',
+    '/__clerk/(.*)',
   ],
 };

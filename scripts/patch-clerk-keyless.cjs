@@ -1,6 +1,6 @@
 // Clerk 6.39.7 spreads React children into a server-action payload in keyless
 // development mode. Keep rendering children, but send only the action's inputs.
-// Apply to both builds so this fix survives npm install / npm ci.
+// Clerk 7 removed these files, so newer releases intentionally skip this patch.
 const fs = require('node:fs');
 const path = require('node:path');
 
@@ -13,6 +13,8 @@ const inputs = [
 
 for (const build of ['esm', 'cjs']) {
   const file = path.join(clerkRoot, 'dist', build, 'app-router/client/keyless-cookie-sync.js');
+  if (!fs.existsSync(file)) continue;
+
   const source = fs.readFileSync(file, 'utf8');
   const patched = source.replace(
     /(syncKeylessConfigAction\(\{\s*)\.\.\.props,/,

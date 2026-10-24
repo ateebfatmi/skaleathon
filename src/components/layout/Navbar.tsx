@@ -218,7 +218,6 @@ export default function Navbar({ event }: { event: EventData }) {
                         {/* Avatar with Copper Ring & Status Indicator */}
                         <div className="relative flex items-center shrink-0">
                           <UserButton
-                            afterSignOutUrl="/"
                             appearance={{
                               elements: {
                                 avatarBox:
@@ -428,7 +427,6 @@ export default function Navbar({ event }: { event: EventData }) {
                         <div className="flex items-center gap-3">
                           <div className="relative">
                             <UserButton
-                              afterSignOutUrl="/"
                               appearance={{
                                 elements: {
                                   avatarBox:

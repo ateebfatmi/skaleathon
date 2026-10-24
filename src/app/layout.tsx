@@ -70,15 +70,16 @@ export default async function RootLayout({
 
   return (
     <ClerkProvider
+      afterSignOutUrl="/"
       appearance={{
-        baseTheme: dark,
+        theme: dark,
         variables: {
           colorPrimary: '#c19a88',
           colorBackground: '#0B0B0B',
-          colorText: '#EDEDED',
-          colorTextSecondary: '#A1A1A1',
-          colorInputBackground: '#141414',
-          colorInputText: '#EDEDED',
+          colorForeground: '#EDEDED',
+          colorMutedForeground: '#A1A1A1',
+          colorInput: '#141414',
+          colorInputForeground: '#EDEDED',
           borderRadius: '0.75rem',
         },
         elements: {
