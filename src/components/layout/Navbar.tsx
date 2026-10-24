@@ -18,8 +18,6 @@ import {
   Trophy,
 } from 'lucide-react';
 import {
-  SignedIn,
-  SignedOut,
   SignInButton,
   UserButton,
   useUser,
@@ -33,7 +31,7 @@ export default function Navbar({ event }: { event: EventData }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const { user } = useUser();
+  const { user, isLoaded: isAuthLoaded, isSignedIn } = useUser();
 
   const isDashboard = pathname.startsWith('/dashboard');
 
@@ -92,7 +90,7 @@ export default function Navbar({ event }: { event: EventData }) {
   const defaultRegisterButton = (
     <Link
       href="/register"
-      className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-[#c19a88]/50 transition-transform duration-300 hover:scale-[1.03] active:scale-[0.98]"
+      className="group relative hidden 2xl:inline-flex items-center gap-2 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-[#c19a88]/50 transition-transform duration-300 hover:scale-[1.03] active:scale-[0.98]"
     >
       <span className="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#805948_0%,#c19a88_50%,#805948_100%)] opacity-70 group-hover:opacity-100 transition-opacity" />
       <span className="relative flex items-center gap-2 rounded-full bg-[#0D0B0A]/95 px-4 py-2 text-xs font-semibold text-white backdrop-blur-xl transition-colors duration-200 group-hover:bg-[#14100E]">
@@ -197,23 +195,23 @@ export default function Navbar({ event }: { event: EventData }) {
           </nav>
 
           {/* Right Action Cluster */}
-          <div className="hidden md:flex items-center space-x-3">
+          <div className="hidden shrink-0 md:flex items-center space-x-3">
             <ErrorBoundary
               fallback={
                 <div className="flex items-center space-x-3">
                   <Link
                     href="/sign-in"
-                    className="text-xs font-medium tracking-wide text-neutral-400 hover:text-white transition-colors px-3.5 py-2 rounded-full hover:bg-white/[0.04]"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-2 text-xs font-semibold tracking-wide text-neutral-200 transition-all hover:border-[#c19a88]/40 hover:bg-white/[0.07] hover:text-white"
                   >
-                    Sign In
+                    <User className="h-3.5 w-3.5 text-[#c19a88]" />
+                    <span>Sign In</span>
                   </Link>
                   {defaultRegisterButton}
                 </div>
               }
             >
-              {mounted ? (
-                <>
-                  <SignedIn>
+              {mounted && isAuthLoaded ? (
+                isSignedIn ? (
                     <div className="flex items-center gap-3">
                       {/* Luxury Account Capsule */}
                       <div className="group flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.03] p-1.5 pr-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_4px_20px_rgba(0,0,0,0.35)] backdrop-blur-2xl transition-all duration-300 hover:border-[#c19a88]/40 hover:bg-white/[0.06] hover:shadow-[0_0_25px_rgba(193,154,136,0.2)]">
@@ -249,26 +247,25 @@ export default function Navbar({ event }: { event: EventData }) {
                         </div>
                       </div>
                     </div>
-                  </SignedIn>
-                  
-                  <SignedOut>
+                ) : (
                     <div className="flex items-center space-x-3">
                       <SignInButton mode="modal">
-                        <button className="text-xs font-medium tracking-wide text-neutral-400 hover:text-white transition-colors px-3.5 py-2 rounded-full hover:bg-white/[0.04] cursor-pointer">
-                          Sign In
+                        <button className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-2 text-xs font-semibold tracking-wide text-neutral-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-all hover:border-[#c19a88]/40 hover:bg-white/[0.07] hover:text-white cursor-pointer">
+                          <User className="h-3.5 w-3.5 text-[#c19a88]" />
+                          <span>Sign In</span>
                         </button>
                       </SignInButton>
                       {defaultRegisterButton}
                     </div>
-                  </SignedOut>
-                </>
+                )
               ) : (
                 <div className="flex items-center space-x-3">
                   <Link
                     href="/sign-in"
-                    className="text-xs font-medium tracking-wide text-neutral-400 hover:text-white transition-colors px-3.5 py-2 rounded-full hover:bg-white/[0.04]"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-2 text-xs font-semibold tracking-wide text-neutral-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-all hover:border-[#c19a88]/40 hover:bg-white/[0.07] hover:text-white"
                   >
-                    Sign In
+                    <User className="h-3.5 w-3.5 text-[#c19a88]" />
+                    <span>Sign In</span>
                   </Link>
                   {defaultRegisterButton}
                 </div>
@@ -424,9 +421,9 @@ export default function Navbar({ event }: { event: EventData }) {
                   </>
                 }
               >
-                {mounted ? (
-                  <>
-                    <SignedIn>
+                {mounted && isAuthLoaded ? (
+                  isSignedIn ? (
+                    <>
                       <div className="flex items-center justify-between p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 shadow-sm">
                         <div className="flex items-center gap-3">
                           <div className="relative">
@@ -466,9 +463,9 @@ export default function Navbar({ event }: { event: EventData }) {
                         <LayoutDashboard className="h-4 w-4 text-[#c19a88]" />
                         <span>Go to Dashboard</span>
                       </Link>
-                    </SignedIn>
-
-                    <SignedOut>
+                    </>
+                  ) : (
+                    <>
                       <SignInButton mode="modal">
                         <button
                           onClick={() => setMobileMenuOpen(false)}
@@ -486,8 +483,8 @@ export default function Navbar({ event }: { event: EventData }) {
                         <span>Register Team — {formatINR(event.registration_fee_inr)}</span>
                         <ArrowRight className="h-4 w-4" />
                       </Link>
-                    </SignedOut>
-                  </>
+                    </>
+                  )
                 ) : (
                   <>
                     <Link
