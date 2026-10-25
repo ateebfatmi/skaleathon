@@ -62,13 +62,6 @@ export default function TracksPageClient({ tracks, event }: TracksPageClientProp
 
         {/* 1. Open Luxury Editorial Hero */}
         <header className="relative pt-1">
-          {/* Faint Oversized Architectural Watermark */}
-          <div className="pointer-events-none select-none absolute right-2 top-4 hidden xl:block overflow-hidden">
-            <span className="font-mono text-[68px] font-black tracking-tighter text-white/[0.02] leading-none uppercase">
-              ARENAS
-            </span>
-          </div>
-
           {/* Top Utility & Context Ribbon */}
           <div className="mobile-utility-row relative z-10 flex flex-wrap items-center justify-between gap-3 pb-3 mb-4 border-b border-white/[0.07]">
             <div className="flex flex-wrap items-center gap-2 text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.22em]">
