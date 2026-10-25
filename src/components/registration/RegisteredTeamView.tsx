@@ -1,7 +1,9 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import QRCode from 'qrcode';
 import {
   CheckCircle2,
   ShieldCheck,
@@ -38,8 +40,28 @@ export default function RegisteredTeamView({
   userName,
   userEmail,
 }: RegisteredTeamViewProps) {
+  const [passQrCode, setPassQrCode] = useState<string>('');
+
+  useEffect(() => {
+    if (team?.id) {
+      const verificationUrl = `https://skaleathon.skalekraft.in/dashboard/team?pass=${encodeURIComponent(team.id)}`;
+      QRCode.toDataURL(verificationUrl, {
+        width: 360,
+        margin: 1,
+        errorCorrectionLevel: 'H',
+        color: {
+          dark: '#171310',
+          light: '#ffffff',
+        },
+      })
+        .then(setPassQrCode)
+        .catch(() => setPassQrCode(''));
+    }
+  }, [team?.id]);
+
   const leaderMember = members.find((m) => m.role === 'leader') || members[0];
   const regularMembers = members.filter((m) => m.id !== leaderMember?.id);
+  const openSlotsCount = Math.max(0, 6 - members.length);
 
   const formattedDate = team.created_at
     ? (() => {
@@ -59,7 +81,139 @@ export default function RegisteredTeamView({
     : 'Active';
 
   return (
-    <div className="space-y-8 max-w-4xl mx-auto">
+    <>
+      {/* High-Resolution A4 Print Pass */}
+      <article className="skaleathon-print-pass" aria-label="Official Skaleathon Registration Receipt">
+        <div className="print-pass-frame">
+          <header className="print-pass-header">
+            <div className="print-pass-brand">
+              <Image
+                src="/images/skalekraft-logo.png"
+                alt="SkaleKraft"
+                width={68}
+                height={68}
+                className="print-pass-logo"
+                priority
+              />
+              <div>
+                <p>SkaleKraft presents</p>
+                <h1>SKALE<span>ATHON</span></h1>
+              </div>
+            </div>
+            <div className="print-pass-document-label">
+              <span>Official document</span>
+              <strong>Squad Credential</strong>
+              <small>National Engineering Tournament</small>
+            </div>
+          </header>
+
+          <div className="print-pass-body">
+            <div className="print-pass-status-row">
+              <div className="print-pass-status">
+                <span className="print-pass-status-dot" />
+                <div>
+                  <small>Registration status</small>
+                  <strong>Verified &amp; Paid</strong>
+                </div>
+              </div>
+              <div className="print-pass-id">
+                <small>Credential ID</small>
+                <strong>{team.id.toUpperCase()}</strong>
+              </div>
+            </div>
+
+            <section className="print-pass-intro">
+              <p>Authorized competition entry for</p>
+              <h2>{team.name}</h2>
+              <span>Engineering Squad</span>
+            </section>
+
+            <section className="print-pass-facts" aria-label="Squad details">
+              <div>
+                <small>Competition track</small>
+                <strong>{track?.name || 'Technical Arena'}</strong>
+              </div>
+              <div>
+                <small>Team lead</small>
+                <strong>{leaderMember?.name || userName || 'Team Lead'}</strong>
+              </div>
+              <div>
+                <small>Institution / organization</small>
+                <strong>{team.college_or_org || 'Independent Squad'}</strong>
+              </div>
+              <div>
+                <small>Registered location</small>
+                <strong>{team.city ? `${team.city}, ` : ''}{team.state || 'India'}</strong>
+              </div>
+            </section>
+
+            <section className="print-pass-roster">
+              <div className="print-pass-section-heading">
+                <div>
+                  <small>Authorized participants</small>
+                  <h3>Confirmed Squad Roster</h3>
+                </div>
+                <strong>{members.length} / 6 seats confirmed</strong>
+              </div>
+
+              <div className="print-pass-roster-grid">
+                {members.map((member, index) => (
+                  <div className="print-pass-member" key={member.id}>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <div>
+                      <strong>{member.name}</strong>
+                      <small>{member.email}</small>
+                    </div>
+                    <em>{member.id === leaderMember?.id ? 'Team Lead' : 'Member'}</em>
+                  </div>
+                ))}
+                {Array.from({ length: openSlotsCount }).map((_, index) => (
+                  <div className="print-pass-member print-pass-member-open" key={`open-${index}`}>
+                    <span>{String(members.length + index + 1).padStart(2, '0')}</span>
+                    <div>
+                      <strong>Open team position</strong>
+                      <small>Not yet assigned</small>
+                    </div>
+                    <em>Available</em>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="print-pass-verification">
+              <div className="print-pass-qr">
+                {passQrCode ? (
+                  <Image src={passQrCode} alt="Squad pass verification QR code" width={112} height={112} unoptimized />
+                ) : (
+                  <span>QR</span>
+                )}
+              </div>
+              <div className="print-pass-verification-copy">
+                <small>Digital squad record</small>
+                <h3>Scan to open the secure participant record</h3>
+                <p>
+                  Authorized users can sign in to review the current squad record. Present this pass
+                  with a valid photo ID when requested by the organizer.
+                </p>
+                <div>
+                  <span>Enrollment date <strong>{formattedDate}</strong></span>
+                  <span>Payment reference <strong>{paymentOrder?.razorpay_payment_id || 'RZP_SETTLED'}</strong></span>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <footer className="print-pass-footer">
+            <div>
+              <strong>SKALEKRAFT</strong>
+              <span>Build. Innovate. Scale.</span>
+            </div>
+            <p>System-generated credential · No signature required · skaleathon.skalekraft.in</p>
+          </footer>
+        </div>
+      </article>
+
+      <div className="space-y-8 max-w-4xl mx-auto">
       {/* Official Digital Team Pass Card */}
       <div className="rounded-[28px] border border-[#c19a88]/40 bg-[linear-gradient(145deg,rgba(193,154,136,0.06),rgba(14,14,14,0.98))] p-6 sm:p-9 shadow-[0_25px_60px_rgba(0,0,0,0.6)] backdrop-blur-2xl relative overflow-hidden">
         {/* Subtle radial ambient glow */}
@@ -282,5 +436,6 @@ export default function RegisteredTeamView({
         </p>
       </div>
     </div>
+    </>
   );
 }

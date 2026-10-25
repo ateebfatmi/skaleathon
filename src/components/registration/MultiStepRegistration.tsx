@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
+import Image from 'next/image';
+import QRCode from 'qrcode';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
   Users,
@@ -27,6 +29,8 @@ import {
   Clock,
   Shield,
   UserCheck,
+  Printer,
+  Copy,
 } from 'lucide-react';
 import { EventData, EventTrack } from '@/lib/db/types';
 import { LocationInput } from './LocationInput';
@@ -154,6 +158,26 @@ export default function MultiStepRegistration({
   const [createdTeam, setCreatedTeam] = useState<any>(null);
   const [paymentOrder, setPaymentOrder] = useState<any>(null);
   const [paymentConfirmed, setPaymentConfirmed] = useState(false);
+  const [paymentResult, setPaymentResult] = useState<{ paymentId?: string; orderId?: string } | null>(null);
+  const [copiedPassId, setCopiedPassId] = useState(false);
+  const [passQrCode, setPassQrCode] = useState<string>('');
+
+  useEffect(() => {
+    if (step === 5 && (createdTeam?.id || teamName)) {
+      const verificationUrl = `https://skaleathon.skalekraft.in/dashboard/team?pass=${encodeURIComponent(createdTeam?.id || '')}`;
+      QRCode.toDataURL(verificationUrl, {
+        width: 360,
+        margin: 1,
+        errorCorrectionLevel: 'H',
+        color: {
+          dark: '#171310',
+          light: '#ffffff',
+        },
+      })
+        .then(setPassQrCode)
+        .catch(() => setPassQrCode(''));
+    }
+  }, [step, createdTeam?.id, teamName]);
 
   // Check current session to prepopulate leader if logged in
   useEffect(() => {
@@ -343,6 +367,10 @@ export default function MultiStepRegistration({
         throw new Error(verifyData.error || 'Payment signature verification failed.');
       }
 
+      setPaymentResult({
+        paymentId: verifyPayload.paymentId,
+        orderId: verifyPayload.orderId,
+      });
       setPaymentConfirmed(true);
       setStep(5);
     };
@@ -1217,65 +1245,372 @@ export default function MultiStepRegistration({
         </div>
       )}
 
-      {/* STEP 5: REGISTRATION CONFIRMATION */}
+      {/* STEP 5: REGISTRATION CONFIRMATION & LUXURY RECEIPT */}
       {step === 5 && (
-        <div className={isModal ? "rounded-2xl border border-[#c19a88]/30 bg-[#0E0E0E] p-6 sm:p-8 text-center space-y-4 shadow-xl" : "rounded-[28px] border border-[#c19a88]/30 bg-gradient-to-b from-[#141414] via-[#101010] to-[#0A0A0A] p-8 sm:p-12 text-center space-y-6 shadow-2xl shadow-black/80 relative overflow-hidden"}>
-          {!isModal && (
-            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#c19a88] to-transparent opacity-80" />
-          )}
+        <>
+          {/* High-Resolution A4 Single-Page Print Pass (Hidden on screen; visible only during print) */}
+          <article className="skaleathon-print-pass" aria-label="Official Skaleathon Registration Receipt">
+            <div className="print-pass-frame">
+              <header className="print-pass-header">
+                <div className="print-pass-brand">
+                  <Image
+                    src="/images/skalekraft-logo.png"
+                    alt="SkaleKraft"
+                    width={68}
+                    height={68}
+                    className="print-pass-logo"
+                    priority
+                  />
+                  <div>
+                    <p>SkaleKraft presents</p>
+                    <h1>SKALE<span>ATHON</span></h1>
+                  </div>
+                </div>
+                <div className="print-pass-document-label">
+                  <span>Official document</span>
+                  <strong>Registration Receipt</strong>
+                  <small>National Engineering Tournament</small>
+                </div>
+              </header>
 
-          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#805948]/20 border border-[#c19a88]/40 text-[#c19a88] mx-auto shadow-inner ring-4 ring-[#805948]/20 animate-in zoom-in-75 duration-300">
-            <CheckCircle2 className="h-8 w-8" />
-          </div>
+              <div className="print-pass-body">
+                <div className="print-pass-status-row">
+                  <div className="print-pass-status">
+                    <span className="print-pass-status-dot" />
+                    <div>
+                      <small>Registration &amp; Payment Status</small>
+                      <strong>Verified &amp; Paid (₹{event.registration_fee_inr.toFixed(2)})</strong>
+                    </div>
+                  </div>
+                  <div className="print-pass-id">
+                    <small>Registration Credential ID</small>
+                    <strong>{(createdTeam?.id || '').toUpperCase()}</strong>
+                  </div>
+                </div>
 
-          <div className="space-y-2">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-[#c19a88] font-mono">
-              ✦ Authoritatively Verified // {event.name}
-            </span>
-            <h1 className="text-2xl sm:text-3xl font-black text-white">Registration Confirmed!</h1>
-            <p className="text-xs sm:text-sm text-neutral-300 max-w-md mx-auto leading-relaxed">
-              Congratulations! Team <strong>{teamName}</strong> is officially registered for {event.name} under the <strong>{currentTrackObj?.name}</strong>.
-            </p>
-          </div>
+                <section className="print-pass-intro">
+                  <p>Official tournament entry for</p>
+                  <h2>{teamName}</h2>
+                  <span>Authorized Engineering Squad</span>
+                </section>
 
-          {/* Receipt Card */}
-          <div className="rounded-2xl border border-white/10 bg-black/50 p-6 text-left max-w-md mx-auto text-xs space-y-3 shadow-inner">
-            <div className="flex justify-between pb-2 border-b border-white/10">
-              <span className="text-neutral-400">Registration ID:</span>
-              <span className="font-mono font-bold text-white">{createdTeam?.id}</span>
+                <section className="print-pass-facts" aria-label="Squad details">
+                  <div>
+                    <small>Competition Track</small>
+                    <strong>{currentTrackObj?.name || 'General Arena'}</strong>
+                  </div>
+                  <div>
+                    <small>Team Leader</small>
+                    <strong>{leaderName}</strong>
+                  </div>
+                  <div>
+                    <small>Institution / Organization</small>
+                    <strong>{collegeOrOrg || 'Independent Innovators'}</strong>
+                  </div>
+                  <div>
+                    <small>Registered Location</small>
+                    <strong>{city ? `${city}, ` : ''}{state || 'India'}</strong>
+                  </div>
+                </section>
+
+                <section className="print-pass-roster">
+                  <div className="print-pass-section-heading">
+                    <div>
+                      <small>Confirmed Squad Roster</small>
+                      <h3>Registered Participants</h3>
+                    </div>
+                    <strong>{1 + members.length} / 6 Seats Enrolled</strong>
+                  </div>
+
+                  <div className="print-pass-roster-grid">
+                    {/* Leader */}
+                    <div className="print-pass-member">
+                      <span>01</span>
+                      <div>
+                        <strong>{leaderName}</strong>
+                        <small>{leaderEmail} • {leaderPhone}</small>
+                      </div>
+                      <em>Team Lead</em>
+                    </div>
+
+                    {/* Additional members */}
+                    {members.map((member, index) => (
+                      <div className="print-pass-member" key={index}>
+                        <span>{String(index + 2).padStart(2, '0')}</span>
+                        <div>
+                          <strong>{member.name}</strong>
+                          <small>{member.email}{member.phone ? ` • ${member.phone}` : ''}</small>
+                        </div>
+                        <em>Member</em>
+                      </div>
+                    ))}
+
+                    {/* Open slots */}
+                    {Array.from({ length: Math.max(0, 6 - (1 + members.length)) }).map((_, index) => (
+                      <div className="print-pass-member print-pass-member-open" key={`open-${index}`}>
+                        <span>{String(1 + members.length + index + 1).padStart(2, '0')}</span>
+                        <div>
+                          <strong>Open Team Position</strong>
+                          <small>Can be invited from Squad Dashboard</small>
+                        </div>
+                        <em>Available</em>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                <section className="print-pass-verification">
+                  <div className="print-pass-qr">
+                    {passQrCode ? (
+                      <Image src={passQrCode} alt="Registration verification QR code" width={112} height={112} unoptimized />
+                    ) : (
+                      <span>QR</span>
+                    )}
+                  </div>
+                  <div className="print-pass-verification-copy">
+                    <small>Official Tournament Record</small>
+                    <h3>Scan to verify authorized squad credential</h3>
+                    <p>
+                      Official registration and payment receipt for SKALEATHON. Present this pass or your digital record with photo ID at tournament checkpoints.
+                    </p>
+                    <div>
+                      <span>Issued Date <strong>{new Date().toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}</strong></span>
+                      <span>Payment Ref <strong>{paymentResult?.paymentId || paymentOrder?.orderId || 'SETTLED_RZP'}</strong></span>
+                      <span>Amount Paid <strong>₹{event.registration_fee_inr.toFixed(2)} INR</strong></span>
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              <footer className="print-pass-footer">
+                <div>
+                  <strong>SKALEKRAFT</strong>
+                  <span>Build. Innovate. Scale.</span>
+                </div>
+                <p>System-generated official receipt · Authorized digital seal · skaleathon.skalekraft.in</p>
+              </footer>
             </div>
-            <div className="flex justify-between pb-2 border-b border-white/10">
-              <span className="text-neutral-400">Order Reference:</span>
-              <span className="font-mono text-neutral-300">{paymentOrder?.orderId}</span>
+          </article>
+
+          {/* On-Screen Luxury Dark Editorial Receipt Card */}
+          <div className="space-y-6 animate-in fade-in-50 duration-500">
+            {/* Confirmation Banner */}
+            <div className="text-center space-y-2">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Verified Entry // Tournament Pass Issued</span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                Registration Confirmed!
+              </h1>
+              <p className="text-xs sm:text-sm text-neutral-300 max-w-lg mx-auto leading-relaxed">
+                Congratulations! Team <strong className="text-white">{teamName}</strong> is officially entered into{' '}
+                <span className="text-[#e8c5b4] font-medium">{event.name}</span> in the{' '}
+                <strong className="text-white">{currentTrackObj?.name}</strong> arena.
+              </p>
             </div>
-            <div className="flex justify-between pb-2 border-b border-white/10">
-              <span className="text-neutral-400">Payment Status:</span>
-              <span className="font-bold text-[#c19a88]">Verified Paid (₹{event.registration_fee_inr.toFixed(2)})</span>
+
+            {/* Luxury Editorial Voucher Card */}
+            <div className="rounded-3xl border border-[#c19a88]/30 bg-gradient-to-b from-[#181615] via-[#121110] to-[#0A0A0A] p-6 sm:p-8 relative overflow-hidden shadow-2xl shadow-black/80 space-y-6">
+              {/* Top hairline gold gradient accent */}
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#c19a88] to-transparent opacity-90" />
+              
+              {/* Ambient radial glow */}
+              <div className="pointer-events-none absolute -top-24 right-0 h-64 w-64 rounded-full bg-[#c19a88]/10 blur-[90px]" />
+
+              {/* Receipt Header */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-white/10 relative z-10">
+                <div className="flex items-center gap-3">
+                  <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-[#805948] to-[#c19a88] p-[1px] shadow-lg shrink-0">
+                    <div className="h-full w-full rounded-[11px] bg-black/80 flex items-center justify-center">
+                      <Sparkles className="h-5 w-5 text-[#e8c5b4]" />
+                    </div>
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase font-bold tracking-widest text-[#c19a88] font-mono block">
+                      SkaleKraft Official Receipt
+                    </span>
+                    <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                      {teamName}
+                    </h2>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap sm:flex-col items-start sm:items-end gap-1.5">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[11px] font-bold text-emerald-400">
+                    <CheckCircle2 className="h-3 w-3" />
+                    VERIFIED PAID
+                  </span>
+                  <span className="text-[10px] font-mono text-neutral-400">
+                    {new Date().toLocaleDateString('en-IN', {
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric',
+                    })}
+                  </span>
+                </div>
+              </div>
+
+              {/* Particulars Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs relative z-10">
+                <div className="p-3.5 rounded-2xl border border-white/5 bg-white/[0.02] space-y-1">
+                  <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider block">
+                    Registration ID
+                  </span>
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="font-mono font-bold text-white truncate text-xs" title={createdTeam?.id}>
+                      {createdTeam?.id ? `${createdTeam.id.substring(0, 14)}...` : 'PENDING'}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (createdTeam?.id) {
+                          navigator.clipboard.writeText(createdTeam.id);
+                          setCopiedPassId(true);
+                          setTimeout(() => setCopiedPassId(false), 2000);
+                        }
+                      }}
+                      className="p-1 rounded hover:bg-white/10 text-neutral-400 hover:text-white transition-colors cursor-pointer"
+                      title="Copy Full ID"
+                    >
+                      {copiedPassId ? <Check className="h-3 w-3 text-emerald-400" /> : <Copy className="h-3 w-3" />}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="p-3.5 rounded-2xl border border-white/5 bg-white/[0.02] space-y-1">
+                  <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider block">
+                    Track Arena
+                  </span>
+                  <span className="font-semibold text-[#e8c5b4] block truncate">
+                    {currentTrackObj?.name || 'Assigned Track'}
+                  </span>
+                </div>
+
+                <div className="p-3.5 rounded-2xl border border-white/5 bg-white/[0.02] space-y-1">
+                  <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider block">
+                    Team Leader
+                  </span>
+                  <span className="font-semibold text-white block truncate">
+                    {leaderName}
+                  </span>
+                  <span className="text-[10px] text-neutral-400 block truncate">
+                    {leaderPhone}
+                  </span>
+                </div>
+
+                <div className="p-3.5 rounded-2xl border border-white/5 bg-white/[0.02] space-y-1">
+                  <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider block">
+                    Total Settled
+                  </span>
+                  <span className="font-extrabold text-[#c19a88] text-sm block">
+                    ₹{event.registration_fee_inr.toFixed(2)}
+                  </span>
+                  <span className="text-[10px] text-neutral-400 block truncate font-mono">
+                    {paymentResult?.paymentId ? `ID: ${paymentResult.paymentId.substring(0, 12)}...` : 'Flat Per Team'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Perforated Divider */}
+              <div className="relative py-1">
+                <div className="absolute -left-10 top-1/2 -translate-y-1/2 h-5 w-5 rounded-full bg-[#0A0A0A] border-r border-[#c19a88]/30 pointer-events-none" />
+                <div className="absolute -right-10 top-1/2 -translate-y-1/2 h-5 w-5 rounded-full bg-[#0A0A0A] border-l border-[#c19a88]/30 pointer-events-none" />
+                <div className="border-t border-dashed border-white/10 w-full" />
+              </div>
+
+              {/* Squad Roster Breakdown */}
+              <div className="space-y-3 relative z-10">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-mono text-[10px] uppercase font-bold tracking-wider text-neutral-400 flex items-center gap-1.5">
+                    <Users className="h-3.5 w-3.5 text-[#c19a88]" />
+                    Registered Squad Roster ({1 + members.length} Innovator{1 + members.length > 1 ? 's' : ''})
+                  </span>
+                  <span className="text-[10px] text-neutral-400 font-mono">
+                    {collegeOrOrg || city || 'Independent Innovators'}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                  {/* Leader entry */}
+                  <div className="flex items-center justify-between p-3 rounded-xl border border-[#805948]/30 bg-[#805948]/10">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <span className="font-mono text-xs font-bold text-[#c19a88]">01</span>
+                      <div className="min-w-0">
+                        <p className="font-semibold text-white truncate text-xs">{leaderName}</p>
+                        <p className="text-[10px] text-neutral-400 truncate">{leaderEmail}</p>
+                      </div>
+                    </div>
+                    <span className="text-[9px] uppercase font-bold tracking-wider bg-[#805948]/30 text-[#e8c5b4] px-2 py-0.5 rounded-full shrink-0 border border-[#c19a88]/20">
+                      Leader
+                    </span>
+                  </div>
+
+                  {/* Additional members */}
+                  {members.map((m, idx) => (
+                    <div key={idx} className="flex items-center justify-between p-3 rounded-xl border border-white/5 bg-white/[0.02]">
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <span className="font-mono text-xs text-neutral-500">{String(idx + 2).padStart(2, '0')}</span>
+                        <div className="min-w-0">
+                          <p className="font-semibold text-neutral-200 truncate text-xs">{m.name}</p>
+                          <p className="text-[10px] text-neutral-400 truncate">{m.email}</p>
+                        </div>
+                      </div>
+                      <span className="text-[9px] uppercase font-bold tracking-wider text-neutral-400 px-2 py-0.5 rounded-full shrink-0">
+                        Member
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* QR Code Security Card */}
+              <div className="flex flex-col sm:flex-row items-center gap-4 p-4 rounded-2xl border border-white/10 bg-black/40 text-xs relative z-10">
+                <div className="h-24 w-24 rounded-xl bg-white p-1.5 flex items-center justify-center shrink-0 border border-[#c19a88]/30 shadow-md">
+                  {passQrCode ? (
+                    <Image src={passQrCode} alt="Team QR Pass" width={84} height={84} unoptimized />
+                  ) : (
+                    <div className="h-full w-full bg-neutral-900 rounded flex items-center justify-center text-[10px] font-mono text-neutral-500">
+                      QR PASS
+                    </div>
+                  )}
+                </div>
+                <div className="space-y-1 text-center sm:text-left min-w-0">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#c19a88] block font-bold">
+                    Official Tournament Credential
+                  </span>
+                  <p className="text-neutral-300 font-medium text-xs leading-relaxed">
+                    Present this verified digital receipt or printed pass at hackathon checkpoints.
+                  </p>
+                  <p className="text-[10px] text-neutral-500 font-mono">
+                    Order: {paymentResult?.orderId || paymentOrder?.orderId || 'Verified Settled'} • No physical ticket required
+                  </p>
+                </div>
+              </div>
             </div>
-            <div className="flex justify-between">
-              <span className="text-neutral-400">Registered Members:</span>
-              <span className="text-neutral-200">{1 + members.length} Member(s)</span>
+
+            {/* Action Buttons */}
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5">
+              <button
+                type="button"
+                onClick={() => router.push('/dashboard')}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4] hover:brightness-110 px-8 py-3.5 text-xs font-bold text-black shadow-lg shadow-[#805948]/30 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+              >
+                <span>Go to Team Dashboard</span>
+                <ArrowRight className="h-4 w-4" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => window.print()}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 hover:bg-[#c19a88]/20 px-7 py-3.5 text-xs font-semibold text-[#e8c5b4] hover:text-white transition-all cursor-pointer shadow-sm hover:scale-[1.02] active:scale-[0.98]"
+              >
+                <Printer className="h-4 w-4 text-[#c19a88]" />
+                <span>Print Registration Receipt</span>
+              </button>
             </div>
           </div>
-
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button
-              onClick={() => router.push('/dashboard')}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-8 py-3 text-xs font-bold text-white shadow-lg shadow-[#805948]/25 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
-            >
-              <span>Go to Team Dashboard</span>
-              <ArrowRight className="h-4 w-4" />
-            </button>
-
-            <button
-              onClick={() => window.print()}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-6 py-3 text-xs font-semibold text-neutral-300 hover:text-white transition-colors cursor-pointer"
-            >
-              <Download className="h-4 w-4" />
-              <span>Print Registration Receipt</span>
-            </button>
-          </div>
-        </div>
+        </>
       )}
     </div>
   );
