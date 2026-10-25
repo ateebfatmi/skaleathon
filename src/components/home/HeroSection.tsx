@@ -105,7 +105,7 @@ export default function HeroSection({ event }: HeroProps) {
               title: `₹${prizePoolFormatted} Prize Pool`,
               subtitle: `1st ₹${firstPrizeFormatted} • 2nd ₹${secondPrizeFormatted} • 3rd ₹${thirdPrizeFormatted}`,
               isPrimary: true,
-              href: '/prizes',
+              href: '#prizes',
               badge: '★ CASH PRIZES',
             },
             {

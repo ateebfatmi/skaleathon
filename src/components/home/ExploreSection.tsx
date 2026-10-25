@@ -28,7 +28,7 @@ export default function ExploreSection() {
       badge: 'Integrity',
       desc: 'Team eligibility, submission requirements, original code standards, and evaluation rubrics.',
       href: '/rules',
-      cta: 'Read Tournament Rules',
+      cta: 'Read Official Rules',
       icon: ShieldCheck,
       accent: '#c19a88',
     },
@@ -55,7 +55,7 @@ export default function ExploreSection() {
             <span className="h-px w-6 bg-[#c19a88]/70" />
           </div>
           <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-            Dive deeper into the <span className="text-[#c19a88]">tournament details</span>.
+            Dive deeper into the <span className="text-[#c19a88]">hackathon details</span>.
           </h2>
           <p className="mt-2 text-xs sm:text-sm text-white/55 font-light">
             Dedicated portals for track requirements, bounty breakdowns, official rules, and support.
