@@ -241,12 +241,15 @@ export class SupabaseStore {
       finalRole = 'judge';
     }
 
+    const existingByEmail = await this.getProfileByEmail(data.email);
+    const resolvedId = existingByEmail?.id || data.id;
+
     const dbProfile = {
-      id: data.id,
+      id: resolvedId,
       email: data.email.toLowerCase(),
-      full_name: data.full_name || 'Participant',
-      phone: data.phone || null,
-      college_name: data.college_or_org || null,
+      full_name: data.full_name || existingByEmail?.full_name || 'Participant',
+      phone: data.phone ?? existingByEmail?.phone ?? null,
+      college_name: data.college_or_org ?? existingByEmail?.college_or_org ?? null,
       system_role: finalRole,
       updated_at: new Date().toISOString(),
     };
@@ -692,6 +695,32 @@ export class SupabaseStore {
       error_reason: data.error_reason,
       created_at: data.created_at,
       updated_at: data.updated_at,
+    };
+  }
+
+  static async getPaymentOrderByTeam(teamId: string): Promise<PaymentOrder | null> {
+    const client = this.getClient();
+    const { data, error } = await client
+      .from('payment_orders')
+      .select('*')
+      .eq('team_id', teamId)
+      .order('created_at', { ascending: false });
+
+    if (error || !data || data.length === 0) return null;
+
+    const chosen = data.find((row) => row.status === 'paid') || data[0];
+
+    return {
+      id: chosen.id,
+      team_id: chosen.team_id,
+      amount_inr: Number(chosen.amount_inr),
+      currency: chosen.currency,
+      status: chosen.status,
+      razorpay_payment_id: chosen.payment_id,
+      razorpay_signature: chosen.signature,
+      error_reason: chosen.error_reason,
+      created_at: chosen.created_at,
+      updated_at: chosen.updated_at,
     };
   }
 

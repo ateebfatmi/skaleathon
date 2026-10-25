@@ -158,7 +158,7 @@ export class EventRepository {
     if (this.isSupabaseEnabled()) {
       try {
         const track = await SupabaseStore.getTrack(trackId);
-        if (track) return track;
+        if (track || process.env.NODE_ENV === 'production') return track;
       } catch (err) {
         this.handleSupabaseError('getTrack', err);
       }
@@ -401,7 +401,7 @@ export class EventRepository {
     if (this.isSupabaseEnabled()) {
       try {
         const team = await SupabaseStore.getTeam(teamId);
-        if (team) return team;
+        if (team || process.env.NODE_ENV === 'production') return team;
       } catch (err) {
         this.handleSupabaseError('getTeam', err);
       }
@@ -455,7 +455,7 @@ export class EventRepository {
     if (this.isSupabaseEnabled()) {
       try {
         const teams = await SupabaseStore.getTeams();
-        if (teams.length > 0) {
+        if (teams.length > 0 || process.env.NODE_ENV === 'production') {
           let filtered = teams;
           if (filters?.status) filtered = filtered.filter((t) => t.status === filters.status);
           if (filters?.trackId) filtered = filtered.filter((t) => t.track_id === filters.trackId);
@@ -545,7 +545,7 @@ export class EventRepository {
     if (this.isSupabaseEnabled()) {
       try {
         const order = await SupabaseStore.getPaymentOrder(orderId);
-        if (order) return order;
+        if (order || process.env.NODE_ENV === 'production') return order;
       } catch (err) {
         this.handleSupabaseError('getPaymentOrder', err);
       }
@@ -555,8 +555,20 @@ export class EventRepository {
   }
 
   static async getPaymentOrderByTeam(teamId: string): Promise<PaymentOrder | null> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const order = await SupabaseStore.getPaymentOrderByTeam(teamId);
+        if (order || process.env.NODE_ENV === 'production') return order;
+      } catch (err) {
+        this.handleSupabaseError('getPaymentOrderByTeam', err);
+      }
+    }
     const state = this.store.getState();
-    return state.paymentOrders.find((p) => p.team_id === teamId) || null;
+    return (
+      state.paymentOrders.find((p) => p.team_id === teamId && p.status === 'paid') ||
+      state.paymentOrders.find((p) => p.team_id === teamId) ||
+      null
+    );
   }
 
   static async completePaymentOrder(params: {
@@ -613,6 +625,17 @@ export class EventRepository {
   }
 
   static async markPaymentFailed(orderId: string, reason: string): Promise<void> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        await SupabaseStore.updatePaymentOrder(orderId, {
+          status: 'failed',
+          error_reason: reason,
+        });
+        return;
+      } catch (err) {
+        this.handleSupabaseError('markPaymentFailed', err);
+      }
+    }
     const state = this.store.getState();
     const order = state.paymentOrders.find((p) => p.id === orderId);
     if (order) {
@@ -628,6 +651,18 @@ export class EventRepository {
     eventType: string;
     payload: Record<string, unknown>;
   }): Promise<{ isDuplicate: boolean }> {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const res = await SupabaseStore.logWebhookEvent({
+          id: params.eventId,
+          event_type: params.eventType,
+          payload: params.payload,
+        });
+        return { isDuplicate: res.isDuplicate };
+      } catch (err) {
+        this.handleSupabaseError('recordWebhookEvent', err);
+      }
+    }
     const state = this.store.getState();
     const existing = state.webhookEvents.find((e) => e.id === params.eventId);
     if (existing) {
@@ -647,6 +682,9 @@ export class EventRepository {
   }
 
   static async markWebhookProcessed(eventId: string, errorMessage?: string): Promise<void> {
+    if (this.isSupabaseEnabled()) {
+      return;
+    }
     const state = this.store.getState();
     const evt = state.webhookEvents.find((e) => e.id === eventId);
     if (evt) {
@@ -804,6 +842,27 @@ export class EventRepository {
   static async listSubmissions(filters?: { trackId?: string; status?: Submission['status'] }): Promise<
     Array<Submission & { teamName: string; collegeOrOrg: string | null }>
   > {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const subs = await SupabaseStore.getSubmissions();
+        let filtered = subs.map((s) => ({
+          ...s,
+          teamName: s.team?.name || 'Unknown Team',
+          collegeOrOrg: s.team?.college_or_org || null,
+        }));
+        if (filters?.trackId) {
+          filtered = filtered.filter((s) => s.track_id === filters.trackId);
+        }
+        if (filters?.status) {
+          filtered = filtered.filter((s) => s.status === filters.status);
+        }
+        if (filtered.length > 0 || process.env.NODE_ENV === 'production') {
+          return filtered;
+        }
+      } catch (err) {
+        this.handleSupabaseError('listSubmissions', err);
+      }
+    }
     const state = this.store.getState();
     let subs = [...state.submissions];
 
@@ -829,7 +888,7 @@ export class EventRepository {
     if (this.isSupabaseEnabled()) {
       try {
         const criteria = await SupabaseStore.getJudgingCriteria();
-        if (criteria.length > 0) return criteria;
+        if (criteria.length > 0 || process.env.NODE_ENV === 'production') return criteria;
       } catch (err) {
         this.handleSupabaseError('getJudgingCriteria', err);
       }
@@ -872,7 +931,7 @@ export class EventRepository {
     if (this.isSupabaseEnabled()) {
       try {
         const judges = await SupabaseStore.getJudges();
-        if (judges.length > 0) return judges;
+        if (judges.length > 0 || process.env.NODE_ENV === 'production') return judges;
       } catch (err) {
         this.handleSupabaseError('getJudges', err);
       }
@@ -891,6 +950,24 @@ export class EventRepository {
   static async getAssignmentsForJudge(judgeId: string): Promise<
     Array<JudgeAssignment & { submission: Submission; teamName: string; scoreSubmission?: ScoreSubmission | null }>
   > {
+    if (this.isSupabaseEnabled()) {
+      try {
+        const assignments = await SupabaseStore.getJudgeAssignments(judgeId);
+        const mapped = assignments
+          .filter((a) => a.submission)
+          .map((a) => ({
+            ...a,
+            submission: a.submission!,
+            teamName: a.team?.name || 'Assigned Project',
+            scoreSubmission: null,
+          }));
+        if (mapped.length > 0 || process.env.NODE_ENV === 'production') {
+          return mapped;
+        }
+      } catch (err) {
+        this.handleSupabaseError('getAssignmentsForJudge', err);
+      }
+    }
     const state = this.store.getState();
     const assignments = state.judgeAssignments.filter((a) => a.judge_id === judgeId);
 
@@ -1054,7 +1131,7 @@ export class EventRepository {
       try {
         await SupabaseStore.publishLeaderboard('skaleathon-2027', actorId);
         const res = await SupabaseStore.getLeaderboard('skaleathon-2027', true);
-        if (res.length > 0) return res;
+        if (res.length > 0 || process.env.NODE_ENV === 'production') return res;
       } catch (err) {
         this.handleSupabaseError('publishLeaderboard', err);
       }
@@ -1129,7 +1206,7 @@ export class EventRepository {
     if (this.isSupabaseEnabled()) {
       try {
         const res = await SupabaseStore.getLeaderboard('skaleathon-2027', true);
-        if (res.length > 0) return res;
+        if (res.length > 0 || process.env.NODE_ENV === 'production') return res;
       } catch (err) {
         this.handleSupabaseError('getLeaderboard', err);
       }
@@ -1229,7 +1306,7 @@ export class EventRepository {
     if (this.isSupabaseEnabled()) {
       try {
         const cert = await SupabaseStore.getCertificateByCode(code);
-        if (cert) return cert;
+        if (cert || process.env.NODE_ENV === 'production') return cert;
       } catch (err) {
         this.handleSupabaseError('getCertificateByCode', err);
       }
@@ -1242,7 +1319,7 @@ export class EventRepository {
     if (this.isSupabaseEnabled()) {
       try {
         const certs = await SupabaseStore.getCertificatesByTeam(teamId);
-        if (certs.length > 0) return certs;
+        if (certs.length > 0 || process.env.NODE_ENV === 'production') return certs;
       } catch (err) {
         this.handleSupabaseError('getCertificatesByTeam', err);
       }
@@ -1278,7 +1355,7 @@ export class EventRepository {
     if (this.isSupabaseEnabled()) {
       try {
         const ann = await SupabaseStore.getAnnouncements();
-        if (ann.length > 0) return ann;
+        if (ann.length > 0 || process.env.NODE_ENV === 'production') return ann;
       } catch (err) {
         this.handleSupabaseError('getAnnouncements', err);
       }
@@ -1336,6 +1413,19 @@ export class EventRepository {
       } catch (err) {
         console.warn('SupabaseStore.logAudit error:', err);
       }
+      if (process.env.NODE_ENV === 'production') {
+        return {
+          id: 'audit_' + Math.random().toString(36).substring(2, 10),
+          actor_id: params.actor_id,
+          actor_email: params.actor_email || null,
+          action: params.action,
+          target_entity: params.target_entity,
+          target_id: params.target_id || null,
+          details: params.details || {},
+          ip_address: params.ip_address || null,
+          created_at: new Date().toISOString(),
+        };
+      }
     }
     const state = this.store.getState();
     const log: AuditLog = {
@@ -1358,7 +1448,7 @@ export class EventRepository {
     if (this.isSupabaseEnabled()) {
       try {
         const logs = await SupabaseStore.getAuditLogs(limit);
-        if (logs.length > 0) return logs;
+        if (logs.length > 0 || process.env.NODE_ENV === 'production') return logs;
       } catch (err) {
         this.handleSupabaseError('getAuditLogs', err);
       }

@@ -12,6 +12,11 @@ function getAppSecret(): string {
   const secret = process.env.APP_SECRET;
   if (secret && secret.length >= 32) return secret;
 
+  const fallbackKey = process.env.CLERK_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (fallbackKey) {
+    return crypto.createHash('sha256').update(fallbackKey).digest('hex');
+  }
+
   if (process.env.NODE_ENV === 'production') {
     throw new Error('APP_SECRET must be configured with at least 32 characters in production.');
   }
@@ -89,11 +94,12 @@ const resolveCurrentSession = async (): Promise<AuthSession | null> => {
       if (clerkUser) {
         const primaryEmail =
           clerkUser.emailAddresses.find((e) => e.id === clerkUser.primaryEmailAddressId)?.emailAddress ||
-          clerkUser.emailAddresses[0]?.emailAddress;
+          clerkUser.emailAddresses[0]?.emailAddress ||
+          `${clerkUser.id}@clerk.local`;
 
-        if (primaryEmail) {
-          profile = await EventRepository.getProfileByEmail(primaryEmail);
-          if (!profile) {
+        profile = await EventRepository.getProfileByEmail(primaryEmail);
+        if (!profile) {
+          try {
             profile = await EventRepository.upsertProfile({
               id: clerkUser.id,
               email: primaryEmail,
@@ -102,6 +108,18 @@ const resolveCurrentSession = async (): Promise<AuthSession | null> => {
                 : (clerkUser.username || primaryEmail),
               role: 'participant',
             });
+          } catch (upsertErr) {
+            console.error('Profile upsert fallback in session resolution:', upsertErr);
+            profile = {
+              id: clerkUser.id,
+              email: primaryEmail,
+              full_name: clerkUser.firstName
+                ? `${clerkUser.firstName} ${clerkUser.lastName || ''}`.trim()
+                : (clerkUser.username || primaryEmail),
+              role: 'participant',
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+            };
           }
         }
       }
@@ -114,14 +132,18 @@ const resolveCurrentSession = async (): Promise<AuthSession | null> => {
 
   // Retrieve teamId if user is leader or member
   let teamId: string | null = null;
-  const teamAsLeader = await EventRepository.getTeamByLeader(profile.id);
-  const teamAsMember = teamAsLeader
-    ? null
-    : await EventRepository.getTeamByMemberEmail(profile.email);
-  if (teamAsLeader) {
-    teamId = teamAsLeader.id;
-  } else if (teamAsMember) {
-    teamId = teamAsMember.id;
+  try {
+    const teamAsLeader = await EventRepository.getTeamByLeader(profile.id);
+    const teamAsMember = teamAsLeader
+      ? null
+      : await EventRepository.getTeamByMemberEmail(profile.email);
+    if (teamAsLeader) {
+      teamId = teamAsLeader.id;
+    } else if (teamAsMember) {
+      teamId = teamAsMember.id;
+    }
+  } catch (err) {
+    console.warn('Unable to resolve user team during session lookup:', err);
   }
 
   // Double check admin allowlist
