@@ -111,7 +111,7 @@ export function EditorialIndexBar({
                 cyberAudio.playHover();
               }}
               onMouseLeave={() => setHoveredKey(null)}
-              className={`group relative min-h-16 py-3 px-3 sm:min-h-0 sm:py-4 sm:px-4 flex items-center justify-between text-[11px] sm:text-xs transition-colors duration-300 text-left overflow-hidden cursor-pointer select-none ${
+              className={`group relative py-2.5 px-3 sm:min-h-0 sm:py-3 sm:px-3.5 flex items-center justify-between text-[11px] sm:text-xs transition-colors duration-300 text-left overflow-hidden cursor-pointer select-none ${
                 isActive
                   ? 'text-white font-semibold'
                   : 'text-neutral-400 hover:text-white'

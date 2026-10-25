@@ -17,8 +17,8 @@ export default async function TracksPage() {
   ]);
 
   return (
-    <div className="py-10 sm:py-16 bg-[#0B0B0B] min-h-screen relative overflow-hidden">
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+    <div className="pt-20 pb-12 sm:pt-24 sm:pb-16 bg-[#0B0B0B] min-h-screen relative overflow-hidden">
+      <div className="container mx-auto max-w-5xl px-4 sm:px-6 relative z-10">
         <TracksPageClient tracks={tracks} event={event} />
       </div>
     </div>
