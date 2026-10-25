@@ -85,7 +85,7 @@ export default function HeroSection({ event }: HeroProps) {
         >
           India&apos;s premier 4-stage hackathon conducted by SkaleKraft as SKALEATHON. Architect, build, and deploy production-grade software across AI/ML, Web, and Mobile arenas — competing for a{' '}
           <Link
-            href="#prizes"
+            href="/prizes"
             className="inline-flex items-center gap-1.5 font-bold text-white bg-gradient-to-r from-[#c19a88]/30 via-[#805948]/35 to-[#c19a88]/30 border border-[#c19a88]/60 px-2.5 py-0.5 rounded-lg shadow-[0_0_20px_rgba(193,154,136,0.35)] hover:border-[#e8c5b4] hover:shadow-[0_0_30px_rgba(193,154,136,0.5)] transition-all"
           >
             <Trophy className="h-3.5 w-3.5 text-[#ffe5d9] inline shrink-0" />
@@ -115,7 +115,7 @@ export default function HeroSection({ event }: HeroProps) {
 
             <span className="h-3 w-px bg-white/20" />
 
-            <Link href="#prizes" className="text-[#ffe5d9] font-bold flex items-center gap-1 hover:text-white transition-colors">
+            <Link href="/prizes" className="text-[#ffe5d9] font-bold flex items-center gap-1 hover:text-white transition-colors">
               <Trophy className="h-3 w-3 text-[#c19a88]" />
               <span>₹{prizePoolFormatted} Bounty</span>
             </Link>
@@ -167,7 +167,7 @@ export default function HeroSection({ event }: HeroProps) {
               title: `₹${prizePoolFormatted} Prize Pool`,
               subtitle: `1st ₹${firstPrizeFormatted} • 2nd ₹${secondPrizeFormatted} • 3rd ₹${thirdPrizeFormatted}`,
               isPrimary: true,
-              href: '#prizes',
+              href: '/prizes',
               badge: '★ CASH PRIZES',
             },
             {
