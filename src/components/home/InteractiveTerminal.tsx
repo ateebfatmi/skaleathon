@@ -118,7 +118,7 @@ export default function InteractiveTerminal({ event }: { event: EventData }) {
             <div className="text-[#ffe5d9] font-bold">Official Competition Guidelines:</div>
             <div className="space-y-1 text-white/70 text-[11px]">
               <div>• Team size: {event.min_team_size} to {event.max_team_size} members. Solo entries permitted.</div>
-              <div>• Screening Quiz (Jan 8) → Architecture PPT (Jan 10–14) → Build (Jan 16–26) → Finale (Jan 29–30).</div>
+              <div>• Screening Quiz (Jan 8) → Architecture PPT (Jan 10–14) → Build (Jan 16–25) → Finale (Jan 29–30).</div>
               <div>• Evaluation based on architecture, code quality, deployment, and live presentation.</div>
             </div>
             <Link href="/rules" className="inline-flex items-center gap-1 text-[#c19a88] hover:text-white pt-1 text-[11px]">
@@ -266,7 +266,7 @@ export default function InteractiveTerminal({ event }: { event: EventData }) {
               </div>
 
               <div className="flex items-center justify-between text-[11px] text-white/50 pt-0.5">
-                <span>Top {event.certificates_top_n} teams receive verified merit certificates</span>
+                <span>Top {event.certificates_top_n} teams receive merit certificates</span>
                 <Link href="/prizes" className="text-[#c19a88] hover:text-white flex items-center gap-1 font-mono text-[10px] font-medium transition-colors">
                   Details <ArrowRight className="h-3 w-3" />
                 </Link>
@@ -293,7 +293,7 @@ export default function InteractiveTerminal({ event }: { event: EventData }) {
                 <div className="p-2 rounded-xl border border-white/10 bg-white/[0.02]">
                   <div className="text-[9px] text-[#e8c5b4] font-bold">STAGE 03</div>
                   <div className="text-xs font-semibold text-white mt-0.5">Build Sprint</div>
-                  <div className="text-[10px] text-white/40 mt-1">Jan 16–26, 2027</div>
+                  <div className="text-[10px] text-white/40 mt-1">Jan 16–25, 2027</div>
                 </div>
                 <div className="p-2 rounded-xl border border-white/10 bg-white/[0.02]">
                   <div className="text-[9px] text-amber-400 font-bold">STAGE 04</div>

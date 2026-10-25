@@ -104,7 +104,7 @@ export function EditorialIndexBar({
                 cyberAudio.playHover();
               }}
               onMouseLeave={() => setHoveredKey(null)}
-              className={`group relative py-3.5 sm:py-4 px-3.5 sm:px-4 flex items-center justify-between text-xs transition-colors duration-300 text-left overflow-hidden cursor-pointer select-none ${
+              className={`group relative min-h-16 py-3 px-3 sm:min-h-0 sm:py-4 sm:px-4 flex items-center justify-between text-[11px] sm:text-xs transition-colors duration-300 text-left overflow-hidden cursor-pointer select-none ${
                 isActive
                   ? 'text-white font-semibold'
                   : 'text-neutral-400 hover:text-white'
@@ -150,7 +150,7 @@ export function EditorialIndexBar({
                 >
                   {item.num}
                 </span>
-                <span className="truncate">{item.label}</span>
+                <span className="line-clamp-2 leading-tight sm:truncate sm:leading-normal">{item.label}</span>
               </div>
 
               <div className="relative z-10 flex items-center gap-1.5 shrink-0">

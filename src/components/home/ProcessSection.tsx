@@ -33,7 +33,7 @@ export default function ProcessSection({ event }: { event: EventData }) {
       num: 'Stage 03',
       title: 'Project Submission',
       subtitle: 'Core Engineering & Codebase',
-      date: '16/17–25/26 Jan 2027',
+      date: '16–25 Jan 2027',
       desc: 'The primary building phase. Teams submit their public GitHub repository and live deployed URL (optional demo video provides an evaluation advantage).',
       icon: Code2,
       accent: 'rgba(232, 197, 180, 0.18)',

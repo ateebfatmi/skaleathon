@@ -133,7 +133,7 @@ export default function TeamWorkspaceClient({
             <div className="print-pass-document-label">
               <span>Official document</span>
               <strong>Squad Credential</strong>
-              <small>2027 National Engineering Tournament</small>
+              <small>National Engineering Tournament</small>
             </div>
           </header>
 
@@ -244,11 +244,11 @@ export default function TeamWorkspaceClient({
       </article>
 
       <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      className="relative w-full space-y-14 pb-24 text-neutral-200"
-    >
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="relative w-full space-y-14 pb-24 text-neutral-200"
+      >
       {/* Subtle Background Ambient Glows (Blended into background) */}
       <div className="pointer-events-none absolute -top-20 right-10 h-96 w-96 rounded-full bg-[#c19a88]/15 blur-[160px]" />
       <div className="pointer-events-none absolute top-40 -left-20 h-72 w-72 rounded-full bg-[#805948]/12 blur-[140px]" />
@@ -263,19 +263,23 @@ export default function TeamWorkspaceClient({
         </div>
 
         {/* Top Utility & Context Ribbon */}
-        <div className="mobile-utility-row relative z-10 flex flex-wrap items-center justify-between gap-4 pb-4 mb-7 border-b border-white/[0.07]">
-          <div className="flex flex-wrap items-center gap-2.5 text-[10px] font-mono uppercase tracking-[0.25em]">
-            <span className="relative flex h-2 w-2">
+        <div className="relative z-10 flex flex-col gap-3 border-b border-white/[0.07] pb-4 mb-5 sm:mb-7 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-4">
+          <div className="grid w-full grid-cols-2 gap-2 font-mono text-[9px] uppercase tracking-[0.16em] sm:flex sm:w-auto sm:flex-wrap sm:items-center sm:gap-2.5 sm:text-[10px] sm:tracking-[0.25em]">
+            <span className="col-span-2 inline-flex min-h-10 items-center gap-2 rounded-xl border border-white/[0.07] bg-white/[0.025] px-3 text-[#c19a88] sm:col-auto sm:min-h-0 sm:rounded-none sm:border-0 sm:bg-transparent sm:px-0">
+              <span className="relative flex h-2 w-2 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+              </span>
+              <span className="sm:hidden">Official Squad Pass</span>
+              <span className="hidden sm:inline">Official Squad Pass // Active Roster</span>
             </span>
-            <span className="text-[#c19a88]">Official Squad Pass // Active Roster</span>
-            <span className="text-white/20">•</span>
-            <span className="text-emerald-400 font-semibold">STATUS: REGISTRATION PAID</span>
-            <span className="text-white/20">•</span>
+            <span className="inline-flex min-h-10 items-center justify-center rounded-xl border border-emerald-400/15 bg-emerald-400/[0.06] px-2 text-center font-semibold text-emerald-400 sm:min-h-0 sm:justify-start sm:rounded-none sm:border-0 sm:bg-transparent sm:px-0">
+              Registration Paid
+            </span>
+            <span className="hidden text-white/20 sm:inline">•</span>
             <button
               onClick={() => copyToClipboard(team.id, 'pass')}
-              className="group inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors"
+              className="group inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-white/[0.07] bg-white/[0.025] px-2 text-neutral-400 transition-colors hover:text-white sm:min-h-0 sm:justify-start sm:rounded-none sm:border-0 sm:bg-transparent sm:px-0"
               title="Click to copy full Pass ID"
             >
               <span>ID:</span>
@@ -291,21 +295,21 @@ export default function TeamWorkspaceClient({
           </div>
 
           {/* Right Quick Actions */}
-          <div className="flex items-center gap-5 text-xs">
+          <div className="grid w-full grid-cols-2 gap-2 text-xs sm:flex sm:w-auto sm:items-center sm:gap-5">
             <button
               onClick={() => window.print()}
-              className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors font-medium"
+              className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 font-medium text-neutral-300 transition-colors hover:text-white sm:min-h-0 sm:justify-start sm:rounded-none sm:border-0 sm:bg-transparent sm:px-0 sm:text-neutral-400"
               title="Print official team credentials"
             >
               <Printer className="h-3.5 w-3.5 text-[#c19a88]" />
               <span>Print Pass</span>
             </button>
 
-            <span className="text-white/15">|</span>
+            <span className="hidden text-white/15 sm:inline">|</span>
 
             <button
               onClick={shareSquadPass}
-              className="group inline-flex items-center gap-1.5 text-[#e8c5b4] hover:text-white transition-colors font-semibold"
+              className="group inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl border border-[#c19a88]/20 bg-[#c19a88]/[0.07] px-3 font-semibold text-[#e8c5b4] transition-colors hover:text-white sm:min-h-0 sm:justify-start sm:rounded-none sm:border-0 sm:bg-transparent sm:px-0"
               title="Share squad credentials"
             >
               {copiedInvite ? (
@@ -324,15 +328,15 @@ export default function TeamWorkspaceClient({
         </div>
 
         {/* Editorial Headline & Manifesto */}
-        <div className="relative z-10 max-w-3xl space-y-5 pb-9">
-          <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold text-white tracking-tight leading-[1.06]">
+        <div className="relative z-10 max-w-3xl space-y-4 pb-6 sm:space-y-5 sm:pb-9">
+          <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-extrabold text-white tracking-tight leading-[1.06]">
             Squad{' '}
             <span className="font-serif italic font-normal text-[#e8c5b4]">
               {team.name}
             </span>
           </h1>
 
-          <div className="border-l-2 border-[#c19a88]/45 pl-4 space-y-2">
+          <div className="border-l-2 border-[#c19a88]/45 pl-3.5 space-y-2 sm:pl-4">
             <p className="text-sm sm:text-[15px] text-neutral-300/90 leading-relaxed font-light">
               Verified engineering squad competing in{' '}
               <strong className="text-white font-medium">{track ? track.name : 'Skaleathon'}</strong>. Your team credential covers 1 to 6 members under a single flat registration pass.
@@ -421,7 +425,7 @@ export default function TeamWorkspaceClient({
               <span className="font-mono text-2xl font-light text-white/10 select-none">02</span>
             </div>
             <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-              Saturday, January 8, 2027 • 10:00 AM IST
+              Friday, January 8, 2027 • 10:00 AM IST
             </h3>
             <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
               Timed 45-minute online technical screening assessment evaluating core CS fundamentals and{' '}
@@ -453,8 +457,8 @@ export default function TeamWorkspaceClient({
         <div className="divide-y divide-white/[0.06] border-t border-b border-white/[0.06]">
           {/* Leader Row */}
           {leaderMember && (
-            <div className="flex items-center justify-between py-4">
-              <div className="flex items-center gap-4 min-w-0">
+            <div className="flex flex-col gap-2 py-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-3 min-w-0 sm:gap-4">
                 <span className="text-xs font-mono font-bold text-[#c19a88] w-6 shrink-0">
                   01
                 </span>
@@ -474,7 +478,7 @@ export default function TeamWorkspaceClient({
                 </div>
               </div>
 
-              <span className="inline-flex items-center gap-1.5 text-[11px] font-mono text-emerald-400 shrink-0">
+              <span className="inline-flex items-center gap-1.5 self-start pl-9 text-[11px] font-mono text-emerald-400 shrink-0 sm:self-auto sm:pl-0">
                 <CheckCircle2 className="h-3.5 w-3.5" />
                 <span>Verified</span>
               </span>
@@ -483,8 +487,8 @@ export default function TeamWorkspaceClient({
 
           {/* Other Members */}
           {regularMembers.map((member, idx) => (
-            <div key={member.id} className="flex items-center justify-between py-4">
-              <div className="flex items-center gap-4 min-w-0">
+            <div key={member.id} className="flex flex-col gap-2 py-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-3 min-w-0 sm:gap-4">
                 <span className="text-xs font-mono text-white/35 w-6 shrink-0">
                   {String(idx + 2).padStart(2, '0')}
                 </span>
@@ -504,14 +508,14 @@ export default function TeamWorkspaceClient({
                 </div>
               </div>
 
-              <span className="text-[11px] font-mono text-white/40 shrink-0">Active</span>
+              <span className="self-start pl-9 text-[11px] font-mono text-white/40 shrink-0 sm:self-auto sm:pl-0">Active</span>
             </div>
           ))}
 
           {/* Single Compact Open Slots Row */}
           {openSlotsCount > 0 && (
-            <div className="flex items-center justify-between py-4">
-              <div className="flex items-center gap-4 min-w-0">
+            <div className="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-3 min-w-0 sm:gap-4">
                 <span className="text-xs font-mono font-bold text-[#c19a88] w-6 shrink-0">
                   +{openSlotsCount}
                 </span>
@@ -527,7 +531,7 @@ export default function TeamWorkspaceClient({
 
               <button
                 onClick={shareSquadPass}
-                className="group inline-flex items-center gap-1.5 text-xs font-semibold text-[#e8c5b4] hover:text-white transition-colors shrink-0"
+                className="group inline-flex min-h-11 w-full items-center justify-center gap-1.5 rounded-xl border border-[#c19a88]/20 bg-[#c19a88]/[0.07] px-3 text-xs font-semibold text-[#e8c5b4] transition-colors hover:text-white sm:min-h-0 sm:w-auto sm:justify-start sm:rounded-none sm:border-0 sm:bg-transparent sm:px-0 shrink-0"
               >
                 <Share2 className="h-3.5 w-3.5 text-[#c19a88]" />
                 <span>Invite / Share Pass</span>

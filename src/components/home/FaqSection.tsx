@@ -19,7 +19,7 @@ export default function FaqSection({ event }: { event: EventData }) {
     },
     {
       q: 'What are the technical tracks available?',
-      a: 'Skaleathon features three tracks: (1) AI & Machine Learning, (2) Web Architecture, and (3) Mobile Systems. Teams choose one track during registration and can adjust before the final submission deadline.',
+      a: 'Skaleathon features three open-domain tracks: (1) AI & Machine Learning, (2) Web Development, and (3) App Development. Teams choose one track during registration and can formulate any problem statement across any domain.',
     },
     {
       q: 'When are the competition rounds conducted?',

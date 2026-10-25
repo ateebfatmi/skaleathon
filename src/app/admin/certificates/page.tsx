@@ -61,7 +61,7 @@ export default function AdminCertificatesPage() {
             </span>
             <h1 className="text-2xl font-black text-white">Certificate Management</h1>
             <p className="text-xs text-slate-400 mt-1">
-              Issue, inspect, and manage verifiable digital PDF certificates for the Top 25 finalist teams.
+              Issue, inspect, and manage digital PDF certificates for the Top 25 finalist teams.
             </p>
           </div>
 

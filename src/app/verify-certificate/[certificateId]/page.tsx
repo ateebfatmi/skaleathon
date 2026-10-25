@@ -25,7 +25,7 @@ export default async function VerifyCertificatePage({
             className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.16em] text-white/50 hover:text-[#c19a88] transition-colors"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
-            <span>Return to Skaleathon 2027</span>
+            <span>Return to Skaleathon</span>
           </Link>
         </div>
 
@@ -37,7 +37,7 @@ export default async function VerifyCertificatePage({
             </div>
             <h1 className="text-2xl font-medium text-white">Certificate Not Found</h1>
             <p className="text-xs sm:text-sm text-white/55 max-w-md mx-auto leading-relaxed font-light">
-              The identifier <code className="text-[#c19a88] font-mono bg-white/[0.04] border border-white/10 px-2 py-0.5 rounded">{code}</code> is not registered in the Skaleathon 2027 official certificate database.
+              The identifier <code className="text-[#c19a88] font-mono bg-white/[0.04] border border-white/10 px-2 py-0.5 rounded">{code}</code> is not registered in the Skaleathon official certificate database.
             </p>
             <p className="text-xs text-white/40 font-light">
               Please ensure the certificate code was copied accurately from the certificate or scanned directly from the QR code.
@@ -126,7 +126,7 @@ export default async function VerifyCertificatePage({
 
               <span className="text-[11px] text-white/45 flex items-center gap-1.5 font-light">
                 <CheckCircle2 className="h-3.5 w-3.5 text-[#c19a88]" strokeWidth={2} />
-                Cryptographically Signed & Timestamped
+                Official SkaleKraft Certificate
               </span>
             </div>
           </div>

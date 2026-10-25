@@ -44,10 +44,10 @@ export default async function DashboardPage() {
   const firstName = session?.fullName?.split(' ')[0] || 'Innovator';
 
   return (
-    <div className="relative w-full space-y-10 sm:space-y-14 pb-20 sm:pb-24 text-neutral-200">
+    <div className="relative w-full space-y-8 pb-20 text-neutral-200 sm:space-y-14 sm:pb-24">
       {/* Subtle Background Ambient Glows (Blended into background) */}
-      <div className="pointer-events-none absolute -top-20 right-10 h-96 w-96 rounded-full bg-[#c19a88]/15 blur-[160px]" />
-      <div className="pointer-events-none absolute top-40 -left-20 h-72 w-72 rounded-full bg-[#805948]/12 blur-[140px]" />
+      <div className="pointer-events-none absolute -top-20 right-10 hidden h-96 w-96 rounded-full bg-[#c19a88]/15 blur-[160px] sm:block" />
+      <div className="pointer-events-none absolute top-40 -left-20 hidden h-72 w-72 rounded-full bg-[#805948]/12 blur-[140px] sm:block" />
 
       {/* 1. Open Luxury Editorial Hero */}
       <header className="relative pt-1">
@@ -59,7 +59,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Top Utility & Context Ribbon */}
-        <div className="mobile-utility-row relative z-10 flex flex-wrap items-center justify-between gap-4 pb-4 mb-6 sm:mb-7 border-b border-white/[0.07]">
+        <div className="mobile-utility-row relative z-10 mb-4 flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.07] pb-4 sm:mb-7">
           <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 text-[10px] font-mono uppercase tracking-[0.22em] sm:tracking-[0.25em]">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c19a88] opacity-75" />
@@ -110,7 +110,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Editorial Headline & Manifesto */}
-        <div className="relative z-10 max-w-3xl space-y-4 sm:space-y-5 pb-7 sm:pb-9">
+        <div className="relative z-10 max-w-3xl space-y-3 pb-5 sm:space-y-5 sm:pb-9">
           <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-extrabold text-white tracking-tight leading-[1.08]">
             Welcome back,{' '}
             <span className="font-serif italic font-normal text-[#e8c5b4]">
@@ -135,9 +135,9 @@ export default async function DashboardPage() {
             <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
               01 {'//'} Live Tournament Telemetry
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+            <h2 className="text-[1.65rem] leading-tight sm:text-3xl font-bold text-white tracking-tight">
               Active Phase &amp;{' '}
-              <span className="font-serif italic font-normal text-[#e8c5b4]">
+              <span className="block font-serif italic font-normal text-[#e8c5b4] sm:inline">
                 Upcoming Milestones
               </span>
             </h2>

@@ -82,7 +82,10 @@ const resolveCurrentSession = async (): Promise<AuthSession | null> => {
         profile = await EventRepository.getProfile(clerkAuth.userId);
       }
 
-      const clerkUser = profile ? null : await currentUser();
+      // `auth()` already tells us when the request is signed out. Avoid a
+      // network-backed `currentUser()` lookup in that case; it needlessly
+      // delayed protected-route redirects when Clerk was slow or unavailable.
+      const clerkUser = !profile && clerkAuth.userId ? await currentUser() : null;
       if (clerkUser) {
         const primaryEmail =
           clerkUser.emailAddresses.find((e) => e.id === clerkUser.primaryEmailAddressId)?.emailAddress ||

@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { connection } from 'next/server';
 import { Instrument_Serif } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/layout/Navbar';
@@ -9,8 +8,9 @@ import { dark } from '@clerk/themes';
 import AudioToggle from '@/components/layout/AudioToggle';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 import InteractiveAmbientBackground from '@/components/layout/InteractiveAmbientBackground';
-import { EventRepository } from '@/lib/db/repository';
 import AuthStateSynchronizer from '@/components/auth/AuthStateSynchronizer';
+import PageMotion from '@/components/layout/PageMotion';
+import { getClerkProxyUrl } from '@/lib/auth/clerk-config';
 
 const instrumentSerif = Instrument_Serif({
   weight: '400',
@@ -58,19 +58,25 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+// Navigation chrome should never wait for the database. Pages that display
+// live competition data fetch it themselves; these stable public values keep
+// the persistent navbar and footer immediately renderable during transitions.
+const shellEvent = {
+  registration_fee_inr: 99,
+};
+
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // Shared event data is read at request time, including for the 404 route.
-  // Production builds must not require a live database to prerender this layout.
-  await connection();
-  const event = await EventRepository.getEvent();
-
   return (
     <ClerkProvider
       afterSignOutUrl="/"
+      proxyUrl={getClerkProxyUrl(
+        process.env.NODE_ENV,
+        process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+      )}
       appearance={{
         theme: dark,
         variables: {
@@ -90,7 +96,7 @@ export default async function RootLayout({
         },
       }}
     >
-      <html lang="en" className="dark">
+      <html lang="en" className="dark" data-scroll-behavior="smooth">
         <body className={`min-h-screen bg-[#0B0B0B] text-white flex flex-col antialiased selection:bg-[#805948]/30 selection:text-white relative overflow-x-clip ${instrumentSerif.variable}`}>
           <AuthStateSynchronizer />
           {/* SkaleKraft Signature Interactive Background Architecture */}
@@ -100,13 +106,15 @@ export default async function RootLayout({
 
 
           <ErrorBoundary fallback={null}>
-            <Navbar event={event} />
+            <Navbar event={shellEvent} />
           </ErrorBoundary>
           <ErrorBoundary fallback={null}>
-            <main className="relative z-10 flex-1">{children}</main>
+            <main className="relative z-10 flex-1">
+              <PageMotion>{children}</PageMotion>
+            </main>
           </ErrorBoundary>
           <ErrorBoundary fallback={null}>
-            <Footer event={event} />
+            <Footer />
           </ErrorBoundary>
           <ErrorBoundary fallback={null}>
             <AudioToggle />

@@ -34,6 +34,39 @@ body {
   min-height: 100vh;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+/* Native scroll-driven reveals avoid runtime observers and coexist with
+   Framer Motion because `translate` is independent from `transform`. */
+@keyframes section-scroll-reveal {
+  from {
+    translate: 0 1.75rem;
+    opacity: 0.72;
+  }
+  to {
+    translate: 0 0;
+    opacity: 1;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  main section:not([data-no-scroll-reveal]),
+  main [data-scroll-reveal] {
+    animation: section-scroll-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 24%;
+  }
+}
+
+/* Skip layout and paint work for home-page sections until they approach the
+   viewport. Intrinsic sizing keeps the scroll bar stable before they render. */
+main > div > div.flex.flex-col > section:not(:first-child) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+
 /* Mobile layout primitives -------------------------------------------------
    The public experience is intentionally dense and editorial. On phones we
    keep that character, but use a repeatable two-column rhythm for scannable
@@ -290,6 +323,470 @@ body {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  main section:not([data-no-scroll-reveal]),
+  main [data-scroll-reveal] {
+    animation: none !important;
+  }
+}
+
+/* Official squad credential ------------------------------------------------
+   The dashboard stays interactive on screen; printing produces a purpose-built
+   single-page A4 pass instead of a browser snapshot of the workspace. */
+.skaleathon-print-pass {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  html,
+  body {
+    width: 210mm !important;
+    height: 297mm !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  .skaleathon-print-pass,
+  .skaleathon-print-pass * {
+    visibility: visible !important;
+  }
+
+  .skaleathon-print-pass {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 2147483647 !important;
+    display: block !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    overflow: hidden !important;
+    color: #171310 !important;
+    background: #f4f0ea !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+  }
+
+  .print-pass-frame {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    border: 3mm solid #171310;
+    background:
+      linear-gradient(135deg, rgba(193, 154, 136, 0.09), transparent 36%),
+      #f7f4ef;
+  }
+
+  .print-pass-frame::after {
+    position: absolute;
+    right: 12mm;
+    top: 57mm;
+    color: rgba(128, 89, 72, 0.045);
+    content: 'SKALEATHON';
+    font-size: 24mm;
+    font-weight: 900;
+    letter-spacing: -1.5mm;
+    transform: rotate(-90deg) translateY(100%);
+    transform-origin: right top;
+    white-space: nowrap;
+  }
+
+  .print-pass-header {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    min-height: 42mm;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9mm 12mm;
+    color: #ffffff;
+    background:
+      radial-gradient(circle at 78% 15%, rgba(193, 154, 136, 0.27), transparent 38%),
+      linear-gradient(115deg, #0a0a0c 0%, #171310 65%, #2b1f1a 100%);
+    border-bottom: 1.5mm solid #b88670;
+  }
+
+  .print-pass-brand {
+    display: flex;
+    align-items: center;
+    gap: 4mm;
+  }
+
+  .print-pass-logo {
+    width: 18mm !important;
+    height: 18mm !important;
+    border: 0.35mm solid rgba(255, 255, 255, 0.2);
+    border-radius: 3mm;
+  }
+
+  .print-pass-brand p,
+  .print-pass-document-label span,
+  .print-pass-document-label small {
+    margin: 0;
+    color: #c9ad9f;
+    font-size: 2.5mm;
+    letter-spacing: 0.4mm;
+  }
+
+  .print-pass-brand h1 {
+    margin: 0.8mm 0 0;
+    color: #ffffff;
+    font-size: 7mm;
+    font-weight: 700;
+    letter-spacing: 2mm;
+    line-height: 1;
+  }
+
+  .print-pass-brand h1 span {
+    color: #d1a28c;
+  }
+
+  .print-pass-document-label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1mm;
+    text-align: right;
+  }
+
+  .print-pass-document-label strong {
+    color: #ffffff;
+    font-size: 4.5mm;
+    letter-spacing: 0.25mm;
+  }
+
+  .print-pass-body {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    padding: 8mm 12mm 5mm;
+  }
+
+  .print-pass-status-row {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    border: 0.3mm solid #d8cec5;
+    background: rgba(255, 255, 255, 0.76);
+  }
+
+  .print-pass-status,
+  .print-pass-id {
+    display: flex;
+    min-height: 15mm;
+    align-items: center;
+    padding: 3mm 4mm;
+  }
+
+  .print-pass-status {
+    gap: 3mm;
+  }
+
+  .print-pass-status-dot {
+    width: 3.2mm;
+    height: 3.2mm;
+    border: 0.7mm solid #ccebdd;
+    border-radius: 50%;
+    background: #15965b;
+    box-shadow: 0 0 0 0.8mm rgba(21, 150, 91, 0.09);
+  }
+
+  .print-pass-status div,
+  .print-pass-id {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8mm;
+  }
+
+  .print-pass-status small,
+  .print-pass-id small,
+  .print-pass-facts small,
+  .print-pass-section-heading small,
+  .print-pass-verification-copy > small {
+    color: #7b6d65;
+    font-size: 2.2mm;
+    font-weight: 700;
+    letter-spacing: 0.45mm;
+    text-transform: uppercase;
+  }
+
+  .print-pass-status strong {
+    color: #117748;
+    font-size: 3.4mm;
+    letter-spacing: 0.25mm;
+    text-transform: uppercase;
+  }
+
+  .print-pass-id {
+    align-items: flex-end;
+    justify-content: center;
+    border-left: 0.3mm solid #d8cec5;
+  }
+
+  .print-pass-id strong {
+    max-width: 80mm;
+    overflow: hidden;
+    color: #2e2520;
+    font-family: 'Courier New', monospace;
+    font-size: 2.75mm;
+    letter-spacing: 0.1mm;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .print-pass-intro {
+    padding: 9mm 0 7mm;
+    border-bottom: 0.45mm solid #b88670;
+  }
+
+  .print-pass-intro p {
+    margin: 0 0 1.5mm;
+    color: #805948;
+    font-size: 2.5mm;
+    font-weight: 700;
+    letter-spacing: 0.65mm;
+    text-transform: uppercase;
+  }
+
+  .print-pass-intro h2 {
+    margin: 0;
+    color: #171310;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 13mm;
+    font-weight: 500;
+    letter-spacing: -0.4mm;
+    line-height: 1;
+  }
+
+  .print-pass-intro > span {
+    display: block;
+    margin-top: 1.7mm;
+    color: #7b6d65;
+    font-size: 3mm;
+    letter-spacing: 0.8mm;
+    text-transform: uppercase;
+  }
+
+  .print-pass-facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 0 0 7mm;
+    border-bottom: 0.3mm solid #d8cec5;
+    border-left: 0.3mm solid #d8cec5;
+  }
+
+  .print-pass-facts > div {
+    display: flex;
+    min-height: 18mm;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.2mm;
+    padding: 3mm 4mm;
+    border-top: 0.3mm solid #d8cec5;
+    border-right: 0.3mm solid #d8cec5;
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  .print-pass-facts strong {
+    overflow: hidden;
+    color: #241d19;
+    font-size: 3.5mm;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .print-pass-section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 3mm;
+  }
+
+  .print-pass-section-heading h3,
+  .print-pass-verification-copy h3 {
+    margin: 1mm 0 0;
+    color: #171310;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 6mm;
+    font-weight: 500;
+  }
+
+  .print-pass-section-heading > strong {
+    color: #805948;
+    font-size: 2.4mm;
+    letter-spacing: 0.3mm;
+    text-transform: uppercase;
+  }
+
+  .print-pass-roster-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-left: 0.3mm solid #d8cec5;
+    border-top: 0.3mm solid #d8cec5;
+  }
+
+  .print-pass-member {
+    display: grid;
+    min-height: 16mm;
+    grid-template-columns: 8mm minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 2mm;
+    padding: 2.5mm 3mm;
+    border-right: 0.3mm solid #d8cec5;
+    border-bottom: 0.3mm solid #d8cec5;
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+  .print-pass-member > span {
+    color: #b88670;
+    font-family: 'Courier New', monospace;
+    font-size: 3mm;
+    font-weight: 700;
+  }
+
+  .print-pass-member > div {
+    min-width: 0;
+  }
+
+  .print-pass-member strong,
+  .print-pass-member small {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .print-pass-member strong {
+    color: #241d19;
+    font-size: 3mm;
+  }
+
+  .print-pass-member small {
+    margin-top: 0.7mm;
+    color: #786b64;
+    font-size: 2.25mm;
+  }
+
+  .print-pass-member em {
+    padding: 1mm 1.6mm;
+    border: 0.25mm solid #d0b2a4;
+    border-radius: 9mm;
+    color: #805948;
+    font-size: 2mm;
+    font-style: normal;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .print-pass-member-open {
+    opacity: 0.56;
+    background: rgba(236, 231, 224, 0.58);
+  }
+
+  .print-pass-verification {
+    display: flex;
+    align-items: center;
+    gap: 6mm;
+    margin-top: 7mm;
+    padding: 5mm;
+    border: 0.4mm solid #b88670;
+    background: #ffffff;
+  }
+
+  .print-pass-qr {
+    display: flex;
+    width: 28mm;
+    height: 28mm;
+    flex: 0 0 28mm;
+    align-items: center;
+    justify-content: center;
+    border: 0.3mm solid #d8cec5;
+    background: #ffffff;
+  }
+
+  .print-pass-qr img {
+    width: 25mm !important;
+    height: 25mm !important;
+  }
+
+  .print-pass-qr > span {
+    color: #805948;
+    font-weight: 800;
+  }
+
+  .print-pass-verification-copy {
+    min-width: 0;
+  }
+
+  .print-pass-verification-copy h3 {
+    font-size: 5mm;
+  }
+
+  .print-pass-verification-copy p {
+    max-width: 112mm;
+    margin: 2mm 0 3mm;
+    color: #665a53;
+    font-size: 2.55mm;
+    line-height: 1.5;
+  }
+
+  .print-pass-verification-copy > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2mm 6mm;
+    color: #7b6d65;
+    font-size: 2.2mm;
+    text-transform: uppercase;
+  }
+
+  .print-pass-verification-copy > div strong {
+    margin-left: 1mm;
+    color: #2e2520;
+    font-family: 'Courier New', monospace;
+  }
+
+  .print-pass-footer {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    min-height: 20mm;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4mm 12mm;
+    color: #ffffff;
+    background: #171310;
+  }
+
+  .print-pass-footer > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8mm;
+  }
+
+  .print-pass-footer strong {
+    color: #d1a28c;
+    font-size: 3.2mm;
+    letter-spacing: 0.9mm;
+  }
+
+  .print-pass-footer span,
+  .print-pass-footer p {
+    margin: 0;
+    color: #b7aaa3;
+    font-size: 2.1mm;
+    letter-spacing: 0.15mm;
   }
 }
 /* Official squad credential ------------------------------------------------

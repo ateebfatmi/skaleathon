@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, Loader2 } from 'lucide-react';
@@ -29,14 +29,6 @@ export default function DashboardQuickIndexBar({ memberCount }: DashboardQuickIn
     { href: '/dashboard/submission', num: '04', label: 'Deliverables Portal' },
   ];
 
-  // Prefetch all 4 routes so redirection after transition is instantaneous
-  useEffect(() => {
-    items.forEach((item) => {
-      router.prefetch(item.href);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router]);
-
   const handleItemClick = (e: React.MouseEvent, item: QuickIndexItem) => {
     e.preventDefault();
     if (navigatingItem) return;
@@ -53,7 +45,7 @@ export default function DashboardQuickIndexBar({ memberCount }: DashboardQuickIn
     <>
       <nav
         aria-label="Workspace Quick Index"
-        className="relative grid grid-cols-2 sm:grid-cols-4 border-t border-b border-white/[0.08] divide-y sm:divide-y-0 sm:divide-x divide-white/[0.06]"
+        className="relative -mx-4 flex snap-x snap-mandatory gap-2 overflow-x-auto border-y border-white/[0.08] px-4 py-2 scrollbar-none sm:mx-0 sm:grid sm:grid-cols-4 sm:gap-0 sm:divide-x sm:divide-white/[0.06] sm:px-0 sm:py-0"
       >
         {items.map((item) => {
           const isActive = selectedNum === item.num;
@@ -64,13 +56,14 @@ export default function DashboardQuickIndexBar({ memberCount }: DashboardQuickIn
             <button
               key={item.num}
               type="button"
+              aria-current={isActive ? 'page' : undefined}
               onClick={(e) => handleItemClick(e, item)}
               onMouseEnter={() => {
                 setHoveredNum(item.num);
                 cyberAudio.playHover();
               }}
               onMouseLeave={() => setHoveredNum(null)}
-              className={`group relative py-3.5 sm:py-4 px-3.5 sm:px-4 flex items-center justify-between text-xs transition-colors duration-300 text-left overflow-hidden cursor-pointer select-none ${
+              className={`group relative flex min-h-12 min-w-[13rem] snap-start items-center justify-between overflow-hidden rounded-xl border border-white/[0.07] px-3.5 py-3 text-left text-xs transition-colors duration-300 cursor-pointer select-none sm:min-w-0 sm:rounded-none sm:border-0 sm:px-4 sm:py-4 ${
                 isActive
                   ? 'text-white font-semibold'
                   : 'text-neutral-400 hover:text-white'
@@ -116,7 +109,7 @@ export default function DashboardQuickIndexBar({ memberCount }: DashboardQuickIn
                 >
                   {item.num}
                 </span>
-                <span className="truncate">{item.label}</span>
+                <span className="whitespace-nowrap">{item.label}</span>
               </div>
 
               <div className="relative z-10 flex items-center gap-1.5 shrink-0">
@@ -133,7 +126,7 @@ export default function DashboardQuickIndexBar({ memberCount }: DashboardQuickIn
                   </motion.div>
                 ) : (
                   <ArrowUpRight
-                    className={`h-3.5 w-3.5 shrink-0 transition-all duration-300 ${
+                    className={`hidden h-3.5 w-3.5 shrink-0 transition-all duration-300 sm:block ${
                       isActive
                         ? 'text-[#e8c5b4] translate-x-0.5 -translate-y-0.5'
                         : 'text-neutral-600 group-hover:text-[#e8c5b4] group-hover:translate-x-0.5 group-hover:-translate-y-0.5'

@@ -32,7 +32,7 @@ export default function TimelineSection({ event }: TimelineProps) {
     {
       num: '04',
       title: 'Stage 3 — Project Codebase & Demo',
-      date: '16/17–25/26 Jan 2027',
+      date: '16–25 Jan 2027',
       desc: 'Building round: Submit public GitHub repo and live deployed URL (optional video walkthrough for an evaluation advantage).',
       badge: 'Stage 3',
     },

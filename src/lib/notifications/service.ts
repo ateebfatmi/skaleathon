@@ -28,7 +28,7 @@ export class NotificationService {
             Authorization: `Bearer ${resendApiKey}`,
           },
           body: JSON.stringify({
-            from: process.env.EMAIL_FROM || 'Skaleathon 2027 <no-reply@skaleathon.in>',
+            from: process.env.EMAIL_FROM || 'Skaleathon <no-reply@skaleathon.in>',
             to: message.to,
             subject: message.subject,
             html: message.html,
@@ -56,11 +56,11 @@ export class NotificationService {
   }) {
     return this.sendEmail({
       to: params.recipientEmail,
-      subject: `Registration Confirmed: ${params.teamName} at Skaleathon 2027`,
+      subject: `Registration Confirmed: ${params.teamName} at Skaleathon`,
       category: 'registration',
       html: `
-        <div style="font-family: sans-serif; background: #070a12; color: #f1f5f9; padding: 24px; border-radius: 8px;">
-          <h2 style="color: #818cf8;">Welcome to Skaleathon 2027!</h2>
+        <div style="font-family: sans-serif; background: #0B0B0B; color: #f1f5f9; padding: 24px; border-radius: 8px;">
+          <h2 style="color: #c19a88;">Welcome to Skaleathon!</h2>
           <p>Hi ${params.recipientName},</p>
           <p>Your team <strong>${params.teamName}</strong> has been successfully registered.</p>
           <p>Payment of ₹${params.amountInr} has been authoritatively verified under order <code>${params.orderId}</code>.</p>
@@ -80,7 +80,7 @@ export class NotificationService {
   }) {
     return this.sendEmail({
       to: params.recipientEmail,
-      subject: `Project Submission Received: ${params.projectTitle} (Skaleathon 2027)`,
+      subject: `Project Submission Received: ${params.projectTitle} (Skaleathon)`,
       category: 'submission',
       html: `
         <div style="font-family: sans-serif; background: #070a12; color: #f1f5f9; padding: 24px; border-radius: 8px;">

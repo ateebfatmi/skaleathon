@@ -6,22 +6,12 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   Mail,
-  Globe,
-  ShieldCheck,
   ArrowUpRight,
-  ArrowRight,
-  Sparkles,
   Instagram,
   Linkedin,
-  Github,
-  LayoutDashboard,
-  Shield,
-  Award,
 } from 'lucide-react';
-import type { EventData } from '@/lib/db/types';
-import { formatINR } from '@/lib/utils';
 
-export default function Footer({ event }: { event: EventData }) {
+export default function Footer() {
   const pathname = usePathname();
   const currentYear = new Date().getFullYear();
 
@@ -29,22 +19,8 @@ export default function Footer({ event }: { event: EventData }) {
   const isPortalPage =
     pathname.startsWith('/admin') ||
     pathname.startsWith('/judge');
-  const isRegisterPage = pathname === '/register';
-  const isDashboardPage = pathname.startsWith('/dashboard');
-  const isTracksPage = pathname === '/tracks' || pathname.startsWith('/tracks/');
-
-  const competitionLinks = [
-    { label: 'Competition Tracks', href: '/tracks' },
-    { label: 'Prize Pool & Perks', href: '/prizes' },
-    { label: 'Rules & Guidelines', href: '/rules' },
-    { label: 'Frequently Asked Questions', href: '/faq' },
-  ];
-
   const portalsLinks = [
-    { label: 'Team Registration', href: '/register' },
-    { label: 'Participant Dashboard', href: '/dashboard' },
     { label: 'Submit Deliverables', href: '/dashboard/submission' },
-    { label: 'Certificates', href: '/verify-certificate/SKALE27-PREVIEW' },
     { label: 'Judge Evaluation Portal', href: '/judge' },
   ];
 
@@ -71,9 +47,6 @@ export default function Footer({ event }: { event: EventData }) {
             </Link>
             <Link href="/privacy" className="hover:text-white transition-colors">
               Privacy
-            </Link>
-            <Link href="/faq" className="hover:text-white transition-colors">
-              FAQ
             </Link>
             <a
               href="mailto:skalekraft@gmail.com"
@@ -122,19 +95,7 @@ export default function Footer({ event }: { event: EventData }) {
               </span>
             </div>
 
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs">
-              <Link href="/tracks" className="hover:text-white transition-colors">
-                Tracks
-              </Link>
-              <Link href="/rules" className="hover:text-white transition-colors">
-                Rules
-              </Link>
-              <Link href="/faq" className="hover:text-white transition-colors">
-                FAQ
-              </Link>
-              <Link href="/verify-certificate/SKALE27-PREVIEW" className="hover:text-white transition-colors">
-                Certificates
-              </Link>
+            <div className="flex items-center text-xs">
               <a
                 href="mailto:skalekraft@gmail.com"
                 className="text-[#c19a88] hover:underline"
@@ -162,93 +123,16 @@ export default function Footer({ event }: { event: EventData }) {
       {/* Ambient background glow */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#805948]/10 via-transparent to-transparent" />
 
-      {/* Pre-Footer Action Banner (Hidden on /register, /dashboard, and /tracks) */}
-      {!isRegisterPage && !isDashboardPage && !isTracksPage && (
-        <div className="border-b border-white/[0.06] bg-white/[0.01]">
-          <div className="container mx-auto max-w-7xl px-4 py-8 sm:py-12 sm:px-6 lg:px-8">
-            <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-gradient-to-r from-[#120F0D]/90 via-[#0B0C12]/90 to-[#120F0D]/90 p-5 sm:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-2xl">
-              <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#c19a88]/15 blur-3xl" />
-              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 sm:gap-8 relative z-10">
-                <div className="space-y-2.5 sm:space-y-3 max-w-2xl">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 px-3 py-1 text-[11px] sm:text-xs font-medium text-[#e8c5b4]">
-                    <Sparkles className="h-3.5 w-3.5" />
-                    <span>National Hackathon</span>
-                  </div>
-                  <h3 className="text-xl sm:text-3xl font-bold tracking-tight text-white leading-snug">
-                    Ready to Build, Innovate, and Scale?
-                  </h3>
-                  <p className="text-xs sm:text-base text-neutral-400 font-light leading-relaxed">
-                    Join forward-thinking engineers across India. Register your team for {formatINR(event.registration_fee_inr)} and compete for the {formatINR(event.prize_pool_inr)} prize pool, certificates for the top {event.certificates_top_n} teams, and interview opportunities.
-                  </p>
-                </div>
-
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 shrink-0">
-                  <Link
-                    href="/register"
-                    className="group flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-6 py-3 sm:py-3.5 text-xs sm:text-sm font-bold text-white shadow-[0_4px_25px_rgba(128,89,72,0.4)] hover:scale-[1.03] transition-all"
-                  >
-                    <span>Register Team — {formatINR(event.registration_fee_inr)}</span>
-                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                  <Link
-                    href="/tracks"
-                    className="rounded-full border border-white/10 bg-white/[0.04] px-6 py-3 sm:py-3.5 text-center text-xs sm:text-sm font-medium text-neutral-300 hover:border-white/25 hover:bg-white/[0.08] hover:text-white transition-all"
-                  >
-                    Explore Tracks
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Main Footer Navigation Columns */}
-      <div className="container mx-auto max-w-7xl px-4 py-10 sm:py-16 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 gap-8 sm:gap-12 md:grid-cols-2 lg:grid-cols-5">
+      <div className="container mx-auto max-w-7xl px-4 py-10 sm:py-12 sm:px-6 lg:px-8">
+        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr] md:gap-16">
           
-          {/* Brand Information (Spans 2 columns) */}
-          <div className="space-y-5 sm:space-y-6 col-span-2 lg:col-span-2">
-            <Link href="/" className="flex items-center gap-3 group select-none">
-              <div
-                className="relative h-10 w-10 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-[#1c1b1a] shadow-[0_0_20px_rgba(193,154,136,0.18)] transition-all group-hover:scale-105 group-hover:border-[#c19a88]/50"
-                style={{ width: 40, height: 40, minWidth: 40, minHeight: 40 }}
-              >
-                <Image
-                  src="/images/skalekraft-logo.png"
-                  alt="SkaleKraft logo"
-                  width={40}
-                  height={40}
-                  className="h-full w-full object-contain"
-                  style={{ width: 40, height: 40, maxWidth: 40, maxHeight: 40 }}
-                />
-              </div>
-              <div className="flex flex-col justify-center">
-                <span className="font-serif italic text-xs sm:text-[13px] tracking-wide text-[#e8c5b4] leading-tight">
-                  SkaleKraft presents
-                </span>
-                <div className="flex items-center gap-2 mt-0.5">
-                  <span className="text-lg font-semibold tracking-[0.24em] text-white">
-                    SKALE<span className="text-[#c19a88]">ATHON</span>
-                  </span>
-                </div>
-              </div>
-            </Link>
-
-            <p className="text-sm text-neutral-400 font-light leading-relaxed max-w-sm">
-              India’s premier national online technology challenge. Empowering ambitious software engineers to solve real-world industry problems in AI/ML, Web, and Native Mobile applications.
-            </p>
-
-            {/* Live Status Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-xs text-emerald-400 font-medium">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Registrations Active • Limited Slots</span>
-            </div>
-
-            {/* Organizer Attribution & Socials */}
-            <div className="pt-2 space-y-3">
-              <div className="text-xs text-neutral-400">
-                Organized and hosted by{' '}
+          <div className="space-y-5">
+            <div>
+              <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-[#c19a88]">
+                Organizer
+              </h4>
+              <p className="mt-4 max-w-sm text-sm font-light leading-relaxed text-neutral-400">
+                Skaleathon is organized and hosted by{' '}
                 <a
                   href="https://skalekraft.in"
                   target="_blank"
@@ -258,9 +142,11 @@ export default function Footer({ event }: { event: EventData }) {
                   <span>SkaleKraft</span>
                   <ArrowUpRight className="h-3 w-3" />
                 </a>
-              </div>
+                .
+              </p>
+            </div>
 
-              <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 pt-1">
                 <a
                   href="https://instagram.com/skalekraft"
                   target="_blank"
@@ -289,33 +175,12 @@ export default function Footer({ event }: { event: EventData }) {
                 >
                   <Mail className="h-4 w-4" />
                 </a>
-              </div>
             </div>
           </div>
 
-          {/* Column 2: Competition */}
           <div className="space-y-4">
             <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-[#c19a88]">
-              Competition
-            </h4>
-            <ul className="space-y-2.5 text-sm">
-              {competitionLinks.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-neutral-400 hover:text-white transition-colors duration-150 inline-block font-light"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Column 3: Portals & Registry */}
-          <div className="space-y-4">
-            <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-[#c19a88]">
-              Portals
+              Participant Tools
             </h4>
             <ul className="space-y-2.5 text-sm">
               {portalsLinks.map((item) => (
@@ -331,7 +196,6 @@ export default function Footer({ event }: { event: EventData }) {
             </ul>
           </div>
 
-          {/* Column 4: Legal & Integrity */}
           <div className="space-y-4">
             <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-[#c19a88]">
               Legal & Trust
@@ -349,21 +213,12 @@ export default function Footer({ event }: { event: EventData }) {
               ))}
             </ul>
 
-            <div className="pt-3">
-              <Link
-                href="/verify-certificate/SKALE27-PREVIEW"
-                className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.02] px-3 py-2 text-xs font-medium text-neutral-300 hover:border-[#c19a88]/40 hover:text-white transition-all"
-              >
-                <Award className="h-3.5 w-3.5 text-[#c19a88]" />
-                <span>Certificates</span>
-              </Link>
-            </div>
           </div>
 
         </div>
       </div>
 
-      {/* Bottom Bar: Copyright & Operational Status */}
+      {/* Bottom Bar */}
       <div className="border-t border-white/[0.06] bg-[#05060A]/80 py-6">
         <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500 font-light">
@@ -373,12 +228,7 @@ export default function Footer({ event }: { event: EventData }) {
               <span>Build. Innovate. Scale.</span>
             </div>
 
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 text-emerald-400">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-[11px] font-mono">Systems Operational</span>
-              </div>
-              <span className="text-neutral-600">•</span>
+            <div className="flex items-center">
               <a
                 href="https://skalekraft.in"
                 target="_blank"

@@ -662,7 +662,10 @@ export class EventRepository {
     if (this.isSupabaseEnabled()) {
       try {
         const sub = await SupabaseStore.getSubmissionByTeam(teamId);
-        if (sub) return sub;
+        // No submission is a normal state before a team enters the build
+        // phase. Supabase is authoritative in production, so a null result
+        // must not fall through to the development-only JSON store.
+        if (sub || process.env.NODE_ENV === 'production') return sub;
       } catch (err) {
         this.handleSupabaseError('getSubmissionByTeam', err);
       }
@@ -675,7 +678,7 @@ export class EventRepository {
     if (this.isSupabaseEnabled()) {
       try {
         const sub = await SupabaseStore.getSubmission(submissionId);
-        if (sub) return sub;
+        if (sub || process.env.NODE_ENV === 'production') return sub;
       } catch (err) {
         this.handleSupabaseError('getSubmission', err);
       }
@@ -740,7 +743,7 @@ export class EventRepository {
     const event = await this.getEvent();
     if (event.submission_deadline) {
       if (new Date() > new Date(event.submission_deadline)) {
-        throw new Error('Project submissions have officially closed for Skaleathon 2027.');
+        throw new Error('Project submissions have officially closed for Skaleathon.');
       }
     }
 
@@ -1080,9 +1083,9 @@ export class EventRepository {
     state.announcements.unshift({
       id: 'ann_' + Math.random().toString(36).substring(2, 10),
       event_id: 'skaleathon-2027',
-      title: 'Official Results Announced for Skaleathon 2027!',
+      title: 'Official Results Announced for Skaleathon!',
       content:
-        'The official rankings and winners have been announced. Top 25 teams are now eligible to verify and download their certificates.',
+        'The official rankings and winners have been announced. Top 25 teams are now eligible to download their certificates.',
       category: 'results',
       is_published: true,
       published_at: now,
@@ -1166,17 +1169,17 @@ export class EventRepository {
       const members = state.teamMembers.filter((m) => m.team_id === team.id);
 
       let certType: Certificate['certificate_type'] = 'top_25_merit';
-      let achievementText = `Top 25 Finalist (Rank #${res.rank}) at Skaleathon 2027`;
+      let achievementText = `Top 25 Finalist (Rank #${res.rank}) at Skaleathon`;
 
       if (res.rank === 1) {
         certType = 'winner_first';
-        achievementText = 'First Prize Winner (1st Place) at Skaleathon 2027';
+        achievementText = 'First Prize Winner (1st Place) at Skaleathon';
       } else if (res.rank === 2) {
         certType = 'winner_second';
-        achievementText = 'Second Prize Winner (2nd Place) at Skaleathon 2027';
+        achievementText = 'Second Prize Winner (2nd Place) at Skaleathon';
       } else if (res.rank === 3) {
         certType = 'winner_third';
-        achievementText = 'Third Prize Winner (3rd Place) at Skaleathon 2027';
+        achievementText = 'Third Prize Winner (3rd Place) at Skaleathon';
       }
 
       for (let i = 0; i < members.length; i++) {

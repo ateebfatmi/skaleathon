@@ -196,10 +196,10 @@ export default async function PrizesPage() {
                   <span className="font-mono text-2xl font-light text-white/10 select-none">01</span>
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-                  Top {event.certificates_top_n} Squads — Verified Merit Citations
+                  Top {event.certificates_top_n} Squads — Merit Certificates
                 </h3>
                 <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-                  All enrolled members of the top {event.certificates_top_n} ranked squads receive an official, verifiable Certificate of Engineering Merit issued by SkaleKraft.
+                  All enrolled members of the top {event.certificates_top_n} ranked squads receive an official Certificate of Engineering Merit issued by SkaleKraft.
                 </p>
               </div>
 

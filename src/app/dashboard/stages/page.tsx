@@ -62,7 +62,7 @@ export default async function DashboardStagesPage() {
       description:
         'The primary development sprint. Deliver a production-grade codebase in a public GitHub repository and a live deployed URL on cloud hosting. A 2–3 minute video walkthrough is not strictly necessary, but will give your team a distinct evaluation advantage.',
       format: 'GitHub + Live Demo URL (Video Link Optional Advantage)',
-      schedule: 'Jan 16/17–25/26, 2027',
+      schedule: 'Jan 16–25, 2027',
       weightage: 'Primary Evaluation (60% Weight)',
       criteria: 'Code cleanliness, architecture resilience, live functionality, UX finish, cloud deployment',
       deliverables: [

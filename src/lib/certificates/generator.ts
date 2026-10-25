@@ -14,21 +14,21 @@ export async function generateCertificatePDF(cert: Certificate, siteUrl: string 
   const pageHeight = doc.internal.pageSize.getHeight();
 
   // Background
-  doc.setFillColor(7, 10, 18);
+  doc.setFillColor(11, 11, 11);
   doc.rect(0, 0, pageWidth, pageHeight, 'F');
 
-  // Outer Decorative Borders
-  doc.setDrawColor(99, 102, 241); // brand violet
+  // Outer Decorative Borders (SkaleKraft Copper & Champagne)
+  doc.setDrawColor(193, 154, 136); // #c19a88 copper
   doc.setLineWidth(1.2);
   doc.rect(10, 10, pageWidth - 20, pageHeight - 20);
 
-  doc.setDrawColor(56, 189, 248); // cyan
+  doc.setDrawColor(128, 89, 72); // #805948 warm bronze
   doc.setLineWidth(0.4);
   doc.rect(13, 13, pageWidth - 26, pageHeight - 26);
 
   // Corner Accent Diamonds
   const drawCornerDiamond = (x: number, y: number) => {
-    doc.setFillColor(99, 102, 241);
+    doc.setFillColor(193, 154, 136);
     doc.lines([[3, 3], [-3, 3], [-3, -3], [3, -3]], x, y - 3, [1, 1], 'FD');
   };
   drawCornerDiamond(10, 10);
@@ -39,18 +39,18 @@ export async function generateCertificatePDF(cert: Certificate, siteUrl: string 
   // Organizer Badge
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(10);
-  doc.setTextColor(148, 163, 184); // Slate 400
+  doc.setTextColor(193, 154, 136);
   doc.text('SKALEKRAFT PRESENTS', pageWidth / 2, 26, { align: 'center' });
 
   // Main Event Title
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(26);
   doc.setTextColor(255, 255, 255);
-  doc.text('SKALEATHON 2027', pageWidth / 2, 36, { align: 'center' });
+  doc.text('SKALEATHON', pageWidth / 2, 36, { align: 'center' });
 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(10);
-  doc.setTextColor(56, 189, 248); // Cyan
+  doc.setTextColor(232, 197, 180); // #e8c5b4 champagne
   doc.text('BUILD. INNOVATE. SCALE. — A NATIONAL ONLINE HACKATHON', pageWidth / 2, 43, { align: 'center' });
 
   // Certificate Heading
@@ -68,7 +68,7 @@ export async function generateCertificatePDF(cert: Certificate, siteUrl: string 
   // Participant Name
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(24);
-  doc.setTextColor(129, 140, 248); // Indigo 400
+  doc.setTextColor(232, 197, 180); // #e8c5b4 champagne
   doc.text(cert.recipient_name.toUpperCase(), pageWidth / 2, 83, { align: 'center' });
 
   // Team & Achievement
@@ -85,7 +85,7 @@ export async function generateCertificatePDF(cert: Certificate, siteUrl: string 
 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(14);
-  doc.setTextColor(56, 189, 248);
+  doc.setTextColor(193, 154, 136);
   doc.text(cert.achievement_text, pageWidth / 2, 105, { align: 'center' });
 
   // Verification QR Code

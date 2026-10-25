@@ -51,7 +51,7 @@ const INITIAL_STATE: DatabaseState = {
   events: [
     {
       id: 'skaleathon-2027',
-      name: 'Skaleathon 2027',
+      name: 'Skaleathon',
       tagline: 'Build. Innovate. Scale.',
       organizer_name: 'SkaleKraft',
       organizer_website: 'https://skalekraft.in',
@@ -64,9 +64,9 @@ const INITIAL_STATE: DatabaseState = {
       second_prize_inr: 10000.0,
       third_prize_inr: 5000.0,
       certificates_top_n: 25,
-      registration_start_at: '2027-01-01T00:00:00.000Z',
-      registration_end_at: '2027-12-31T18:29:59.000Z',
-      submission_deadline: '2027-01-26T18:29:59.000Z',
+      registration_start_at: '2026-10-01T00:00:00.000Z',
+      registration_end_at: '2027-01-07T18:29:59.000Z',
+      submission_deadline: '2027-01-25T18:29:59.000Z',
       results_announced_at: '2027-01-30T13:30:00.000Z',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
@@ -197,7 +197,7 @@ const INITIAL_STATE: DatabaseState = {
     {
       id: 'ann-1',
       event_id: 'skaleathon-2027',
-      title: 'Welcome to Skaleathon 2027!',
+      title: 'Welcome to Skaleathon!',
       content:
         'Registrations are now open across India for all eligible college students and early-career innovators. Build your team of 1–6 members and choose your track!',
       category: 'general',

@@ -167,7 +167,7 @@ export default async function RulesPage() {
                 {
                   num: '03',
                   title: 'Engineering Sprint & Codebase',
-                  date: '16/17–25/26 Jan 2027',
+                  date: '16–25 Jan 2027',
                   desc: 'Squads build and submit a public GitHub repository and live deployed cloud URL (plus an optional 2–3 min demo walkthrough).',
                 },
                 {

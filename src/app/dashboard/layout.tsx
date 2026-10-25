@@ -16,7 +16,7 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="py-8 sm:py-10 bg-[#0B0B0B] min-h-[calc(100vh-140px)] relative overflow-hidden">
+    <div className="py-4 sm:py-10 bg-[#0B0B0B] min-h-[calc(100vh-140px)] relative overflow-hidden">
       {/* Background ambient light */}
       <div className="pointer-events-none absolute left-1/2 top-10 -translate-x-1/2 w-full max-w-7xl h-72 bg-[#805948]/10 rounded-full blur-[140px]" />
 

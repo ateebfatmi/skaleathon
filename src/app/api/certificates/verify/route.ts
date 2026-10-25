@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
         is_revoked: cert.is_revoked,
         revocation_reason: cert.revocation_reason,
         organizer: 'SkaleKraft',
-        event: 'Skaleathon 2027',
+        event: 'Skaleathon',
       },
     });
   } catch (err: any) {

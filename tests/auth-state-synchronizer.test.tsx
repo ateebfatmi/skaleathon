@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import AuthStateSynchronizer from '@/components/auth/AuthStateSynchronizer';
 
@@ -33,7 +33,7 @@ describe('AuthStateSynchronizer', () => {
     authState.userId = 'user_123';
     view.rerender(<AuthStateSynchronizer />);
 
-    await waitFor(() => expect(authState.refresh).toHaveBeenCalledTimes(1));
+    await vi.waitFor(() => expect(authState.refresh).toHaveBeenCalledTimes(1));
     expect(window.sessionStorage.getItem('skaleathon:clerk-user')).toBe('user_123');
   });
 });

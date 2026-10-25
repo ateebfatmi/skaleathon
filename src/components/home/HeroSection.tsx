@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Sparkles, ShieldCheck, Trophy, Layers } from 'lucide-react';
 import { EventData } from '@/lib/db/types';
 import GlassmorphismCta from '@/components/ui/glassmorphism-cta';
-import InteractiveTerminal from '@/components/home/InteractiveTerminal';
+import LazyInteractiveTerminal from '@/components/home/LazyInteractiveTerminal';
 
 interface HeroProps {
   event: EventData;
@@ -253,7 +253,7 @@ export default function HeroSection({ event }: HeroProps) {
         <div
           className="mt-8 sm:mt-12"
         >
-          <InteractiveTerminal event={event} />
+          <LazyInteractiveTerminal event={event} />
         </div>
       </div>
     </section>

@@ -7,14 +7,14 @@ export default function TechMarquee() {
   const items = [
     { label: 'AI & Machine Learning Track', icon: Cpu, highlight: true },
     { label: 'Authorized Prize Pool', icon: Sparkles, highlight: false },
-    { label: 'Web Architecture Track', icon: Globe, highlight: true },
+    { label: 'Web Development Track', icon: Globe, highlight: true },
     { label: 'Flat Team Registration', icon: Zap, highlight: false },
-    { label: 'Mobile Systems Track', icon: Smartphone, highlight: true },
-    { label: 'Top 25 Cryptographic Certificates', icon: ShieldCheck, highlight: false },
+    { label: 'App Development Track', icon: Smartphone, highlight: true },
+    { label: 'Top 25 Merit Certificates', icon: ShieldCheck, highlight: false },
     { label: 'SkaleKraft Interview Opportunities', icon: Terminal, highlight: true },
     { label: '1 to 6 Member Team Rosters', icon: Sparkles, highlight: false },
     { label: 'National Online Hackathon — India', icon: Globe, highlight: true },
-    { label: 'Tamper-Evident SHA-256 Badges', icon: ShieldCheck, highlight: false },
+    { label: 'Open Domain Innovation', icon: ShieldCheck, highlight: false },
   ];
 
   return (

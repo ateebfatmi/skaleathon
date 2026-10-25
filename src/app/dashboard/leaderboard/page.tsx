@@ -210,8 +210,8 @@ export default async function DashboardLeaderboardPage() {
                 {
                   rank: String(event.certificates_top_n).padStart(2, '0'),
                   title: `Top ${event.certificates_top_n} National Merit Roster`,
-                  desc: `Official national rank citation and verified achievement credentials for the top ${event.certificates_top_n} squads.`,
-                  reward: `Top ${event.certificates_top_n} Merit Distinction`,
+                  desc: `Official national rank citation and merit certificates for the top ${event.certificates_top_n} squads.`,
+                  reward: `Top ${event.certificates_top_n} Merit Certificate`,
                   accent: 'text-emerald-400',
                 },
               ].map((tier) => (

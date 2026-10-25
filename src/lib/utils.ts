@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-export const REGISTRATION_DEADLINE = "2027-12-31T18:29:59.000Z";
+export const REGISTRATION_DEADLINE = "2027-01-07T18:29:59.000Z";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

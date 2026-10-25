@@ -25,13 +25,22 @@ import {
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 import type { EventData } from '@/lib/db/types';
 import { formatINR } from '@/lib/utils';
+import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
 
-export default function Navbar({ event }: { event: EventData }) {
+type NavbarEvent = Pick<EventData, 'registration_fee_inr'> & Partial<Pick<EventData, 'prize_pool_inr'>>;
+
+export default function Navbar({ event }: { event: NavbarEvent }) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { user, isLoaded: isAuthLoaded, isSignedIn } = useUser();
+  const { scrollYProgress } = useScroll();
+  const smoothScrollProgress = useSpring(scrollYProgress, {
+    stiffness: 140,
+    damping: 28,
+    mass: 0.25,
+  });
 
   const isDashboard = pathname.startsWith('/dashboard');
 
@@ -107,8 +116,9 @@ export default function Navbar({ event }: { event: EventData }) {
   return (
     <>
       {/* Top scroll progress bar */}
-      <div
+      <motion.div
         className="fixed left-0 right-0 top-0 z-[60] h-[2px] origin-left bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4] pointer-events-none"
+        style={{ scaleX: smoothScrollProgress }}
       />
 
       <header
@@ -177,8 +187,10 @@ export default function Navbar({ event }: { event: EventData }) {
                   }`}
                 >
                   {active && (
-                    <div
+                    <motion.div
+                      layoutId="navbar-active-pill"
                       className="absolute inset-0 rounded-full bg-gradient-to-r from-white/[0.14] to-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_0_15px_rgba(193,154,136,0.18)]"
+                      transition={{ type: 'spring', stiffness: 420, damping: 34 }}
                     />
                   )}
                   <span className="relative z-10 flex min-w-0 items-center justify-center">
@@ -293,8 +305,18 @@ export default function Navbar({ event }: { event: EventData }) {
         </div>
 
         {/* Mobile Menu Dropdown */}
-        {mobileMenuOpen && (
-          <div id="mobile-navigation" className="md:hidden max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-b border-white/10 bg-[#07090E]/98 px-4 pt-3 pb-[max(2rem,env(safe-area-inset-bottom))] space-y-4 backdrop-blur-2xl animate-in fade-in slide-in-from-top-3 duration-200">
+        <AnimatePresence initial={false}>
+          {mobileMenuOpen && (
+            <motion.div
+              id="mobile-navigation"
+              initial={{ opacity: 0, height: 0, y: -8 }}
+              animate={{ opacity: 1, height: 'auto', y: 0 }}
+              exit={{ opacity: 0, height: 0, y: -8 }}
+              transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+              className="relative md:hidden max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-b border-white/10 bg-[#07090E]/98 px-4 pt-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] backdrop-blur-2xl"
+            >
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-44 bg-[radial-gradient(ellipse_at_top,rgba(193,154,136,0.10),transparent_68%)]" />
+            <div className="relative space-y-4">
             {isDashboard && (
               <div className="pb-3 border-b border-white/10 space-y-2">
                 <div className="px-1 text-[10px] uppercase tracking-[0.2em] text-[#c19a88] font-bold">
@@ -330,8 +352,15 @@ export default function Navbar({ event }: { event: EventData }) {
                 </div>
               </div>
             )}
-            <div className="space-y-1">
-              {navLinks.map((link) => {
+            <div>
+              <div className="mb-2 flex items-center justify-between px-1">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/35">
+                  Explore
+                </span>
+                <span className="text-[10px] font-mono text-[#c19a88]/70">01 — 06</span>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+              {navLinks.map((link, index) => {
                 const active =
                   link.href === '/'
                     ? pathname === '/'
@@ -348,10 +377,10 @@ export default function Navbar({ event }: { event: EventData }) {
                         scrollToTop();
                       }
                     }}
-                    className={`flex items-center justify-between rounded-xl px-4 py-3 text-sm font-medium transition-all ${
+                    className={`group relative flex min-h-14 items-center justify-between overflow-hidden rounded-xl border px-3.5 py-3 text-sm font-medium transition-all ${
                       active
-                        ? 'bg-white/[0.08] text-[#e8c5b4] font-semibold border border-[#c19a88]/30'
-                        : 'text-neutral-400 hover:bg-white/[0.04] hover:text-white'
+                        ? 'border-[#c19a88]/40 bg-[linear-gradient(135deg,rgba(193,154,136,0.16),rgba(255,255,255,0.04))] text-[#f3d7ca] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]'
+                        : 'border-white/[0.07] bg-white/[0.025] text-neutral-400 hover:border-white/15 hover:bg-white/[0.06] hover:text-white'
                     }`}
                   >
                     <span className="flex items-center gap-2">
@@ -363,14 +392,15 @@ export default function Navbar({ event }: { event: EventData }) {
                       )}
                     </span>
                     {active && (
-                      <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88]" />
+                      <span className="absolute bottom-0 left-3.5 right-3.5 h-px bg-gradient-to-r from-transparent via-[#c19a88] to-transparent" />
                     )}
                   </Link>
                 );
               })}
+              </div>
             </div>
 
-            <div className="pt-4 border-t border-white/10 space-y-3">
+            <div className="space-y-2.5 border-t border-white/10 pt-4">
               <ErrorBoundary
                 fallback={
                   <>
@@ -396,8 +426,8 @@ export default function Navbar({ event }: { event: EventData }) {
                 {mounted && isAuthLoaded ? (
                   isSignedIn ? (
                     <>
-                      <div className="flex items-center justify-between p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 shadow-sm">
-                        <div className="flex items-center gap-3">
+                      <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.035] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+                        <div className="flex min-w-0 items-center gap-3">
                           <div className="relative">
                             <UserButton
                               appearance={{
@@ -409,26 +439,26 @@ export default function Navbar({ event }: { event: EventData }) {
                             />
                             <span className="pointer-events-none absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-[#0B0B0B]" />
                           </div>
-                          <div className="flex flex-col text-left">
-                            <span className="text-sm font-semibold text-white">
+                          <div className="flex min-w-0 flex-col text-left">
+                            <span className="truncate text-sm font-semibold text-white">
                               {user?.fullName || user?.firstName || 'Participant'}
                             </span>
-                            <span className="text-[10px] text-neutral-400 truncate max-w-[170px]">
+                            <span className="max-w-[170px] truncate text-[10px] text-neutral-500">
                               {user?.primaryEmailAddress?.emailAddress || 'Skaleathon Innovator'}
                             </span>
                           </div>
                         </div>
-                        <span className="text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-md border border-[#c19a88]/30 bg-[#c19a88]/10 text-[#c19a88] font-bold">
+                        <span className="ml-2 shrink-0 rounded-full border border-[#c19a88]/25 bg-[#c19a88]/10 px-2 py-1 text-[8px] font-bold uppercase tracking-[0.14em] text-[#c19a88]">
                           Participant
                         </span>
                       </div>
                       <Link
                         href="/dashboard"
                         onClick={() => setMobileMenuOpen(false)}
-                        className={`flex items-center justify-center gap-2 rounded-xl border px-4 py-3 text-center text-sm font-semibold transition-colors ${
+                        className={`flex items-center justify-center gap-2 rounded-xl border px-4 py-3 text-center text-sm font-semibold transition-all active:scale-[0.99] ${
                           isDashboard
                             ? 'bg-[#c19a88]/15 border-[#c19a88]/40 text-[#e8c5b4]'
-                            : 'bg-white/[0.06] border-white/10 text-white hover:bg-white/[0.1]'
+                            : 'border-[#c19a88]/35 bg-gradient-to-r from-[#805948]/35 to-[#c19a88]/20 text-white hover:border-[#c19a88]/60'
                         }`}
                       >
                         <LayoutDashboard className="h-4 w-4 text-[#c19a88]" />
@@ -478,8 +508,10 @@ export default function Navbar({ event }: { event: EventData }) {
                 )}
               </ErrorBoundary>
             </div>
-          </div>
-        )}
+            </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
     </>
   );

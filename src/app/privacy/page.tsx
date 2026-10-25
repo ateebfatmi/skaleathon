@@ -42,7 +42,7 @@ export default function PrivacyPage() {
         <h1 className="mt-3 text-4xl font-medium tracking-tight sm:text-6xl text-white">Privacy Policy</h1>
         <p className="mt-3 text-sm text-white/40">Last updated: October 2026 • Version 1.0</p>
         <p className="mt-6 text-base leading-relaxed text-white/65 font-light">
-          This Privacy Policy explains how participant information is collected, processed, and safeguarded during Skaleathon 2027.
+          This Privacy Policy explains how participant information is collected, processed, and safeguarded during Skaleathon.
         </p>
 
         <div className="mt-12 space-y-10">

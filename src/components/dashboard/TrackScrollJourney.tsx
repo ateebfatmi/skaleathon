@@ -575,27 +575,33 @@ export default function TrackScrollJourney({
             {[
               {
                 title: 'Innovation & Originality',
-                weight: '30%',
-                targetWidth: '30%',
+                weight: '25%',
+                targetWidth: '25%',
                 desc: 'Novelty of problem formulation, creative autonomy, and distinct edge over existing solutions.',
               },
               {
-                title: 'Technical Architecture & Rigor',
-                weight: '30%',
-                targetWidth: '30%',
-                desc: 'System design depth, code quality, performance benchmarks, and production resilience.',
+                title: 'Technical Implementation',
+                weight: '25%',
+                targetWidth: '25%',
+                desc: 'Code quality, architectural robustness, tech stack execution, and production security.',
               },
               {
-                title: 'Real-World Utility & Scale',
+                title: 'Problem Relevance & Impact',
                 weight: '20%',
                 targetWidth: '20%',
                 desc: 'Practical viability, domain impact, and architectural scalability under load.',
               },
               {
-                title: 'UX & Interface Craft',
-                weight: '20%',
-                targetWidth: '20%',
-                desc: 'Intuitive user flow, visual polish, responsiveness, and overall product execution.',
+                title: 'Usability & Design',
+                weight: '15%',
+                targetWidth: '15%',
+                desc: 'User experience clarity, responsive design, accessibility, and visual polish.',
+              },
+              {
+                title: 'Presentation & Demonstration',
+                weight: '15%',
+                targetWidth: '15%',
+                desc: 'Demo effectiveness, blueprint/video clarity, README documentation, and live showcase.',
               },
             ].map((item, idx) => (
               <motion.div
