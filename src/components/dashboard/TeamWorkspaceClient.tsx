@@ -20,7 +20,6 @@ import {
   Layers,
   Send,
   Code2,
-  Share2,
 } from 'lucide-react';
 import { Team, TeamMember, EventTrack, PaymentOrder } from '@/lib/db/types';
 import { motion } from 'framer-motion';
@@ -85,7 +84,7 @@ export default function TeamWorkspaceClient({
       })()
     : 'Active';
 
-  const copyToClipboard = (text: string, type: 'pass' | 'invite') => {
+  const copyToClipboard = (text: string, type: 'pass' | 'invite' = 'pass') => {
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
       navigator.clipboard.writeText(text);
       if (type === 'pass') {
@@ -185,7 +184,7 @@ export default function TeamWorkspaceClient({
                   <small>Authorized participants</small>
                   <h3>Confirmed Squad Roster</h3>
                 </div>
-                <strong>{members.length} / 6 seats confirmed</strong>
+                <strong>{members.length} {members.length === 1 ? 'member' : 'members'} confirmed</strong>
               </div>
 
               <div className="print-pass-roster-grid">
@@ -197,16 +196,6 @@ export default function TeamWorkspaceClient({
                       <small>{member.email}</small>
                     </div>
                     <em>{member.id === leaderMember?.id ? 'Team Lead' : 'Member'}</em>
-                  </div>
-                ))}
-                {Array.from({ length: openSlotsCount }).map((_, index) => (
-                  <div className="print-pass-member print-pass-member-open" key={`open-${index}`}>
-                    <span>{String(members.length + index + 1).padStart(2, '0')}</span>
-                    <div>
-                      <strong>Open team position</strong>
-                      <small>Not yet assigned</small>
-                    </div>
-                    <em>Available</em>
                   </div>
                 ))}
               </div>
@@ -280,7 +269,7 @@ export default function TeamWorkspaceClient({
             </span>
             <span className="hidden text-white/20 sm:inline">•</span>
             <button
-              onClick={() => copyToClipboard(team.id, 'pass')}
+              onClick={() => copyToClipboard(team.id)}
               className="group inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-white/[0.07] bg-white/[0.025] px-2 text-neutral-400 transition-colors hover:text-white sm:min-h-0 sm:justify-start sm:rounded-none sm:border-0 sm:bg-transparent sm:px-0"
               title="Click to copy full Pass ID"
             >
@@ -315,26 +304,6 @@ export default function TeamWorkspaceClient({
             >
               <Printer className="h-3.5 w-3.5 text-[#c19a88]" />
               <span>Print Pass</span>
-            </button>
-
-            <span className="hidden text-white/15 sm:inline">|</span>
-
-            <button
-              onClick={shareSquadPass}
-              className="group inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-[#c19a88]/20 bg-[#c19a88]/[0.07] px-3 py-1.5 font-semibold text-[#e8c5b4] transition-colors hover:text-white cursor-pointer"
-              title="Share squad credentials"
-            >
-              {copiedInvite ? (
-                <>
-                  <Check className="h-3.5 w-3.5 text-emerald-400" />
-                  <span className="text-emerald-400">Copied Pass!</span>
-                </>
-              ) : (
-                <>
-                  <Share2 className="h-3.5 w-3.5 text-[#c19a88]" />
-                  <span>Share Squad Pass</span>
-                </>
-              )}
             </button>
           </div>
         </div>
@@ -544,34 +513,6 @@ export default function TeamWorkspaceClient({
               <span className="self-start pl-9 text-[11px] font-mono text-white/40 shrink-0 sm:self-auto sm:pl-0">Active</span>
             </div>
           ))}
-
-          {/* Single Compact Open Slots Row */}
-          {openSlotsCount > 0 && (
-            <div className="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex items-center gap-3 min-w-0 sm:gap-4">
-                <span className="text-xs font-mono font-bold text-[#c19a88] w-6 shrink-0">
-                  +{openSlotsCount}
-                </span>
-                <div>
-                  <p className="text-xs sm:text-sm font-semibold text-white/80">
-                    {openSlotsCount} Open Roster {openSlotsCount === 1 ? 'Slot' : 'Slots'} Available
-                  </p>
-                  <p className="text-xs text-neutral-400 font-light">
-                    Invite up to {6 - members.length} additional teammates to join this squad pass
-                  </p>
-                </div>
-              </div>
-
-              <button
-                onClick={shareSquadPass}
-                className="group inline-flex min-h-11 w-full items-center justify-center gap-1.5 rounded-xl border border-[#c19a88]/20 bg-[#c19a88]/[0.07] px-3 text-xs font-semibold text-[#e8c5b4] transition-colors hover:text-white sm:min-h-0 sm:w-auto sm:justify-start sm:rounded-none sm:border-0 sm:bg-transparent sm:px-0 shrink-0"
-              >
-                <Share2 className="h-3.5 w-3.5 text-[#c19a88]" />
-                <span>Invite / Share Pass</span>
-                <ArrowRight className="h-3 w-3 text-[#c19a88] group-hover:translate-x-0.5 transition-transform" />
-              </button>
-            </div>
-          )}
         </div>
       </section>
       </motion.div>
