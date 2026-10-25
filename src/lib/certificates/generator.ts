@@ -2,7 +2,7 @@ import { jsPDF } from 'jspdf';
 import QRCode from 'qrcode';
 import { Certificate } from '../db/types';
 
-export async function generateCertificatePDF(cert: Certificate, siteUrl: string = 'https://skaleathon.in'): Promise<Uint8Array> {
+export async function generateCertificatePDF(cert: Certificate, siteUrl: string = 'https://skaleathon.skalekraft.in'): Promise<Uint8Array> {
   // Create landscape A4 document
   const doc = new jsPDF({
     orientation: 'landscape',
