@@ -24,7 +24,7 @@ export default function PrizesSection({ event }: PrizesProps) {
       place: '1st Place',
       amount: formatINR(event.first_prize_inr || 20000),
       subtitle: 'National Champion',
-      badge: 'Grand Winner',
+      badge: 'Grand Champion',
       order: 'order-1 md:order-2',
       spotlight: 'rgba(232, 197, 180, 0.25)',
       amountClass: 'bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948]',
@@ -89,18 +89,18 @@ export default function PrizesSection({ event }: PrizesProps) {
                     : 'border-white/[0.08] shadow-[0_20px_50px_rgba(0,0,0,0.5)]'
                 }`}
               >
-                {prize.isGrand && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4] text-[10px] font-bold text-black uppercase tracking-widest shadow-md flex items-center gap-1">
-                    <Sparkles className="h-3 w-3" />
-                    <span>Grand Champion</span>
-                  </div>
-                )}
-
                 <div>
                   <div className="flex items-center justify-between mb-5">
-                    <span className="text-[9px] font-mono uppercase tracking-[0.18em] px-2.5 py-1 rounded-full border border-white/10 bg-white/[0.04] text-[#c19a88]">
-                      {prize.badge}
-                    </span>
+                    {prize.isGrand ? (
+                      <span className="inline-flex items-center gap-1.5 text-[9px] font-mono font-bold uppercase tracking-[0.18em] px-3 py-1 rounded-full bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4] text-black shadow-sm whitespace-nowrap">
+                        <Sparkles className="h-3 w-3 shrink-0" />
+                        <span>{prize.badge}</span>
+                      </span>
+                    ) : (
+                      <span className="text-[9px] font-mono uppercase tracking-[0.18em] px-2.5 py-1 rounded-full border border-white/10 bg-white/[0.04] text-[#c19a88] whitespace-nowrap">
+                        {prize.badge}
+                      </span>
+                    )}
                     {prize.isGrand ? (
                       <div className="p-2 rounded-xl bg-[#c19a88]/20 border border-[#c19a88]/40 text-[#c19a88] shadow-[0_0_15px_rgba(193,154,136,0.4)]">
                         <Trophy className="h-5 w-5 text-[#e8c5b4]" strokeWidth={2} />
