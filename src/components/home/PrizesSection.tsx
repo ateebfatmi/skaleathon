@@ -175,10 +175,7 @@ export default function PrizesSection({ event }: PrizesProps) {
                 </div>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-white/[0.08] flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
-                <span className="text-[10px] text-white/40 italic">
-                  *Disclaimer: Non-guarantee interview evaluation
-                </span>
+              <div className="mt-6 pt-4 border-t border-white/[0.08] flex items-center justify-end">
                 <span className="text-[10px] font-mono text-[#c19a88]">Selected Candidates</span>
               </div>
             </SpotlightCard>
