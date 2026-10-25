@@ -69,10 +69,7 @@ export default async function PrizesPage() {
             {/* Editorial Headline & Manifesto */}
             <div className="relative z-10 max-w-3xl space-y-5 pb-9">
               <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold text-white tracking-tight leading-[1.06]">
-                Prizes &amp;{' '}
-                <span className="font-serif italic font-normal text-[#e8c5b4]">
-                  Recognitions
-                </span>
+                Prizes &amp; <span className="text-[#c19a88]">Recognitions</span>
               </h1>
 
               <p className="border-l-2 border-[#c19a88]/45 pl-4 text-sm sm:text-[15px] text-neutral-300/90 leading-relaxed font-light">
@@ -100,10 +97,7 @@ export default async function PrizesPage() {
                   01 {'//'} Championship Podium
                 </span>
                 <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                  National Cash{' '}
-                  <span className="font-serif italic font-normal text-[#e8c5b4]">
-                    Grants
-                  </span>
+                  National Cash <span className="text-[#c19a88]">Grants</span>
                 </h2>
               </div>
               <p className="text-xs text-neutral-400 font-light max-w-xs">

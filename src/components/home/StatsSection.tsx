@@ -77,12 +77,8 @@ export default function StatsSection({ event }: StatsProps) {
                 Engineered for Builders
               </p>
             </div>
-            <h2 className="mt-2 text-2xl sm:text-3xl font-medium tracking-tight text-white">
-              Competition at a{' '}
-              <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
-                glance
-              </span>
-              .
+            <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-white">
+              Competition at a <span className="text-[#c19a88]">glance</span>.
             </h2>
           </div>
           <p className="text-xs text-white/40 max-w-xs sm:text-right">

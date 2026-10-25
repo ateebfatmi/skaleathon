@@ -56,12 +56,8 @@ export default function PrizesSection({ event }: PrizesProps) {
             <span className="h-px w-6 bg-[#c19a88]/70" />
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-white tracking-tight">
-            Rewards for exceptional{' '}
-            <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
-              execution
-            </span>
-            .
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+            Rewards for exceptional <span className="text-[#c19a88]">execution</span>.
           </h2>
 
           <p className="mt-4 text-sm text-white/60 leading-relaxed font-light max-w-xl">

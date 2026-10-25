@@ -95,11 +95,7 @@ export default function HowItWorksSection({ event }: { event: EventData }) {
             <span>FIRST TIME HERE? // QUICK-START ROADMAP</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
-            How Skaleathon works in{' '}
-            <span className="font-serif italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-[#ffe5d9] via-[#c19a88] to-[#805948]">
-              3 simple steps
-            </span>
-            .
+            How Skaleathon works in <span className="text-[#c19a88]">3 simple steps</span>.
           </h2>
           <p className="mt-3.5 text-sm sm:text-base text-white/60 leading-relaxed font-light">
             You don’t need a fully formed startup idea today. Register in 2 minutes, pick your passion track, and build production-ready software with your team.

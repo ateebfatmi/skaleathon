@@ -32,12 +32,8 @@ export default function OrganizerSection() {
                   style={{ width: 56, height: 56, maxWidth: 56, maxHeight: 56 }}
                 />
               </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-white tracking-tight leading-tight">
-                Crafted by{' '}
-                <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
-                  SkaleKraft
-                </span>
-                .
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
+                Crafted by <span className="text-[#c19a88]">SkaleKraft</span>.
               </h2>
             </div>
 

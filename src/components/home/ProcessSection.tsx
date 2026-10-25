@@ -64,12 +64,8 @@ export default function ProcessSection({ event }: { event: EventData }) {
             </p>
             <span className="h-px w-6 bg-[#c19a88]/70" />
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-white tracking-tight">
-            Four progressive{' '}
-            <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
-              stages
-            </span>
-            .
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+            Four progressive <span className="text-[#c19a88]">stages</span>.
           </h2>
           <p className="mt-4 text-sm text-white/55 leading-relaxed font-light">
             A comprehensive four-stage funnel designed to evaluate technical aptitude, architectural design, software execution, and live verbal defense.

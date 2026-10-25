@@ -26,12 +26,8 @@ export default function RulesSummarySection({ event }: { event: EventData }) {
                 Integrity & Governance
               </p>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-medium text-white tracking-tight leading-tight">
-              Rules of{' '}
-              <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
-                engagement
-              </span>
-              .
+            <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight leading-tight">
+              Rules of <span className="text-[#c19a88]">engagement</span>.
             </h2>
             <p className="text-sm text-white/55 leading-relaxed font-light">
               We uphold strict engineering integrity. All submissions undergo automated plagiarism checks, commit history verification, and manual code audits.
