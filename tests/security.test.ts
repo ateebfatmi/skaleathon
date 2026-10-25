@@ -1,6 +1,9 @@
 import crypto from 'crypto';
 import { afterEach, describe, expect, it } from 'vitest';
 import { signToken, verifyToken } from '../src/lib/auth/session';
+import { isSafePublicHttpUrl, submissionSchema } from '../src/lib/validation/schemas';
+import { checkRateLimit } from '../src/lib/security/rate-limit';
+import { NextRequest } from 'next/server';
 
 describe('session token security', () => {
   const originalSecret = process.env.APP_SECRET;
@@ -37,3 +40,68 @@ describe('session token security', () => {
     expect(verifyToken(`${payload}.${signature}`)).toBeNull();
   });
 });
+
+describe('URL and SSRF safety validation', () => {
+  it('accepts safe public HTTPS URLs', () => {
+    expect(isSafePublicHttpUrl('https://myproject.vercel.app')).toBe(true);
+    expect(isSafePublicHttpUrl('https://youtube.com/watch?v=123')).toBe(true);
+    expect(isSafePublicHttpUrl('')).toBe(true);
+    expect(isSafePublicHttpUrl(undefined)).toBe(true);
+  });
+
+  it('rejects unsafe protocols and internal metadata IP addresses', () => {
+    expect(isSafePublicHttpUrl('javascript:alert(1)')).toBe(false);
+    expect(isSafePublicHttpUrl('file:///etc/passwd')).toBe(false);
+    expect(isSafePublicHttpUrl('data:text/html,<script>alert(1)</script>')).toBe(false);
+    expect(isSafePublicHttpUrl('http://169.254.169.254/latest/meta-data/')).toBe(false);
+    expect(isSafePublicHttpUrl('http://localhost:3000')).toBe(false);
+    expect(isSafePublicHttpUrl('http://127.0.0.1:8080')).toBe(false);
+    expect(isSafePublicHttpUrl('http://0.0.0.0')).toBe(false);
+    expect(isSafePublicHttpUrl('http://192.168.1.1')).toBe(false);
+    expect(isSafePublicHttpUrl('http://10.0.0.1')).toBe(false);
+    expect(isSafePublicHttpUrl('http://internal.service.local')).toBe(false);
+  });
+
+  it('validates github_url specifically', () => {
+    const valid = submissionSchema.safeParse({
+      title: 'Valid Project',
+      track_id: 'fintech',
+      problem_statement: 'A valid problem statement that is long enough to meet requirements.',
+      solution_overview: 'A valid solution overview that is detailed and meets requirements.',
+      description: 'A complete and in-depth description that covers everything necessary for evaluation.',
+      tech_stack: ['Next.js', 'TypeScript'],
+      github_url: 'https://github.com/myorg/myrepo',
+    });
+    expect(valid.success).toBe(true);
+
+    const invalid = submissionSchema.safeParse({
+      title: 'Valid Project',
+      track_id: 'fintech',
+      problem_statement: 'A valid problem statement that is long enough to meet requirements.',
+      solution_overview: 'A valid solution overview that is detailed and meets requirements.',
+      description: 'A complete and in-depth description that covers everything necessary for evaluation.',
+      tech_stack: ['Next.js'],
+      github_url: 'https://evil-site.com/github.com/malicious',
+    });
+    expect(invalid.success).toBe(false);
+  });
+});
+
+describe('rate limiter security', () => {
+  it('enforces limit boundary and resets after time', () => {
+    const req = new NextRequest('http://localhost:3000/api/test', {
+      headers: { 'x-forwarded-for': '203.0.113.195' },
+    });
+
+    const res1 = checkRateLimit(req, 'test-scope', 2, 500);
+    expect(res1.allowed).toBe(true);
+
+    const res2 = checkRateLimit(req, 'test-scope', 2, 500);
+    expect(res2.allowed).toBe(true);
+
+    const res3 = checkRateLimit(req, 'test-scope', 2, 500);
+    expect(res3.allowed).toBe(false);
+    expect(res3.retryAfterSeconds).toBeGreaterThan(0);
+  });
+});
+

@@ -2,6 +2,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/auth/server-guard';
 import { EventRepository } from '@/lib/db/repository';
 
+function sanitizeCsvCell(value: string | number | null | undefined): string {
+  if (value === null || value === undefined) return '""';
+  let str = String(value);
+  // Mitigate CSV / Formula Injection: prepend ' if cell starts with dangerous spreadsheet formula triggers
+  if (/^[=+\-@\t\r]/.test(str)) {
+    str = `'${str}`;
+  }
+  return `"${str.replace(/"/g, '""')}"`;
+}
+
 export async function GET(req: NextRequest) {
   try {
     await requireAdmin();
@@ -14,15 +24,15 @@ export async function GET(req: NextRequest) {
     if (format === 'csv') {
       const headers = ['Team ID', 'Team Name', 'Track ID', 'Status', 'College/Org', 'City', 'Members Count', 'Payment Status', 'Created At'];
       const rows = teams.map((t) => [
-        `"${t.id}"`,
-        `"${t.name.replace(/"/g, '""')}"`,
-        `"${t.track_id || ''}"`,
-        `"${t.status}"`,
-        `"${(t.college_or_org || '').replace(/"/g, '""')}"`,
-        `"${(t.city || '').replace(/"/g, '""')}"`,
-        t.members.length,
-        `"${t.paymentOrder?.status || 'unpaid'}"`,
-        `"${t.created_at}"`,
+        sanitizeCsvCell(t.id),
+        sanitizeCsvCell(t.name),
+        sanitizeCsvCell(t.track_id || ''),
+        sanitizeCsvCell(t.status),
+        sanitizeCsvCell(t.college_or_org || ''),
+        sanitizeCsvCell(t.city || ''),
+        sanitizeCsvCell(t.members.length),
+        sanitizeCsvCell(t.paymentOrder?.status || 'unpaid'),
+        sanitizeCsvCell(t.created_at),
       ]);
 
       const csvContent = [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');

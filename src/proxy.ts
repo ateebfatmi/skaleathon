@@ -21,9 +21,7 @@ const isPublicRoute = createRouteMatcher([
   '/api/certificates/verify(.*)',
   '/api/certificates/download(.*)',
   '/api/auth/(.*)',
-  '/api/create-order',
-  '/api/verify-payment',
-  '/api/payment/(.*)',
+  '/api/payment/webhook',
 ]);
 
 export default clerkMiddleware(

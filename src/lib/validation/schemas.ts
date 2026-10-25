@@ -25,25 +25,70 @@ export const registrationSchema = z.object({
 
 export type RegistrationFormData = z.infer<typeof registrationSchema>;
 
+export const isSafePublicHttpUrl = (val: string | undefined | null): boolean => {
+  if (!val || val === '') return true;
+  try {
+    const parsed = new URL(val);
+    if (!['http:', 'https:'].includes(parsed.protocol)) return false;
+    const hostname = parsed.hostname.toLowerCase();
+    // Block loopback, link-local, private IP ranges, and internal metadata services
+    if (
+      hostname === 'localhost' ||
+      hostname === '127.0.0.1' ||
+      hostname === '0.0.0.0' ||
+      hostname === '::1' ||
+      hostname === '169.254.169.254' ||
+      hostname.endsWith('.local') ||
+      hostname.endsWith('.internal') ||
+      /^10\./.test(hostname) ||
+      /^192\.168\./.test(hostname) ||
+      /^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(hostname)
+    ) {
+      return false;
+    }
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 export const submissionSchema = z.object({
   title: z.string().trim().min(3, 'Project title must have at least 3 characters').max(100),
   track_id: z.string().min(1, 'Track is required'),
   problem_statement: z.string().trim().min(20, 'Please articulate the problem in at least 20 characters').max(3000),
   solution_overview: z.string().trim().min(30, 'Please describe your solution in at least 30 characters').max(5000),
   description: z.string().trim().min(30, 'Please provide an in-depth project description').max(8000),
-  tech_stack: z.array(z.string()).min(1, 'Please specify at least one core technology'),
+  tech_stack: z
+    .array(z.string().trim().max(50))
+    .min(1, 'Please specify at least one core technology')
+    .max(20, 'Maximum 20 technologies allowed'),
   github_url: z
     .string()
     .trim()
     .optional()
     .or(z.literal(''))
     .refine(
-      (url) => !url || url.toLowerCase().includes('github.com'),
-      'Must be a valid GitHub repository URL'
+      (url) => !url || (isSafePublicHttpUrl(url) && /^https?:\/\/(www\.)?github\.com\/[\w.-]+\/[\w.-]+/i.test(url)),
+      'Must be a valid public GitHub repository URL (e.g. https://github.com/owner/repo)'
     ),
-  live_demo_url: z.string().trim().url('Must be a valid URL').optional().or(z.literal('')),
-  demo_video_url: z.string().trim().url('Must be a valid URL').optional().or(z.literal('')),
-  presentation_url: z.string().trim().url('Must be a valid URL').optional().or(z.literal('')),
+  live_demo_url: z
+    .string()
+    .trim()
+    .optional()
+    .or(z.literal(''))
+    .refine(isSafePublicHttpUrl, 'Must be a valid public HTTP or HTTPS URL'),
+  demo_video_url: z
+    .string()
+    .trim()
+    .optional()
+    .or(z.literal(''))
+    .refine(isSafePublicHttpUrl, 'Must be a valid public HTTP or HTTPS URL'),
+  presentation_url: z
+    .string()
+    .trim()
+    .optional()
+    .or(z.literal(''))
+    .refine(isSafePublicHttpUrl, 'Must be a valid public HTTP or HTTPS URL'),
   member_contributions: z.string().trim().max(2000).optional().or(z.literal('')),
   ai_tool_disclosure: z.string().trim().max(2000).optional().or(z.literal('')),
   isDraft: z.boolean().default(false),
@@ -53,12 +98,14 @@ export type SubmissionFormData = z.infer<typeof submissionSchema>;
 
 export const judgingScoreSchema = z.object({
   assignmentId: z.string().min(1),
-  scores: z.array(
-    z.object({
-      criterionId: z.string(),
-      score: z.number().min(0).max(10),
-    })
-  ),
+  scores: z
+    .array(
+      z.object({
+        criterionId: z.string().max(100),
+        score: z.number().min(0).max(10),
+      })
+    )
+    .max(50, 'Maximum 50 scoring criteria allowed'),
   feedback: z.string().max(3000).optional().or(z.literal('')),
   internalNotes: z.string().max(3000).optional().or(z.literal('')),
   isLocked: z.boolean().default(false),
