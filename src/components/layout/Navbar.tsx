@@ -167,7 +167,7 @@ export default function Navbar({ event }: { event: NavbarEvent }) {
           {/* Center Navigation Capsule */}
           <nav
             aria-label="Main Navigation"
-            className="hidden w-[min(44vw,34rem)] lg:flex items-center rounded-full border border-white/[0.08] bg-white/[0.02] p-1.5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.06),0_8px_24px_rgba(0,0,0,0.4)] backdrop-blur-2xl"
+            className="hidden lg:flex items-center gap-1 rounded-full border border-white/[0.08] bg-white/[0.02] p-1.5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.06),0_8px_24px_rgba(0,0,0,0.4)] backdrop-blur-2xl"
           >
             {navLinks.map((item) => {
               const active =
@@ -180,7 +180,7 @@ export default function Navbar({ event }: { event: NavbarEvent }) {
                   href={item.href}
                   prefetch={true}
                   onClick={item.href === '/' ? handleHomeClick : undefined}
-                  className={`relative flex h-8 min-w-0 flex-1 items-center justify-center rounded-full px-2 text-xs font-medium tracking-wide transition-colors duration-200 ${
+                  className={`relative flex h-8 items-center justify-center rounded-full px-3.5 text-xs font-medium tracking-wide whitespace-nowrap transition-colors duration-200 ${
                     active
                       ? 'text-white font-semibold'
                       : 'text-neutral-400 hover:text-white hover:bg-white/[0.04]'
@@ -193,14 +193,14 @@ export default function Navbar({ event }: { event: NavbarEvent }) {
                       transition={{ type: 'spring', stiffness: 420, damping: 34 }}
                     />
                   )}
-                  <span className="relative z-10 flex min-w-0 items-center justify-center">
-                    <span
-                      aria-hidden="true"
-                      className={`mr-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[#c19a88] shadow-[0_0_8px_#c19a88] transition-opacity duration-200 ${
-                        active ? 'opacity-100' : 'opacity-0'
-                      }`}
-                    />
-                    <span className="truncate">{item.name}</span>
+                  <span className="relative z-10 flex items-center justify-center">
+                    {active && (
+                      <span
+                        aria-hidden="true"
+                        className="mr-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[#c19a88] shadow-[0_0_8px_#c19a88]"
+                      />
+                    )}
+                    <span>{item.name}</span>
                     {item.badge && (
                       <span className="ml-1.5 px-1.5 py-0.2 rounded-full text-[9px] font-mono font-bold bg-[#c19a88]/25 text-[#ffe5d9] border border-[#c19a88]/40 shadow-[0_0_8px_rgba(193,154,136,0.25)] shrink-0">
                         {item.badge}

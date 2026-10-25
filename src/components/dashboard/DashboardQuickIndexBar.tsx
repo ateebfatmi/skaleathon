@@ -37,8 +37,13 @@ export default function DashboardQuickIndexBar({ memberCount }: DashboardQuickIn
     setSelectedNum(item.num);
     setNavigatingItem(item);
 
-    // Begin loading immediately; the transition accompanies real loading instead of delaying it.
-    router.push(item.href);
+    // Play the spring underline slide, shimmer sweep, and transition pill before navigating
+    setTimeout(() => {
+      router.push(item.href);
+      setTimeout(() => {
+        setNavigatingItem(null);
+      }, 450);
+    }, 340);
   };
 
   return (

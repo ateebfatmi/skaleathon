@@ -63,16 +63,23 @@ export function EditorialIndexBar({
     const isHashLink = item.href.startsWith('#');
 
     if (isHashLink) {
-      const targetId = item.href.replace('#', '');
-      const el = document.getElementById(targetId);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        window.history.replaceState(null, '', item.href);
-      }
-      setTimeout(() => setTransitioningItem(null), 180);
+      setTimeout(() => {
+        const targetId = item.href.replace('#', '');
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          window.history.replaceState(null, '', item.href);
+        }
+        setTimeout(() => setTransitioningItem(null), 240);
+      }, 280);
     } else {
-      // Begin loading immediately; motion remains as lightweight progress feedback.
-      router.push(item.href);
+      // Play the spring underline slide, shimmer sweep, and transition pill before navigating
+      setTimeout(() => {
+        router.push(item.href);
+        setTimeout(() => {
+          setTransitioningItem(null);
+        }, 450);
+      }, 340);
     }
   };
 
