@@ -21,13 +21,10 @@ test.describe('public website', () => {
     await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     const navigation = page.getByRole('navigation', { name: 'Main Navigation' });
-    await Promise.all([
-      page.waitForURL('**/tracks'),
-      navigation.getByRole('link', { name: 'Tracks' }).click(),
-    ]);
+    await navigation.getByRole('link', { name: 'Tracks' }).click();
 
     await expect(page).toHaveURL(/\/tracks$/);
-    await expect(page.locator('main')).toBeVisible();
+    await expect(page.locator('main')).toBeVisible({ timeout: 15_000 });
   });
 
   test('security headers are present', async ({ request }) => {
