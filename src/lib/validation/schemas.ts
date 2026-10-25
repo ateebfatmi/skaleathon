@@ -19,7 +19,7 @@ export const registrationSchema = z.object({
   leader_phone: z.string().trim().min(10, 'Valid 10-digit phone number is required').max(15),
   members: z.array(teamMemberSchema).max(5, 'Maximum 5 additional members allowed (Total team size: 1-6)'),
   acceptedPolicies: z.literal(true, {
-    errorMap: () => ({ message: 'You must accept the official rules, privacy policy, and terms.' }),
+    error: 'You must accept the official rules, privacy policy, and terms.',
   }),
 });
 

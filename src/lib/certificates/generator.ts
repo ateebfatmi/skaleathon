@@ -18,11 +18,11 @@ export async function generateCertificatePDF(cert: Certificate, siteUrl: string 
   doc.rect(0, 0, pageWidth, pageHeight, 'F');
 
   // Outer Decorative Borders (SkaleKraft Copper & Champagne)
-  doc.setDrawColor(193, 154, 136); // #c19a88 copper
+  doc.setDrawColor(193, 154, 136); // #f5f5f5 copper
   doc.setLineWidth(1.2);
   doc.rect(10, 10, pageWidth - 20, pageHeight - 20);
 
-  doc.setDrawColor(128, 89, 72); // #805948 warm bronze
+  doc.setDrawColor(128, 89, 72); // #737373 warm bronze
   doc.setLineWidth(0.4);
   doc.rect(13, 13, pageWidth - 26, pageHeight - 26);
 
@@ -50,7 +50,7 @@ export async function generateCertificatePDF(cert: Certificate, siteUrl: string 
 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(10);
-  doc.setTextColor(232, 197, 180); // #e8c5b4 champagne
+  doc.setTextColor(232, 197, 180); // #ffffff champagne
   doc.text('BUILD. INNOVATE. SCALE. — A NATIONAL ONLINE HACKATHON', pageWidth / 2, 43, { align: 'center' });
 
   // Certificate Heading
@@ -68,7 +68,7 @@ export async function generateCertificatePDF(cert: Certificate, siteUrl: string 
   // Participant Name
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(24);
-  doc.setTextColor(232, 197, 180); // #e8c5b4 champagne
+  doc.setTextColor(232, 197, 180); // #ffffff champagne
   doc.text(cert.recipient_name.toUpperCase(), pageWidth / 2, 83, { align: 'center' });
 
   // Team & Achievement

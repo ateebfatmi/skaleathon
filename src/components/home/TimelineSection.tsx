@@ -51,11 +51,11 @@ export default function TimelineSection({ event }: TimelineProps) {
         {/* Compact Header */}
         <div className="text-center max-w-xl mx-auto mb-6 sm:mb-8">
           <div className="inline-flex items-center gap-2 mb-2">
-            <span className="h-px w-5 bg-[#c19a88]/70" />
+            <span className="h-px w-5 bg-[#f5f5f5]/70" />
             <p className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold">
               OPERATIONAL SCHEDULE
             </p>
-            <span className="h-px w-5 bg-[#c19a88]/70" />
+            <span className="h-px w-5 bg-[#f5f5f5]/70" />
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight">
             Event <span className="text-[#c19a88]">milestones</span>.
@@ -73,12 +73,12 @@ export default function TimelineSection({ event }: TimelineProps) {
               className="group flex flex-col sm:flex-row sm:items-center justify-between py-3.5 px-4 sm:px-6 hover:bg-white/[0.02] transition-colors gap-2.5 sm:gap-4"
             >
               <div className="flex items-start sm:items-center gap-3 sm:gap-4 min-w-0">
-                <span className="font-mono text-[11px] font-bold text-[#c19a88] bg-[#c19a88]/10 border border-[#c19a88]/25 px-2 py-0.5 rounded shrink-0">
+                <span className="font-mono text-[11px] font-bold text-[#c19a88] bg-[#f5f5f5]/10 border border-[#f5f5f5]/25 px-2 py-0.5 rounded shrink-0">
                   {m.num}
                 </span>
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="text-sm font-semibold text-white tracking-tight group-hover:text-[#e8c5b4] transition-colors">
+                    <h3 className="text-sm font-semibold text-white tracking-tight group-hover:text-[#ffffff] transition-colors">
                       {m.title}
                     </h3>
                   </div>
@@ -89,7 +89,7 @@ export default function TimelineSection({ event }: TimelineProps) {
               </div>
 
               <div className="shrink-0 sm:text-right pl-8 sm:pl-0">
-                <span className="inline-block text-[11px] font-mono font-medium px-3 py-1 rounded-full border border-white/10 bg-white/[0.04] text-[#e8c5b4] group-hover:border-[#c19a88]/40 transition-colors shadow-sm">
+                <span className="inline-block text-[11px] font-mono font-medium px-3 py-1 rounded-full border border-white/10 bg-white/[0.04] text-[#ffffff] group-hover:border-[#f5f5f5]/40 transition-colors shadow-sm">
                   {m.date}
                 </span>
               </div>

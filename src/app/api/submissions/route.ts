@@ -3,7 +3,7 @@ import { requireAuth } from '@/lib/auth/server-guard';
 import { EventRepository } from '@/lib/db/repository';
 import { submissionSchema } from '@/lib/validation/schemas';
 import { NotificationService } from '@/lib/notifications/service';
-import { checkRateLimit } from '@/lib/security/rate-limit';
+import { checkRateLimitDistributed } from '@/lib/security/rate-limit';
 
 export async function GET(req: NextRequest) {
   try {
@@ -45,7 +45,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const rateLimit = checkRateLimit(req, 'submission-write', 20, 60_000);
+    const rateLimit = await checkRateLimitDistributed(req, 'submission-write', 20, 60_000);
     if (!rateLimit.allowed) {
       return NextResponse.json(
         { error: 'Too many submission requests. Please retry shortly.' },
@@ -83,18 +83,21 @@ export async function POST(req: NextRequest) {
     const submission = await EventRepository.saveSubmission(session.teamId, data, session.userId);
 
     const team = await EventRepository.getTeam(session.teamId);
+    let emailDelivered = false;
     if (team && !data.isDraft) {
-      await NotificationService.sendSubmissionReceipt({
+      const notification = await NotificationService.sendSubmissionReceipt({
         recipientEmail: session.email,
         teamName: team.name,
         projectTitle: submission.title,
         submissionId: submission.id,
       });
+      emailDelivered = notification.success;
     }
 
     return NextResponse.json({
       success: true,
       submission,
+      emailDelivered: data.isDraft ? undefined : emailDelivered,
       message: data.isDraft ? 'Draft saved successfully.' : 'Project submitted successfully for evaluation.',
     });
   } catch (err: any) {

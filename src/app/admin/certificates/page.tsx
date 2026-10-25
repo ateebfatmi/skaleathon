@@ -60,7 +60,7 @@ export default function AdminCertificatesPage() {
               National Certificate Registry
             </span>
             <h1 className="text-2xl font-black text-white">Certificate Management</h1>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-neutral-400 mt-1">
               Issue, inspect, and manage digital PDF certificates for the Top 25 finalist teams.
             </p>
           </div>
@@ -96,15 +96,15 @@ export default function AdminCertificatesPage() {
           <h2 className="text-base font-bold text-white">
             Issued Certificates Database ({certs.length})
           </h2>
-          <span className="text-xs text-slate-400">
+          <span className="text-xs text-neutral-400">
             Automatic QR Generation & PDF Binary Delivery
           </span>
         </div>
 
         {certs.length === 0 ? (
-          <div className="py-12 text-center text-xs text-slate-400 space-y-2">
+          <div className="py-12 text-center text-xs text-neutral-400 space-y-2">
             <p>No certificates issued yet.</p>
-            <p className="text-[11px] text-slate-500">
+            <p className="text-[11px] text-neutral-500">
               * Note: Certificates can only be issued once results have been officially published from the Results Management tab.
             </p>
           </div>
@@ -117,7 +117,7 @@ export default function AdminCertificatesPage() {
               >
                 <div>
                   <div className="font-bold text-white text-sm">{c.recipient_name}</div>
-                  <div className="text-slate-400">Team: {c.team_name} • {c.achievement_text}</div>
+                  <div className="text-neutral-400">Team: {c.team_name} • {c.achievement_text}</div>
                   <div className="font-mono text-[10px] text-cyanAccent-400 mt-1">Code: {c.certificate_code}</div>
                 </div>
 

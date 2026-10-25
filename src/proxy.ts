@@ -29,7 +29,15 @@ export default clerkMiddleware(
     if (isPublicRoute(req)) return NextResponse.next();
 
     const clerkKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
-    if (!clerkKey || clerkKey.includes('placeholder')) return NextResponse.next();
+    if (!clerkKey || clerkKey.includes('placeholder')) {
+      if (process.env.NODE_ENV === 'production') {
+        return NextResponse.json(
+          { error: 'Authentication service is not configured.' },
+          { status: 503 }
+        );
+      }
+      return NextResponse.next();
+    }
 
     try {
       await auth.protect();

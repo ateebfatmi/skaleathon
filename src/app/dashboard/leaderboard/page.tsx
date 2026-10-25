@@ -30,7 +30,7 @@ export default async function DashboardLeaderboardPage() {
   return (
     <div className="relative w-full space-y-8 pb-20 text-neutral-200">
       {/* Background Ambient Glows */}
-      <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 h-80 w-full max-w-5xl rounded-full bg-[#c19a88]/10 blur-[150px]" />
+      <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 h-80 w-full max-w-5xl rounded-full bg-[#f5f5f5]/10 blur-[150px]" />
 
       {/* 1. Header & Context */}
       <header className="relative space-y-4 pt-1">
@@ -48,7 +48,7 @@ export default async function DashboardLeaderboardPage() {
               Squad: {team ? team.name : 'Your Team'}
             </span>
             <span className="text-white/20">•</span>
-            <span className="text-[#e8c5b4] font-semibold">
+            <span className="text-[#ffffff] font-semibold">
               {isPublished ? '[PUBLISHED]' : '[UNLOCKS POST-STAGE 01]'}
             </span>
           </div>
@@ -64,7 +64,7 @@ export default async function DashboardLeaderboardPage() {
             <span className="text-white/15">|</span>
             <Link
               href="/dashboard/stages"
-              className="inline-flex items-center gap-1.5 text-[#e8c5b4] hover:text-white transition-colors font-semibold"
+              className="inline-flex items-center gap-1.5 text-[#ffffff] hover:text-white transition-colors font-semibold"
             >
               <Layers className="h-3.5 w-3.5 text-[#c19a88]" />
               <span>Stage Roadmap</span>
@@ -87,59 +87,78 @@ export default async function DashboardLeaderboardPage() {
       {!isPublished ? (
         <div className="space-y-8">
           {/* Activation Notice Card */}
-          <div className="rounded-3xl border border-amber-500/30 bg-[#161311] p-6 sm:p-8 space-y-5 shadow-[0_12px_40px_rgba(0,0,0,0.5)]">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
+          <div className="relative overflow-hidden rounded-[28px] border border-amber-400/20 bg-[linear-gradient(135deg,#171717_0%,#111111_72%)] p-5 shadow-[0_24px_75px_rgba(0,0,0,0.42)] sm:p-7">
+            <div className="pointer-events-none absolute -right-24 -top-28 h-80 w-80 rounded-full bg-amber-400/[0.07] blur-3xl" />
+            <div className="pointer-events-none absolute bottom-0 right-8 font-mono text-[150px] font-black leading-none text-white/[0.018]">01</div>
+
+            <div className="relative flex flex-col gap-4 border-b border-white/[0.07] pb-5 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-3">
-                <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/25 text-amber-400">
-                  <Lock className="h-6 w-6" />
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-amber-400/25 bg-amber-400/10 text-amber-300">
+                  <Lock className="h-5 w-5" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-amber-400 font-bold block">
-                    STAGE 01 SCREENING IN PROGRESS
+                  <span className="block font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-amber-300">
+                    Stage 01 screening in progress
                   </span>
-                  <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                    Leaderboard Unlocks After Quiz Tabulation
+                  <h2 className="mt-1 text-xl font-bold tracking-tight text-white sm:text-2xl">
+                    Standings are sealed until scoring is complete
                   </h2>
                 </div>
               </div>
-
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.05] border border-white/10 text-xs font-mono text-neutral-300">
+              <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-2 font-mono text-[11px] text-neutral-300">
                 <Calendar className="h-3.5 w-3.5 text-[#c19a88]" />
-                <span>Scheduled Reveal: Jan 08, 2027</span>
-              </div>
+                Reveal · Jan 08, 2027
+              </span>
             </div>
 
-            <p className="text-sm text-neutral-200 font-normal leading-relaxed">
-              To guarantee competitive fairness, the national leaderboard remains locked during registration. Following the timed <strong>Stage 01 Online Technical Quiz</strong>, official screening percentiles, qualification cutoffs, and seeded team scores will be announced live on this dashboard.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-              <div className="p-4 rounded-2xl border border-white/[0.08] bg-[#1a1715]/70 space-y-1.5">
-                <div className="flex items-center gap-2 text-[#c19a88] font-bold text-xs uppercase tracking-wider">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                  <span>Phase 01: Initial Seeding</span>
+            <div className="relative mt-5 grid gap-5 lg:grid-cols-[0.62fr_1.38fr] lg:items-stretch">
+              <div className="flex flex-col justify-between rounded-2xl border border-white/[0.07] bg-black/20 p-5">
+                <div>
+                  <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/35">Publication status</span>
+                  <div className="mt-3 flex items-end gap-2">
+                    <span className="text-4xl font-black tracking-tight text-white">Locked</span>
+                    <span className="mb-1.5 h-2 w-2 animate-pulse rounded-full bg-amber-400" />
+                  </div>
                 </div>
-                <h3 className="text-sm font-bold text-white">Qualifier Cutoffs</h3>
-                <p className="text-xs text-neutral-300 font-normal leading-relaxed">
-                  Screening scores determine squad seeding for Stage 02 (Architecture PPT) and Stage 03 (Build Sprint).
+                <p className="mt-5 text-xs leading-5 text-white/45">
+                  Scores remain private to protect competitive fairness during registration and screening.
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl border border-white/[0.08] bg-[#1a1715]/70 space-y-1.5">
-                <div className="flex items-center gap-2 text-[#e8c5b4] font-bold text-xs uppercase tracking-wider">
-                  <Trophy className="h-4 w-4 text-[#e8c5b4]" />
-                  <span>Phase 02: Cumulative Points</span>
-                </div>
-                <h3 className="text-sm font-bold text-white">Top 25 National Merit Roster</h3>
-                <p className="text-xs text-neutral-300 font-normal leading-relaxed">
-                  Cumulative evaluations determine podium cash prizes ({formatINR(event.prize_pool_inr)}) and merit certificates.
+              <div className="space-y-4">
+                <p className="text-sm font-normal leading-6 text-neutral-300">
+                  After the <strong className="text-white">Stage 01 Online Technical Quiz</strong>, this dashboard will publish verified percentiles, qualification cutoffs, and seeded squad scores.
                 </p>
+
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="rounded-2xl border border-white/[0.07] bg-white/[0.025] p-4">
+                    <div className="flex items-center gap-2 font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-[#d4d4d4]">
+                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+                      Phase 01 · Initial seeding
+                    </div>
+                    <h3 className="mt-2 text-sm font-bold text-white">Qualifier Cutoffs</h3>
+                    <p className="mt-1 text-xs leading-5 text-white/45">
+                      Screening results seed qualifying squads for the architecture and build rounds.
+                    </p>
+                  </div>
+
+                  <div className="rounded-2xl border border-white/[0.07] bg-white/[0.025] p-4">
+                    <div className="flex items-center gap-2 font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-[#ffffff]">
+                      <Trophy className="h-3.5 w-3.5" />
+                      Phase 02 · Cumulative points
+                    </div>
+                    <h3 className="mt-2 text-sm font-bold text-white">Top 25 Merit Roster</h3>
+                    <p className="mt-1 text-xs leading-5 text-white/45">
+                      Final totals determine {formatINR(event.prize_pool_inr)} in prizes and merit certificates.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
           {/* National Honors Cards */}
-          <section className="rounded-3xl border border-white/10 bg-[#141211] p-6 sm:p-8 space-y-6 shadow-[0_12px_40px_rgba(0,0,0,0.5)]">
+          <section className="rounded-3xl border border-white/10 bg-[#141414] p-6 sm:p-8 space-y-6 shadow-[0_12px_40px_rgba(0,0,0,0.5)]">
             <div className="flex items-center justify-between pb-4 border-b border-white/[0.08]">
               <div className="space-y-0.5">
                 <span className="text-[10px] font-mono uppercase tracking-widest text-[#c19a88] font-bold">
@@ -149,12 +168,12 @@ export default async function DashboardLeaderboardPage() {
                   National Honors &amp; Cash Allocations
                 </h3>
               </div>
-              <span className="text-xs font-mono font-bold text-[#e8c5b4]">
+              <span className="text-xs font-mono font-bold text-[#ffffff]">
                 {formatINR(event.prize_pool_inr)} Total Pool
               </span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="mobile-card-grid grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
               {[
                 {
                   rank: '01',
@@ -162,8 +181,8 @@ export default async function DashboardLeaderboardPage() {
                   title: 'National Champion',
                   reward: formatINR(event.first_prize_inr || 20000),
                   desc: 'Winner Trophy, Interview Call & Citation',
-                  border: 'border-[#c19a88]/60 bg-[#1f1816]',
-                  accent: 'text-[#e8c5b4]',
+                  border: 'border-[#f5f5f5]/60 bg-[#171717]',
+                  accent: 'text-[#ffffff]',
                 },
                 {
                   rank: '02',
@@ -171,7 +190,7 @@ export default async function DashboardLeaderboardPage() {
                   title: 'First Runner-Up',
                   reward: formatINR(event.second_prize_inr || 10000),
                   desc: 'Runner-Up Certificate & Interview Call',
-                  border: 'border-white/10 bg-[#1a1715]/70',
+                  border: 'border-white/10 bg-[#171717]/70',
                   accent: 'text-white',
                 },
                 {
@@ -180,7 +199,7 @@ export default async function DashboardLeaderboardPage() {
                   title: 'Second Runner-Up',
                   reward: formatINR(event.third_prize_inr || 5000),
                   desc: 'Finalist Certificate & Interview Call',
-                  border: 'border-white/10 bg-[#1a1715]/70',
+                  border: 'border-white/10 bg-[#171717]/70',
                   accent: 'text-[#c19a88]',
                 },
                 {
@@ -212,7 +231,7 @@ export default async function DashboardLeaderboardPage() {
         </div>
       ) : (
         /* Live Published Leaderboard Table */
-        <div className="rounded-3xl border border-white/10 bg-[#141211] p-6 sm:p-8 space-y-6 shadow-[0_12px_40px_rgba(0,0,0,0.5)]">
+        <div className="rounded-3xl border border-white/10 bg-[#141414] p-6 sm:p-8 space-y-6 shadow-[0_12px_40px_rgba(0,0,0,0.5)]">
           <div className="flex items-center justify-between pb-4 border-b border-white/[0.08]">
             <h2 className="text-xl font-bold text-white">Live Adjudicated Standings</h2>
             <span className="text-xs font-mono text-emerald-400 font-bold">● Standings Verified</span>
@@ -234,7 +253,7 @@ export default async function DashboardLeaderboardPage() {
                   <tr key={res.id || idx} className="hover:bg-white/[0.02] transition-colors">
                     <td className="py-3.5 px-4 font-mono font-bold text-[#c19a88]">#{idx + 1}</td>
                     <td className="py-3.5 px-4 font-bold text-white">{res.team_name}</td>
-                    <td className="py-3.5 px-4 text-xs font-mono text-[#e8c5b4]">{res.track_name}</td>
+                    <td className="py-3.5 px-4 text-xs font-mono text-[#ffffff]">{res.track_name}</td>
                     <td className="py-3.5 px-4 text-xs text-neutral-400">{res.college_or_org || 'Independent'}</td>
                     <td className="py-3.5 px-4 font-mono font-bold text-white text-right">{res.total_score || '—'}</td>
                   </tr>

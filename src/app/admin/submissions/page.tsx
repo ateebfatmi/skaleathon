@@ -15,7 +15,7 @@ export default async function AdminSubmissionsPage() {
             Project Deliverable Review
           </span>
           <h1 className="text-2xl font-black text-white">Project Submissions ({submissions.length})</h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-neutral-400 mt-1">
             Audit submitted repositories, live demos, and AI disclosures across all competition tracks.
           </p>
         </div>
@@ -24,7 +24,7 @@ export default async function AdminSubmissionsPage() {
       <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="border-b border-white/10 bg-[#141414] text-slate-400 font-semibold">
+            <thead className="border-b border-white/10 bg-[#141414] text-neutral-400 font-semibold">
               <tr>
                 <th className="py-3.5 px-6">Project Title & Team</th>
                 <th className="py-3.5 px-6">Track</th>
@@ -37,7 +37,7 @@ export default async function AdminSubmissionsPage() {
             <tbody className="divide-y divide-white/5">
               {submissions.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-8 text-center text-slate-400">
+                  <td colSpan={6} className="py-8 text-center text-neutral-400">
                     No project submissions recorded yet.
                   </td>
                 </tr>
@@ -46,9 +46,9 @@ export default async function AdminSubmissionsPage() {
                   <tr key={sub.id} className="hover:bg-white/[0.02] transition-colors">
                     <td className="py-4 px-6">
                       <div className="font-bold text-white text-sm">{sub.title}</div>
-                      <div className="text-[11px] text-slate-400">Team: {sub.teamName}</div>
+                      <div className="text-[11px] text-neutral-400">Team: {sub.teamName}</div>
                     </td>
-                    <td className="py-4 px-6 font-mono text-slate-300">{sub.track_id}</td>
+                    <td className="py-4 px-6 font-mono text-neutral-300">{sub.track_id}</td>
                     <td className="py-4 px-6 space-y-1">
                       <a
                         href={sub.github_url}
@@ -64,7 +64,7 @@ export default async function AdminSubmissionsPage() {
                           href={sub.live_demo_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-slate-300 hover:underline flex items-center gap-1"
+                          className="text-neutral-300 hover:underline flex items-center gap-1"
                         >
                           <Globe className="h-3 w-3" />
                           <span>Demo</span>
@@ -76,7 +76,7 @@ export default async function AdminSubmissionsPage() {
                         {sub.tech_stack.map((t, i) => (
                           <span
                             key={i}
-                            className="text-[10px] px-1.5 py-0.5 rounded bg-white/5 border border-white/10 font-mono text-slate-300"
+                            className="text-[10px] px-1.5 py-0.5 rounded bg-white/5 border border-white/10 font-mono text-neutral-300"
                           >
                             {t}
                           </span>
@@ -88,7 +88,7 @@ export default async function AdminSubmissionsPage() {
                         {sub.status.toUpperCase()}
                       </span>
                     </td>
-                    <td className="py-4 px-6 font-mono text-[11px] text-slate-400">
+                    <td className="py-4 px-6 font-mono text-[11px] text-neutral-400">
                       {sub.submitted_at ? new Date(sub.submitted_at).toLocaleDateString() : 'Draft'}
                     </td>
                   </tr>

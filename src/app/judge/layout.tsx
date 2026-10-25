@@ -27,14 +27,14 @@ export default async function JudgeLayout({
               <span>Technical Judging Panel</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-white">Evaluation Portal</h1>
-            <p className="text-xs text-slate-400 mt-0.5">
-              Evaluator: <strong className="text-slate-200">{session.fullName}</strong> ({session.email})
+            <p className="text-xs text-neutral-400 mt-0.5">
+              Evaluator: <strong className="text-neutral-200">{session.fullName}</strong> ({session.email})
             </p>
           </div>
 
           <Link
             href="/dashboard"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-400 hover:text-white"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Participant View</span>

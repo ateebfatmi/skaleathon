@@ -15,12 +15,12 @@ export default async function FaqPage() {
   const event = await EventRepository.getEvent();
 
   return (
-    <div className="py-10 sm:py-16 bg-[#0B0B0B] min-h-screen relative overflow-hidden">
+    <div className="py-8 sm:py-16 bg-[#0B0B0B] min-h-screen relative overflow-hidden">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="relative w-full space-y-12 pb-24 text-neutral-200">
           <h1 className="sr-only">Skaleathon frequently asked questions</h1>
           {/* Subtle Background Ambient Glows */}
-          <div className="pointer-events-none absolute -top-20 right-10 h-96 w-96 rounded-full bg-[#c19a88]/15 blur-[160px]" />
+          <div className="pointer-events-none absolute -top-20 right-10 h-96 w-96 rounded-full bg-[#f5f5f5]/15 blur-[160px]" />
 
           {/* Top Utility & Context Ribbon */}
           <header className="relative pt-1">
@@ -33,12 +33,12 @@ export default async function FaqPage() {
             <div className="mobile-utility-row relative z-10 flex flex-wrap items-center justify-between gap-4 pb-4 mb-2 border-b border-white/[0.07]">
               <div className="flex flex-wrap items-center gap-2.5 text-[10px] font-mono uppercase tracking-[0.25em]">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c19a88] opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#c19a88]" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#f5f5f5] opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#f5f5f5]" />
                 </span>
                 <span className="text-[#c19a88]">Knowledge Base // Participant FAQ</span>
                 <span className="text-white/20">•</span>
-                <span className="text-[#e8c5b4] font-semibold">[SKALEATHON]</span>
+                <span className="text-[#ffffff] font-semibold">[SKALEATHON]</span>
               </div>
 
               <div className="flex items-center gap-5 text-xs">
@@ -51,7 +51,7 @@ export default async function FaqPage() {
                 <span className="text-white/15">|</span>
                 <Link
                   href="/register"
-                  className="group inline-flex items-center gap-1.5 text-[#e8c5b4] hover:text-white transition-colors font-semibold"
+                  className="group inline-flex items-center gap-1.5 text-[#ffffff] hover:text-white transition-colors font-semibold"
                 >
                   <span>Register Squad ({formatINR(event.registration_fee_inr)})</span>
                   <ArrowRight className="h-3 w-3 text-[#c19a88] group-hover:translate-x-0.5 transition-transform" />
@@ -75,7 +75,7 @@ export default async function FaqPage() {
 
             <a
               href="mailto:skalekraft@gmail.com"
-              className="w-fit inline-flex items-center gap-2 text-xs font-mono font-semibold text-[#e8c5b4] hover:text-white transition-colors"
+              className="mobile-touch-target inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-4 text-xs font-mono font-semibold text-[#ffffff] transition-colors hover:bg-white/[0.07] hover:text-white sm:w-fit sm:border-0 sm:bg-transparent sm:px-0"
             >
               <Mail className="h-4 w-4 text-[#c19a88]" />
               <span>skalekraft@gmail.com</span>

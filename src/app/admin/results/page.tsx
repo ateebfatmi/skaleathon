@@ -78,7 +78,7 @@ export default function AdminResultsPage() {
               National Leaderboard Command
             </span>
             <h1 className="text-2xl font-black text-white">Results & Podium Management</h1>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-neutral-400 mt-1">
               Private preview of weighted judging scores. Verify rankings before officially publishing.
             </p>
           </div>
@@ -87,7 +87,7 @@ export default function AdminResultsPage() {
             <button
               onClick={fetchResults}
               disabled={loading}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-4 py-2 text-xs font-semibold text-slate-300 transition-colors"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-4 py-2 text-xs font-semibold text-neutral-300 transition-colors"
             >
               <RefreshCw className="h-3.5 w-3.5" />
               <span>Refresh Tally</span>
@@ -133,7 +133,7 @@ export default function AdminResultsPage() {
       {/* Leaderboard Table */}
       <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] overflow-hidden">
         <div className="px-6 py-4 border-b border-white/10 bg-[#141414] flex items-center justify-between">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
+          <span className="text-xs font-bold uppercase tracking-wider text-neutral-300">
             Private Ranked Leaderboard Preview
           </span>
           <span
@@ -149,7 +149,7 @@ export default function AdminResultsPage() {
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="border-b border-white/10 bg-[#0a0f1d] text-slate-400 font-semibold">
+            <thead className="border-b border-white/10 bg-[#0a0a0a] font-semibold text-neutral-400">
               <tr>
                 <th className="py-3.5 px-6">Rank</th>
                 <th className="py-3.5 px-6">Team & Project</th>
@@ -161,13 +161,13 @@ export default function AdminResultsPage() {
             <tbody className="divide-y divide-white/5">
               {loading ? (
                 <tr>
-                  <td colSpan={5} className="py-8 text-center text-slate-400">
+                  <td colSpan={5} className="py-8 text-center text-neutral-400">
                     Computing weighted scores...
                   </td>
                 </tr>
               ) : preview.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="py-8 text-center text-slate-400">
+                  <td colSpan={5} className="py-8 text-center text-neutral-400">
                     No evaluated submissions found to generate rankings.
                   </td>
                 </tr>
@@ -178,17 +178,17 @@ export default function AdminResultsPage() {
                       #{res.rank}
                     </td>
                     <td className="py-4 px-6">
-                      <div className="font-bold text-slate-200">{res.team_name}</div>
-                      <div className="text-[11px] text-slate-400">{res.project_title}</div>
+                      <div className="font-bold text-neutral-200">{res.team_name}</div>
+                      <div className="text-[11px] text-neutral-400">{res.project_title}</div>
                     </td>
-                    <td className="py-4 px-6 font-mono text-slate-300">{res.track_id}</td>
+                    <td className="py-4 px-6 font-mono text-neutral-300">{res.track_id}</td>
                     <td className="py-4 px-6">
                       <span
                         className={`inline-block px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-wider ${
                           res.rank === 1
                             ? 'bg-amber-950 text-amber-300 border border-amber-500/40'
                             : res.rank === 2
-                            ? 'bg-slate-800 text-slate-200 border border-slate-600'
+                            ? 'bg-neutral-800 text-neutral-200 border border-neutral-600'
                             : res.rank === 3
                             ? 'bg-orange-950 text-orange-300 border border-orange-500/40'
                             : 'bg-brand-950 text-brand-300 border border-brand-500/30'

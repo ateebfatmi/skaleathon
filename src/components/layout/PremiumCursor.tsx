@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 
 type CursorMode = "default" | "button" | "card" | "image" | "text";
 
-const defaultColor = "rgba(193, 154, 136, 0.85)";
+const defaultColor = "rgba(255,255,255, 0.85)";
 
 function lerp(start: number, end: number, amount: number) {
   return start + (end - start) * amount;

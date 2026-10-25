@@ -44,15 +44,15 @@ export default function FaqSection({ event }: { event: EventData }) {
       <div className="container mx-auto max-w-4xl px-1 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">
           <div className="inline-flex items-center gap-2.5 mb-2.5 sm:mb-3">
-            <span className="h-px w-6 bg-[#c19a88]/70" />
+            <span className="h-px w-6 bg-[#f5f5f5]/70" />
             <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
               Clarity First
             </p>
-            <span className="h-px w-6 bg-[#c19a88]/70" />
+            <span className="h-px w-6 bg-[#f5f5f5]/70" />
           </div>
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-medium text-white tracking-tight">
             Frequently asked{' '}
-            <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
+            <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#ffffff] via-[#f5f5f5] to-[#737373] bg-clip-text text-transparent pb-1 inline-block">
               questions
             </span>
             .

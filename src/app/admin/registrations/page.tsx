@@ -38,7 +38,7 @@ export default function AdminRegistrationsPage() {
               Team Roster Registry
             </span>
             <h1 className="text-2xl font-black text-white">Registration Management</h1>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-neutral-400 mt-1">
               Search, filter, inspect team rosters, and export authoritative registration records.
             </p>
           </div>
@@ -56,7 +56,7 @@ export default function AdminRegistrationsPage() {
         {/* Filter Bar */}
         <div className="pt-4 flex flex-col sm:flex-row items-center gap-4">
           <div className="relative flex-1 w-full">
-            <Search className="h-4 w-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="h-4 w-4 text-neutral-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={search}
@@ -83,7 +83,7 @@ export default function AdminRegistrationsPage() {
       <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="border-b border-white/10 bg-[#141414] text-slate-400 font-semibold">
+            <thead className="border-b border-white/10 bg-[#141414] text-neutral-400 font-semibold">
               <tr>
                 <th className="py-3.5 px-6">Team Name</th>
                 <th className="py-3.5 px-6">Track</th>
@@ -96,13 +96,13 @@ export default function AdminRegistrationsPage() {
             <tbody className="divide-y divide-white/5">
               {loading ? (
                 <tr>
-                  <td colSpan={6} className="py-8 text-center text-slate-400">
+                  <td colSpan={6} className="py-8 text-center text-neutral-400">
                     Loading registrations...
                   </td>
                 </tr>
               ) : filteredTeams.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-8 text-center text-slate-400">
+                  <td colSpan={6} className="py-8 text-center text-neutral-400">
                     No teams found matching search criteria.
                   </td>
                 </tr>
@@ -111,15 +111,15 @@ export default function AdminRegistrationsPage() {
                   <tr key={team.id} className="hover:bg-white/[0.02] transition-colors">
                     <td className="py-4 px-6 font-bold text-white">
                       <div>{team.name}</div>
-                      <span className="font-mono text-[10px] text-slate-400">{team.id}</span>
+                      <span className="font-mono text-[10px] text-neutral-400">{team.id}</span>
                     </td>
-                    <td className="py-4 px-6 text-slate-300 font-mono text-[11px]">
+                    <td className="py-4 px-6 text-neutral-300 font-mono text-[11px]">
                       {team.track_id || 'Unassigned'}
                     </td>
-                    <td className="py-4 px-6 text-slate-300">
+                    <td className="py-4 px-6 text-neutral-300">
                       {team.city ? `${team.city}, ${team.state}` : '—'}
                     </td>
-                    <td className="py-4 px-6 text-slate-200">
+                    <td className="py-4 px-6 text-neutral-200">
                       {team.members ? `${team.members.length} Member(s)` : '1 Member'}
                     </td>
                     <td className="py-4 px-6">
@@ -133,7 +133,7 @@ export default function AdminRegistrationsPage() {
                         {team.status.toUpperCase()}
                       </span>
                     </td>
-                    <td className="py-4 px-6 text-slate-400 font-mono text-[11px]">
+                    <td className="py-4 px-6 text-neutral-400 font-mono text-[11px]">
                       {new Date(team.created_at).toLocaleDateString()}
                     </td>
                   </tr>

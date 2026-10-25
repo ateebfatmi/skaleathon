@@ -34,7 +34,7 @@ export default async function TeamPage() {
   if (!team) {
     return (
       <div className="relative max-w-2xl mx-auto py-16 text-center space-y-5">
-        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-64 w-64 rounded-full bg-[#c19a88]/10 blur-[120px]" />
+        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-64 w-64 rounded-full bg-[#f5f5f5]/10 blur-[120px]" />
         <div className="relative z-10 flex items-center justify-center text-[#c19a88] mx-auto">
           <Users className="h-8 w-8" />
         </div>
@@ -47,7 +47,7 @@ export default async function TeamPage() {
         <div className="relative z-10 pt-2">
           <Link
             href="/register"
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-7 py-3 text-xs font-bold text-white shadow-[0_4px_25px_rgba(128,89,72,0.4)] transition-all hover:scale-105"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#737373] via-[#737373] to-[#f5f5f5] hover:from-[#a3a3a3] hover:to-[#d4d4d4] px-7 py-3 text-xs font-bold text-white shadow-[0_4px_25px_rgba(163,163,163,0.4)] transition-all hover:scale-105"
           >
             <Sparkles className="h-4 w-4" />
             <span>Register Squad</span>

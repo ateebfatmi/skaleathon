@@ -169,7 +169,7 @@ export default function MultiStepRegistration({
         margin: 1,
         errorCorrectionLevel: 'H',
         color: {
-          dark: '#171310',
+          dark: '#111111',
           light: '#ffffff',
         },
       })
@@ -406,7 +406,7 @@ export default function MultiStepRegistration({
             track: currentTrackObj?.name || '',
           },
           theme: {
-            color: '#805948',
+            color: '#737373',
           },
           modal: {
             ondismiss: function () {
@@ -468,13 +468,13 @@ export default function MultiStepRegistration({
         }
       >
         {!isModal && (
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#c19a88]/40 to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#f5f5f5]/40 to-transparent" />
         )}
         <div className="relative">
           {/* Continuous connecting bar behind circles */}
           <div className="absolute top-4 sm:top-5 left-6 right-6 h-[2px] bg-white/[0.08] -z-0" />
           <div
-            className="absolute top-4 sm:top-5 left-6 h-[2px] bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4] transition-all duration-500 -z-0 shadow-[0_0_12px_rgba(193,154,136,0.6)]"
+            className="absolute top-4 sm:top-5 left-6 h-[2px] bg-gradient-to-r from-[#737373] via-[#f5f5f5] to-[#ffffff] transition-all duration-500 -z-0 shadow-[0_0_12px_rgba(255,255,255,0.6)]"
             style={{
               width: `${((step - 1) / 4) * 100}%`,
               maxWidth: 'calc(100% - 48px)',
@@ -494,9 +494,9 @@ export default function MultiStepRegistration({
                       isModal ? 'h-7 w-7 text-[11px]' : 'h-8 w-8 sm:h-10 sm:w-10 text-xs sm:text-sm'
                     } items-center justify-center rounded-xl font-bold transition-all duration-300 ${
                       isCompleted
-                        ? 'bg-gradient-to-br from-[#805948] to-[#c19a88] text-white shadow-md shadow-[#805948]/30 ring-2 ring-[#c19a88]/40'
+                        ? 'bg-gradient-to-br from-[#737373] to-[#f5f5f5] text-white shadow-md shadow-[#737373]/30 ring-2 ring-[#f5f5f5]/40'
                         : isCurrent
-                        ? 'bg-gradient-to-br from-[#c19a88] to-[#805948] text-white ring-4 ring-[#805948]/30 shadow-[0_0_20px_rgba(193,154,136,0.45)] scale-105'
+                        ? 'bg-gradient-to-br from-[#f5f5f5] to-[#737373] text-white ring-4 ring-[#737373]/30 shadow-[0_0_20px_rgba(255,255,255,0.45)] scale-105'
                         : 'border border-white/10 bg-[#161616] text-neutral-500'
                     }`}
                   >
@@ -511,7 +511,7 @@ export default function MultiStepRegistration({
                       isModal ? 'text-[9px]' : 'text-[10px] sm:text-[11px]'
                     } font-bold uppercase tracking-wider transition-colors text-center ${
                       isCurrent
-                        ? 'text-[#e8c5b4]'
+                        ? 'text-[#ffffff]'
                         : isCompleted
                         ? 'text-white/80'
                         : 'text-neutral-500'
@@ -536,9 +536,9 @@ export default function MultiStepRegistration({
 
       {/* STEP 1: TEAM INFORMATION */}
       {step === 1 && (
-        <div className={isModal ? "space-y-4" : "rounded-[28px] border border-white/15 bg-gradient-to-b from-[#141414]/95 via-[#101010]/98 to-[#0B0B0B] p-6 sm:p-9 space-y-6 shadow-[0_25px_80px_rgba(0,0,0,0.85),0_0_50px_rgba(193,154,136,0.06)] backdrop-blur-2xl relative overflow-hidden"}>
+        <div className={isModal ? "space-y-4" : "rounded-[28px] border border-white/15 bg-gradient-to-b from-[#141414]/95 via-[#101010]/98 to-[#0B0B0B] p-6 sm:p-9 space-y-6 shadow-[0_25px_80px_rgba(0,0,0,0.85),0_0_50px_rgba(255,255,255,0.06)] backdrop-blur-2xl relative overflow-hidden"}>
           {!isModal && (
-            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#c19a88] to-transparent opacity-80" />
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#f5f5f5] to-transparent opacity-80" />
           )}
 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
@@ -582,7 +582,7 @@ export default function MultiStepRegistration({
                   value={teamName}
                   onChange={(e) => setTeamName(e.target.value)}
                   placeholder="e.g. NeuralCoders"
-                  className="w-full rounded-xl border border-white/10 bg-[#141414] pl-10 pr-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20 focus:outline-none transition-all"
+                  className="w-full rounded-xl border border-white/10 bg-[#141414] pl-10 pr-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#f5f5f5] focus:ring-2 focus:ring-[#f5f5f5]/20 focus:outline-none transition-all"
                 />
               </div>
             </div>
@@ -596,7 +596,7 @@ export default function MultiStepRegistration({
                   <button
                     type="button"
                     onClick={() => setIsChangingTrack(true)}
-                    className="text-[11px] font-mono text-[#c19a88] hover:text-[#e8c5b4] underline cursor-pointer"
+                    className="text-[11px] font-mono text-[#c19a88] hover:text-[#ffffff] underline cursor-pointer"
                   >
                     Change Track
                   </button>
@@ -613,9 +613,9 @@ export default function MultiStepRegistration({
               </div>
 
               {hasPreselectedTrack && !isChangingTrack && currentTrackObj ? (
-                <div className="rounded-xl border border-[#c19a88]/40 bg-[#805948]/15 p-3 sm:p-3.5 flex items-center justify-between shadow-sm">
+                <div className="rounded-xl border border-[#f5f5f5]/40 bg-[#737373]/15 p-3 sm:p-3.5 flex items-center justify-between shadow-sm">
                   <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-lg border border-[#c19a88]/40 bg-[#c19a88]/20 flex items-center justify-center text-[#e8c5b4] shrink-0">
+                    <div className="h-8 w-8 rounded-lg border border-[#f5f5f5]/40 bg-[#f5f5f5]/20 flex items-center justify-center text-[#ffffff] shrink-0">
                       <Check className="h-4 w-4" />
                     </div>
                     <div>
@@ -650,12 +650,12 @@ export default function MultiStepRegistration({
                         }}
                         className={`group relative p-3.5 sm:p-4 rounded-xl border text-left transition-all duration-200 overflow-hidden ${
                           isSelected
-                            ? 'border-[#c19a88] bg-gradient-to-b from-[#805948]/25 via-[#c19a88]/10 to-[#141414] text-white shadow-[0_0_25px_rgba(193,154,136,0.22)] ring-1 ring-[#c19a88]/50'
+                            ? 'border-[#f5f5f5] bg-gradient-to-b from-[#737373]/25 via-[#f5f5f5]/10 to-[#141414] text-white shadow-[0_0_25px_rgba(255,255,255,0.22)] ring-1 ring-[#f5f5f5]/50'
                             : 'border-white/10 bg-white/[0.02] text-neutral-400 hover:border-white/20 hover:bg-white/[0.04] hover:text-white'
                         }`}
                       >
                         {isSelected && (
-                          <div className="absolute top-0 right-0 px-2 py-0.5 rounded-bl-lg bg-[#c19a88] text-[9px] font-mono font-bold text-black uppercase">
+                          <div className="absolute top-0 right-0 px-2 py-0.5 rounded-bl-lg bg-[#f5f5f5] text-[9px] font-mono font-bold text-black uppercase">
                             Selected
                           </div>
                         )}
@@ -663,7 +663,7 @@ export default function MultiStepRegistration({
                           <div
                             className={`p-1.5 rounded-lg border transition-colors ${
                               isSelected
-                                ? 'border-[#c19a88]/50 bg-[#c19a88]/20 text-[#e8c5b4]'
+                                ? 'border-[#f5f5f5]/50 bg-[#f5f5f5]/20 text-[#ffffff]'
                                 : 'border-white/10 bg-white/5 text-neutral-400 group-hover:text-white'
                             }`}
                           >
@@ -734,7 +734,7 @@ export default function MultiStepRegistration({
                   value={collegeOrOrg}
                   onChange={(e) => setCollegeOrOrg(e.target.value)}
                   placeholder="e.g. IIT Delhi / Independent"
-                  className="w-full rounded-xl border border-white/10 bg-[#141414] pl-10 pr-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20 focus:outline-none transition-all"
+                  className="w-full rounded-xl border border-white/10 bg-[#141414] pl-10 pr-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#f5f5f5] focus:ring-2 focus:ring-[#f5f5f5]/20 focus:outline-none transition-all"
                 />
               </div>
             </div>
@@ -753,7 +753,7 @@ export default function MultiStepRegistration({
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Briefly describe your team's background, vision, or area of interest..."
-                  className="w-full rounded-xl border border-white/10 bg-[#141414] pl-10 pr-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20 focus:outline-none transition-all resize-none"
+                  className="w-full rounded-xl border border-white/10 bg-[#141414] pl-10 pr-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#f5f5f5] focus:ring-2 focus:ring-[#f5f5f5]/20 focus:outline-none transition-all resize-none"
                 />
               </div>
             </div>
@@ -766,7 +766,7 @@ export default function MultiStepRegistration({
             <button
               type="button"
               onClick={handleProceedToStep2}
-              className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#805948] via-[#9c6d58] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-7 py-3 text-xs font-bold text-white shadow-xl shadow-[#805948]/30 hover:shadow-[0_0_30px_rgba(193,154,136,0.35)] hover:scale-[1.02] active:scale-[0.98] transition-all"
+              className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#737373] via-[#a3a3a3] to-[#f5f5f5] hover:from-[#a3a3a3] hover:to-[#d4d4d4] px-7 py-3 text-xs font-bold text-white shadow-xl shadow-[#737373]/30 hover:shadow-[0_0_30px_rgba(255,255,255,0.35)] hover:scale-[1.02] active:scale-[0.98] transition-all"
             >
               <span>Continue to Members (Step 2)</span>
               <ArrowRight className="h-4 w-4" />
@@ -777,9 +777,9 @@ export default function MultiStepRegistration({
 
       {/* STEP 2: TEAM MEMBERS */}
       {step === 2 && (
-        <div className={isModal ? "space-y-4" : "rounded-[28px] border border-white/15 bg-gradient-to-b from-[#141414]/95 via-[#101010]/98 to-[#0B0B0B] p-6 sm:p-9 space-y-6 shadow-[0_25px_80px_rgba(0,0,0,0.85),0_0_50px_rgba(193,154,136,0.06)] backdrop-blur-2xl relative overflow-hidden"}>
+        <div className={isModal ? "space-y-4" : "rounded-[28px] border border-white/15 bg-gradient-to-b from-[#141414]/95 via-[#101010]/98 to-[#0B0B0B] p-6 sm:p-9 space-y-6 shadow-[0_25px_80px_rgba(0,0,0,0.85),0_0_50px_rgba(255,255,255,0.06)] backdrop-blur-2xl relative overflow-hidden"}>
           {!isModal && (
-            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#c19a88] to-transparent opacity-80" />
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#f5f5f5] to-transparent opacity-80" />
           )}
 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
@@ -798,20 +798,20 @@ export default function MultiStepRegistration({
                 Participate individually or add up to {event.max_team_size - 1} teammates. The flat ₹{event.registration_fee_inr} fee covers the entire squad.
               </p>
             </div>
-            <div className="inline-flex items-center gap-1.5 text-[11px] font-mono text-[#e8c5b4] bg-[#805948]/20 border border-[#c19a88]/30 px-3 py-1 rounded-full self-start sm:self-auto">
+            <div className="inline-flex items-center gap-1.5 text-[11px] font-mono text-[#ffffff] bg-[#737373]/20 border border-[#f5f5f5]/30 px-3 py-1 rounded-full self-start sm:self-auto">
               <UserCheck className="h-3.5 w-3.5 text-[#c19a88]" />
               <span>{1 + members.length} of {event.max_team_size} Enrolled</span>
             </div>
           </div>
 
           {/* Leader Card */}
-          <div className={`rounded-2xl border border-[#805948]/30 bg-[#805948]/10 ${isModal ? 'p-3.5 space-y-3' : 'p-5 space-y-4'} relative overflow-hidden`}>
+          <div className={`rounded-2xl border border-[#737373]/30 bg-[#737373]/10 ${isModal ? 'p-3.5 space-y-3' : 'p-5 space-y-4'} relative overflow-hidden`}>
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-[#e8c5b4] uppercase tracking-wider flex items-center gap-1.5">
+              <span className="text-xs font-bold text-[#ffffff] uppercase tracking-wider flex items-center gap-1.5">
                 <Users className="h-4 w-4 text-[#c19a88]" />
                 Member #1: Team Leader (Primary Contact)
               </span>
-              <span className="text-[10px] font-semibold bg-[#805948]/40 border border-[#c19a88]/30 px-2.5 py-0.5 rounded-full text-[#e8c5b4]">
+              <span className="text-[10px] font-semibold bg-[#737373]/40 border border-[#f5f5f5]/30 px-2.5 py-0.5 rounded-full text-[#ffffff]">
                 Authorized Submitter
               </span>
             </div>
@@ -832,7 +832,7 @@ export default function MultiStepRegistration({
                     value={leaderName}
                     onChange={(e) => setLeaderName(e.target.value)}
                     placeholder="Leader Name"
-                    className="w-full rounded-xl border border-white/10 bg-[#141414] pl-9 pr-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20 focus:outline-none transition-all"
+                    className="w-full rounded-xl border border-white/10 bg-[#141414] pl-9 pr-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#f5f5f5] focus:ring-2 focus:ring-[#f5f5f5]/20 focus:outline-none transition-all"
                   />
                 </div>
               </div>
@@ -858,7 +858,7 @@ export default function MultiStepRegistration({
                         ? 'border-red-500/70 focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
                         : isValidEmail(leaderEmail)
                         ? 'border-emerald-500/50 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20'
-                        : 'border-white/10 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20'
+                        : 'border-white/10 focus:border-[#f5f5f5] focus:ring-2 focus:ring-[#f5f5f5]/20'
                     }`}
                   />
                 </div>
@@ -899,7 +899,7 @@ export default function MultiStepRegistration({
                         ? 'border-amber-500/70 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20'
                         : leaderPhone.length === 10
                         ? 'border-emerald-500/50 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20'
-                        : 'border-white/10 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20'
+                        : 'border-white/10 focus:border-[#f5f5f5] focus:ring-2 focus:ring-[#f5f5f5]/20'
                     }`}
                   />
                   <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-mono text-neutral-500 pointer-events-none">
@@ -956,7 +956,7 @@ export default function MultiStepRegistration({
                       value={member.name}
                       onChange={(e) => updateMember(idx, 'name', e.target.value)}
                       placeholder="Full Name *"
-                      className="w-full rounded-xl border border-white/10 bg-[#141414] pl-9 pr-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20 focus:outline-none transition-all"
+                      className="w-full rounded-xl border border-white/10 bg-[#141414] pl-9 pr-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#f5f5f5] focus:ring-2 focus:ring-[#f5f5f5]/20 focus:outline-none transition-all"
                     />
                   </div>
 
@@ -978,7 +978,7 @@ export default function MultiStepRegistration({
                             ? 'border-red-500/70 focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
                             : isValidEmail(member.email)
                             ? 'border-emerald-500/50 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20'
-                            : 'border-white/10 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20'
+                            : 'border-white/10 focus:border-[#f5f5f5] focus:ring-2 focus:ring-[#f5f5f5]/20'
                         }`}
                       />
                     </div>
@@ -1009,7 +1009,7 @@ export default function MultiStepRegistration({
                             ? 'border-amber-500/70 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20'
                             : member.phone.length === 10
                             ? 'border-emerald-500/50 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20'
-                            : 'border-white/10 focus:border-[#c19a88] focus:ring-2 focus:ring-[#c19a88]/20'
+                            : 'border-white/10 focus:border-[#f5f5f5] focus:ring-2 focus:ring-[#f5f5f5]/20'
                         }`}
                       />
                       {member.phone.length > 0 && (
@@ -1033,7 +1033,7 @@ export default function MultiStepRegistration({
               <button
                 type="button"
                 onClick={addMember}
-                className="w-full flex items-center justify-center gap-2 rounded-xl border border-dashed border-white/20 py-3 text-xs font-semibold text-neutral-300 hover:border-[#c19a88] hover:text-[#c19a88] hover:bg-white/[0.02] transition-all"
+                className="w-full flex items-center justify-center gap-2 rounded-xl border border-dashed border-white/20 py-3 text-xs font-semibold text-neutral-300 hover:border-[#f5f5f5] hover:text-[#c19a88] hover:bg-white/[0.02] transition-all"
               >
                 <Plus className="h-4 w-4" />
                 <span>Add Another Member ({1 + members.length} of 6 configured)</span>
@@ -1054,7 +1054,7 @@ export default function MultiStepRegistration({
             <button
               type="button"
               onClick={handleProceedToStep3}
-              className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#805948] via-[#9c6d58] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-7 py-3 text-xs font-bold text-white shadow-xl shadow-[#805948]/30 hover:shadow-[0_0_30px_rgba(193,154,136,0.35)] hover:scale-[1.02] active:scale-[0.98] transition-all"
+              className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#737373] via-[#a3a3a3] to-[#f5f5f5] hover:from-[#a3a3a3] hover:to-[#d4d4d4] px-7 py-3 text-xs font-bold text-white shadow-xl shadow-[#737373]/30 hover:shadow-[0_0_30px_rgba(255,255,255,0.35)] hover:scale-[1.02] active:scale-[0.98] transition-all"
             >
               <span>Review Details (Step 3)</span>
               <ArrowRight className="h-4 w-4" />
@@ -1065,9 +1065,9 @@ export default function MultiStepRegistration({
 
       {/* STEP 3: REVIEW & CONSENT */}
       {step === 3 && (
-        <div className={isModal ? "space-y-4" : "rounded-[28px] border border-white/15 bg-gradient-to-b from-[#141414]/95 via-[#101010]/98 to-[#0B0B0B] p-6 sm:p-9 space-y-6 shadow-[0_25px_80px_rgba(0,0,0,0.85),0_0_50px_rgba(193,154,136,0.06)] backdrop-blur-2xl relative overflow-hidden"}>
+        <div className={isModal ? "space-y-4" : "rounded-[28px] border border-white/15 bg-gradient-to-b from-[#141414]/95 via-[#101010]/98 to-[#0B0B0B] p-6 sm:p-9 space-y-6 shadow-[0_25px_80px_rgba(0,0,0,0.85),0_0_50px_rgba(255,255,255,0.06)] backdrop-blur-2xl relative overflow-hidden"}>
           {!isModal && (
-            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#c19a88] to-transparent opacity-80" />
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#f5f5f5] to-transparent opacity-80" />
           )}
 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
@@ -1120,25 +1120,25 @@ export default function MultiStepRegistration({
 
             <div className="flex items-center justify-between pt-2">
               <span className="text-neutral-300 font-bold">Total Registration Fee</span>
-              <span className="text-lg font-black text-[#e8c5b4] font-mono">₹{event.registration_fee_inr.toFixed(2)} (Flat Per Team)</span>
+              <span className="text-lg font-black text-[#ffffff] font-mono">₹{event.registration_fee_inr.toFixed(2)} (Flat Per Team)</span>
             </div>
           </div>
 
           {/* Mandatory Policy Consent */}
-          <div className="rounded-2xl border border-[#805948]/30 bg-[#805948]/10 p-4.5 hover:border-[#c19a88]/40 transition-colors">
+          <div className="rounded-2xl border border-[#737373]/30 bg-[#737373]/10 p-4.5 hover:border-[#f5f5f5]/40 transition-colors">
             <label className="flex items-start gap-3 cursor-pointer">
               <input
                 type="checkbox"
                 checked={acceptedPolicies}
                 onChange={(e) => setAcceptedPolicies(e.target.checked)}
-                className="mt-1 h-4 w-4 rounded border-white/20 bg-[#141414] text-[#c19a88] focus:ring-[#c19a88] accent-[#c19a88]"
+                className="mt-1 h-4 w-4 rounded border-white/20 bg-[#141414] text-[#c19a88] focus:ring-[#f5f5f5] accent-[#f5f5f5]"
               />
               <span className="text-xs text-neutral-300 leading-relaxed">
                 I hereby certify that all information provided is accurate and all team members consent to participation. I accept the{' '}
-                <a href="/rules" target="_blank" rel="noopener noreferrer" className="text-[#c19a88] hover:text-[#e8c5b4] underline">Official Rules</a>,{' '}
-                <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-[#c19a88] hover:text-[#e8c5b4] underline">Terms & Conditions</a>,{' '}
-                <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-[#c19a88] hover:text-[#e8c5b4] underline">Privacy Policy</a>, and the{' '}
-                <a href="/refund-policy" target="_blank" rel="noopener noreferrer" className="text-[#c19a88] hover:text-[#e8c5b4] underline">Refund Policy</a>.
+                <a href="/rules" target="_blank" rel="noopener noreferrer" className="text-[#c19a88] hover:text-[#ffffff] underline">Official Rules</a>,{' '}
+                <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-[#c19a88] hover:text-[#ffffff] underline">Terms & Conditions</a>,{' '}
+                <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-[#c19a88] hover:text-[#ffffff] underline">Privacy Policy</a>, and the{' '}
+                <a href="/refund-policy" target="_blank" rel="noopener noreferrer" className="text-[#c19a88] hover:text-[#ffffff] underline">Refund Policy</a>.
               </span>
             </label>
           </div>
@@ -1157,7 +1157,7 @@ export default function MultiStepRegistration({
               type="button"
               disabled={loading}
               onClick={handleRegisterAndPay}
-              className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#805948] via-[#9c6d58] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-7 py-3 text-xs font-bold text-white shadow-xl shadow-[#805948]/30 hover:shadow-[0_0_30px_rgba(193,154,136,0.35)] hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 transition-all"
+              className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#737373] via-[#a3a3a3] to-[#f5f5f5] hover:from-[#a3a3a3] hover:to-[#d4d4d4] px-7 py-3 text-xs font-bold text-white shadow-xl shadow-[#737373]/30 hover:shadow-[0_0_30px_rgba(255,255,255,0.35)] hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 transition-all"
             >
               <span>{loading ? 'Registering Team...' : `Proceed to Payment (₹${event.registration_fee_inr})`}</span>
               <ArrowRight className="h-4 w-4" />
@@ -1168,9 +1168,9 @@ export default function MultiStepRegistration({
 
       {/* STEP 4: PAYMENT (RAZORPAY) */}
       {step === 4 && paymentOrder && (
-        <div className={isModal ? "space-y-4" : "rounded-[28px] border border-white/15 bg-gradient-to-b from-[#141414]/95 via-[#101010]/98 to-[#0B0B0B] p-6 sm:p-9 space-y-6 shadow-[0_25px_80px_rgba(0,0,0,0.85),0_0_50px_rgba(193,154,136,0.06)] backdrop-blur-2xl relative overflow-hidden"}>
+        <div className={isModal ? "space-y-4" : "rounded-[28px] border border-white/15 bg-gradient-to-b from-[#141414]/95 via-[#101010]/98 to-[#0B0B0B] p-6 sm:p-9 space-y-6 shadow-[0_25px_80px_rgba(0,0,0,0.85),0_0_50px_rgba(255,255,255,0.06)] backdrop-blur-2xl relative overflow-hidden"}>
           {!isModal && (
-            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#c19a88] to-transparent opacity-80" />
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#f5f5f5] to-transparent opacity-80" />
           )}
 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
@@ -1189,7 +1189,7 @@ export default function MultiStepRegistration({
                 Finalize your team registration fee of ₹{event.registration_fee_inr} via Razorpay.
               </p>
             </div>
-            <div className="flex items-center gap-1.5 text-xs font-semibold text-[#c19a88] bg-[#805948]/20 border border-[#c19a88]/30 px-3 py-1 rounded-full self-start sm:self-auto">
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-[#c19a88] bg-[#737373]/20 border border-[#f5f5f5]/30 px-3 py-1 rounded-full self-start sm:self-auto">
               <Lock className="h-3.5 w-3.5" />
               <span>256-bit Encrypted</span>
             </div>
@@ -1207,14 +1207,14 @@ export default function MultiStepRegistration({
             </div>
             <div className="flex items-center justify-between text-xs pt-1">
               <span className="text-neutral-400">Amount Due</span>
-              <span className="text-2xl font-black text-[#e8c5b4] font-mono">
+              <span className="text-2xl font-black text-[#ffffff] font-mono">
                 ₹{((paymentOrder.amount || event.registration_fee_inr * 100) / 100).toFixed(2)}
               </span>
             </div>
           </div>
 
           {/* Gateway Status Box */}
-          <div className={`rounded-2xl border border-[#805948]/30 bg-[#805948]/10 ${isModal ? 'p-3.5 space-y-2' : 'p-5 space-y-3'}`}>
+          <div className={`rounded-2xl border border-[#737373]/30 bg-[#737373]/10 ${isModal ? 'p-3.5 space-y-2' : 'p-5 space-y-3'}`}>
             <div className="flex items-start gap-3">
               <CreditCard className="h-5 w-5 text-[#c19a88] shrink-0 mt-0.5" />
               <div>
@@ -1232,7 +1232,7 @@ export default function MultiStepRegistration({
               type="button"
               disabled={loading}
               onClick={handleVerifyPayment}
-              className="w-full inline-flex items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-[#805948] via-[#9c6d58] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-7 py-3.5 text-sm font-bold text-white shadow-xl shadow-[#805948]/30 hover:shadow-[0_0_30px_rgba(193,154,136,0.35)] hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 transition-all cursor-pointer"
+              className="w-full inline-flex items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-[#737373] via-[#a3a3a3] to-[#f5f5f5] hover:from-[#a3a3a3] hover:to-[#d4d4d4] px-7 py-3.5 text-sm font-bold text-white shadow-xl shadow-[#737373]/30 hover:shadow-[0_0_30px_rgba(255,255,255,0.35)] hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 transition-all cursor-pointer"
             >
               <CreditCard className="h-4 w-4" />
               <span>{loading ? 'Verifying Gateway Signature...' : `Pay ₹${event.registration_fee_inr} & Verify Signature`}</span>
@@ -1392,25 +1392,25 @@ export default function MultiStepRegistration({
               </h1>
               <p className="text-xs sm:text-sm text-neutral-300 max-w-lg mx-auto leading-relaxed">
                 Congratulations! Team <strong className="text-white">{teamName}</strong> is officially entered into{' '}
-                <span className="text-[#e8c5b4] font-medium">{event.name}</span> in the{' '}
+                <span className="text-[#ffffff] font-medium">{event.name}</span> in the{' '}
                 <strong className="text-white">{currentTrackObj?.name}</strong> arena.
               </p>
             </div>
 
             {/* Luxury Editorial Voucher Card */}
-            <div className="rounded-3xl border border-[#c19a88]/30 bg-gradient-to-b from-[#181615] via-[#121110] to-[#0A0A0A] p-6 sm:p-8 relative overflow-hidden shadow-2xl shadow-black/80 space-y-6">
+            <div className="rounded-3xl border border-[#f5f5f5]/30 bg-gradient-to-b from-[#171717] via-[#111111] to-[#0A0A0A] p-6 sm:p-8 relative overflow-hidden shadow-2xl shadow-black/80 space-y-6">
               {/* Top hairline gold gradient accent */}
-              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#c19a88] to-transparent opacity-90" />
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#f5f5f5] to-transparent opacity-90" />
               
               {/* Ambient radial glow */}
-              <div className="pointer-events-none absolute -top-24 right-0 h-64 w-64 rounded-full bg-[#c19a88]/10 blur-[90px]" />
+              <div className="pointer-events-none absolute -top-24 right-0 h-64 w-64 rounded-full bg-[#f5f5f5]/10 blur-[90px]" />
 
               {/* Receipt Header */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-white/10 relative z-10">
                 <div className="flex items-center gap-3">
-                  <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-[#805948] to-[#c19a88] p-[1px] shadow-lg shrink-0">
+                  <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-[#737373] to-[#f5f5f5] p-[1px] shadow-lg shrink-0">
                     <div className="h-full w-full rounded-[11px] bg-black/80 flex items-center justify-center">
-                      <Sparkles className="h-5 w-5 text-[#e8c5b4]" />
+                      <Sparkles className="h-5 w-5 text-[#ffffff]" />
                     </div>
                   </div>
                   <div>
@@ -1439,7 +1439,7 @@ export default function MultiStepRegistration({
               </div>
 
               {/* Particulars Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs relative z-10">
+              <div className="mobile-card-grid relative z-10 grid grid-cols-2 gap-3 text-xs lg:grid-cols-4">
                 <div className="p-3.5 rounded-2xl border border-white/5 bg-white/[0.02] space-y-1">
                   <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider block">
                     Registration ID
@@ -1469,7 +1469,7 @@ export default function MultiStepRegistration({
                   <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider block">
                     Track Arena
                   </span>
-                  <span className="font-semibold text-[#e8c5b4] block truncate">
+                  <span className="font-semibold text-[#ffffff] block truncate">
                     {currentTrackObj?.name || 'Assigned Track'}
                   </span>
                 </div>
@@ -1501,8 +1501,8 @@ export default function MultiStepRegistration({
 
               {/* Perforated Divider */}
               <div className="relative py-1">
-                <div className="absolute -left-10 top-1/2 -translate-y-1/2 h-5 w-5 rounded-full bg-[#0A0A0A] border-r border-[#c19a88]/30 pointer-events-none" />
-                <div className="absolute -right-10 top-1/2 -translate-y-1/2 h-5 w-5 rounded-full bg-[#0A0A0A] border-l border-[#c19a88]/30 pointer-events-none" />
+                <div className="absolute -left-10 top-1/2 -translate-y-1/2 h-5 w-5 rounded-full bg-[#0A0A0A] border-r border-[#f5f5f5]/30 pointer-events-none" />
+                <div className="absolute -right-10 top-1/2 -translate-y-1/2 h-5 w-5 rounded-full bg-[#0A0A0A] border-l border-[#f5f5f5]/30 pointer-events-none" />
                 <div className="border-t border-dashed border-white/10 w-full" />
               </div>
 
@@ -1520,7 +1520,7 @@ export default function MultiStepRegistration({
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                   {/* Leader entry */}
-                  <div className="flex items-center justify-between p-3 rounded-xl border border-[#805948]/30 bg-[#805948]/10">
+                  <div className="flex items-center justify-between p-3 rounded-xl border border-[#737373]/30 bg-[#737373]/10">
                     <div className="flex items-center gap-2.5 min-w-0">
                       <span className="font-mono text-xs font-bold text-[#c19a88]">01</span>
                       <div className="min-w-0">
@@ -1528,7 +1528,7 @@ export default function MultiStepRegistration({
                         <p className="text-[10px] text-neutral-400 truncate">{leaderEmail}</p>
                       </div>
                     </div>
-                    <span className="text-[9px] uppercase font-bold tracking-wider bg-[#805948]/30 text-[#e8c5b4] px-2 py-0.5 rounded-full shrink-0 border border-[#c19a88]/20">
+                    <span className="text-[9px] uppercase font-bold tracking-wider bg-[#737373]/30 text-[#ffffff] px-2 py-0.5 rounded-full shrink-0 border border-[#f5f5f5]/20">
                       Leader
                     </span>
                   </div>
@@ -1553,7 +1553,7 @@ export default function MultiStepRegistration({
 
               {/* QR Code Security Card */}
               <div className="flex flex-col sm:flex-row items-center gap-4 p-4 rounded-2xl border border-white/10 bg-black/40 text-xs relative z-10">
-                <div className="h-24 w-24 rounded-xl bg-white p-1.5 flex items-center justify-center shrink-0 border border-[#c19a88]/30 shadow-md">
+                <div className="h-24 w-24 rounded-xl bg-white p-1.5 flex items-center justify-center shrink-0 border border-[#f5f5f5]/30 shadow-md">
                   {passQrCode ? (
                     <Image src={passQrCode} alt="Team QR Pass" width={84} height={84} unoptimized />
                   ) : (
@@ -1581,7 +1581,7 @@ export default function MultiStepRegistration({
               <button
                 type="button"
                 onClick={() => router.push('/dashboard')}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4] hover:brightness-110 px-8 py-3.5 text-xs font-bold text-black shadow-lg shadow-[#805948]/30 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#737373] via-[#f5f5f5] to-[#ffffff] hover:brightness-110 px-8 py-3.5 text-xs font-bold text-black shadow-lg shadow-[#737373]/30 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
               >
                 <span>Go to Team Dashboard</span>
                 <ArrowRight className="h-4 w-4" />
@@ -1590,9 +1590,9 @@ export default function MultiStepRegistration({
               <a
                 href={`/api/receipt/download?pass=${encodeURIComponent(createdTeam?.id || '')}`}
                 download={`Skaleathon_Receipt_${createdTeam?.id || 'Pass'}.pdf`}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 hover:bg-[#c19a88]/20 px-7 py-3.5 text-xs font-semibold text-[#e8c5b4] hover:text-white transition-all cursor-pointer shadow-sm hover:scale-[1.02] active:scale-[0.98]"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-[#f5f5f5]/30 bg-[#f5f5f5]/10 hover:bg-[#f5f5f5]/20 px-7 py-3.5 text-xs font-semibold text-[#ffffff] hover:text-white transition-all cursor-pointer shadow-sm hover:scale-[1.02] active:scale-[0.98]"
               >
-                <Download className="h-4 w-4 text-[#e8c5b4]" />
+                <Download className="h-4 w-4 text-[#ffffff]" />
                 <span>Download Receipt</span>
               </a>
             </div>

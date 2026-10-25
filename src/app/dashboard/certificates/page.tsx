@@ -22,7 +22,7 @@ export default async function CertificatesDashboardPage() {
             Official Certificates
           </span>
           <h1 className="text-2xl sm:text-3xl font-black text-white">Certificates of Merit</h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-neutral-400 mt-1">
             Conferred to eligible members of the Top 25 finalist teams upon finalized results publication.
           </p>
         </div>
@@ -30,28 +30,28 @@ export default async function CertificatesDashboardPage() {
 
       {!resultsAnnounced ? (
         <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-12 text-center space-y-4">
-          <Award className="h-10 w-10 text-slate-500 mx-auto" />
+          <Award className="h-10 w-10 text-neutral-500 mx-auto" />
           <h2 className="text-lg font-bold text-white">Evaluation In Progress</h2>
-          <p className="text-xs text-slate-400 max-w-md mx-auto leading-relaxed">
+          <p className="text-xs text-neutral-400 max-w-md mx-auto leading-relaxed">
             Certificates are issued immediately after the organizing committee reviews and publishes final leaderboard scores. Check back once results are officially released.
           </p>
           <Link
             href="/dashboard/leaderboard"
-            className="inline-block rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-6 py-2.5 text-xs font-semibold text-slate-300 transition-colors"
+            className="inline-block rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-6 py-2.5 text-xs font-semibold text-neutral-300 transition-colors"
           >
             Check Leaderboard Status
           </Link>
         </div>
       ) : certificates.length === 0 ? (
         <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-12 text-center space-y-4">
-          <AlertCircle className="h-10 w-10 text-slate-500 mx-auto" />
+          <AlertCircle className="h-10 w-10 text-neutral-500 mx-auto" />
           <h2 className="text-lg font-bold text-white">No Certificates Issued For This Team</h2>
-          <p className="text-xs text-slate-400 max-w-md mx-auto leading-relaxed">
+          <p className="text-xs text-neutral-400 max-w-md mx-auto leading-relaxed">
             Merit certificates are reserved for teams finishing within the configured national merit rankings. We sincerely thank your team for your dedication, innovative work, and participation in Skaleathon.
           </p>
           <Link
             href="/dashboard/leaderboard"
-            className="inline-block rounded-xl bg-[#805948] px-6 py-2.5 text-xs font-bold text-white hover:bg-[#9c6d58] transition-colors"
+            className="inline-block rounded-xl bg-[#737373] px-6 py-2.5 text-xs font-bold text-white hover:bg-[#a3a3a3] transition-colors"
           >
             View Final Results
           </Link>
@@ -61,7 +61,7 @@ export default async function CertificatesDashboardPage() {
           {certificates.map((cert) => (
             <div
               key={cert.id}
-              className="rounded-3xl border border-emerald-500/30 bg-gradient-to-b from-[#0e1628] to-[#0a0e19] p-6 space-y-6 flex flex-col justify-between"
+              className="flex flex-col justify-between space-y-6 rounded-3xl border border-emerald-500/30 bg-gradient-to-b from-[#141414] to-[#080808] p-6"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
@@ -73,7 +73,7 @@ export default async function CertificatesDashboardPage() {
 
                 <h3 className="text-lg font-bold text-white">{cert.recipient_name}</h3>
                 <p className="text-xs font-medium text-cyanAccent-300 mt-0.5">{cert.achievement_text}</p>
-                <div className="mt-3 text-[11px] font-mono text-slate-400">
+                <div className="mt-3 text-[11px] font-mono text-neutral-400">
                   Certificate ID: {cert.certificate_code}
                 </div>
               </div>

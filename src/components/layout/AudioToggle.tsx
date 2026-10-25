@@ -22,8 +22,8 @@ export default function AudioToggle() {
         onClick={toggle}
         className={`group flex items-center justify-center h-8 w-8 rounded-full border backdrop-blur-xl transition-all shadow-lg ${
           audioActive
-            ? 'border-[#c19a88]/60 bg-[#121110]/90 text-[#e8c5b4] shadow-[0_0_15px_rgba(193,154,136,0.25)]'
-            : 'border-white/10 bg-[#121110]/70 text-white/40 hover:border-white/25 hover:text-white'
+            ? 'border-[#f5f5f5]/60 bg-[#111111]/90 text-[#ffffff] shadow-[0_0_15px_rgba(255,255,255,0.25)]'
+            : 'border-white/10 bg-[#111111]/70 text-white/40 hover:border-white/25 hover:text-white'
         }`}
         title={audioActive ? 'Mute sound effects' : 'Enable interface audio'}
         aria-label="Toggle UI Audio"

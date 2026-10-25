@@ -248,7 +248,7 @@ export default function ReceiptViewClient({
               type="button"
               onClick={handleDownload}
               disabled={downloading}
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-4 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/25 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer disabled:opacity-75"
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#737373] via-[#737373] to-[#f5f5f5] hover:from-[#a3a3a3] hover:to-[#d4d4d4] px-4 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#737373]/25 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer disabled:opacity-75"
             >
               {downloading ? (
                 <>
@@ -290,16 +290,16 @@ export default function ReceiptViewClient({
         </div>
 
         {/* Editorial Receipt Voucher Card */}
-        <div className="rounded-3xl border border-[#c19a88]/30 bg-gradient-to-b from-[#181615] via-[#121110] to-[#0A0A0A] p-6 sm:p-9 relative overflow-hidden shadow-2xl shadow-black/80 space-y-6">
-          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#c19a88] to-transparent opacity-90" />
-          <div className="pointer-events-none absolute -top-24 right-0 h-64 w-64 rounded-full bg-[#c19a88]/10 blur-[90px]" />
+        <div className="rounded-3xl border border-[#f5f5f5]/30 bg-gradient-to-b from-[#171717] via-[#111111] to-[#0A0A0A] p-6 sm:p-9 relative overflow-hidden shadow-2xl shadow-black/80 space-y-6">
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#f5f5f5] to-transparent opacity-90" />
+          <div className="pointer-events-none absolute -top-24 right-0 h-64 w-64 rounded-full bg-[#f5f5f5]/10 blur-[90px]" />
 
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10 relative z-10">
             <div className="flex items-center gap-3.5">
-              <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-[#805948] to-[#c19a88] p-[1px] shadow-lg shrink-0">
+              <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-[#737373] to-[#f5f5f5] p-[1px] shadow-lg shrink-0">
                 <div className="h-full w-full rounded-[11px] bg-black/85 flex items-center justify-center">
-                  <Sparkles className="h-6 w-6 text-[#e8c5b4]" />
+                  <Sparkles className="h-6 w-6 text-[#ffffff]" />
                 </div>
               </div>
               <div>
@@ -324,7 +324,7 @@ export default function ReceiptViewClient({
           </div>
 
           {/* 4-Item Particulars Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs relative z-10">
+          <div className="mobile-card-grid relative z-10 grid grid-cols-2 gap-3 text-xs lg:grid-cols-4">
             <div className="p-3.5 rounded-2xl border border-white/5 bg-white/[0.02] space-y-1">
               <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider block">
                 Registration ID
@@ -340,7 +340,7 @@ export default function ReceiptViewClient({
                     setCopiedId(true);
                     setTimeout(() => setCopiedId(false), 2000);
                   }}
-                  className="p-1 rounded hover:bg-white/10 text-neutral-400 hover:text-white transition-colors cursor-pointer"
+                  className="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-neutral-400 transition-colors hover:bg-white/10 hover:text-white sm:h-8 sm:w-8"
                   title="Copy Registration ID"
                 >
                   {copiedId ? <Check className="h-3 w-3 text-emerald-400" /> : <Copy className="h-3 w-3" />}
@@ -352,7 +352,7 @@ export default function ReceiptViewClient({
               <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider block">
                 Track Arena
               </span>
-              <span className="font-semibold text-[#e8c5b4] block truncate">
+              <span className="font-semibold text-[#ffffff] block truncate">
                 {track?.name || 'General Arena'}
               </span>
             </div>
@@ -417,7 +417,7 @@ export default function ReceiptViewClient({
                     <span
                       className={`text-[10px] font-mono px-2 py-0.5 rounded-md shrink-0 ${
                         isLeader
-                          ? 'border border-[#c19a88]/40 bg-[#c19a88]/10 text-[#e8c5b4] font-bold'
+                          ? 'border border-[#f5f5f5]/40 bg-[#f5f5f5]/10 text-[#ffffff] font-bold'
                           : 'border border-white/10 bg-white/5 text-neutral-400'
                       }`}
                     >
@@ -441,7 +441,7 @@ export default function ReceiptViewClient({
                 type="button"
                 onClick={handleDownload}
                 disabled={downloading}
-                className="text-xs text-[#e8c5b4] hover:text-white underline underline-offset-4 font-medium transition-colors cursor-pointer disabled:opacity-75"
+                className="text-xs text-[#ffffff] hover:text-white underline underline-offset-4 font-medium transition-colors cursor-pointer disabled:opacity-75"
               >
                 {downloading ? 'Preparing PDF...' : 'Download PDF Copy'}
               </button>

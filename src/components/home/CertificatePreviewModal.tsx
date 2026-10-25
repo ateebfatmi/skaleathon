@@ -24,7 +24,7 @@ export default function CertificatePreviewModal({ event }: { event: EventData })
     <>
       <button
         onClick={open}
-        className="group relative inline-flex items-center gap-2 rounded-full border border-[#c19a88]/40 bg-[#c19a88]/10 px-4 py-2 text-xs font-semibold text-[#e8c5b4] hover:bg-[#c19a88]/20 hover:border-[#c19a88] transition-all shadow-sm"
+        className="group relative inline-flex items-center gap-2 rounded-full border border-[#f5f5f5]/40 bg-[#f5f5f5]/10 px-4 py-2 text-xs font-semibold text-[#ffffff] hover:bg-[#f5f5f5]/20 hover:border-[#f5f5f5] transition-all shadow-sm"
       >
         <Sparkles className="h-3.5 w-3.5 text-[#c19a88] group-hover:rotate-12 transition-transform" />
         <span>Live Certificate Simulator</span>
@@ -32,9 +32,9 @@ export default function CertificatePreviewModal({ event }: { event: EventData })
 
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-2xl rounded-[28px] border border-white/15 bg-[#0D0B0A] p-6 sm:p-8 shadow-[0_25px_80px_rgba(0,0,0,0.9)] overflow-hidden">
+          <div className="relative w-full max-w-2xl rounded-[28px] border border-white/15 bg-[#111111] p-6 sm:p-8 shadow-[0_25px_80px_rgba(0,0,0,0.9)] overflow-hidden">
             {/* Ambient background glow */}
-            <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#805948]/30 blur-[90px]" />
+            <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#737373]/30 blur-[90px]" />
 
             {/* Header */}
             <div className="flex items-center justify-between pb-4 border-b border-white/10">
@@ -63,7 +63,7 @@ export default function CertificatePreviewModal({ event }: { event: EventData })
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-xs text-white focus:outline-none focus:border-[#c19a88]"
+                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-xs text-white focus:outline-none focus:border-[#f5f5f5]"
                   placeholder="Enter participant name"
                 />
               </div>
@@ -73,14 +73,14 @@ export default function CertificatePreviewModal({ event }: { event: EventData })
                   type="text"
                   value={team}
                   onChange={(e) => setTeam(e.target.value)}
-                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-xs text-white focus:outline-none focus:border-[#c19a88]"
+                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-xs text-white focus:outline-none focus:border-[#f5f5f5]"
                   placeholder="Enter team name"
                 />
               </div>
             </div>
 
             {/* Live Visual Certificate Card */}
-            <div className="relative rounded-2xl border-2 border-[#c19a88]/40 bg-[linear-gradient(145deg,#120e0d,#080707)] p-6 sm:p-8 text-center shadow-inner overflow-hidden">
+            <div className="relative rounded-2xl border-2 border-[#f5f5f5]/40 bg-[linear-gradient(145deg,#111111,#080707)] p-6 sm:p-8 text-center shadow-inner overflow-hidden">
               <div className="absolute top-3 left-4 font-mono text-[9px] text-[#c19a88] tracking-widest uppercase">
                 SKALEKRAFT
               </div>
@@ -100,12 +100,12 @@ export default function CertificatePreviewModal({ event }: { event: EventData })
 
               <p className="text-[11px] text-white/60 mb-2 font-light">This officially certifies that</p>
 
-              <div className="text-lg sm:text-2xl font-bold tracking-tight bg-gradient-to-r from-white via-[#f2d9ce] to-[#c19a88] bg-clip-text text-transparent my-1">
+              <div className="text-lg sm:text-2xl font-bold tracking-tight bg-gradient-to-r from-white via-[#f5f5f5] to-[#f5f5f5] bg-clip-text text-transparent my-1">
                 {name || 'Participant Name'}
               </div>
 
               <p className="text-[11px] text-white/60 max-w-md mx-auto leading-relaxed font-light">
-                representing team <span className="text-white font-semibold">{team || 'Team Name'}</span>, achieved top honors among the top {event.certificates_top_n} national teams in the <span className="text-[#e8c5b4] font-medium">{track}</span>.
+                representing team <span className="text-white font-semibold">{team || 'Team Name'}</span>, achieved top honors among the top {event.certificates_top_n} national teams in the <span className="text-[#ffffff] font-medium">{track}</span>.
               </p>
 
               {/* Certificate Bottom Telemetry */}

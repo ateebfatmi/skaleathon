@@ -106,7 +106,7 @@ export default function TeamWorkspaceClient({
       margin: 1,
       errorCorrectionLevel: 'H',
       color: {
-        dark: '#171310',
+        dark: '#111111',
         light: '#ffffff',
       },
     })
@@ -268,8 +268,8 @@ export default function TeamWorkspaceClient({
         className="screen-only-content relative w-full space-y-14 pb-24 text-neutral-200"
       >
       {/* Subtle Background Ambient Glows (Blended into background) */}
-      <div className="pointer-events-none absolute -top-20 right-10 h-96 w-96 rounded-full bg-[#c19a88]/15 blur-[160px]" />
-      <div className="pointer-events-none absolute top-40 -left-20 h-72 w-72 rounded-full bg-[#805948]/12 blur-[140px]" />
+      <div className="pointer-events-none absolute -top-20 right-10 h-96 w-96 rounded-full bg-[#f5f5f5]/15 blur-[160px]" />
+      <div className="pointer-events-none absolute top-40 -left-20 h-72 w-72 rounded-full bg-[#737373]/12 blur-[140px]" />
 
       {/* 1. Open Luxury Editorial Hero */}
       <header className="relative pt-1">
@@ -301,7 +301,7 @@ export default function TeamWorkspaceClient({
               title="Click to copy full Pass ID"
             >
               <span>ID:</span>
-              <span className="text-[#e8c5b4] font-semibold">
+              <span className="text-[#ffffff] font-semibold">
                 [{team.id.toUpperCase()}]
               </span>
               {copiedPassId ? (
@@ -318,12 +318,12 @@ export default function TeamWorkspaceClient({
               type="button"
               onClick={handleDownloadReceipt}
               disabled={downloadingReceipt}
-              className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-[#c19a88]/30 bg-[#c19a88]/10 hover:bg-[#c19a88]/20 active:scale-[0.98] px-4 py-2 font-semibold text-[#e8c5b4] hover:text-white transition-all cursor-pointer shadow-sm shadow-[#805948]/20 disabled:opacity-75"
+              className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-[#f5f5f5]/30 bg-[#f5f5f5]/10 hover:bg-[#f5f5f5]/20 active:scale-[0.98] px-4 py-2 font-semibold text-[#ffffff] hover:text-white transition-all cursor-pointer shadow-sm shadow-[#737373]/20 disabled:opacity-75"
               title="Download official PDF registration receipt"
             >
               {downloadingReceipt ? (
                 <>
-                  <Loader2 className="h-3.5 w-3.5 animate-spin text-[#e8c5b4]" />
+                  <Loader2 className="h-3.5 w-3.5 animate-spin text-[#ffffff]" />
                   <span>Preparing PDF...</span>
                 </>
               ) : downloadSuccess ? (
@@ -333,7 +333,7 @@ export default function TeamWorkspaceClient({
                 </>
               ) : (
                 <>
-                  <Download className="h-3.5 w-3.5 text-[#e8c5b4]" />
+                  <Download className="h-3.5 w-3.5 text-[#ffffff]" />
                   <span>Download Receipt</span>
                 </>
               )}
@@ -345,12 +345,12 @@ export default function TeamWorkspaceClient({
         <div className="relative z-10 max-w-3xl space-y-4 pb-6 sm:space-y-5 sm:pb-9">
           <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-extrabold text-white tracking-tight leading-[1.06]">
             Squad{' '}
-            <span className="font-serif italic font-normal text-[#e8c5b4]">
+            <span className="font-serif italic font-normal text-[#ffffff]">
               {team.name}
             </span>
           </h1>
 
-          <div className="border-l-2 border-[#c19a88]/45 pl-3.5 space-y-2 sm:pl-4">
+          <div className="border-l-2 border-[#f5f5f5]/45 pl-3.5 space-y-2 sm:pl-4">
             <p className="text-sm sm:text-[15px] text-neutral-300/90 leading-relaxed font-light">
               Verified engineering squad competing in{' '}
               <strong className="text-white font-medium">{track ? track.name : 'Skaleathon'}</strong>. Your team credential covers 1 to 6 members under a single flat registration pass.
@@ -391,49 +391,62 @@ export default function TeamWorkspaceClient({
 
       {/* 2. Section 01: Squad Telemetry Cards */}
       <section className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div className="flex flex-col gap-4 border-b border-white/[0.07] pb-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
               01 // Squad Credentials &amp; Verification
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               Enrollment &amp; <span className="text-[#c19a88]">Pass Status</span>
             </h2>
           </div>
-          <p className="text-xs text-neutral-300 font-normal max-w-xs">
+          <p className="max-w-sm text-sm leading-relaxed text-neutral-400 sm:text-right">
             Official hackathon registration record and active milestone schedule.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.08fr_0.92fr]">
           {/* Card 01 */}
-          <div className="rounded-3xl border border-white/10 bg-[#141211] p-6 space-y-4 shadow-[0_12px_40px_rgba(0,0,0,0.4)]">
-            <div className="flex items-center justify-between">
+          <div className="group relative min-h-[300px] overflow-hidden rounded-[28px] border border-[#f5f5f5]/25 bg-[linear-gradient(145deg,#171717_0%,#111111_72%)] p-6 shadow-[0_22px_70px_rgba(0,0,0,0.42)] sm:p-8">
+            <div className="pointer-events-none absolute -right-16 -top-20 h-56 w-56 rounded-full bg-[#f5f5f5]/10 blur-3xl" />
+            <div className="relative flex h-full flex-col">
+            <div className="flex flex-wrap items-center justify-between gap-3">
               <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#c19a88] font-bold">
                 Pillar 01 • Squad Leadership &amp; Pass
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-bold text-xs">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1.5 text-xs font-bold text-emerald-300">
                 <CheckCircle2 className="h-3.5 w-3.5" />
                 <span>Verified &amp; Paid</span>
               </span>
             </div>
 
-            <div>
-              <h3 className="text-lg font-bold text-white">
+            <div className="mt-8 flex items-start gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[#f5f5f5]/25 bg-[#f5f5f5]/10 text-[#ffffff]">
+                <CheckCircle2 className="h-5 w-5" />
+              </div>
+              <div className="min-w-0">
+              <p className="mb-1 font-mono text-[9px] uppercase tracking-[0.22em] text-white/35">Authorized squad lead</p>
+              <h3 className="text-xl font-bold tracking-tight text-white sm:text-2xl">
                 Led by {leaderMember?.name || userName || 'Team Lead'}
               </h3>
-              <p className="text-xs text-neutral-300 font-normal leading-relaxed mt-1">
-                Primary correspondence and round updates are dispatched to{' '}
-                <span className="text-white font-mono">{leaderMember?.email || userEmail}</span>. Registration reference: <span className="font-mono text-[#e8c5b4]">{paymentOrder?.razorpay_payment_id || 'RZP_SETTLED'}</span>.
+              <p className="mt-2 max-w-xl text-sm font-normal leading-relaxed text-neutral-400">
+                Competition notices and milestone updates are sent to{' '}
+                <span className="break-all text-neutral-200">{leaderMember?.email || userEmail}</span>.
               </p>
+              </div>
             </div>
 
-            <div className="pt-2 flex flex-wrap items-center gap-2.5">
+            <div className="mt-6 grid grid-cols-2 gap-2 rounded-2xl border border-white/[0.06] bg-black/20 p-3 font-mono text-[10px] sm:flex sm:gap-8">
+              <span className="text-white/35">PAYMENT REF <strong className="mt-1 block text-[#ffffff]">{paymentOrder?.razorpay_payment_id || 'RZP_SETTLED'}</strong></span>
+              <span className="text-white/35">ENROLLED <strong className="mt-1 block text-white/75">{formattedDate}</strong></span>
+            </div>
+
+            <div className="mt-auto flex flex-wrap items-center gap-2.5 pt-6">
               <button
                 type="button"
                 onClick={handleDownloadReceipt}
                 disabled={downloadingReceipt}
-                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-4 py-2 text-xs font-bold text-white shadow-md transition-all cursor-pointer disabled:opacity-75"
+                className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-gradient-to-r from-[#737373] to-[#f5f5f5] px-4 py-2 text-xs font-bold text-white shadow-lg shadow-black/20 transition-all hover:-translate-y-0.5 hover:from-[#a3a3a3] hover:to-[#d4d4d4] disabled:opacity-75"
               >
                 {downloadingReceipt ? (
                   <>
@@ -455,40 +468,56 @@ export default function TeamWorkspaceClient({
 
               <Link
                 href={`/dashboard/receipt?pass=${encodeURIComponent(team.id)}`}
-                className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] px-3.5 py-2 text-xs font-medium text-neutral-200 hover:text-white transition-all"
+                className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2 text-xs font-medium text-neutral-200 transition-all hover:-translate-y-0.5 hover:bg-white/[0.08] hover:text-white"
               >
                 <FileText className="h-3.5 w-3.5 text-[#c19a88]" />
                 <span>View Full Receipt</span>
               </Link>
             </div>
+            </div>
           </div>
 
           {/* Card 02 */}
-          <div className="rounded-3xl border border-white/10 bg-[#141211] p-6 space-y-4 shadow-[0_12px_40px_rgba(0,0,0,0.4)] flex flex-col justify-between">
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#e8c5b4] font-bold">
+          <div className="relative min-h-[300px] overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(145deg,#171717_0%,#111111_75%)] p-6 shadow-[0_22px_70px_rgba(0,0,0,0.42)] sm:p-8">
+            <span className="pointer-events-none absolute -bottom-8 right-4 font-mono text-[120px] font-black leading-none text-white/[0.025]">01</span>
+            <div className="relative flex h-full flex-col">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#ffffff] font-bold">
                   Pillar 02 • Next Active Milestone
                 </span>
-                <span className="text-xs font-mono font-bold text-[#c19a88] bg-[#c19a88]/10 border border-[#c19a88]/25 px-2.5 py-0.5 rounded-full">
+                <span className="rounded-full border border-[#f5f5f5]/25 bg-[#f5f5f5]/10 px-3 py-1.5 font-mono text-xs font-bold text-[#ffffff]">
                   Stage 01
                 </span>
               </div>
-              <h3 className="text-lg font-bold text-white">
+              <div className="mt-8 grid grid-cols-[72px_1fr] items-start gap-4">
+                <div className="rounded-2xl border border-[#f5f5f5]/25 bg-[#f5f5f5]/10 py-3 text-center">
+                  <strong className="block text-2xl font-black leading-none text-white">08</strong>
+                  <span className="mt-1 block font-mono text-[9px] uppercase tracking-[0.18em] text-[#ffffff]">Jan 2027</span>
+                </div>
+                <div>
+              <p className="mb-1 font-mono text-[9px] uppercase tracking-[0.22em] text-white/35">45-minute online assessment</p>
+              <h3 className="text-xl font-bold tracking-tight text-white sm:text-2xl">
                 Online Technical Screening Quiz
               </h3>
-              <p className="text-xs text-neutral-300 font-normal leading-relaxed">
-                Scheduled for <strong>Friday, January 8, 2027</strong>. Timed 45-minute multiple-choice assessment evaluating CS fundamentals, data structures, and {track?.name || 'track'} domain logic.
+              <p className="mt-2 text-sm font-normal leading-relaxed text-neutral-400">
+                CS fundamentals, data structures, algorithms, and {track?.name || 'track'} domain logic.
               </p>
-            </div>
+                </div>
+              </div>
+              <div className="mt-6 flex items-center gap-2 border-t border-white/[0.07] pt-4 text-xs text-white/45">
+                <Calendar className="h-4 w-4 text-[#c19a88]" />
+                <span>Friday, January 8, 2027</span>
+              </div>
 
-            <div className="pt-2">
+            <div className="mt-auto pt-6">
               <Link
                 href="/dashboard/stages"
-                className="inline-flex items-center gap-2 text-xs font-bold text-[#c19a88] hover:text-white transition-colors"
+                className="group inline-flex items-center gap-2 text-xs font-bold text-[#ffffff] transition-colors hover:text-white"
               >
-                <span>Review Stage 01 Preparation &amp; Syllabus →</span>
+                <span>Review preparation &amp; syllabus</span>
+                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
               </Link>
+            </div>
             </div>
           </div>
         </div>
@@ -496,26 +525,32 @@ export default function TeamWorkspaceClient({
 
       {/* 3. Section 02: Confirmed Squad Roster Cards */}
       <section id="roster" className="space-y-5 pt-4 scroll-mt-28">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div className="flex flex-col gap-4 border-b border-white/[0.07] pb-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
               02 // Registered Engineers ({members.length} of 6)
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               Confirmed Squad <span className="text-[#c19a88]">Roster</span>
             </h2>
           </div>
-          <span className="text-xs font-mono text-neutral-400 bg-white/[0.04] border border-white/10 px-3 py-1 rounded-full">
-            1 to 6 Members Policy
-          </span>
+          <div className="w-full max-w-xs space-y-2">
+            <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-white/45">
+              <span>Squad capacity</span>
+              <span className="text-[#ffffff]">{members.length} / 6 confirmed</span>
+            </div>
+            <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
+              <div className="h-full rounded-full bg-gradient-to-r from-[#737373] to-[#ffffff]" style={{ width: `${Math.max((members.length / 6) * 100, 8)}%` }} />
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Leader Card */}
           {leaderMember && (
-            <div className="rounded-2xl border border-[#c19a88]/40 bg-[#161311] p-5 flex items-center justify-between gap-4 shadow-md">
+            <div className="rounded-2xl border border-[#f5f5f5]/35 bg-[linear-gradient(135deg,#171717,#111111)] p-5 flex items-center justify-between gap-4 shadow-[0_16px_45px_rgba(0,0,0,0.3)]">
               <div className="flex items-center gap-3.5 min-w-0">
-                <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-[#805948] to-[#c19a88] flex items-center justify-center text-white font-bold text-sm shrink-0 shadow-sm">
+                <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-[#737373] to-[#f5f5f5] flex items-center justify-center text-white font-bold text-sm shrink-0 shadow-sm">
                   {leaderMember.name.slice(0, 2).toUpperCase()}
                 </div>
                 <div className="min-w-0 space-y-0.5">
@@ -523,7 +558,7 @@ export default function TeamWorkspaceClient({
                     <p className="text-sm sm:text-base font-bold text-white truncate">
                       {leaderMember.name}
                     </p>
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#c19a88]/20 text-[#e8c5b4] border border-[#c19a88]/40 shrink-0">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#f5f5f5]/20 text-[#ffffff] border border-[#f5f5f5]/40 shrink-0">
                       Team Lead
                     </span>
                   </div>
@@ -547,7 +582,7 @@ export default function TeamWorkspaceClient({
 
           {/* Regular Members */}
           {regularMembers.map((member, idx) => (
-            <div key={member.id} className="rounded-2xl border border-white/10 bg-[#141211] p-5 flex items-center justify-between gap-4 hover:border-white/20 transition-all">
+            <div key={member.id} className="rounded-2xl border border-white/10 bg-[#141414] p-5 flex items-center justify-between gap-4 hover:border-white/20 transition-all">
               <div className="flex items-center gap-3.5 min-w-0">
                 <div className="h-11 w-11 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white font-bold text-sm shrink-0">
                   {member.name.slice(0, 2).toUpperCase()}

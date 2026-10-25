@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { EventRepository } from '@/lib/db/repository';
 import { verifyWebhookSignature } from '@/lib/razorpay/client';
-import { checkRateLimit } from '@/lib/security/rate-limit';
+import { checkRateLimitDistributed } from '@/lib/security/rate-limit';
 
 export async function POST(req: NextRequest) {
+  let eventId: string | null = null;
   try {
-    const rateLimit = checkRateLimit(req, 'payment-webhook', 120, 60_000);
+    const rateLimit = await checkRateLimitDistributed(req, 'payment-webhook', 120, 60_000);
     if (!rateLimit.allowed) {
       return NextResponse.json(
         { error: 'Webhook rate limit exceeded.' },
@@ -23,18 +24,19 @@ export async function POST(req: NextRequest) {
     }
 
     const payload = JSON.parse(rawBody);
-    const eventId = req.headers.get('x-razorpay-event-id') || payload.event_id || 'evt_' + Date.now();
+    const resolvedEventId = req.headers.get('x-razorpay-event-id') || payload.event_id || 'evt_' + Date.now();
+    eventId = resolvedEventId;
     const eventType = payload.event;
 
     // Idempotency check
     const { isDuplicate } = await EventRepository.recordWebhookEvent({
-      eventId,
+      eventId: resolvedEventId,
       eventType,
       payload,
     });
 
     if (isDuplicate) {
-      return NextResponse.json({ status: 'ignored_duplicate', eventId });
+      return NextResponse.json({ status: 'ignored_duplicate', eventId: resolvedEventId });
     }
 
     // Process event
@@ -81,10 +83,17 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    await EventRepository.markWebhookProcessed(eventId);
-    return NextResponse.json({ status: 'success', eventId });
+    await EventRepository.markWebhookProcessed(resolvedEventId);
+    return NextResponse.json({ status: 'success', eventId: resolvedEventId });
   } catch (err: any) {
     console.error('Webhook processing error:', err);
+    if (eventId) {
+      try {
+        await EventRepository.markWebhookProcessed(eventId, err.message || 'Webhook processing failed');
+      } catch (stateError) {
+        console.error('Failed to record webhook processing error:', stateError);
+      }
+    }
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }

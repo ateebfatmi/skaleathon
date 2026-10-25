@@ -18,7 +18,7 @@ export default function TechMarquee() {
   ];
 
   return (
-    <div className="relative w-full overflow-hidden border-y border-white/[0.07] bg-[#07090E]/80 py-3.5 backdrop-blur-xl">
+    <div className="relative w-full overflow-hidden border-y border-white/[0.07] bg-[#070707]/80 py-3.5 backdrop-blur-xl">
       {/* Edge gradient fade masks */}
       <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-20 sm:w-32 bg-gradient-to-r from-[#0B0B0B] to-transparent" />
       <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-20 sm:w-32 bg-gradient-to-l from-[#0B0B0B] to-transparent" />
@@ -29,14 +29,14 @@ export default function TechMarquee() {
           return (
             <div
               key={idx}
-              className="flex items-center gap-2.5 px-3 py-1 rounded-full border border-white/[0.06] bg-white/[0.02] text-xs font-medium tracking-wide text-white/70 hover:border-[#c19a88]/40 hover:text-white transition-all cursor-default"
+              className="flex items-center gap-2.5 px-3 py-1 rounded-full border border-white/[0.06] bg-white/[0.02] text-xs font-medium tracking-wide text-white/70 hover:border-[#f5f5f5]/40 hover:text-white transition-all cursor-default"
             >
               <Icon
                 className={`h-3.5 w-3.5 ${
                   item.highlight ? 'text-[#c19a88]' : 'text-white/40'
                 }`}
               />
-              <span className={item.highlight ? 'text-[#e8c5b4] font-semibold' : ''}>
+              <span className={item.highlight ? 'text-[#ffffff] font-semibold' : ''}>
                 {item.label}
               </span>
               <span className="text-white/20 ml-2">•</span>

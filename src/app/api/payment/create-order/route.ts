@@ -2,11 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { EventRepository } from '@/lib/db/repository';
 import { createRazorpayOrder } from '@/lib/razorpay/client';
 import { requireTeamLeader } from '@/lib/auth/server-guard';
-import { checkRateLimit } from '@/lib/security/rate-limit';
+import { checkRateLimitDistributed } from '@/lib/security/rate-limit';
 
 export async function POST(req: NextRequest) {
   try {
-    const rateLimit = checkRateLimit(req, 'payment-order', 10, 60_000);
+    const rateLimit = await checkRateLimitDistributed(req, 'payment-order', 10, 60_000);
     if (!rateLimit.allowed) {
       return NextResponse.json(
         { error: 'Too many payment attempts. Please try again shortly.' },

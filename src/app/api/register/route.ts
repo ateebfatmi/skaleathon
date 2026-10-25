@@ -2,11 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { registrationSchema } from '@/lib/validation/schemas';
 import { EventRepository } from '@/lib/db/repository';
 import { requireAuth } from '@/lib/auth/server-guard';
-import { checkRateLimit } from '@/lib/security/rate-limit';
+import { checkRateLimitDistributed } from '@/lib/security/rate-limit';
 
 export async function POST(req: NextRequest) {
   try {
-    const rateLimit = checkRateLimit(req, 'registration', 5, 60_000);
+    const rateLimit = await checkRateLimitDistributed(req, 'registration', 5, 60_000);
     if (!rateLimit.allowed) {
       return NextResponse.json(
         { error: 'Too many registration attempts. Please try again shortly.' },

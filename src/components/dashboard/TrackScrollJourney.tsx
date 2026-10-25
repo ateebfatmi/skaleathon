@@ -35,7 +35,6 @@ interface TrackScrollJourneyProps {
     coreExpectation: string;
     suggestedStack: string[];
   } | null;
-  accentColor: string;
 }
 
 const VERSATILE_EXAMPLE_DOMAINS = [
@@ -59,7 +58,6 @@ export default function TrackScrollJourney({
   track,
   team,
   trackMeta,
-  accentColor: rawAccent,
 }: TrackScrollJourneyProps) {
   const [activeSection, setActiveSection] = useState<SectionId>('scope');
 
@@ -73,24 +71,24 @@ export default function TrackScrollJourney({
 
   return (
     <div className="relative w-full space-y-8 pb-20 text-neutral-200">
-      {/* Background Ambient Glows */}
-      <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 h-80 w-full max-w-5xl rounded-full bg-[#c19a88]/10 blur-[150px]" />
+      <div className="experience-bento-mask pointer-events-none absolute inset-x-0 -top-10 h-[34rem] opacity-[0.08]" />
+      <div className="pointer-events-none absolute -top-32 left-1/2 h-96 w-full max-w-5xl -translate-x-1/2 rounded-full bg-white/[0.06] blur-[160px]" />
 
       {/* 1. Header & Context */}
-      <header className="relative space-y-4 pt-1">
-        <div className="flex flex-wrap items-center justify-between gap-4 pb-3 border-b border-white/10">
+      <header className="relative space-y-6 pt-2 sm:pt-4">
+        <div className="experience-glass-panel flex flex-col gap-4 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5">
           <div className="flex items-center gap-2 text-xs font-mono">
             <span className="flex h-2 w-2 relative">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
             </span>
-            <span className="text-[#c19a88] font-bold uppercase tracking-wider">
+            <span className="font-bold uppercase tracking-wider text-white/55">
               Assigned Problem Arena
             </span>
             <span className="text-white/20">•</span>
             <span className="text-white font-semibold">{track ? track.name : 'Open Arena'}</span>
             <span className="text-white/20">•</span>
-            <span className="text-[#e8c5b4] font-semibold">
+            <span className="font-semibold text-white/75">
               Squad: {team ? team.name : 'Your Team'}
             </span>
           </div>
@@ -100,42 +98,45 @@ export default function TrackScrollJourney({
               href="/dashboard"
               className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors"
             >
-              <ArrowLeft className="h-3.5 w-3.5 text-[#c19a88]" />
+              <ArrowLeft className="h-3.5 w-3.5 text-white/60" />
               <span>Back to Overview</span>
             </Link>
             <span className="text-white/15">|</span>
             <Link
               href="/dashboard/stages"
-              className="inline-flex items-center gap-1.5 text-[#e8c5b4] hover:text-white transition-colors font-semibold"
+              className="inline-flex items-center gap-1.5 text-white/70 hover:text-white transition-colors font-semibold"
             >
-              <Layers className="h-3.5 w-3.5 text-[#c19a88]" />
+              <Layers className="h-3.5 w-3.5 text-white/60" />
               <span>Stage Roadmap</span>
-              <ArrowRight className="h-3 w-3 text-[#c19a88]" />
+              <ArrowRight className="h-3 w-3 text-white/60" />
             </Link>
           </div>
         </div>
 
         {/* Page Title & Scope Manifesto */}
-        <div className="max-w-3xl space-y-2">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
-            {track ? track.name : 'Engineering'}{' '}
-            <span className="text-[#c19a88]">Specifications</span>
+        <div className="max-w-4xl space-y-4 py-3 sm:py-6">
+          <span className="block font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-white/40">
+            Competition track / Technical brief
+          </span>
+          <h1 className="text-4xl font-black uppercase leading-[0.92] tracking-[-0.045em] text-white sm:text-6xl lg:text-7xl">
+            {track ? track.name : 'Engineering'} <br />
+            <span className="experience-text-outline">Specifications</span>
           </h1>
-          <p className="text-sm sm:text-base text-neutral-200 font-normal leading-relaxed">
+          <p className="max-w-3xl text-sm font-normal leading-relaxed text-white/55 sm:text-base">
             {trackMeta ? trackMeta.manifesto : track?.description}
           </p>
 
           {/* Quick Attribute Pills */}
-          <div className="flex flex-wrap items-center gap-2.5 pt-2 text-xs">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/10 bg-[#141211] text-neutral-200 font-medium">
-              <Compass className="h-3.5 w-3.5 text-[#c19a88]" />
+          <div className="grid grid-cols-1 gap-2.5 pt-2 text-xs sm:flex sm:flex-wrap sm:items-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.035] px-3 py-2 font-medium text-white/65 backdrop-blur-md">
+              <Compass className="h-3.5 w-3.5 text-white/70" />
               <span>Problem Statement: <strong className="text-white">100% Self-Defined</strong></span>
             </div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/10 bg-[#141211] text-neutral-200 font-medium">
-              <Sparkles className="h-3.5 w-3.5 text-[#e8c5b4]" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.035] px-3 py-2 font-medium text-white/65 backdrop-blur-md">
+              <Sparkles className="h-3.5 w-3.5 text-white/70" />
               <span>Domain Choice: <strong className="text-white">Any Real-World Industry</strong></span>
             </div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/10 bg-[#141211] text-neutral-200 font-medium">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.035] px-3 py-2 font-medium text-white/65 backdrop-blur-md">
               <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
               <span>Squad Format: <strong className="text-white">1 to 6 Members</strong></span>
             </div>
@@ -143,7 +144,7 @@ export default function TrackScrollJourney({
         </div>
 
         {/* Fast Navigation Tabs */}
-        <div className="pt-2 flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+        <div className="relative z-30 grid grid-cols-2 gap-2 rounded-2xl border border-white/10 bg-black/75 p-2 shadow-2xl shadow-black/40 backdrop-blur-xl sm:sticky sm:top-[8.5rem] sm:flex sm:items-center sm:overflow-x-auto">
           {[
             { id: 'scope' as SectionId, label: 'Open Domain Scope' },
             { id: 'stack' as SectionId, label: 'Recommended Tech Stacks' },
@@ -154,10 +155,10 @@ export default function TrackScrollJourney({
               key={item.id}
               type="button"
               onClick={() => scrollToSection(item.id)}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer border ${
+              className={`min-h-11 cursor-pointer rounded-xl border px-3 py-2.5 text-center text-[11px] font-semibold leading-4 transition-all sm:whitespace-nowrap sm:px-4 sm:text-xs ${
                 activeSection === item.id
-                  ? 'bg-[#c19a88]/20 border-[#c19a88] text-white shadow-md'
-                  : 'bg-[#141211] border-white/10 text-neutral-300 hover:text-white hover:border-white/20'
+                  ? 'border-white bg-white text-black shadow-lg shadow-white/10'
+                  : 'border-transparent bg-transparent text-white/50 hover:border-white/10 hover:bg-white/[0.05] hover:text-white'
               }`}
             >
               {item.label}
@@ -171,25 +172,25 @@ export default function TrackScrollJourney({
         {/* Section 01: Open Domain Scope */}
         <section
           id="scope"
-          className="scroll-mt-28 rounded-3xl border border-white/10 bg-[#141211] p-6 sm:p-8 space-y-6 shadow-[0_12px_40px_rgba(0,0,0,0.5)]"
+          className="experience-glass-panel scroll-mt-52 space-y-7 p-5 sm:p-8"
         >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/[0.08]">
             <div className="space-y-1">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[#c19a88] font-bold">
+              <span className="font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-white/35">
                 01 // UNRESTRICTED IDEATION
               </span>
               <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                Versatile Ideas &amp; <span className="text-[#c19a88]">Open Domain Freedom</span>
+                Versatile Ideas &amp; <span className="text-white/55">Open Domain Freedom</span>
               </h2>
             </div>
-            <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full w-fit">
+            <span className="w-fit rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 font-mono text-xs text-white/55">
               Zero Restrictive Prompts
             </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="rounded-2xl border border-white/[0.08] bg-[#1a1715]/70 p-5 space-y-2">
-              <div className="flex items-center gap-2 text-[#c19a88] font-bold text-xs uppercase tracking-wider">
+            <div className="space-y-3 rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5 sm:p-6">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white/45">
                 <Compass className="h-4 w-4" />
                 <span>Pillar 01 • Define Your Own Problem Statement</span>
               </div>
@@ -201,8 +202,8 @@ export default function TrackScrollJourney({
               </p>
             </div>
 
-            <div className="rounded-2xl border border-white/[0.08] bg-[#1a1715]/70 p-5 space-y-2">
-              <div className="flex items-center gap-2 text-[#e8c5b4] font-bold text-xs uppercase tracking-wider">
+            <div className="space-y-3 rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5 sm:p-6">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white/45">
                 <Cpu className="h-4 w-4" />
                 <span>Pillar 02 • Technical Core Alignment</span>
               </div>
@@ -223,7 +224,7 @@ export default function TrackScrollJourney({
               <span className="text-xs font-mono text-white/70 uppercase tracking-wider">
                 Example Domain Spectrum (Choose One or Pioneer Your Own)
               </span>
-              <span className="text-xs text-[#c19a88] font-mono">12+ Example Verticals</span>
+              <span className="font-mono text-xs text-white/35">12+ Example Verticals</span>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
@@ -232,11 +233,11 @@ export default function TrackScrollJourney({
                   key={domain.code}
                   className={`p-3 rounded-xl border text-xs flex items-center gap-2.5 transition-colors ${
                     domain.highlight
-                      ? 'border-[#c19a88]/60 bg-[#c19a88]/15 text-[#e8c5b4] font-bold'
+                      ? 'border-white/30 bg-white/[0.09] text-white font-bold'
                       : 'border-white/[0.08] bg-white/[0.03] text-neutral-200 hover:border-white/20'
                   }`}
                 >
-                  <span className="font-mono text-[#c19a88] text-[11px] font-bold">{domain.code}</span>
+                  <span className="font-mono text-[11px] font-bold text-white/40">{domain.code}</span>
                   <span className="truncate">{domain.name}</span>
                 </div>
               ))}
@@ -248,15 +249,15 @@ export default function TrackScrollJourney({
         {trackMeta && (
           <section
             id="stack"
-            className="scroll-mt-28 rounded-3xl border border-white/10 bg-[#141211] p-6 sm:p-8 space-y-6 shadow-[0_12px_40px_rgba(0,0,0,0.5)]"
+            className="experience-glass-panel scroll-mt-52 space-y-7 p-5 sm:p-8"
           >
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/[0.08]">
               <div className="space-y-1">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-[#c19a88] font-bold">
+                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-white/35">
                   02 // ARCHITECTURAL VELOCITY
                 </span>
                 <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                  Recommended Stacks &amp; <span className="text-[#c19a88]">Toolkits</span>
+                  Recommended Stacks &amp; <span className="text-white/55">Toolkits</span>
                 </h2>
               </div>
               <div className="inline-flex items-center gap-1.5 text-xs text-emerald-400 font-mono bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full">
@@ -269,9 +270,9 @@ export default function TrackScrollJourney({
               {trackMeta.suggestedStack.map((tech, idx) => (
                 <div
                   key={idx}
-                  className="p-3.5 rounded-xl border border-white/[0.08] bg-[#1a1715]/70 hover:border-[#c19a88]/40 transition-all flex flex-col items-center justify-center text-center gap-1.5"
+                  className="flex min-h-24 flex-col items-center justify-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.025] p-3.5 text-center transition-all hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.055]"
                 >
-                  <Code2 className="h-4 w-4 text-[#c19a88]" />
+                  <Code2 className="h-4 w-4 text-white/55" />
                   <span className="text-xs font-semibold text-white font-mono">{tech}</span>
                 </div>
               ))}
@@ -284,14 +285,14 @@ export default function TrackScrollJourney({
           {/* Left 7 Cols: Deliverables Card */}
           <section
             id="deliverables"
-            className="lg:col-span-7 scroll-mt-28 rounded-3xl border border-white/10 bg-[#141211] p-6 sm:p-8 space-y-6 shadow-[0_12px_40px_rgba(0,0,0,0.5)]"
+            className="experience-glass-panel scroll-mt-52 space-y-6 p-5 sm:p-8 lg:col-span-7"
           >
             <div className="space-y-1 pb-4 border-b border-white/[0.08]">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[#c19a88] font-bold">
+              <span className="font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-white/35">
                 03 // MILESTONE DELIVERABLES
               </span>
               <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                Required Project <span className="text-[#c19a88]">Artifacts</span>
+                Required Project <span className="text-white/55">Artifacts</span>
               </h3>
             </div>
 
@@ -326,14 +327,14 @@ export default function TrackScrollJourney({
                 return (
                   <div
                     key={idx}
-                    className="p-4 rounded-2xl border border-white/[0.08] bg-[#1a1715]/70 space-y-1.5"
+                    className="space-y-2 rounded-2xl border border-white/[0.08] bg-white/[0.025] p-4 transition-colors hover:bg-white/[0.045]"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 text-white font-bold text-sm">
-                        <ItemIcon className="h-4 w-4 text-[#c19a88]" />
+                        <ItemIcon className="h-4 w-4 text-white/55" />
                         <span>{item.title}</span>
                       </div>
-                      <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded-full bg-white/10 text-[#e8c5b4]">
+                      <span className="rounded-full bg-white/[0.07] px-2 py-0.5 font-mono text-[11px] font-semibold text-white/55">
                         {item.tag}
                       </span>
                     </div>
@@ -349,14 +350,14 @@ export default function TrackScrollJourney({
           {/* Right 5 Cols: Jury Rubric Card */}
           <section
             id="rubric"
-            className="lg:col-span-5 scroll-mt-28 rounded-3xl border border-white/10 bg-[#141211] p-6 sm:p-8 space-y-6 shadow-[0_12px_40px_rgba(0,0,0,0.5)]"
+            className="experience-glass-panel scroll-mt-52 space-y-6 p-5 sm:p-8 lg:col-span-5"
           >
             <div className="space-y-1 pb-4 border-b border-white/[0.08]">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[#c19a88] font-bold">
+              <span className="font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-white/35">
                 04 // SCORING WEIGHTAGE
               </span>
               <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                Jury Evaluation <span className="text-[#c19a88]">Rubric</span>
+                Jury Evaluation <span className="text-white/55">Rubric</span>
               </h3>
             </div>
 
@@ -368,14 +369,14 @@ export default function TrackScrollJourney({
                 { title: 'Usability & Design', weight: '15%', desc: 'User experience polish, responsiveness, and flow.' },
                 { title: 'Presentation & Documentation', weight: '15%', desc: 'Clear demo, documentation, and live defense clarity.' },
               ].map((item, idx) => (
-                <div key={idx} className="p-3.5 rounded-xl border border-white/[0.08] bg-[#1a1715]/70 space-y-1.5">
+                <div key={idx} className="space-y-2 rounded-xl border border-white/[0.08] bg-white/[0.025] p-3.5">
                   <div className="flex items-center justify-between text-xs sm:text-sm font-bold">
                     <span className="text-white">{item.title}</span>
-                    <span className="font-mono text-[#e8c5b4]">{item.weight}</span>
+                    <span className="font-mono text-white/55">{item.weight}</span>
                   </div>
                   <div className="h-1.5 w-full bg-white/[0.08] rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-[#805948] to-[#c19a88]"
+                      className="h-full bg-white/80"
                       style={{ width: item.weight }}
                     />
                   </div>

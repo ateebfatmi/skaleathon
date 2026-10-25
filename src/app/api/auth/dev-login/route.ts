@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { EventRepository } from '@/lib/db/repository';
 import { createSessionCookie } from '@/lib/auth/session';
 import { UserRole } from '@/lib/db/types';
-import { checkRateLimit } from '@/lib/security/rate-limit';
+import { checkRateLimitDistributed } from '@/lib/security/rate-limit';
 
 export async function POST(req: NextRequest) {
   try {
@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Not found' }, { status: 404 });
     }
 
-    const rateLimit = checkRateLimit(req, 'dev-login', 10, 60_000);
+    const rateLimit = await checkRateLimitDistributed(req, 'dev-login', 10, 60_000);
     if (!rateLimit.allowed) {
       return NextResponse.json(
         { error: 'Too many login attempts. Please try again shortly.' },

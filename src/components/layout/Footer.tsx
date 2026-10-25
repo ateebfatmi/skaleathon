@@ -34,23 +34,23 @@ export default function Footer() {
   // 1. Sleek Minimal Footer for Auth Pages (/sign-in, /sign-up)
   if (isAuthPage) {
     return (
-      <footer className="border-t border-white/[0.06] bg-[#07090E]/95 py-6 text-neutral-400">
+      <footer className="border-t border-white/[0.06] bg-[#070707]/95 py-6 text-neutral-400">
         <div className="container mx-auto max-w-7xl px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
           <div className="flex items-center gap-2">
             <span>© {currentYear} SkaleKraft. All rights reserved.</span>
             <span>•</span>
             <span className="text-neutral-500">Skaleathon</span>
           </div>
-          <div className="flex items-center gap-5 text-neutral-400">
-            <Link href="/terms" className="hover:text-white transition-colors">
+          <div className="flex items-center gap-2 text-neutral-400 sm:gap-5">
+            <Link href="/terms" className="mobile-touch-target inline-flex items-center px-2 hover:text-white transition-colors">
               Terms
             </Link>
-            <Link href="/privacy" className="hover:text-white transition-colors">
+            <Link href="/privacy" className="mobile-touch-target inline-flex items-center px-2 hover:text-white transition-colors">
               Privacy
             </Link>
             <a
               href="mailto:skalekraft@gmail.com"
-              className="hover:text-[#c19a88] transition-colors"
+              className="mobile-touch-target inline-flex items-center px-2 hover:text-white transition-colors"
             >
               Contact Support
             </a>
@@ -63,13 +63,13 @@ export default function Footer() {
   // 2. Focused Workspace Footer for Dashboards & Portals (/admin, /dashboard, /judge)
   if (isPortalPage) {
     return (
-      <footer className="border-t border-white/[0.08] bg-[#07090E] py-8 text-neutral-400">
+      <footer className="border-t border-white/[0.08] bg-[#070707] py-8 text-neutral-400">
         <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-6 border-b border-white/[0.06]">
             <div className="flex items-center gap-3">
               <Link href="/" className="flex items-center gap-2 group">
                 <div
-                  className="relative h-8 w-8 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-[#1c1b1a] shadow-sm"
+                  className="relative h-8 w-8 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-[#1c1c1c] shadow-sm"
                   style={{ width: 32, height: 32, minWidth: 32, minHeight: 32 }}
                 >
                   <Image
@@ -119,14 +119,14 @@ export default function Footer() {
 
   // 3. Full Rich Footer for Public & Content Pages (Home, Tracks, Prizes, Rules, Legal, etc.)
   return (
-    <footer className="relative z-10 border-t border-white/[0.08] bg-[#07090E] text-white">
+    <footer className="relative z-10 border-t border-white/[0.08] bg-[#070707] text-white">
       {/* Ambient background glow */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#805948]/10 via-transparent to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#737373]/10 via-transparent to-transparent" />
 
       <div className="container mx-auto max-w-7xl px-4 py-10 sm:py-12 sm:px-6 lg:px-8">
-        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr] md:gap-16">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-[1.4fr_1fr_1fr] md:gap-16">
           
-          <div className="space-y-5">
+          <div className="col-span-2 space-y-5 md:col-span-1">
             <div>
               <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-[#c19a88]">
                 Organizer
@@ -151,7 +151,7 @@ export default function Footer() {
                   href="https://instagram.com/skalekraft"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-400 hover:border-[#c19a88]/50 hover:bg-[#c19a88]/15 hover:text-white transition-all shadow-sm"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-400 hover:border-[#f5f5f5]/50 hover:bg-[#f5f5f5]/15 hover:text-white transition-all shadow-sm sm:h-9 sm:w-9"
                   aria-label="SkaleKraft on Instagram"
                   title="Instagram"
                 >
@@ -161,7 +161,7 @@ export default function Footer() {
                   href="https://linkedin.com/company/skalekraft"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-400 hover:border-[#c19a88]/50 hover:bg-[#c19a88]/15 hover:text-white transition-all shadow-sm"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-400 hover:border-[#f5f5f5]/50 hover:bg-[#f5f5f5]/15 hover:text-white transition-all shadow-sm sm:h-9 sm:w-9"
                   aria-label="SkaleKraft on LinkedIn"
                   title="LinkedIn"
                 >
@@ -169,7 +169,7 @@ export default function Footer() {
                 </a>
                 <a
                   href="mailto:skalekraft@gmail.com"
-                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-400 hover:border-[#c19a88]/50 hover:bg-[#c19a88]/15 hover:text-white transition-all shadow-sm"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-400 hover:border-[#f5f5f5]/50 hover:bg-[#f5f5f5]/15 hover:text-white transition-all shadow-sm sm:h-9 sm:w-9"
                   aria-label="Email SkaleKraft"
                   title="Email SkaleKraft"
                 >
@@ -187,7 +187,7 @@ export default function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-neutral-400 hover:text-white transition-colors duration-150 inline-block font-light"
+                    className="mobile-touch-target inline-flex items-center text-neutral-400 hover:text-white transition-colors duration-150 font-light"
                   >
                     {item.label}
                   </Link>
@@ -205,7 +205,7 @@ export default function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-neutral-400 hover:text-white transition-colors duration-150 inline-block font-light"
+                    className="mobile-touch-target inline-flex items-center text-neutral-400 hover:text-white transition-colors duration-150 font-light"
                   >
                     {item.label}
                   </Link>
@@ -219,7 +219,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-white/[0.06] bg-[#05060A]/80 py-6">
+      <div className="border-t border-white/[0.06] bg-[#05060A]/80 py-6 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
         <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500 font-light">
             <div className="flex flex-wrap items-center gap-2">
@@ -233,7 +233,7 @@ export default function Footer() {
                 href="https://skalekraft.in"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-neutral-400 hover:text-[#c19a88] transition-colors"
+                className="mobile-touch-target inline-flex items-center px-2 text-neutral-400 hover:text-white transition-colors"
               >
                 skalekraft.in
               </a>

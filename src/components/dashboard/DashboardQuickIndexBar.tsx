@@ -36,21 +36,14 @@ export default function DashboardQuickIndexBar({ memberCount }: DashboardQuickIn
     cyberAudio.playSuccess();
     setSelectedNum(item.num);
     setNavigatingItem(item);
-
-    // Play the spring underline slide, shimmer sweep, and transition pill before navigating
-    setTimeout(() => {
-      router.push(item.href);
-      setTimeout(() => {
-        setNavigatingItem(null);
-      }, 450);
-    }, 340);
+    router.push(item.href);
   };
 
   return (
     <>
       <nav
         aria-label="Workspace Quick Index"
-        className="relative -mx-4 flex snap-x snap-mandatory gap-2 overflow-x-auto border-y border-white/[0.08] px-4 py-2 scrollbar-none sm:mx-0 sm:grid sm:grid-cols-4 sm:gap-0 sm:divide-x sm:divide-white/[0.06] sm:px-0 sm:py-0"
+        className="relative grid grid-cols-2 gap-2 border-y border-white/[0.08] py-2 sm:grid-cols-4 sm:gap-0 sm:divide-x sm:divide-white/[0.06] sm:py-0"
       >
         {items.map((item) => {
           const isActive = selectedNum === item.num;
@@ -68,7 +61,7 @@ export default function DashboardQuickIndexBar({ memberCount }: DashboardQuickIn
                 cyberAudio.playHover();
               }}
               onMouseLeave={() => setHoveredNum(null)}
-              className={`group relative flex min-h-12 min-w-[13rem] snap-start items-center justify-between overflow-hidden rounded-xl border border-white/[0.07] px-3.5 py-3 text-left text-xs transition-colors duration-300 cursor-pointer select-none sm:min-w-0 sm:rounded-none sm:border-0 sm:px-4 sm:py-4 ${
+              className={`group relative flex min-h-16 min-w-0 cursor-pointer select-none items-center justify-between overflow-hidden rounded-xl border border-white/[0.07] px-3 py-3 text-left text-[11px] transition-colors duration-300 sm:min-h-12 sm:rounded-none sm:border-0 sm:px-4 sm:py-4 sm:text-xs ${
                 isActive
                   ? 'text-white font-semibold'
                   : 'text-neutral-400 hover:text-white'
@@ -79,7 +72,7 @@ export default function DashboardQuickIndexBar({ memberCount }: DashboardQuickIn
                 <motion.div
                   layoutId="dashboardQuickIndexBg"
                   transition={{ type: 'spring', stiffness: 380, damping: 32 }}
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#805948]/18 via-[#c19a88]/10 to-white/[0.02]"
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#737373]/18 via-[#f5f5f5]/10 to-white/[0.02]"
                 />
               )}
 
@@ -101,7 +94,7 @@ export default function DashboardQuickIndexBar({ memberCount }: DashboardQuickIn
                     animate={{ x: '100%', opacity: 0 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-[#e8c5b4]/30 to-transparent"
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-[#ffffff]/30 to-transparent"
                   />
                 )}
               </AnimatePresence>
@@ -109,12 +102,12 @@ export default function DashboardQuickIndexBar({ memberCount }: DashboardQuickIn
               <div className="relative z-10 flex items-center gap-2 sm:gap-2.5 min-w-0 pr-2">
                 <span
                   className={`font-mono text-[10px] font-bold transition-colors duration-300 ${
-                    isActive ? 'text-[#e8c5b4]' : 'text-[#c19a88]'
+                    isActive ? 'text-[#ffffff]' : 'text-[#c19a88]'
                   }`}
                 >
                   {item.num}
                 </span>
-                <span className="whitespace-nowrap">{item.label}</span>
+                <span className="leading-4 sm:whitespace-nowrap">{item.label}</span>
               </div>
 
               <div className="relative z-10 flex items-center gap-1.5 shrink-0">
@@ -122,19 +115,19 @@ export default function DashboardQuickIndexBar({ memberCount }: DashboardQuickIn
                   <motion.div
                     initial={{ scale: 0.6, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    className="flex items-center gap-1 text-[10px] font-mono text-[#e8c5b4]"
+                    className="flex items-center gap-1 text-[10px] font-mono text-[#ffffff]"
                   >
                     <span className="hidden lg:inline uppercase tracking-wider text-[9px]">
                       Opening
                     </span>
-                    <Loader2 className="h-3.5 w-3.5 text-[#e8c5b4] animate-spin" />
+                    <Loader2 className="h-3.5 w-3.5 text-[#ffffff] animate-spin" />
                   </motion.div>
                 ) : (
                   <ArrowUpRight
                     className={`hidden h-3.5 w-3.5 shrink-0 transition-all duration-300 sm:block ${
                       isActive
-                        ? 'text-[#e8c5b4] translate-x-0.5 -translate-y-0.5'
-                        : 'text-neutral-600 group-hover:text-[#e8c5b4] group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
+                        ? 'text-[#ffffff] translate-x-0.5 -translate-y-0.5'
+                        : 'text-neutral-600 group-hover:text-[#ffffff] group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
                     }`}
                   />
                 )}
@@ -145,7 +138,7 @@ export default function DashboardQuickIndexBar({ memberCount }: DashboardQuickIn
                 <motion.span
                   layoutId="dashboardQuickIndexUnderline"
                   transition={{ type: 'spring', stiffness: 400, damping: 32 }}
-                  className="pointer-events-none absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4] shadow-[0_0_12px_rgba(232,197,180,0.5)]"
+                  className="pointer-events-none absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#737373] via-[#f5f5f5] to-[#ffffff] shadow-[0_0_12px_rgba(229,229,229,0.5)]"
                 />
               )}
             </button>
@@ -163,7 +156,7 @@ export default function DashboardQuickIndexBar({ memberCount }: DashboardQuickIn
               animate={{ scaleX: 1, opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed top-0 left-0 right-0 z-[100] h-[2.5px] origin-left bg-gradient-to-r from-[#805948] via-[#e8c5b4] to-[#c19a88] shadow-[0_0_16px_#e8c5b4]"
+              className="fixed top-0 left-0 right-0 z-[100] h-[2.5px] origin-left bg-gradient-to-r from-[#737373] via-[#ffffff] to-[#f5f5f5] shadow-[0_0_16px_#ffffff]"
             />
 
             {/* Subtle Editorial Transition Pill & Backdrop Fade */}
@@ -179,14 +172,14 @@ export default function DashboardQuickIndexBar({ memberCount }: DashboardQuickIn
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -8, scale: 0.96 }}
                 transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
-                className="flex items-center gap-3 rounded-full border border-[#c19a88]/40 bg-[#120F0D]/95 px-5 py-2.5 shadow-[0_12px_40px_rgba(0,0,0,0.75),0_0_25px_rgba(193,154,136,0.2)] backdrop-blur-2xl"
+                className="flex items-center gap-3 rounded-full border border-[#f5f5f5]/40 bg-[#111111]/95 px-5 py-2.5 shadow-[0_12px_40px_rgba(0,0,0,0.75),0_0_25px_rgba(255,255,255,0.2)] backdrop-blur-2xl"
               >
                 <span className="font-mono text-[10px] font-bold text-[#c19a88]">
                   {navigatingItem.num}
                 </span>
                 <span className="h-3 w-px bg-white/15" />
                 <span className="text-xs font-medium text-white tracking-wide">
-                  Entering <span className="font-serif italic text-[#e8c5b4]">{navigatingItem.label}</span>
+                  Entering <span className="font-serif italic text-[#ffffff]">{navigatingItem.label}</span>
                 </span>
                 <Loader2 className="h-3.5 w-3.5 text-[#c19a88] animate-spin ml-1" />
               </motion.div>

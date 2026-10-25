@@ -67,12 +67,12 @@ export default function InteractiveTerminal({ event }: { event: EventData }) {
               <div className="divide-y divide-white/[0.06] pt-1">
                 <div className="py-1.5 flex justify-between items-center text-white">
                   <span className="text-amber-300 font-bold">🥇 1st Champion</span>
-                  <span className="font-bold text-[#ffe5d9]">₹{firstPrizeFormatted}</span>
+                  <span className="font-bold text-[#fafafa]">₹{firstPrizeFormatted}</span>
                   <span className="text-white/60 hidden sm:inline">SkaleKraft Interview Call</span>
                 </div>
                 <div className="py-1.5 flex justify-between items-center text-white/90">
-                  <span className="text-slate-300 font-medium">🥈 2nd Runner-Up</span>
-                  <span className="font-bold text-[#e8c5b4]">₹{secondPrizeFormatted}</span>
+                  <span className="text-neutral-300 font-medium">🥈 2nd Runner-Up</span>
+                  <span className="font-bold text-[#ffffff]">₹{secondPrizeFormatted}</span>
                   <span className="text-white/60 hidden sm:inline">National Merit Citation</span>
                 </div>
                 <div className="py-1.5 flex justify-between items-center text-white/80">
@@ -85,7 +85,7 @@ export default function InteractiveTerminal({ event }: { event: EventData }) {
 
             <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-white/50 pt-1">
               <span>Top {event.certificates_top_n} verified merit certificates • Direct bank disbursals</span>
-              <Link href="/prizes" className="text-[#c19a88] hover:text-[#ffe5d9] flex items-center gap-1 transition-colors">
+              <Link href="/prizes" className="text-[#c19a88] hover:text-[#fafafa] flex items-center gap-1 transition-colors">
                 View prize ledger <ArrowRight className="h-3 w-3" />
               </Link>
             </div>
@@ -130,7 +130,7 @@ export default function InteractiveTerminal({ event }: { event: EventData }) {
               <div className="h-px bg-white/[0.06] my-1" />
 
               <div className="flex items-start gap-2.5">
-                <span className="text-[#e8c5b4] font-bold shrink-0">[03]</span>
+                <span className="text-[#ffffff] font-bold shrink-0">[03]</span>
                 <div className="flex-1 flex flex-col sm:flex-row sm:justify-between gap-1">
                   <span className="text-white font-medium">36-Hour Build Sprint</span>
                   <span className="text-[#c19a88] shrink-0 font-bold">Jan 16–25, 2027</span>
@@ -166,12 +166,12 @@ export default function InteractiveTerminal({ event }: { event: EventData }) {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-[11px]">
-              <div className="rounded-lg border border-purple-500/20 bg-purple-500/[0.04] p-2.5">
-                <div className="text-purple-300 font-bold text-xs">01. AI &amp; ML</div>
+              <div className="rounded-lg border border-white/15 bg-white/[0.04] p-2.5">
+                <div className="text-xs font-bold text-white/75">01. AI &amp; ML</div>
                 <div className="text-white/50 text-[10px] mt-1">Autonomous Agents, Tool-Calling, RAG, Vision &amp; Neural Reasoning.</div>
               </div>
-              <div className="rounded-lg border border-sky-500/20 bg-sky-500/[0.04] p-2.5">
-                <div className="text-sky-300 font-bold text-xs">02. Web Development</div>
+              <div className="rounded-lg border border-white/15 bg-white/[0.04] p-2.5">
+                <div className="text-xs font-bold text-white/75">02. Web Development</div>
                 <div className="text-white/50 text-[10px] mt-1">Edge Runtimes, Real-time WebSockets, CRDTs &amp; Scalable Infra.</div>
               </div>
               <div className="rounded-lg border border-amber-500/20 bg-amber-500/[0.04] p-2.5">
@@ -182,7 +182,7 @@ export default function InteractiveTerminal({ event }: { event: EventData }) {
 
             <div className="flex items-center justify-between text-[11px] text-white/50 pt-1">
               <span>Full stack &amp; cloud freedom • Unrestricted problem statements</span>
-              <Link href="/tracks" className="text-[#c19a88] hover:text-[#ffe5d9] flex items-center gap-1 transition-colors">
+              <Link href="/tracks" className="text-[#c19a88] hover:text-[#fafafa] flex items-center gap-1 transition-colors">
                 Explore domains <ArrowRight className="h-3 w-3" />
               </Link>
             </div>
@@ -211,7 +211,7 @@ export default function InteractiveTerminal({ event }: { event: EventData }) {
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-white/60">Registration Fee</span>
-                <span className="text-[#ffe5d9] font-bold">₹{event.registration_fee_inr} FLAT PER SQUAD (Not per head)</span>
+                <span className="text-[#fafafa] font-bold">₹{event.registration_fee_inr} FLAT PER SQUAD (Not per head)</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-white/60">Eligibility</span>
@@ -227,7 +227,7 @@ export default function InteractiveTerminal({ event }: { event: EventData }) {
               <span className="text-[11px] text-white/50">Execute command or click:</span>
               <Link
                 href="/register"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-gradient-to-r from-[#805948] to-[#c19a88] text-white text-xs font-bold hover:scale-105 transition-all shadow-sm"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-gradient-to-r from-[#737373] to-[#f5f5f5] text-white text-xs font-bold hover:scale-105 transition-all shadow-sm"
               >
                 <span>Register Squad (₹99)</span>
                 <ArrowRight className="h-3 w-3" />
@@ -239,7 +239,7 @@ export default function InteractiveTerminal({ event }: { event: EventData }) {
       case 'rules':
         return (
           <div className="space-y-2.5 font-mono text-xs">
-            <div className="text-[#ffe5d9] font-bold">CORE INTEGRITY GUIDELINES</div>
+            <div className="text-[#fafafa] font-bold">CORE INTEGRITY GUIDELINES</div>
             <div className="space-y-1 text-white/70 text-[11px] leading-relaxed">
               <div>• Submissions must be freshly authored during the official hackathon window.</div>
               <div>• Open-source libraries and AI coding assistants are permitted with transparent disclosure.</div>
@@ -254,7 +254,7 @@ export default function InteractiveTerminal({ event }: { event: EventData }) {
       case 'help':
         return (
           <div className="space-y-2.5 font-mono text-xs">
-            <div className="text-[#ffe5d9] font-bold">AVAILABLE CLI COMMANDS</div>
+            <div className="text-[#fafafa] font-bold">AVAILABLE CLI COMMANDS</div>
             <div className="grid grid-cols-2 gap-2 text-[11px] text-white/75">
               <div><span className="text-[#c19a88] font-bold">prizes</span> — Total prize grant &amp; awards</div>
               <div><span className="text-[#c19a88] font-bold">stages</span> — 4-stage competition timeline</div>
@@ -271,7 +271,7 @@ export default function InteractiveTerminal({ event }: { event: EventData }) {
 
       case 'whoami':
         return (
-          <div className="font-mono text-xs text-[#e8c5b4]">
+          <div className="font-mono text-xs text-[#ffffff]">
             guest_engineer@skaleathon: Ready to innovate and scale. Type <span className="text-white font-bold">&apos;register&apos;</span> to claim your pass.
           </div>
         );
@@ -373,7 +373,7 @@ Official Portal: https://skaleathon.skalekraft.in`;
   const activeContent = getOutputForCommand(activeTab);
 
   return (
-    <div className="relative mx-auto max-w-4xl w-full rounded-2xl border border-white/[0.12] bg-[#0A0A0B]/95 shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(193,154,136,0.12),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-2xl overflow-hidden text-left transition-all duration-300 hover:border-[#c19a88]/40">
+    <div className="relative mx-auto max-w-4xl w-full rounded-2xl border border-white/[0.12] bg-[#0A0A0B]/95 shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(255,255,255,0.12),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-2xl overflow-hidden text-left transition-all duration-300 hover:border-[#f5f5f5]/40">
       {/* 1. Authentic macOS Terminal Window Titlebar */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.08] bg-[#121214]/80">
         <div className="flex items-center gap-3">
@@ -444,11 +444,11 @@ Official Portal: https://skaleathon.skalekraft.in`;
               onClick={() => executeCommand(cmd.key)}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md font-mono text-xs font-medium transition-all shrink-0 cursor-pointer ${
                 isActive
-                  ? 'bg-[#c19a88]/20 text-[#ffe5d9] border border-[#c19a88]/60 shadow-[0_0_15px_rgba(193,154,136,0.25)]'
+                  ? 'bg-[#f5f5f5]/20 text-[#fafafa] border border-[#f5f5f5]/60 shadow-[0_0_15px_rgba(255,255,255,0.25)]'
                   : 'bg-white/[0.03] text-white/60 hover:text-white hover:bg-white/[0.06] border border-white/[0.06]'
               }`}
             >
-              <Icon className={`h-3 w-3 ${isActive ? 'text-[#ffe5d9]' : 'text-[#c19a88]'}`} />
+              <Icon className={`h-3 w-3 ${isActive ? 'text-[#fafafa]' : 'text-[#c19a88]'}`} />
               <span>{cmd.label}</span>
               <span className="text-[10px] text-white/40 hidden md:inline">({cmd.note})</span>
             </button>
@@ -468,7 +468,7 @@ Official Portal: https://skaleathon.skalekraft.in`;
             <div className="flex items-center gap-2 text-white/70">
               <span className="text-[#c19a88] font-bold">visitor@skaleathon</span>
               <span className="text-white/30">:</span>
-              <span className="text-[#e8c5b4]/80">~</span>
+              <span className="text-[#ffffff]/80">~</span>
               <span className="text-[#c19a88] font-bold">$</span>
               <span className="text-white font-medium">{item.command}</span>
               <span className="text-white/20 text-[10px] ml-auto">{item.timestamp}</span>
@@ -482,12 +482,12 @@ Official Portal: https://skaleathon.skalekraft.in`;
           <div className="flex items-center gap-2">
             <span className="text-[#c19a88] font-bold">visitor@skaleathon</span>
             <span className="text-white/30">:</span>
-            <span className="text-[#e8c5b4]/80">~</span>
+            <span className="text-[#ffffff]/80">~</span>
             <span className="text-[#c19a88] font-bold">$</span>
             <span className="text-white font-medium tracking-wide">
               {commandPromptText}
             </span>
-            <span className="inline-block w-2 h-4 bg-[#c19a88] animate-pulse align-middle" />
+            <span className="inline-block w-2 h-4 bg-[#f5f5f5] animate-pulse align-middle" />
           </div>
 
           {/* Active Command Output Area */}
@@ -523,7 +523,7 @@ Official Portal: https://skaleathon.skalekraft.in`;
         <button
           type="submit"
           aria-label="Send command"
-          className="flex items-center gap-1 text-[11px] font-mono font-semibold px-2.5 py-1 rounded border border-white/10 bg-white/[0.04] text-white/60 hover:text-white hover:border-[#c19a88]/40 hover:bg-[#c19a88]/20 transition-all shrink-0 cursor-pointer"
+          className="flex items-center gap-1 text-[11px] font-mono font-semibold px-2.5 py-1 rounded border border-white/10 bg-white/[0.04] text-white/60 hover:text-white hover:border-[#f5f5f5]/40 hover:bg-[#f5f5f5]/20 transition-all shrink-0 cursor-pointer"
         >
           <span>Run</span>
           <CornerDownLeft className="h-3 w-3" />

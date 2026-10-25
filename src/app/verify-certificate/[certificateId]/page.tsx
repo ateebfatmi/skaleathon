@@ -16,7 +16,7 @@ export default async function VerifyCertificatePage({
   return (
     <div className="py-20 sm:py-28 bg-[#0B0B0B] min-h-screen relative overflow-hidden">
       {/* Background ambient light */}
-      <div className="pointer-events-none absolute left-1/2 top-20 -translate-x-1/2 w-full max-w-7xl h-96 bg-[#805948]/10 rounded-full blur-[160px]" />
+      <div className="pointer-events-none absolute left-1/2 top-20 -translate-x-1/2 w-full max-w-7xl h-96 bg-[#737373]/10 rounded-full blur-[160px]" />
 
       <div className="container mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="mb-10">
@@ -61,11 +61,11 @@ export default async function VerifyCertificatePage({
           </div>
         ) : (
           /* Valid Certificate */
-          <div className="rounded-[28px] border border-[#c19a88]/40 bg-[linear-gradient(145deg,rgba(193,154,136,0.06),rgba(14,14,14,0.96))] p-8 sm:p-12 space-y-8 shadow-[0_25px_70px_rgba(128,89,72,0.25)]">
+          <div className="rounded-[28px] border border-[#f5f5f5]/40 bg-[linear-gradient(145deg,rgba(255,255,255,0.06),rgba(14,14,14,0.96))] p-8 sm:p-12 space-y-8 shadow-[0_25px_70px_rgba(163,163,163,0.25)]">
             {/* Verification Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/[0.08] pb-6">
               <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#805948]/20 border border-[#c19a88]/40 text-[#c19a88]">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#737373]/20 border border-[#f5f5f5]/40 text-[#c19a88]">
                   <ShieldCheck className="h-6 w-6" strokeWidth={1.8} />
                 </div>
                 <div>
@@ -118,7 +118,7 @@ export default async function VerifyCertificatePage({
               <a
                 href={`/api/certificates/download/${cert.certificate_code}`}
                 download
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] px-7 py-3 text-xs font-semibold tracking-wide text-white shadow-[0_4px_25px_rgba(128,89,72,0.35)] hover:scale-105 transition-all"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#737373] to-[#f5f5f5] px-7 py-3 text-xs font-semibold tracking-wide text-white shadow-[0_4px_25px_rgba(163,163,163,0.35)] hover:scale-105 transition-all"
               >
                 <Download className="h-4 w-4" />
                 <span>Download Official Certificate PDF</span>

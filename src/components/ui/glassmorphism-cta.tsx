@@ -17,7 +17,7 @@ export default function GlassmorphismCta({
   avatarSrc = "/images/skalekraft-logo.png",
   avatarAlt = "SkaleKraft logo",
   spread = "90deg",
-  shimmerColor = "rgba(193, 154, 136, 0.85)",
+  shimmerColor = "rgba(255,255,255, 0.85)",
   speed = "4s",
   className,
   href = "#",
@@ -32,7 +32,7 @@ export default function GlassmorphismCta({
         onClick?.(event);
       }}
       className={cn(
-        "group isolate relative inline-flex cursor-pointer overflow-hidden rounded-full shadow-[0_8px_30px_rgba(128,89,72,0.24)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_35px_8px_rgba(193,154,136,0.28)]",
+        "group isolate relative inline-flex cursor-pointer overflow-hidden rounded-full shadow-[0_8px_30px_rgba(163,163,163,0.24)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_35px_8px_rgba(255,255,255,0.28)]",
         className,
       )}
       style={
@@ -42,7 +42,7 @@ export default function GlassmorphismCta({
           "--radius": "9999px",
           "--speed": speed,
           "--cut": "1px",
-          "--bg": "rgba(128, 89, 72, 0.08)",
+          "--bg": "rgba(163,163,163, 0.08)",
         } as CSSProperties
       }
       {...props}
@@ -74,7 +74,7 @@ export default function GlassmorphismCta({
           className="absolute"
           style={{
             inset: "1px",
-            background: "rgba(17, 14, 13, 0.92)",
+            background: "rgba(17,17,17, 0.92)",
             borderRadius: "9999px",
             backdropFilter: "blur(8px)",
           }}
@@ -85,7 +85,7 @@ export default function GlassmorphismCta({
           alt={avatarAlt}
           width={24}
           height={24}
-          className="relative z-10 h-6 w-6 rounded-full object-cover ring-1 ring-[#c19a88]/40 shadow-[0_0_12px_rgba(193,154,136,0.3)] shrink-0"
+          className="relative z-10 h-6 w-6 rounded-full object-cover ring-1 ring-[#f5f5f5]/40 shadow-[0_0_12px_rgba(255,255,255,0.3)] shrink-0"
           style={{ width: 24, height: 24, maxWidth: 24, maxHeight: 24 }}
         />
         <span className="relative z-10 whitespace-nowrap font-sans">{label}</span>

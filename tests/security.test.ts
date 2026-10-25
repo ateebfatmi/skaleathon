@@ -1,8 +1,8 @@
 import crypto from 'crypto';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { signToken, verifyToken } from '../src/lib/auth/session';
 import { isSafePublicHttpUrl, submissionSchema } from '../src/lib/validation/schemas';
-import { checkRateLimit } from '../src/lib/security/rate-limit';
+import { checkRateLimit, checkRateLimitDistributed } from '../src/lib/security/rate-limit';
 import { NextRequest } from 'next/server';
 
 describe('session token security', () => {
@@ -102,6 +102,37 @@ describe('rate limiter security', () => {
     const res3 = checkRateLimit(req, 'test-scope', 2, 500);
     expect(res3.allowed).toBe(false);
     expect(res3.retryAfterSeconds).toBeGreaterThan(0);
+  });
+
+  it('uses the shared Redis limiter when production credentials are configured', async () => {
+    const originalUrl = process.env.UPSTASH_REDIS_REST_URL;
+    const originalToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+    process.env.UPSTASH_REDIS_REST_URL = 'https://ratelimit.example.com';
+    process.env.UPSTASH_REDIS_REST_TOKEN = 'test-token';
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => [{ result: 1 }, { result: 1 }],
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    try {
+      const req = new NextRequest('http://localhost:3000/api/test', {
+        headers: { 'x-forwarded-for': '203.0.113.196' },
+      });
+      const result = await checkRateLimitDistributed(req, 'distributed-test', 2, 60_000);
+
+      expect(result.allowed).toBe(true);
+      expect(fetchMock).toHaveBeenCalledWith(
+        'https://ratelimit.example.com/pipeline',
+        expect.objectContaining({ method: 'POST' })
+      );
+    } finally {
+      if (originalUrl === undefined) delete process.env.UPSTASH_REDIS_REST_URL;
+      else process.env.UPSTASH_REDIS_REST_URL = originalUrl;
+      if (originalToken === undefined) delete process.env.UPSTASH_REDIS_REST_TOKEN;
+      else process.env.UPSTASH_REDIS_REST_TOKEN = originalToken;
+      vi.unstubAllGlobals();
+    }
   });
 });
 

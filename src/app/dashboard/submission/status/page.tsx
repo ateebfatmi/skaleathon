@@ -20,7 +20,7 @@ export default async function SubmissionStatusPage() {
         </p>
         <Link
           href="/dashboard/submission"
-          className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/30 hover:scale-105 transition-all"
+          className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#737373] via-[#737373] to-[#f5f5f5] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#737373]/30 hover:scale-105 transition-all"
         >
           <span>Create Submission</span>
           <ArrowRight className="h-4 w-4" />
@@ -31,7 +31,7 @@ export default async function SubmissionStatusPage() {
 
   return (
     <div className="max-w-2xl mx-auto space-y-8 py-4">
-      <div className="relative overflow-hidden rounded-3xl border border-emerald-500/40 bg-gradient-to-b from-[#131211] via-[#0E0E0E] to-[#0A0A0A] p-8 sm:p-12 space-y-6 shadow-2xl">
+      <div className="relative overflow-hidden rounded-3xl border border-emerald-500/40 bg-gradient-to-b from-[#141414] via-[#0E0E0E] to-[#0A0A0A] p-8 sm:p-12 space-y-6 shadow-2xl">
         {/* Ambient Top Glow */}
         <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 h-48 w-72 rounded-full bg-emerald-500/15 blur-3xl" />
 
@@ -49,7 +49,7 @@ export default async function SubmissionStatusPage() {
             Submission Received & Queued
           </h1>
           <p className="text-xs sm:text-sm text-neutral-300 max-w-md mx-auto leading-relaxed">
-            Project <strong className="text-white">{submission.title}</strong> by team <strong className="text-[#e8c5b4]">{team?.name}</strong> has been logged for technical jury review.
+            Project <strong className="text-white">{submission.title}</strong> by team <strong className="text-[#ffffff]">{team?.name}</strong> has been logged for technical jury review.
           </p>
         </div>
 
@@ -81,7 +81,7 @@ export default async function SubmissionStatusPage() {
               href={submission.github_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-[#e8c5b4] hover:text-white hover:underline flex items-center gap-1 max-w-[240px] truncate"
+              className="font-mono text-[#ffffff] hover:text-white hover:underline flex items-center gap-1 max-w-[240px] truncate"
             >
               <Github className="h-3.5 w-3.5 shrink-0 text-[#c19a88]" />
               <span className="truncate">{submission.github_url.replace('https://github.com/', '')}</span>
@@ -133,7 +133,7 @@ export default async function SubmissionStatusPage() {
 
           <Link
             href="/dashboard"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/30 hover:scale-105 transition-all"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#737373] via-[#737373] to-[#f5f5f5] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#737373]/30 hover:scale-105 transition-all"
           >
             <span>Return to Dashboard</span>
             <ArrowRight className="h-4 w-4" />

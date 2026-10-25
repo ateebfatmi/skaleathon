@@ -21,7 +21,7 @@ const instrumentSerif = Instrument_Serif({
 
 
 export const metadata: Metadata = {
-  title: 'Skaleathon — National Online Hackathon by SkaleKraft',
+  title: 'Skaleathon',
   description:
     'SkaleKraft presents Skaleathon: A premier national online hackathon with a ₹35,000 prize pool, 3 tracks (AI/ML, Web, App), and a flat ₹99 team pass. Build. Innovate. Scale.',
   keywords: [
@@ -89,7 +89,7 @@ export default function RootLayout({
       appearance={{
         theme: dark,
         variables: {
-          colorPrimary: '#c19a88',
+          colorPrimary: '#f5f5f5',
           colorBackground: '#0B0B0B',
           colorForeground: '#EDEDED',
           colorMutedForeground: '#A1A1A1',
@@ -100,13 +100,13 @@ export default function RootLayout({
         elements: {
           card: 'border border-white/10 shadow-2xl backdrop-blur-xl bg-[#0B0B0B]',
           formButtonPrimary:
-            'bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] text-white font-medium transition-all shadow-lg shadow-[#805948]/20',
-          footerActionLink: 'text-[#c19a88] hover:text-[#e8c5b4]',
+            'bg-gradient-to-r from-[#737373] to-[#f5f5f5] hover:from-[#a3a3a3] hover:to-[#d4d4d4] text-white font-medium transition-all shadow-lg shadow-[#737373]/20',
+          footerActionLink: 'text-[#c19a88] hover:text-[#ffffff]',
         },
       }}
     >
       <html lang="en" className="dark" data-scroll-behavior="smooth">
-        <body className={`min-h-screen bg-[#0B0B0B] text-white flex flex-col antialiased selection:bg-[#805948]/30 selection:text-white relative overflow-x-clip ${instrumentSerif.variable}`}>
+        <body className={`min-h-screen bg-[#0B0B0B] text-white flex flex-col antialiased selection:bg-[#737373]/30 selection:text-white relative overflow-x-clip ${instrumentSerif.variable}`}>
           <AuthStateSynchronizer />
           {/* SkaleKraft Signature Interactive Background Architecture */}
           <InteractiveAmbientBackground />

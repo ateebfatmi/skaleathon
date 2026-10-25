@@ -687,7 +687,12 @@ export class EventRepository {
 
   static async markWebhookProcessed(eventId: string, errorMessage?: string): Promise<void> {
     if (this.isSupabaseEnabled()) {
-      return;
+      try {
+        await SupabaseStore.markWebhookProcessed(eventId, errorMessage);
+        return;
+      } catch (err) {
+        this.handleSupabaseError('markWebhookProcessed', err);
+      }
     }
     const state = this.store.getState();
     const evt = state.webhookEvents.find((e) => e.id === eventId);

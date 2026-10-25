@@ -53,11 +53,11 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
         'Direct fast-track technical interview with SkaleKraft',
         'Featured citation in the official SkaleKraft tech report',
       ],
-      borderClass: 'border-white/10 hover:border-slate-300/40',
-      badgeClass: 'bg-white/10 text-slate-200 border-white/15',
+      borderClass: 'border-white/10 hover:border-neutral-300/40',
+      badgeClass: 'bg-white/10 text-neutral-200 border-white/15',
       amountColor: 'text-white',
       cardBg: 'bg-gradient-to-b from-white/[0.04] to-black/60',
-      iconColor: 'text-slate-300',
+      iconColor: 'text-neutral-300',
       orderClass: 'order-2 md:order-1',
     },
     {
@@ -73,11 +73,11 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
         'Priority interview gateway for paid engineering & AI roles at SkaleKraft',
         'Dedicated showcase feature across SkaleKraft partner channels',
       ],
-      borderClass: 'border-[#c19a88]/60 hover:border-[#e8c5b4] shadow-[0_0_50px_rgba(193,154,136,0.25)]',
-      badgeClass: 'bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4] text-black font-bold tracking-widest',
-      amountColor: 'bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent',
-      cardBg: 'bg-gradient-to-b from-[#c19a88]/15 via-[#1a1412] to-black/80',
-      iconColor: 'text-[#e8c5b4]',
+      borderClass: 'border-[#f5f5f5]/60 hover:border-[#ffffff] shadow-[0_0_50px_rgba(255,255,255,0.25)]',
+      badgeClass: 'bg-gradient-to-r from-[#737373] via-[#f5f5f5] to-[#ffffff] text-black font-bold tracking-widest',
+      amountColor: 'bg-gradient-to-r from-[#ffffff] via-[#f5f5f5] to-[#737373] bg-clip-text text-transparent',
+      cardBg: 'bg-gradient-to-b from-[#f5f5f5]/15 via-[#171717] to-black/80',
+      iconColor: 'text-[#ffffff]',
       isGrand: true,
       orderClass: 'order-1 md:order-2 md:-translate-y-4',
     },
@@ -93,8 +93,8 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
         'Direct fast-track technical interview with SkaleKraft',
         'Official inclusion in the national talent directory',
       ],
-      borderClass: 'border-white/10 hover:border-[#c19a88]/40',
-      badgeClass: 'bg-[#805948]/20 text-[#e8c5b4] border-[#805948]/30',
+      borderClass: 'border-white/10 hover:border-[#f5f5f5]/40',
+      badgeClass: 'bg-[#737373]/20 text-[#ffffff] border-[#737373]/30',
       amountColor: 'text-white',
       cardBg: 'bg-gradient-to-b from-white/[0.04] to-black/60',
       iconColor: 'text-[#c19a88]',
@@ -122,11 +122,11 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
   ];
 
   return (
-    <div className="relative w-full space-y-16 pb-24 text-neutral-200">
+    <div className="relative w-full space-y-10 pb-16 text-neutral-200 sm:space-y-16 sm:pb-24">
       {/* Background Ambient Glows */}
-      <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 h-[420px] w-full max-w-5xl rounded-full bg-[radial-gradient(ellipse_80%_50%_at_50%_20%,rgba(193,154,136,0.18),transparent_70%)] blur-2xl" />
-      <div className="pointer-events-none absolute top-96 -left-32 h-80 w-80 rounded-full bg-[#805948]/15 blur-[140px]" />
-      <div className="pointer-events-none absolute top-[800px] -right-32 h-80 w-80 rounded-full bg-[#c19a88]/12 blur-[140px]" />
+      <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 h-[420px] w-full max-w-5xl rounded-full bg-[radial-gradient(ellipse_80%_50%_at_50%_20%,rgba(255,255,255,0.18),transparent_70%)] blur-2xl" />
+      <div className="pointer-events-none absolute top-96 -left-32 h-80 w-80 rounded-full bg-[#737373]/15 blur-[140px]" />
+      <div className="pointer-events-none absolute top-[800px] -right-32 h-80 w-80 rounded-full bg-[#f5f5f5]/12 blur-[140px]" />
 
       {/* 1. Luxury Editorial Hero Header */}
       <header className="relative pt-1 space-y-4">
@@ -141,8 +141,8 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
         <div className="mobile-utility-row relative z-10 flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/[0.07]">
           <div className="flex flex-wrap items-center gap-2 text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.22em]">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c19a88] opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#c19a88]" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#f5f5f5] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#f5f5f5]" />
             </span>
             <span className="text-[#c19a88]">Official Rewards // Guaranteed Grants</span>
             <span className="text-white/20">•</span>
@@ -150,7 +150,7 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
               Prize Pool: <strong className="text-white font-semibold">{prizePoolFormatted} Total Cash</strong>
             </span>
             <span className="text-white/20">•</span>
-            <span className="text-[#e8c5b4] font-semibold">[TOP {event.certificates_top_n} CITATIONS]</span>
+            <span className="text-[#ffffff] font-semibold">[TOP {event.certificates_top_n} CITATIONS]</span>
           </div>
 
           <div className="flex items-center gap-4 text-xs">
@@ -163,7 +163,7 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
             <span className="text-white/15">|</span>
             <Link
               href="/rules"
-              className="group inline-flex items-center gap-1.5 text-[#e8c5b4] hover:text-white transition-colors font-semibold text-[11px]"
+              className="group inline-flex items-center gap-1.5 text-[#ffffff] hover:text-white transition-colors font-semibold text-[11px]"
             >
               <span>Tournament Rules</span>
               <ArrowRight className="h-3 w-3 text-[#c19a88] group-hover:translate-x-0.5 transition-transform" />
@@ -174,10 +174,10 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
         {/* Editorial Headline & Value Manifesto */}
         <div className="relative z-10 max-w-3xl space-y-3 pb-2">
           <h1 className="text-3xl sm:text-5xl lg:text-[52px] font-extrabold text-white tracking-tight leading-[1.08]">
-            Tournament <span className="font-serif italic font-normal text-[#e8c5b4]">Prizes</span> &amp; Honors
+            Tournament <span className="font-serif italic font-normal text-[#ffffff]">Prizes</span> &amp; Honors
           </h1>
 
-          <p className="border-l-2 border-[#c19a88]/45 pl-3 text-xs sm:text-[14px] text-neutral-300/85 leading-relaxed font-light">
+          <p className="border-l-2 border-[#f5f5f5]/45 pl-3 text-xs sm:text-[14px] text-neutral-300/85 leading-relaxed font-light">
             SkaleKraft awards <strong className="text-white font-semibold">{prizePoolFormatted}</strong> in guaranteed direct cash grants to the top 3 podium squads, along with official verifiable merit certificates for the Top {event.certificates_top_n} finalists and fast-track hiring interviews.
           </p>
         </div>
@@ -192,7 +192,7 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
             </div>
 
             <div className="inline-flex items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3.5 py-2">
-              <Award className="h-4 w-4 text-[#e8c5b4]" />
+              <Award className="h-4 w-4 text-[#ffffff]" />
               <span className="font-semibold text-white">Top {event.certificates_top_n} Certificates</span>
               <span className="text-white/40 text-[11px]">(QR Verifiable)</span>
             </div>
@@ -208,7 +208,7 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
             <button
               type="button"
               onClick={() => setIsRegModalOpen(true)}
-              className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/30 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+              className="group inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#737373] via-[#737373] to-[#f5f5f5] hover:from-[#a3a3a3] hover:to-[#d4d4d4] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#737373]/30 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer sm:w-auto"
             >
               <span>Register Squad ({feeFormatted})</span>
               <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -231,13 +231,13 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch max-w-6xl mx-auto pt-2">
+        <div className="grid grid-cols-2 gap-3 items-stretch max-w-6xl mx-auto pt-2 sm:gap-6 md:grid-cols-3">
           {podiumPrizes.map((p, idx) => (
-            <div key={idx} className={`${p.orderClass} flex flex-col`}>
+            <div key={idx} className={`${p.orderClass} ${p.isGrand ? 'col-span-2 md:col-span-1' : ''} flex min-w-0 flex-col`}>
               <SpotlightCard
                 enableTilt
-                spotlightColor={p.isGrand ? 'rgba(232, 197, 180, 0.22)' : 'rgba(255, 255, 255, 0.08)'}
-                className={`h-full flex flex-col justify-between p-6 sm:p-7 rounded-3xl border transition-all duration-300 ${p.borderClass} ${p.cardBg}`}
+                spotlightColor={p.isGrand ? 'rgba(229,229,229, 0.22)' : 'rgba(255, 255, 255, 0.08)'}
+                className={`h-full flex flex-col justify-between p-4 sm:p-7 rounded-2xl sm:rounded-3xl border transition-all duration-300 ${p.borderClass} ${p.cardBg}`}
               >
                 <div className="space-y-4">
                   {/* Badge & Trophy Header */}
@@ -276,9 +276,9 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
                   <button
                     type="button"
                     onClick={() => setIsRegModalOpen(true)}
-                    className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                    className={`flex min-h-11 w-full cursor-pointer items-center justify-center gap-1.5 rounded-xl px-4 py-2.5 text-xs font-bold transition-all ${
                       p.isGrand
-                        ? 'bg-gradient-to-r from-[#805948] to-[#c19a88] text-white hover:brightness-110 shadow-md'
+                        ? 'bg-gradient-to-r from-[#737373] to-[#f5f5f5] text-white hover:brightness-110 shadow-md'
                         : 'bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/10'
                     }`}
                   >
@@ -309,13 +309,13 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Card 1: Top 25 Certificates */}
           <SpotlightCard
-            spotlightColor="rgba(193,154,136,0.18)"
+            spotlightColor="rgba(255,255,255,0.18)"
             className="p-6 sm:p-8 rounded-3xl border border-white/10 bg-white/[0.02] flex flex-col justify-between space-y-6"
           >
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="p-3 rounded-2xl border border-[#c19a88]/30 bg-[#c19a88]/10 text-[#c19a88]">
+                  <div className="p-3 rounded-2xl border border-[#f5f5f5]/30 bg-[#f5f5f5]/10 text-[#c19a88]">
                     <Award className="h-6 w-6" />
                   </div>
                   <div>
@@ -363,7 +363,7 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
 
           {/* Card 2: SkaleKraft Internship Gateway */}
           <SpotlightCard
-            spotlightColor="rgba(232, 197, 180, 0.18)"
+            spotlightColor="rgba(229,229,229, 0.18)"
             className="p-6 sm:p-8 rounded-3xl border border-white/10 bg-white/[0.02] flex flex-col justify-between space-y-6"
           >
             <div className="space-y-4">
@@ -465,12 +465,12 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
 
       {/* 5. High-Impact Closing CTA Banner */}
       <section className="max-w-4xl mx-auto pt-4">
-        <div className="relative rounded-3xl border border-[#c19a88]/40 bg-gradient-to-r from-[#1f1715] via-[#161211] to-[#1f1715] p-8 sm:p-10 text-center overflow-hidden shadow-[0_20px_60px_rgba(128,89,72,0.25)]">
-          <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#c19a88]/15 blur-3xl" />
-          <div className="pointer-events-none absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-[#805948]/20 blur-3xl" />
+        <div className="relative rounded-3xl border border-[#f5f5f5]/40 bg-gradient-to-r from-[#171717] via-[#171717] to-[#171717] p-8 sm:p-10 text-center overflow-hidden shadow-[0_20px_60px_rgba(163,163,163,0.25)]">
+          <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#f5f5f5]/15 blur-3xl" />
+          <div className="pointer-events-none absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-[#737373]/20 blur-3xl" />
 
           <div className="relative z-10 space-y-4 max-w-xl mx-auto">
-            <span className="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-[0.22em] text-[#e8c5b4] font-bold px-3 py-1 rounded-full bg-[#c19a88]/20 border border-[#c19a88]/40">
+            <span className="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-[0.22em] text-[#ffffff] font-bold px-3 py-1 rounded-full bg-[#f5f5f5]/20 border border-[#f5f5f5]/40">
               <Zap className="h-3 w-3 text-[#c19a88]" />
               <span>4-Stage National Hackathon</span>
             </span>
@@ -487,7 +487,7 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
               <button
                 type="button"
                 onClick={() => setIsRegModalOpen(true)}
-                className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#805948]/30 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#737373] via-[#737373] to-[#f5f5f5] hover:from-[#a3a3a3] hover:to-[#d4d4d4] px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#737373]/30 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
               >
                 <span>Register Squad — {feeFormatted}</span>
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />

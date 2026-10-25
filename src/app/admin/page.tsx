@@ -59,14 +59,14 @@ export default async function AdminOverviewPage() {
       value: overview.certificatesIssued,
       sub: 'Top 25 finalists registry',
       icon: Award,
-      color: 'text-[#c19a88] border-[#c19a88]/30',
+      color: 'text-[#c19a88] border-[#f5f5f5]/30',
     },
     {
       label: 'Event Lifecycle Stage',
       value: event.status.replace(/_/g, ' ').toUpperCase(),
       sub: 'Dynamic system state',
       icon: Settings,
-      color: 'text-slate-300 border-white/20',
+      color: 'text-neutral-300 border-white/20',
     },
   ];
 
@@ -82,7 +82,7 @@ export default async function AdminOverviewPage() {
               className="mobile-card rounded-2xl sm:rounded-3xl border border-white/10 bg-[#0E0E0E] p-4 sm:p-6 space-y-4 hover:border-white/20 transition-all"
             >
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
                   {c.label}
                 </span>
                 <div className={`p-2.5 rounded-xl border bg-white/5 ${c.color}`}>
@@ -93,7 +93,7 @@ export default async function AdminOverviewPage() {
                 <div className="text-2xl sm:text-3xl font-black text-white tracking-tight">
                   {c.value}
                 </div>
-                <p className="text-xs text-slate-400 mt-1">{c.sub}</p>
+                <p className="text-xs text-neutral-400 mt-1">{c.sub}</p>
               </div>
             </div>
           );
@@ -115,7 +115,7 @@ export default async function AdminOverviewPage() {
           <a
             href="/api/admin/registrations?format=csv"
             download
-            className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-4 py-2 text-xs font-semibold text-slate-200 transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-4 py-2 text-xs font-semibold text-neutral-200 transition-colors"
           >
             <Download className="h-3.5 w-3.5" />
             <span>Export Registrations (CSV)</span>
@@ -156,7 +156,7 @@ export default async function AdminOverviewPage() {
 
         <div className="space-y-3">
           {auditLogs.length === 0 ? (
-            <p className="text-xs text-slate-400">No actions recorded yet.</p>
+            <p className="text-xs text-neutral-400">No actions recorded yet.</p>
           ) : (
             auditLogs.map((log) => (
               <div
@@ -164,11 +164,11 @@ export default async function AdminOverviewPage() {
                 className="flex items-center justify-between p-3.5 rounded-xl border border-white/5 bg-[#141414] text-xs"
               >
                 <div>
-                  <span className="font-bold text-slate-200 font-mono">{log.action}</span>
-                  <span className="text-slate-400 mx-2">•</span>
-                  <span className="text-slate-400">Target: {log.target_entity} ({log.target_id || 'Global'})</span>
+                  <span className="font-bold text-neutral-200 font-mono">{log.action}</span>
+                  <span className="text-neutral-400 mx-2">•</span>
+                  <span className="text-neutral-400">Target: {log.target_entity} ({log.target_id || 'Global'})</span>
                 </div>
-                <span className="text-[11px] text-slate-400 font-mono">
+                <span className="text-[11px] text-neutral-400 font-mono">
                   {new Date(log.created_at).toLocaleTimeString()}
                 </span>
               </div>

@@ -31,16 +31,16 @@ export default function RulesPageClient({ event }: RulesPageClientProps) {
       weight: '30%',
       title: 'Architecture & Code Quality',
       desc: 'System modularity, database resilience, clean git commit history, and secure API boundaries.',
-      color: 'from-[#c19a88]/15 to-[#805948]/25',
-      border: 'border-[#c19a88]/40',
+      color: 'from-[#f5f5f5]/15 to-[#737373]/25',
+      border: 'border-[#f5f5f5]/40',
       badge: 'Core Engineering',
     },
     {
       weight: '25%',
       title: 'Innovation & Problem Relevance',
       desc: 'Originality of technical approach, feasibility, and real-world value of the chosen solution.',
-      color: 'from-blue-500/10 to-indigo-500/15',
-      border: 'border-blue-500/30',
+      color: 'from-white/[0.03] to-white/[0.07]',
+      border: 'border-white/15',
       badge: 'Concept & Impact',
     },
     {
@@ -68,8 +68,8 @@ export default function RulesPageClient({ event }: RulesPageClientProps) {
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.08] pb-3.5">
           <div className="flex items-center gap-2.5 text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.22em] text-[#c19a88]">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c19a88] opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#c19a88]" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#f5f5f5] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#f5f5f5]" />
             </span>
             <span>Official Tournament Protocol // Governance &amp; Standards</span>
           </div>
@@ -103,7 +103,7 @@ export default function RulesPageClient({ event }: RulesPageClientProps) {
       {/* 2. Core Eligibility & Squad Protocol (4 Focused Cards) */}
       <section className="space-y-4">
         <div className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] animate-pulse" />
+          <span className="h-1.5 w-1.5 rounded-full bg-[#f5f5f5] animate-pulse" />
           <h2 className="text-[11px] font-mono uppercase tracking-[0.22em] text-[#c19a88] font-bold">
             01 // Squad &amp; Eligibility Protocol
           </h2>
@@ -112,7 +112,7 @@ export default function RulesPageClient({ event }: RulesPageClientProps) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
           <SpotlightCard className="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] flex flex-col justify-between space-y-3">
             <div className="space-y-2.5">
-              <div className="h-9 w-9 rounded-xl bg-[#c19a88]/10 border border-[#c19a88]/20 flex items-center justify-center text-[#c19a88]">
+              <div className="h-9 w-9 rounded-xl bg-[#f5f5f5]/10 border border-[#f5f5f5]/20 flex items-center justify-center text-[#c19a88]">
                 <Users className="h-4 w-4" />
               </div>
               <h3 className="text-sm font-bold text-white">Squad Size</h3>
@@ -120,14 +120,14 @@ export default function RulesPageClient({ event }: RulesPageClientProps) {
                 {event.min_team_size} to {event.max_team_size} members per team. Solo builders are fully supported and judged equally.
               </p>
             </div>
-            <span className="text-[10px] font-mono text-[#e8c5b4] pt-2 border-t border-white/[0.06] block">
+            <span className="text-[10px] font-mono text-[#ffffff] pt-2 border-t border-white/[0.06] block">
               Cross-college &amp; inter-city allowed
             </span>
           </SpotlightCard>
 
           <SpotlightCard className="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] flex flex-col justify-between space-y-3">
             <div className="space-y-2.5">
-              <div className="h-9 w-9 rounded-xl bg-[#c19a88]/10 border border-[#c19a88]/20 flex items-center justify-center text-[#c19a88]">
+              <div className="h-9 w-9 rounded-xl bg-[#f5f5f5]/10 border border-[#f5f5f5]/20 flex items-center justify-center text-[#c19a88]">
                 <Trophy className="h-4 w-4" />
               </div>
               <h3 className="text-sm font-bold text-white">Flat Team Pass</h3>
@@ -135,14 +135,14 @@ export default function RulesPageClient({ event }: RulesPageClientProps) {
                 Flat {formatINR(event.registration_fee_inr)} entry fee covers the entire squad across all 4 tournament stages.
               </p>
             </div>
-            <span className="text-[10px] font-mono text-[#e8c5b4] pt-2 border-t border-white/[0.06] block">
+            <span className="text-[10px] font-mono text-[#ffffff] pt-2 border-t border-white/[0.06] block">
               Zero per-head or hidden fees
             </span>
           </SpotlightCard>
 
           <SpotlightCard className="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] flex flex-col justify-between space-y-3">
             <div className="space-y-2.5">
-              <div className="h-9 w-9 rounded-xl bg-[#c19a88]/10 border border-[#c19a88]/20 flex items-center justify-center text-[#c19a88]">
+              <div className="h-9 w-9 rounded-xl bg-[#f5f5f5]/10 border border-[#f5f5f5]/20 flex items-center justify-center text-[#c19a88]">
                 <ShieldCheck className="h-4 w-4" />
               </div>
               <h3 className="text-sm font-bold text-white">Single Roster Rule</h3>
@@ -150,14 +150,14 @@ export default function RulesPageClient({ event }: RulesPageClientProps) {
                 Each participant may belong to only one squad. Dual membership results in squad disqualification.
               </p>
             </div>
-            <span className="text-[10px] font-mono text-[#e8c5b4] pt-2 border-t border-white/[0.06] block">
+            <span className="text-[10px] font-mono text-[#ffffff] pt-2 border-t border-white/[0.06] block">
               Finalized before Stage 02
             </span>
           </SpotlightCard>
 
           <SpotlightCard className="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] flex flex-col justify-between space-y-3">
             <div className="space-y-2.5">
-              <div className="h-9 w-9 rounded-xl bg-[#c19a88]/10 border border-[#c19a88]/20 flex items-center justify-center text-[#c19a88]">
+              <div className="h-9 w-9 rounded-xl bg-[#f5f5f5]/10 border border-[#f5f5f5]/20 flex items-center justify-center text-[#c19a88]">
                 <Globe className="h-4 w-4" />
               </div>
               <h3 className="text-sm font-bold text-white">100% Online Mode</h3>
@@ -165,7 +165,7 @@ export default function RulesPageClient({ event }: RulesPageClientProps) {
                 Build and submit remotely from anywhere in India. Live presentations conducted via online video panel.
               </p>
             </div>
-            <span className="text-[10px] font-mono text-[#e8c5b4] pt-2 border-t border-white/[0.06] block">
+            <span className="text-[10px] font-mono text-[#ffffff] pt-2 border-t border-white/[0.06] block">
               No physical travel required
             </span>
           </SpotlightCard>
@@ -175,7 +175,7 @@ export default function RulesPageClient({ event }: RulesPageClientProps) {
       {/* 3. Code Integrity Policy: Allowed vs Strictly Prohibited */}
       <section className="space-y-4">
         <div className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] animate-pulse" />
+          <span className="h-1.5 w-1.5 rounded-full bg-[#f5f5f5] animate-pulse" />
           <h2 className="text-[11px] font-mono uppercase tracking-[0.22em] text-[#c19a88] font-bold">
             02 // Code Integrity: Allowed vs. Prohibited
           </h2>
@@ -265,7 +265,7 @@ export default function RulesPageClient({ event }: RulesPageClientProps) {
       {/* 4. Mandatory Deliverables by Stage */}
       <section className="space-y-4">
         <div className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] animate-pulse" />
+          <span className="h-1.5 w-1.5 rounded-full bg-[#f5f5f5] animate-pulse" />
           <h2 className="text-[11px] font-mono uppercase tracking-[0.22em] text-[#c19a88] font-bold">
             03 // Submission Milestones
           </h2>
@@ -273,7 +273,7 @@ export default function RulesPageClient({ event }: RulesPageClientProps) {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
           <div className="p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-2">
-            <span className="text-[10px] font-mono text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-full border border-blue-500/20 inline-block font-semibold">
+            <span className="inline-block rounded-full border border-white/15 bg-white/[0.06] px-2 py-0.5 font-mono text-[10px] font-semibold text-white/60">
               Stage 01 • 8 Jan
             </span>
             <h3 className="text-xs sm:text-sm font-bold text-white">Online Technical Quiz</h3>
@@ -283,7 +283,7 @@ export default function RulesPageClient({ event }: RulesPageClientProps) {
           </div>
 
           <div className="p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-2">
-            <span className="text-[10px] font-mono text-[#c19a88] bg-[#c19a88]/10 px-2 py-0.5 rounded-full border border-[#c19a88]/20 inline-block font-semibold">
+            <span className="text-[10px] font-mono text-[#c19a88] bg-[#f5f5f5]/10 px-2 py-0.5 rounded-full border border-[#f5f5f5]/20 inline-block font-semibold">
               Stage 02 • 10–14 Jan
             </span>
             <h3 className="text-xs sm:text-sm font-bold text-white">Architecture PPT Deck</h3>
@@ -317,7 +317,7 @@ export default function RulesPageClient({ event }: RulesPageClientProps) {
       {/* 5. Official Judging Rubric (100 Points) */}
       <section className="space-y-4">
         <div className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] animate-pulse" />
+          <span className="h-1.5 w-1.5 rounded-full bg-[#f5f5f5] animate-pulse" />
           <h2 className="text-[11px] font-mono uppercase tracking-[0.22em] text-[#c19a88] font-bold">
             04 // Evaluation Criteria (100 Points Total)
           </h2>
@@ -331,7 +331,7 @@ export default function RulesPageClient({ event }: RulesPageClientProps) {
             >
               <div className="flex items-center justify-between">
                 <span className="text-2xl font-black text-white font-mono">{item.weight}</span>
-                <span className="text-[9px] font-mono text-[#e8c5b4] uppercase tracking-wider">{item.badge}</span>
+                <span className="text-[9px] font-mono text-[#ffffff] uppercase tracking-wider">{item.badge}</span>
               </div>
               <h3 className="text-sm font-bold text-white">{item.title}</h3>
               <p className="text-[11px] text-neutral-300 font-light leading-relaxed">{item.desc}</p>
@@ -341,7 +341,7 @@ export default function RulesPageClient({ event }: RulesPageClientProps) {
       </section>
 
       {/* 6. Clean Call to Action & Support Banner */}
-      <div className="rounded-2xl border border-white/[0.1] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(17,14,13,0.96))] p-5 sm:p-7 flex flex-col md:flex-row items-center justify-between gap-5 shadow-xl">
+      <div className="rounded-2xl border border-white/[0.1] bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(17,17,17,0.96))] p-5 sm:p-7 flex flex-col md:flex-row items-center justify-between gap-5 shadow-xl">
         <div className="space-y-1 text-center md:text-left">
           <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#c19a88] font-bold block">
             Ready to Compete?
@@ -357,7 +357,7 @@ export default function RulesPageClient({ event }: RulesPageClientProps) {
         <div className="flex items-center gap-3 w-full md:w-auto shrink-0">
           <Link
             href="/register"
-            className="flex-1 md:flex-initial px-6 py-2.5 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] text-white font-bold text-xs uppercase tracking-wider text-center shadow-lg shadow-[#805948]/20 hover:scale-105 transition-all flex items-center justify-center gap-1.5"
+            className="flex-1 md:flex-initial px-6 py-2.5 rounded-full bg-gradient-to-r from-[#737373] to-[#f5f5f5] text-white font-bold text-xs uppercase tracking-wider text-center shadow-lg shadow-[#737373]/20 hover:scale-105 transition-all flex items-center justify-center gap-1.5"
           >
             <span>Register Squad</span>
             <ArrowRight className="h-3.5 w-3.5" />

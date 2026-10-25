@@ -11,7 +11,7 @@ interface SpotlightCardProps extends React.HTMLAttributes<HTMLDivElement> {
 export function SpotlightCard({
   children,
   className,
-  spotlightColor = 'rgba(193, 154, 136, 0.14)',
+  spotlightColor = 'rgba(255,255,255, 0.14)',
   enableTilt: _enableTilt = false,
   ...props
 }: SpotlightCardProps) {
@@ -35,7 +35,7 @@ export function SpotlightCard({
       
       {/* Subtle border highlight */}
       <div
-        className="pointer-events-none absolute inset-0 rounded-[24px] border border-[#c19a88]/30 opacity-0 transition-opacity duration-300 group-hover/spotlight:opacity-100"
+        className="pointer-events-none absolute inset-0 rounded-[24px] border border-[#f5f5f5]/30 opacity-0 transition-opacity duration-300 group-hover/spotlight:opacity-100"
         aria-hidden="true"
       />
 

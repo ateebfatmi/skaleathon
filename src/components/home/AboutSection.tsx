@@ -34,14 +34,14 @@ export default function AboutSection() {
   return (
     <section className="py-14 sm:py-20 lg:py-28 relative overflow-hidden bg-[#0B0B0B]">
       {/* Background ambient light */}
-      <div className="pointer-events-none absolute right-0 top-1/3 h-96 w-96 rounded-full bg-[#805948]/10 blur-[130px]" />
+      <div className="pointer-events-none absolute right-0 top-1/3 h-96 w-96 rounded-full bg-[#737373]/10 blur-[130px]" />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-9 sm:gap-12 lg:gap-16 items-center">
           {/* Left Column: Mission Narrative */}
           <div className="lg:col-span-6 space-y-6">
             <div className="flex items-center gap-2.5">
-              <span className="h-px w-6 bg-[#c19a88]/70" />
+              <span className="h-px w-6 bg-[#f5f5f5]/70" />
               <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
                 The Engineering Standard
               </p>
@@ -49,7 +49,7 @@ export default function AboutSection() {
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight text-white leading-[1.12]">
               A platform engineered for builders who{' '}
-              <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
+              <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#ffffff] via-[#f5f5f5] to-[#737373] bg-clip-text text-transparent pb-1 inline-block">
                 ship real software
               </span>
               .
@@ -82,8 +82,8 @@ export default function AboutSection() {
               return (
                 <div key={i} className="h-full">
                   <SpotlightCard
-                    spotlightColor="rgba(193, 154, 136, 0.12)"
-                    className="mobile-card h-full p-4 sm:p-6 hover:border-[#c19a88]/30 group"
+                    spotlightColor="rgba(255,255,255, 0.12)"
+                    className="mobile-card h-full p-4 sm:p-6 hover:border-[#f5f5f5]/30 group"
                   >
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88] shadow-[0_4px_16px_rgba(0,0,0,0.3)] group-hover:scale-105 transition-transform">

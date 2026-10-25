@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/auth/server-guard';
 import { EventRepository } from '@/lib/db/repository';
-import { checkRateLimit } from '@/lib/security/rate-limit';
+import { checkRateLimitDistributed } from '@/lib/security/rate-limit';
 
 export async function POST(req: NextRequest) {
   try {
-    const rateLimit = checkRateLimit(req, 'certificate-generate', 3, 60_000);
+    const rateLimit = await checkRateLimitDistributed(req, 'certificate-generate', 3, 60_000);
     if (!rateLimit.allowed) {
       return NextResponse.json(
         { error: 'Certificate generation is temporarily rate limited.' },

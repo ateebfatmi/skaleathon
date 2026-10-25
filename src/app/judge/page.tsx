@@ -23,7 +23,7 @@ export default async function JudgeOverviewPage() {
       <div className="rounded-2xl border border-white/10 bg-[#0E0E0E] p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-sm font-bold text-white">Official Multi-Criterion Scoring Framework</h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-neutral-400 mt-1">
             5 weighted criteria (Innovation 25%, Technical 25%, Relevance 20%, Design 15%, Presentation 15%). Total Weight: {totalWeight}%.
           </p>
         </div>
@@ -43,9 +43,9 @@ export default async function JudgeOverviewPage() {
 
         {assignments.length === 0 ? (
           <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-8 text-center space-y-4">
-            <Clock className="h-8 w-8 text-slate-500 mx-auto" />
+            <Clock className="h-8 w-8 text-neutral-500 mx-auto" />
             <h3 className="text-base font-bold text-white">No Direct Assignments Allocated Yet</h3>
-            <p className="text-xs text-slate-400 max-w-md mx-auto">
+            <p className="text-xs text-neutral-400 max-w-md mx-auto">
               You can evaluate any of the submitted competition projects below as part of the open judging pool.
             </p>
           </div>
@@ -75,7 +75,7 @@ export default async function JudgeOverviewPage() {
                     </div>
 
                     <h3 className="text-base font-extrabold text-white mb-2">{sub.title}</h3>
-                    <p className="text-xs text-slate-400 line-clamp-2">{sub.problem_statement}</p>
+                    <p className="text-xs text-neutral-400 line-clamp-2">{sub.problem_statement}</p>
                   </div>
 
                   <div className="pt-4 border-t border-white/10 flex items-center justify-between">
@@ -107,7 +107,7 @@ export default async function JudgeOverviewPage() {
         </h2>
 
         {allSubmissions.length === 0 ? (
-          <div className="rounded-2xl border border-white/10 bg-[#0E0E0E] p-8 text-center text-xs text-slate-400">
+          <div className="rounded-2xl border border-white/10 bg-[#0E0E0E] p-8 text-center text-xs text-neutral-400">
             No projects submitted by paid teams yet.
           </div>
         ) : (
@@ -119,14 +119,14 @@ export default async function JudgeOverviewPage() {
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-bold text-slate-300">{sub.teamName}</span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-400">
+                    <span className="text-xs font-bold text-neutral-300">{sub.teamName}</span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-neutral-400">
                       {sub.track_id}
                     </span>
                   </div>
 
                   <h3 className="text-base font-bold text-white mb-2">{sub.title}</h3>
-                  <p className="text-xs text-slate-400 line-clamp-3">{sub.problem_statement}</p>
+                  <p className="text-xs text-neutral-400 line-clamp-3">{sub.problem_statement}</p>
                 </div>
 
                 <div className="pt-4 border-t border-white/10 flex items-center justify-between">
@@ -134,7 +134,7 @@ export default async function JudgeOverviewPage() {
                     href={sub.github_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs text-slate-400 hover:text-white flex items-center gap-1"
+                    className="text-xs text-neutral-400 hover:text-white flex items-center gap-1"
                   >
                     <Github className="h-3.5 w-3.5" />
                     <span>Repo</span>

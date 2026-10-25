@@ -87,7 +87,7 @@ export default function RegisteredTeamView({
         margin: 1,
         errorCorrectionLevel: 'H',
         color: {
-          dark: '#171310',
+          dark: '#111111',
           light: '#ffffff',
         },
       })
@@ -241,10 +241,10 @@ export default function RegisteredTeamView({
 
       <div className="screen-only-content space-y-8 max-w-4xl mx-auto">
       {/* Official Digital Team Pass Card */}
-      <div className="rounded-[28px] border border-[#c19a88]/40 bg-[linear-gradient(145deg,rgba(193,154,136,0.06),rgba(14,14,14,0.98))] p-6 sm:p-9 shadow-[0_25px_60px_rgba(0,0,0,0.6)] backdrop-blur-2xl relative overflow-hidden">
+      <div className="rounded-[28px] border border-[#f5f5f5]/40 bg-[linear-gradient(145deg,rgba(255,255,255,0.06),rgba(14,14,14,0.98))] p-6 sm:p-9 shadow-[0_25px_60px_rgba(0,0,0,0.6)] backdrop-blur-2xl relative overflow-hidden">
         {/* Subtle radial ambient glow */}
-        <div className="pointer-events-none absolute -right-20 -top-20 w-80 h-80 bg-[#c19a88]/15 rounded-full blur-[100px]" />
-        <div className="pointer-events-none absolute -left-20 -bottom-20 w-72 h-72 bg-[#805948]/15 rounded-full blur-[90px]" />
+        <div className="pointer-events-none absolute -right-20 -top-20 w-80 h-80 bg-[#f5f5f5]/15 rounded-full blur-[100px]" />
+        <div className="pointer-events-none absolute -left-20 -bottom-20 w-72 h-72 bg-[#737373]/15 rounded-full blur-[90px]" />
 
         {/* Pass Top Ribbon */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10 relative z-10">
@@ -261,7 +261,7 @@ export default function RegisteredTeamView({
 
           <div className="flex items-center gap-2">
             {track && (
-              <span className="rounded-full border border-[#c19a88]/30 bg-[#c19a88]/15 px-3 py-1 text-xs font-medium text-[#e8c5b4]">
+              <span className="rounded-full border border-[#f5f5f5]/30 bg-[#f5f5f5]/15 px-3 py-1 text-xs font-medium text-[#ffffff]">
                 {track.name}
               </span>
             )}
@@ -287,12 +287,12 @@ export default function RegisteredTeamView({
                 type="button"
                 onClick={handleDownloadReceipt}
                 disabled={downloading}
-                className="w-fit inline-flex items-center gap-2 rounded-xl border border-[#c19a88]/30 bg-[#c19a88]/10 hover:bg-[#c19a88]/20 px-4 py-2 text-xs font-semibold text-[#e8c5b4] hover:text-white transition-all cursor-pointer shadow-sm shadow-[#805948]/20 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-75"
+                className="w-fit inline-flex items-center gap-2 rounded-xl border border-[#f5f5f5]/30 bg-[#f5f5f5]/10 hover:bg-[#f5f5f5]/20 px-4 py-2 text-xs font-semibold text-[#ffffff] hover:text-white transition-all cursor-pointer shadow-sm shadow-[#737373]/20 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-75"
                 title="Download official PDF registration receipt"
               >
                 {downloading ? (
                   <>
-                    <Loader2 className="h-3.5 w-3.5 animate-spin text-[#e8c5b4]" />
+                    <Loader2 className="h-3.5 w-3.5 animate-spin text-[#ffffff]" />
                     <span>Preparing PDF...</span>
                   </>
                 ) : downloadSuccess ? (
@@ -302,7 +302,7 @@ export default function RegisteredTeamView({
                   </>
                 ) : (
                   <>
-                    <Download className="h-3.5 w-3.5 text-[#e8c5b4]" />
+                    <Download className="h-3.5 w-3.5 text-[#ffffff]" />
                     <span>Download Receipt</span>
                   </>
                 )}
@@ -374,9 +374,9 @@ export default function RegisteredTeamView({
           <div className="mobile-card-grid grid grid-cols-2 gap-2.5">
             {/* Leader Card */}
             {leaderMember && (
-              <div className="flex items-center justify-between p-3 rounded-xl border border-[#c19a88]/30 bg-[#c19a88]/[0.06]">
+              <div className="flex items-center justify-between p-3 rounded-xl border border-[#f5f5f5]/30 bg-[#f5f5f5]/[0.06]">
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="h-8 w-8 rounded-full bg-[#c19a88]/20 border border-[#c19a88]/40 flex items-center justify-center text-xs font-bold text-[#e8c5b4] shrink-0">
+                  <div className="h-8 w-8 rounded-full bg-[#f5f5f5]/20 border border-[#f5f5f5]/40 flex items-center justify-center text-xs font-bold text-[#ffffff] shrink-0">
                     {leaderMember.name.charAt(0).toUpperCase()}
                   </div>
                   <div className="min-w-0">
@@ -384,7 +384,7 @@ export default function RegisteredTeamView({
                     <p className="text-[10px] text-white/50 font-mono truncate">{leaderMember.email}</p>
                   </div>
                 </div>
-                <span className="rounded-full bg-[#c19a88]/20 border border-[#c19a88]/40 px-2 py-0.5 text-[10px] font-mono font-bold text-[#e8c5b4] shrink-0">
+                <span className="rounded-full bg-[#f5f5f5]/20 border border-[#f5f5f5]/40 px-2 py-0.5 text-[10px] font-mono font-bold text-[#ffffff] shrink-0">
                   Lead
                 </span>
               </div>
@@ -443,7 +443,7 @@ export default function RegisteredTeamView({
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
         <Link
           href="/dashboard"
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-8 py-3.5 text-xs font-bold text-white shadow-[0_4px_25px_rgba(128,89,72,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#737373] via-[#737373] to-[#f5f5f5] hover:from-[#a3a3a3] hover:to-[#d4d4d4] px-8 py-3.5 text-xs font-bold text-white shadow-[0_4px_25px_rgba(163,163,163,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all"
         >
           <Sparkles className="h-4 w-4" />
           <span>Enter Participant Dashboard</span>

@@ -7,19 +7,29 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
   try {
+    const session = await getCurrentSession();
+    if (!session) {
+      return NextResponse.json(
+        { error: 'Authentication is required to download a receipt.' },
+        { status: 401 }
+      );
+    }
+
     const searchParams = req.nextUrl.searchParams;
     const requestedPass = searchParams.get('pass') || searchParams.get('teamId');
-
-    let teamId = requestedPass;
-    if (!teamId) {
-      const session = await getCurrentSession();
-      teamId = session?.teamId || null;
-    }
+    const teamId = requestedPass || session.teamId || null;
 
     if (!teamId) {
       return NextResponse.json(
-        { error: 'Team ID or authenticated session required to download receipt.' },
-        { status: 401 }
+        { error: 'No team is associated with this account.' },
+        { status: 404 }
+      );
+    }
+
+    if (session.role !== 'admin' && session.teamId !== teamId) {
+      return NextResponse.json(
+        { error: 'You are not authorized to download this team receipt.' },
+        { status: 403 }
       );
     }
 

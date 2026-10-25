@@ -180,7 +180,7 @@ export function LocationInput({
           className={`w-full rounded-xl border border-white/10 pl-3.5 pr-10 py-2.5 text-xs text-white placeholder-neutral-500 transition-colors ${
             disabled
               ? 'bg-[#101010]/90 opacity-50 cursor-not-allowed border-white/5 select-none text-neutral-500'
-              : 'bg-[#141414] focus:border-[#c19a88] focus:ring-1 focus:ring-[#c19a88]/30 focus:outline-none'
+              : 'bg-[#141414] focus:border-[#f5f5f5] focus:ring-1 focus:ring-[#f5f5f5]/30 focus:outline-none'
           }`}
         />
 
@@ -242,9 +242,9 @@ export function LocationInput({
                     onClick={() => handleSelect(item)}
                     className={`px-3.5 py-2 text-xs cursor-pointer flex items-center justify-between transition-colors ${
                       isHighlighted
-                        ? 'bg-[#805948]/25 text-white'
+                        ? 'bg-[#737373]/25 text-white'
                         : isSelected
-                        ? 'bg-white/[0.04] text-[#e8c5b4]'
+                        ? 'bg-white/[0.04] text-[#ffffff]'
                         : 'text-neutral-300 hover:bg-white/[0.03]'
                     }`}
                   >
@@ -281,13 +281,13 @@ export function LocationInput({
                   setIsOpen(false);
                   setHighlightIndex(-1);
                 }}
-                className="px-3.5 py-2.5 text-xs cursor-pointer flex items-center justify-between text-[#e8c5b4] bg-[#805948]/20 hover:bg-[#805948]/35 transition-colors border-t border-white/[0.08]"
+                className="px-3.5 py-2.5 text-xs cursor-pointer flex items-center justify-between text-[#ffffff] bg-[#737373]/20 hover:bg-[#737373]/35 transition-colors border-t border-white/[0.08]"
               >
                 <div className="flex items-center gap-2 truncate">
                   <span className="text-xs font-bold text-[#c19a88]">+</span>
                   <span className="truncate">Use &ldquo;{value.trim()}&rdquo; as your city</span>
                 </div>
-                <span className="text-[10px] font-mono text-[#c19a88] bg-[#c19a88]/15 px-1.5 py-0.5 rounded ml-2 flex-shrink-0">
+                <span className="text-[10px] font-mono text-[#c19a88] bg-[#f5f5f5]/15 px-1.5 py-0.5 rounded ml-2 flex-shrink-0">
                   Select
                 </span>
               </li>

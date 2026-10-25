@@ -28,12 +28,12 @@ export default async function DashboardAnnouncementsPage() {
     <div className="space-y-6">
       {/* Header Banner */}
       <div className="rounded-2xl border border-white/10 bg-[#0E0E0E]/80 p-5 sm:p-6 backdrop-blur-xl relative overflow-hidden">
-        <div className="pointer-events-none absolute -right-10 -bottom-10 w-60 h-60 bg-[#c19a88]/10 rounded-full blur-[100px]" />
+        <div className="pointer-events-none absolute -right-10 -bottom-10 w-60 h-60 bg-[#f5f5f5]/10 rounded-full blur-[100px]" />
         
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
           <div>
             <div className="flex items-center gap-2 mb-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88]" />
+              <span className="h-1.5 w-1.5 rounded-full bg-[#f5f5f5]" />
               <span className="text-[10px] uppercase tracking-[0.2em] text-[#c19a88] font-bold">
                 Official Broadcasts
               </span>
@@ -74,21 +74,21 @@ export default async function DashboardAnnouncementsPage() {
                 ? { label: 'TIMELINE', color: 'border-amber-500/30 bg-amber-500/10 text-amber-300' }
                 : ann.category === 'results'
                 ? { label: 'RESULTS', color: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300' }
-                : { label: 'GENERAL', color: 'border-[#c19a88]/30 bg-[#c19a88]/10 text-[#c19a88]' };
+                : { label: 'GENERAL', color: 'border-[#f5f5f5]/30 bg-[#f5f5f5]/10 text-[#c19a88]' };
 
             return (
               <div
                 key={ann.id}
                 className={`rounded-2xl border p-5 sm:p-6 transition-all relative ${
                   isLatest
-                    ? 'border-[#c19a88]/40 bg-[#0E0E0E] shadow-[0_0_20px_rgba(193,154,136,0.08)]'
+                    ? 'border-[#f5f5f5]/40 bg-[#0E0E0E] shadow-[0_0_20px_rgba(255,255,255,0.08)]'
                     : 'border-white/10 bg-[#0E0E0E]/60 hover:border-white/20'
                 }`}
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/[0.06] pb-3 mb-3">
                   <div className="flex items-center gap-2.5">
                     {isLatest && (
-                      <span className="flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full border border-[#c19a88]/40 bg-[#c19a88]/15 text-[#e8c5b4]">
+                      <span className="flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full border border-[#f5f5f5]/40 bg-[#f5f5f5]/15 text-[#ffffff]">
                         <Sparkles className="h-2.5 w-2.5 text-[#c19a88]" />
                         <span>LATEST</span>
                       </span>

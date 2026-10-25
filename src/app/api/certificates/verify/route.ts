@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { EventRepository } from '@/lib/db/repository';
-import { checkRateLimit } from '@/lib/security/rate-limit';
+import { checkRateLimitDistributed } from '@/lib/security/rate-limit';
 
 export async function GET(req: NextRequest) {
   try {
-    const rateLimit = checkRateLimit(req, 'certificate-verify', 30, 60_000);
+    const rateLimit = await checkRateLimitDistributed(req, 'certificate-verify', 30, 60_000);
     if (!rateLimit.allowed) {
       return NextResponse.json(
         { error: 'Too many verification attempts. Please try again shortly.' },

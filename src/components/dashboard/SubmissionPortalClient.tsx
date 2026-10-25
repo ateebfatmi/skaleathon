@@ -74,7 +74,7 @@ export default function SubmissionPortalClient({
         // Ignore localStorage errors
       }
     }
-  }, [initialSubmission]);
+  }, [demoVideoUrl, githubUrl, initialSubmission, liveDemoUrl, presentationUrl]);
 
   const handleStage2Submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -169,7 +169,7 @@ export default function SubmissionPortalClient({
   if (!isPaid) {
     return (
       <div className="relative max-w-2xl mx-auto py-16 text-center space-y-5">
-        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-64 w-64 rounded-full bg-[#c19a88]/10 blur-[120px]" />
+        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-64 w-64 rounded-full bg-[#f5f5f5]/10 blur-[120px]" />
         <div className="relative z-10 flex items-center justify-center text-[#c19a88] mx-auto">
           <Lock className="h-8 w-8" />
         </div>
@@ -185,7 +185,7 @@ export default function SubmissionPortalClient({
         <div className="relative z-10 pt-2">
           <button
             onClick={() => router.push('/register')}
-            className="rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-7 py-3 text-xs font-bold text-white shadow-lg shadow-[#805948]/30 hover:scale-105 transition-all"
+            className="rounded-full bg-gradient-to-r from-[#737373] via-[#737373] to-[#f5f5f5] px-7 py-3 text-xs font-bold text-white shadow-lg shadow-[#737373]/30 hover:scale-105 transition-all"
           >
             Complete Team Registration
           </button>
@@ -195,10 +195,10 @@ export default function SubmissionPortalClient({
   }
 
   return (
-    <div className="relative w-full space-y-14 pb-24 text-neutral-200">
+    <div className="relative w-full space-y-10 pb-24 text-neutral-200 sm:space-y-12">
       {/* Subtle Background Ambient Glows (Blended into background) */}
-      <div className="pointer-events-none absolute -top-20 right-10 h-96 w-96 rounded-full bg-[#c19a88]/15 blur-[160px]" />
-      <div className="pointer-events-none absolute top-40 -left-20 h-72 w-72 rounded-full bg-[#805948]/12 blur-[140px]" />
+      <div className="pointer-events-none absolute -top-20 right-10 h-96 w-96 rounded-full bg-[#f5f5f5]/12 blur-[160px]" />
+      <div className="pointer-events-none absolute top-40 -left-20 h-72 w-72 rounded-full bg-[#737373]/10 blur-[140px]" />
 
       {/* 1. Open Luxury Editorial Hero */}
       <header className="relative pt-1">
@@ -213,8 +213,8 @@ export default function SubmissionPortalClient({
         <div className="mobile-utility-row relative z-10 flex flex-wrap items-center justify-between gap-4 pb-4 mb-7 border-b border-white/[0.07]">
           <div className="flex flex-wrap items-center gap-2.5 text-[10px] font-mono uppercase tracking-[0.25em]">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c19a88] opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#c19a88]" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#f5f5f5] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#f5f5f5]" />
             </span>
             <span className="text-[#c19a88]">Milestone Artifacts // Deliverables Portal</span>
             {team && (
@@ -228,7 +228,7 @@ export default function SubmissionPortalClient({
             {track && (
               <>
                 <span className="text-white/20">•</span>
-                <span className="text-[#e8c5b4] font-semibold">
+                <span className="text-[#ffffff] font-semibold">
                   [{track.slug.toUpperCase()}]
                 </span>
               </>
@@ -249,7 +249,7 @@ export default function SubmissionPortalClient({
 
             <Link
               href="/dashboard/stages"
-              className="group inline-flex items-center gap-1.5 text-[#e8c5b4] hover:text-white transition-colors font-semibold"
+              className="group inline-flex items-center gap-1.5 text-[#ffffff] hover:text-white transition-colors font-semibold"
             >
               <Layers className="h-3.5 w-3.5 text-[#c19a88]" />
               <span>Stage Roadmap</span>
@@ -262,12 +262,12 @@ export default function SubmissionPortalClient({
         <div className="relative z-10 max-w-3xl space-y-5 pb-9">
           <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold text-white tracking-tight leading-[1.06]">
             Milestone{' '}
-            <span className="font-serif italic font-normal text-[#e8c5b4]">
+            <span className="font-serif italic font-normal text-[#ffffff]">
               Deliverables
             </span>
           </h1>
 
-          <p className="border-l-2 border-[#c19a88]/45 pl-4 text-sm sm:text-[15px] text-neutral-300/90 leading-relaxed font-light">
+          <p className="border-l-2 border-[#f5f5f5]/45 pl-4 text-sm sm:text-[15px] text-neutral-300/90 leading-relaxed font-light">
             Stage 02 (Idea &amp; Architecture PPT) and Stage 03 (Working Prototype &amp; GitHub Repository) occur on separate competition dates. Each phase features its own independent submission window below.
           </p>
         </div>
@@ -294,8 +294,10 @@ export default function SubmissionPortalClient({
       <form
         id="stage-02"
         onSubmit={handleStage2Submit}
-        className="space-y-8 scroll-mt-28"
+        className="relative space-y-6 overflow-hidden rounded-[28px] border border-[#f5f5f5]/20 bg-[linear-gradient(145deg,#171717_0%,#101010_72%)] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.35)] scroll-mt-28 sm:p-7"
       >
+        <div className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-[#f5f5f5]/[0.07] blur-3xl" />
+        <span className="pointer-events-none absolute -bottom-10 right-7 font-mono text-[140px] font-black leading-none text-white/[0.018]">02</span>
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div>
             <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
@@ -303,7 +305,7 @@ export default function SubmissionPortalClient({
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
               Idea &amp; Architecture{' '}
-              <span className="font-serif italic font-normal text-[#e8c5b4]">
+              <span className="font-serif italic font-normal text-[#ffffff]">
                 Presentation (PDF)
               </span>
             </h2>
@@ -316,7 +318,7 @@ export default function SubmissionPortalClient({
                 <span>WINDOW OPEN</span>
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1.5 text-amber-400/90">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/20 bg-amber-400/[0.07] px-3 py-1.5 text-amber-300">
                 <Lock className="h-3.5 w-3.5" />
                 <span>OPENS ON STAGE 02 DATE</span>
               </span>
@@ -324,9 +326,9 @@ export default function SubmissionPortalClient({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 pt-2 border-t border-white/[0.08]">
+        <div className="relative grid grid-cols-1 gap-6 border-t border-white/[0.08] pt-5 md:grid-cols-2 lg:gap-8">
           {/* Pillar 01: Blueprint Specs */}
-          <div className="relative pt-4 space-y-3">
+          <div className="relative space-y-3 rounded-2xl border border-white/[0.06] bg-black/15 p-5">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#c19a88] font-bold">
                 Pillar 01 • Required Slide Deck Scope
@@ -339,30 +341,30 @@ export default function SubmissionPortalClient({
             <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
               Export your presentation as a PDF (maximum 10 slides) covering your self-defined problem statement, high-level system architecture, database schema, and API/AI integrations.
             </p>
-            <div className="grid grid-cols-2 gap-2 pt-1 text-xs font-mono text-neutral-300">
-              <span className="inline-flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88]" />
+            <div className="grid grid-cols-1 gap-2 pt-2 text-[11px] font-mono text-neutral-300 sm:grid-cols-2">
+              <span className="inline-flex items-center gap-2 rounded-lg bg-white/[0.025] px-2.5 py-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#f5f5f5]" />
                 Problem &amp; Domain Fit
               </span>
-              <span className="inline-flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88]" />
+              <span className="inline-flex items-center gap-2 rounded-lg bg-white/[0.025] px-2.5 py-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#f5f5f5]" />
                 Architecture Diagram
               </span>
-              <span className="inline-flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88]" />
+              <span className="inline-flex items-center gap-2 rounded-lg bg-white/[0.025] px-2.5 py-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#f5f5f5]" />
                 Schema &amp; Data Flow
               </span>
-              <span className="inline-flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88]" />
+              <span className="inline-flex items-center gap-2 rounded-lg bg-white/[0.025] px-2.5 py-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#f5f5f5]" />
                 Max 10 PDF Slides
               </span>
             </div>
           </div>
 
           {/* Pillar 02: Submission Field */}
-          <div className="relative pt-4 md:border-l md:border-white/[0.08] md:pl-8 lg:pl-12 space-y-4">
+          <div className="relative space-y-4 rounded-2xl border border-white/[0.06] bg-black/15 p-5">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#e8c5b4] font-bold">
+              <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#ffffff] font-bold">
                 Pillar 02 • PDF Deck URL
               </span>
               <span className="font-mono text-2xl font-light text-white/10 select-none">02</span>
@@ -384,7 +386,7 @@ export default function SubmissionPortalClient({
                       ? 'https://drive.google.com/file/d/.../view'
                       : 'Accepted when Stage 02 window opens'
                   }
-                  className="w-full rounded-xl border border-white/15 bg-black/40 py-3 px-4 pr-10 text-xs sm:text-sm text-white placeholder-neutral-500 focus:border-[#c19a88] focus:bg-black/60 focus:outline-none transition-all disabled:opacity-60 disabled:cursor-not-allowed font-mono"
+                className="w-full rounded-xl border border-white/10 bg-black/35 py-3 px-4 pr-10 text-xs sm:text-sm text-white placeholder-neutral-500 focus:border-[#f5f5f5] focus:bg-black/60 focus:outline-none transition-all disabled:border-white/[0.06] disabled:bg-black/20 disabled:text-white/35 disabled:opacity-100 disabled:cursor-not-allowed font-mono"
                 />
                 {presentationUrl && stage2WindowOpen && (
                   <a
@@ -426,7 +428,7 @@ export default function SubmissionPortalClient({
                 <button
                   type="submit"
                   disabled={stage2Saving}
-                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] px-5 py-2 text-xs font-bold text-white shadow-lg shadow-[#805948]/30 hover:scale-105 transition-all disabled:opacity-50"
+                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#737373] to-[#f5f5f5] px-5 py-2 text-xs font-bold text-white shadow-lg shadow-[#737373]/30 hover:scale-105 transition-all disabled:opacity-50"
                 >
                   <Save className="h-3.5 w-3.5" />
                   <span>{stage2Saving ? 'Submitting...' : 'Submit Stage 02 PPT'}</span>
@@ -446,7 +448,7 @@ export default function SubmissionPortalClient({
       <form
         id="stage-03"
         onSubmit={handleStage3Submit}
-        className="space-y-8 pt-10 border-t border-white/[0.08] scroll-mt-28"
+        className="space-y-7 rounded-[28px] border border-white/[0.08] bg-[#111111] p-5 shadow-[0_20px_60px_rgba(0,0,0,0.3)] scroll-mt-28 sm:p-7"
       >
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div>
@@ -455,7 +457,7 @@ export default function SubmissionPortalClient({
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
               Working Prototype &amp;{' '}
-              <span className="font-serif italic font-normal text-[#e8c5b4]">
+              <span className="font-serif italic font-normal text-[#ffffff]">
                 Codebase Links
               </span>
             </h2>
@@ -468,7 +470,7 @@ export default function SubmissionPortalClient({
                 <span>WINDOW OPEN</span>
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1.5 text-amber-400/90">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/20 bg-amber-400/[0.07] px-3 py-1.5 text-amber-300">
                 <Lock className="h-3.5 w-3.5" />
                 <span>OPENS ON STAGE 03 DATE</span>
               </span>
@@ -500,7 +502,7 @@ export default function SubmissionPortalClient({
                     ? 'https://your-project.vercel.app'
                     : 'Stage 03 prototype URL will be accepted during the build sprint'
                 }
-                className="w-full rounded-xl border border-white/15 bg-black/40 py-2.5 px-3.5 text-xs sm:text-sm text-white placeholder-neutral-500 focus:border-[#c19a88] focus:bg-black/60 focus:outline-none transition-all disabled:opacity-60 disabled:cursor-not-allowed font-mono"
+                className="w-full rounded-xl border border-white/15 bg-black/40 py-2.5 px-3.5 text-xs sm:text-sm text-white placeholder-neutral-500 focus:border-[#f5f5f5] focus:bg-black/60 focus:outline-none transition-all disabled:opacity-60 disabled:cursor-not-allowed font-mono"
               />
             </div>
           </div>
@@ -528,7 +530,7 @@ export default function SubmissionPortalClient({
                     ? 'https://github.com/organization/repository'
                     : 'Stage 03 GitHub URL will be accepted during the build sprint'
                 }
-                className="w-full rounded-xl border border-white/15 bg-black/40 py-2.5 px-3.5 text-xs sm:text-sm text-white placeholder-neutral-500 focus:border-[#c19a88] focus:bg-black/60 focus:outline-none transition-all disabled:opacity-60 disabled:cursor-not-allowed font-mono"
+                className="w-full rounded-xl border border-white/15 bg-black/40 py-2.5 px-3.5 text-xs sm:text-sm text-white placeholder-neutral-500 focus:border-[#f5f5f5] focus:bg-black/60 focus:outline-none transition-all disabled:opacity-60 disabled:cursor-not-allowed font-mono"
               />
             </div>
           </div>
@@ -538,7 +540,7 @@ export default function SubmissionPortalClient({
             <div className="md:col-span-5 space-y-1">
               <div className="flex items-center gap-2.5">
                 <span className="font-mono text-xs font-bold text-[#c19a88]">03</span>
-                <Video className="h-4 w-4 text-[#e8c5b4]" />
+                <Video className="h-4 w-4 text-[#ffffff]" />
                 <span className="text-sm font-bold text-white">Video Walkthrough (Optional)</span>
               </div>
               <p className="text-xs text-neutral-400 font-light pl-6">
@@ -556,7 +558,7 @@ export default function SubmissionPortalClient({
                     ? 'https://youtu.be/... or https://loom.com/share/...'
                     : 'Optional video walkthrough URL accepted during Stage 03'
                 }
-                className="w-full rounded-xl border border-white/15 bg-black/40 py-2.5 px-3.5 text-xs sm:text-sm text-white placeholder-neutral-500 focus:border-[#c19a88] focus:bg-black/60 focus:outline-none transition-all disabled:opacity-60 disabled:cursor-not-allowed font-mono"
+                className="w-full rounded-xl border border-white/15 bg-black/40 py-2.5 px-3.5 text-xs sm:text-sm text-white placeholder-neutral-500 focus:border-[#f5f5f5] focus:bg-black/60 focus:outline-none transition-all disabled:opacity-60 disabled:cursor-not-allowed font-mono"
               />
             </div>
           </div>
@@ -585,7 +587,7 @@ export default function SubmissionPortalClient({
             <button
               type="submit"
               disabled={stage3Saving}
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/30 hover:scale-105 transition-all disabled:opacity-50"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#737373] to-[#f5f5f5] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#737373]/30 hover:scale-105 transition-all disabled:opacity-50"
             >
               <Save className="h-3.5 w-3.5" />
               <span>{stage3Saving ? 'Submitting...' : 'Submit Stage 03 Deliverables'}</span>
@@ -607,13 +609,13 @@ export default function SubmissionPortalClient({
           </span>
           <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
             Submission Protocol &amp;{' '}
-            <span className="font-serif italic font-normal text-[#e8c5b4]">
+            <span className="font-serif italic font-normal text-[#ffffff]">
               Guidelines
             </span>
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-2 border-t border-white/[0.08]">
+        <div className="grid grid-cols-2 gap-4 border-t border-white/[0.08] pt-2 md:grid-cols-3 md:gap-8">
           <div className="pt-4 space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-[#c19a88] font-bold">
@@ -627,9 +629,9 @@ export default function SubmissionPortalClient({
             </p>
           </div>
 
-          <div className="pt-4 md:border-l md:border-white/[0.08] md:pl-8 space-y-2">
+          <div className="space-y-2 pt-4 md:border-l md:border-white/[0.08] md:pl-8">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-[#e8c5b4] font-bold">
+              <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-[#ffffff] font-bold">
                 Access Permissions
               </span>
               <span className="font-mono text-xl font-light text-white/10">02</span>
@@ -640,7 +642,7 @@ export default function SubmissionPortalClient({
             </p>
           </div>
 
-          <div className="pt-4 md:border-l md:border-white/[0.08] md:pl-8 space-y-2">
+          <div className="col-span-2 space-y-2 pt-4 md:col-span-1 md:border-l md:border-white/[0.08] md:pl-8">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-emerald-400 font-bold">
                 Code Authenticity

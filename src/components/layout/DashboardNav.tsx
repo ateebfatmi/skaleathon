@@ -41,7 +41,7 @@ export default function DashboardNav() {
             {isActive ? (
               <motion.div
                 layoutId="active-dashboard-indicator"
-                className="absolute inset-0 rounded-full bg-white/[0.12] border border-[#c19a88]/40 shadow-[0_0_12px_rgba(193,154,136,0.2)]"
+                className="absolute inset-0 rounded-full bg-white/[0.12] border border-[#f5f5f5]/40 shadow-[0_0_12px_rgba(255,255,255,0.2)]"
                 transition={{ type: 'spring', stiffness: 400, damping: 32 }}
               />
             ) : (

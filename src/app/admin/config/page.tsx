@@ -84,7 +84,7 @@ export default function AdminConfigPage() {
   };
 
   if (loading) {
-    return <div className="text-xs text-slate-400 p-8 text-center">Loading event configuration...</div>;
+    return <div className="text-xs text-neutral-400 p-8 text-center">Loading event configuration...</div>;
   }
 
   return (
@@ -95,7 +95,7 @@ export default function AdminConfigPage() {
             Lifecycle & Operational Settings
           </span>
           <h1 className="text-2xl font-black text-white">Event Configuration</h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-neutral-400 mt-1">
             Update hackathon phases, submission cutoffs, and team policies without changing source code.
           </p>
         </div>
@@ -141,7 +141,7 @@ export default function AdminConfigPage() {
         {/* Milestone Dates */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5 flex items-center gap-1.5">
+            <label className="block text-xs font-semibold text-neutral-300 mb-1.5 flex items-center gap-1.5">
               <Calendar className="h-3.5 w-3.5 text-cyanAccent-400" />
               <span>Registration Opening Date</span>
             </label>
@@ -154,7 +154,7 @@ export default function AdminConfigPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5 flex items-center gap-1.5">
+            <label className="block text-xs font-semibold text-neutral-300 mb-1.5 flex items-center gap-1.5">
               <Calendar className="h-3.5 w-3.5 text-cyanAccent-400" />
               <span>Registration Deadline</span>
             </label>
@@ -167,7 +167,7 @@ export default function AdminConfigPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5 flex items-center gap-1.5">
+            <label className="block text-xs font-semibold text-neutral-300 mb-1.5 flex items-center gap-1.5">
               <Calendar className="h-3.5 w-3.5 text-amber-400" />
               <span>Project Submission Deadline</span>
             </label>
@@ -180,7 +180,7 @@ export default function AdminConfigPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5 flex items-center gap-1.5">
+            <label className="block text-xs font-semibold text-neutral-300 mb-1.5 flex items-center gap-1.5">
               <Calendar className="h-3.5 w-3.5 text-emerald-400" />
               <span>Results Announcement Date</span>
             </label>
@@ -196,7 +196,7 @@ export default function AdminConfigPage() {
         {/* Fees & Team Size Parameters */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-white/10">
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+            <label className="block text-xs font-semibold text-neutral-300 mb-1.5">
               Registration Fee (INR)
             </label>
             <input
@@ -209,7 +209,7 @@ export default function AdminConfigPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+            <label className="block text-xs font-semibold text-neutral-300 mb-1.5">
               Min Team Size
             </label>
             <input
@@ -223,7 +223,7 @@ export default function AdminConfigPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+            <label className="block text-xs font-semibold text-neutral-300 mb-1.5">
               Max Team Size
             </label>
             <input

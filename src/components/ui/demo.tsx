@@ -1,21 +1,36 @@
-import Velaris from "@/components/ui/velaris";
+'use client';
 
-export default function VelarisDemo() {
+import { useEffect } from 'react';
+import Lenis from 'lenis';
+import { Component } from '@/components/ui/experience-hero';
+
+export default function DemoOne() {
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (time) => Math.min(1, 1.001 - Math.pow(2, -10 * time)),
+      smoothWheel: true,
+    });
+    let frame = 0;
+
+    const animate = (time: number) => {
+      lenis.raf(time);
+      frame = requestAnimationFrame(animate);
+    };
+
+    frame = requestAnimationFrame(animate);
+    return () => {
+      cancelAnimationFrame(frame);
+      lenis.destroy();
+    };
+  }, []);
+
   return (
-    <Velaris height="500px" className="rounded-xl">
-      <div className="flex h-full w-full flex-col items-center justify-center gap-4 px-6 text-center">
-        <span className="rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-medium text-white/80 backdrop-blur">
-          Powered by WebGL
-        </span>
-        <h1 className="max-w-2xl text-4xl font-semibold tracking-tight text-white sm:text-6xl">
-          Living gradients in motion
-        </h1>
-        <p className="max-w-md text-sm text-white/70 sm:text-base">
-          An animated simplex-noise background with color blending, vignette glow and film grain.
-        </p>
-      </div>
-    </Velaris>
+    <div className="min-h-screen bg-[#020202] selection:bg-white selection:text-black">
+      <main className="relative w-full overflow-x-hidden">
+        <Component />
+        <div className="experience-bento-mask pointer-events-none fixed inset-0 z-[100] opacity-10" />
+      </main>
+    </div>
   );
 }
-
-export { VelarisDemo as DemoOne };

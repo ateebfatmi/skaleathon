@@ -77,8 +77,8 @@ export default function TracksPageClient({ tracks, event }: TracksPageClientProp
     <>
       <div className="relative w-full space-y-7 pb-16 text-neutral-200">
         {/* Subtle Background Ambient Glows */}
-        <div className="pointer-events-none absolute -top-20 right-10 h-72 w-72 rounded-full bg-[#c19a88]/12 blur-[140px]" />
-        <div className="pointer-events-none absolute top-40 -left-20 h-60 w-60 rounded-full bg-[#805948]/10 blur-[120px]" />
+        <div className="pointer-events-none absolute -top-20 right-10 h-72 w-72 rounded-full bg-[#f5f5f5]/12 blur-[140px]" />
+        <div className="pointer-events-none absolute top-40 -left-20 h-60 w-60 rounded-full bg-[#737373]/10 blur-[120px]" />
 
         {/* 1. Open Luxury Editorial Hero */}
         <header className="relative pt-1">
@@ -86,8 +86,8 @@ export default function TracksPageClient({ tracks, event }: TracksPageClientProp
           <div className="mobile-utility-row relative z-10 flex flex-wrap items-center justify-between gap-3 pb-3 mb-4 border-b border-white/[0.07]">
             <div className="flex flex-wrap items-center gap-2 text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.22em]">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c19a88] opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#c19a88]" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#f5f5f5] opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#f5f5f5]" />
               </span>
               <span className="text-[#c19a88]">Curated Arenas // Open Innovation</span>
               <span className="text-white/20">•</span>
@@ -95,7 +95,7 @@ export default function TracksPageClient({ tracks, event }: TracksPageClientProp
                 Scope: <strong className="text-white font-semibold">100% Self-Defined Problem Statement</strong>
               </span>
               <span className="text-white/20">•</span>
-              <span className="text-[#e8c5b4] font-semibold">[3 ARENAS]</span>
+              <span className="text-[#ffffff] font-semibold">[3 ARENAS]</span>
             </div>
 
             <div className="flex items-center gap-4 text-xs">
@@ -108,7 +108,7 @@ export default function TracksPageClient({ tracks, event }: TracksPageClientProp
               <span className="text-white/15">|</span>
               <Link
                 href="/rules"
-                className="group inline-flex items-center gap-1.5 text-[#e8c5b4] hover:text-white transition-colors font-semibold text-[11px]"
+                className="group inline-flex items-center gap-1.5 text-[#ffffff] hover:text-white transition-colors font-semibold text-[11px]"
               >
                 <span>Tournament Rules</span>
                 <ArrowRight className="h-3 w-3 text-[#c19a88] group-hover:translate-x-0.5 transition-transform" />
@@ -122,7 +122,7 @@ export default function TracksPageClient({ tracks, event }: TracksPageClientProp
               Competition <span className="text-[#c19a88]">Tracks</span>
             </h1>
 
-            <p className="border-l-2 border-[#c19a88]/45 pl-3 text-xs sm:text-[13px] text-neutral-300/85 leading-relaxed font-light">
+            <p className="border-l-2 border-[#f5f5f5]/45 pl-3 text-xs sm:text-[13px] text-neutral-300/85 leading-relaxed font-light">
               Select an arena below to view evaluation benchmarks, expected deliverables, and recommended stacks.
             </p>
           </div>
@@ -144,7 +144,7 @@ export default function TracksPageClient({ tracks, event }: TracksPageClientProp
           {/* Section Indicator */}
           <div className="flex items-center justify-between pt-1 pb-1">
             <div className="flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] animate-pulse" />
+              <span className="h-1.5 w-1.5 rounded-full bg-[#f5f5f5] animate-pulse" />
               <span className="text-[11px] font-mono uppercase tracking-[0.22em] text-[#c19a88] font-bold">
                 {activeTab === 'all' ? 'All Competition Arenas' : 'Selected Arena Specification'}
               </span>
@@ -189,10 +189,10 @@ export default function TracksPageClient({ tracks, event }: TracksPageClientProp
                   <article
                     id={track.id}
                     key={track.id}
-                    className="relative rounded-2xl sm:rounded-3xl border border-white/[0.12] bg-[linear-gradient(145deg,rgba(255,255,255,0.035),rgba(17,14,13,0.96))] p-4 sm:p-6 lg:p-7 shadow-[0_15px_40px_rgba(0,0,0,0.5)] backdrop-blur-2xl transition-all duration-300 hover:border-[#c19a88]/60 hover:shadow-[0_0_30px_rgba(193,154,136,0.12)] scroll-mt-24 overflow-hidden"
+                    className="relative rounded-2xl sm:rounded-3xl border border-white/[0.12] bg-[linear-gradient(145deg,rgba(255,255,255,0.035),rgba(17,17,17,0.96))] p-4 sm:p-6 lg:p-7 shadow-[0_15px_40px_rgba(0,0,0,0.5)] backdrop-blur-2xl transition-all duration-300 hover:border-[#f5f5f5]/60 hover:shadow-[0_0_30px_rgba(255,255,255,0.12)] scroll-mt-24 overflow-hidden"
                   >
                     {/* Subtle top corner ambient glow */}
-                    <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#c19a88]/10 blur-[70px]" />
+                    <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#f5f5f5]/10 blur-[70px]" />
 
                     {/* Faint Architectural Arena Watermark inside the card */}
                     <div className="pointer-events-none select-none absolute right-4 top-2 hidden sm:block overflow-hidden">
@@ -204,22 +204,22 @@ export default function TracksPageClient({ tracks, event }: TracksPageClientProp
                     {/* Card Header: Distinct Number Badge, Title, and Action */}
                     <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
                       <div className="space-y-2">
-                        <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#c19a88]/15 border border-[#c19a88]/30 text-[#e8c5b4] text-[10px] font-mono uppercase tracking-[0.2em] font-semibold">
-                          <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] animate-pulse" />
+                        <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#f5f5f5]/15 border border-[#f5f5f5]/30 text-[#ffffff] text-[10px] font-mono uppercase tracking-[0.2em] font-semibold">
+                          <span className="h-1.5 w-1.5 rounded-full bg-[#f5f5f5] animate-pulse" />
                           <span>Arena {num} of 03</span>
                           <span className="text-white/30">•</span>
                           <span className="text-white font-bold">[{track.slug.toUpperCase()}]</span>
                         </div>
 
                         <div className="flex items-center gap-3">
-                          <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-gradient-to-br from-[#c19a88]/20 to-[#805948]/10 border border-[#c19a88]/30 flex items-center justify-center text-[#c19a88] shrink-0 shadow-inner">
+                          <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-gradient-to-br from-[#f5f5f5]/20 to-[#737373]/10 border border-[#f5f5f5]/30 flex items-center justify-center text-[#c19a88] shrink-0 shadow-inner">
                             <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
                           </div>
                           <div>
                             <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
-                              {track.name} <span className="font-serif italic font-normal text-[#e8c5b4] text-lg sm:text-xl lg:text-2xl">Arena</span>
+                              {track.name} <span className="font-serif italic font-normal text-[#ffffff] text-lg sm:text-xl lg:text-2xl">Arena</span>
                             </h2>
-                            <p className="mt-0.5 text-[11px] sm:text-xs text-[#e8c5b4]/80 font-mono">
+                            <p className="mt-0.5 text-[11px] sm:text-xs text-[#ffffff]/80 font-mono">
                               Open Innovation Arena • Self-Defined Problem Statement
                             </p>
                           </div>
@@ -230,7 +230,7 @@ export default function TracksPageClient({ tracks, event }: TracksPageClientProp
                         <button
                           type="button"
                           onClick={() => handleOpenRegistration(track.id)}
-                          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-5 py-2.5 text-xs font-bold text-white shadow-[0_4px_20px_rgba(128,89,72,0.35)] hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                          className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#737373] to-[#f5f5f5] hover:from-[#a3a3a3] hover:to-[#d4d4d4] px-5 py-2.5 text-xs font-bold text-white shadow-[0_4px_20px_rgba(163,163,163,0.35)] hover:scale-105 active:scale-95 transition-all cursor-pointer sm:w-auto"
                         >
                           <span>Register for this Arena (₹{event.registration_fee_inr})</span>
                           <ArrowRight className="h-3.5 w-3.5" />
@@ -264,7 +264,7 @@ export default function TracksPageClient({ tracks, event }: TracksPageClientProp
                         <div className="space-y-2">
                           {extra.deliverables.map((item, dIdx) => (
                             <div key={dIdx} className="flex items-start gap-2 text-xs text-neutral-300 font-light leading-relaxed">
-                              <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] shrink-0 mt-1.5" />
+                              <span className="h-1.5 w-1.5 rounded-full bg-[#f5f5f5] shrink-0 mt-1.5" />
                               <span>{item}</span>
                             </div>
                           ))}
@@ -275,8 +275,8 @@ export default function TracksPageClient({ tracks, event }: TracksPageClientProp
                       <div className="rounded-xl border border-white/[0.08] bg-black/40 p-3.5 sm:p-4 space-y-2.5">
                         <div className="flex items-center justify-between pb-2 border-b border-white/[0.06]">
                           <div className="flex items-center gap-1.5">
-                            <Sparkles className="h-3.5 w-3.5 text-[#e8c5b4]" />
-                            <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#e8c5b4] font-bold">
+                            <Sparkles className="h-3.5 w-3.5 text-[#ffffff]" />
+                            <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#ffffff] font-bold">
                               Recommended Stack
                             </span>
                           </div>
@@ -289,9 +289,9 @@ export default function TracksPageClient({ tracks, event }: TracksPageClientProp
                           {extra.recommendedTech.map((tech, tIdx) => (
                             <span
                               key={tIdx}
-                              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-white/[0.05] border border-white/10 text-[11px] font-mono text-neutral-200 hover:border-[#c19a88]/40 transition-colors"
+                              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-white/[0.05] border border-white/10 text-[11px] font-mono text-neutral-200 hover:border-[#f5f5f5]/40 transition-colors"
                             >
-                              <span className="h-1 w-1 rounded-full bg-[#c19a88]" />
+                              <span className="h-1 w-1 rounded-full bg-[#f5f5f5]" />
                               <span>{tech}</span>
                             </span>
                           ))}
@@ -319,7 +319,7 @@ export default function TracksPageClient({ tracks, event }: TracksPageClientProp
                           <button
                             type="button"
                             onClick={() => setActiveTab(nextTrack.id)}
-                            className="inline-flex items-center gap-1.5 text-[#e8c5b4] hover:text-white transition-colors font-semibold cursor-pointer"
+                            className="inline-flex items-center gap-1.5 text-[#ffffff] hover:text-white transition-colors font-semibold cursor-pointer"
                           >
                             <span>Next: {nextTrack.name} Arena</span>
                             <ChevronRight className="h-3.5 w-3.5 text-[#c19a88]" />
@@ -328,7 +328,7 @@ export default function TracksPageClient({ tracks, event }: TracksPageClientProp
                           <button
                             type="button"
                             onClick={() => setActiveTab('all')}
-                            className="inline-flex items-center gap-1.5 text-[#e8c5b4] hover:text-white transition-colors font-semibold cursor-pointer"
+                            className="inline-flex items-center gap-1.5 text-[#ffffff] hover:text-white transition-colors font-semibold cursor-pointer"
                           >
                             <Layers className="h-3.5 w-3.5 text-[#c19a88]" />
                             <span>Compare All 3 Arenas</span>

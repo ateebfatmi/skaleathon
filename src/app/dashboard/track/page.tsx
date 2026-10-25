@@ -76,27 +76,19 @@ export default async function DashboardTrackPage() {
     ? TRACK_METAS[track.id] || TRACK_METAS['track-ai-ml']
     : null;
 
-  // Ensure we strictly use the luxury SkaleKraft copper/champagne palette and avoid odd purple colors
-  const rawColor = track?.color_accent;
-  const isOddColor =
-    !rawColor ||
-    rawColor.toLowerCase().startsWith('#8b') ||
-    rawColor.toLowerCase().startsWith('#63') ||
-    rawColor.toLowerCase().includes('purple');
-  const accentColor = isOddColor ? '#c19a88' : rawColor;
-
   if (!track) {
     return (
-      <div className="space-y-12 pb-20 text-neutral-200">
+      <div className="relative space-y-12 pb-20 text-neutral-200">
+        <div className="experience-bento-mask pointer-events-none absolute inset-x-0 -top-10 h-[32rem] opacity-[0.08]" />
         <div className="relative border-b border-white/[0.08] pb-8 pt-2">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div className="space-y-2">
-              <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block">
+              <span className="block font-mono text-[10px] font-bold uppercase tracking-[0.26em] text-white/40">
                 Engineering Arenas
               </span>
               <h1 className="text-3xl sm:text-5xl font-bold text-white tracking-tight">
                 Select Your{' '}
-                <span className="font-serif italic font-normal text-[#e8c5b4]">
+                <span className="experience-text-outline">
                   Competition Track
                 </span>
               </h1>
@@ -107,7 +99,7 @@ export default async function DashboardTrackPage() {
 
             <Link
               href="/register"
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/20 transition-all hover:scale-105 shrink-0"
+              className="inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-bold text-black shadow-lg shadow-white/10 transition-all hover:scale-[1.03] hover:bg-white/90"
             >
               <span>Register Squad</span>
               <ArrowRight className="h-3.5 w-3.5" />
@@ -120,16 +112,15 @@ export default async function DashboardTrackPage() {
           {allTracks.map((t, idx) => (
             <div
               key={t.id}
-              className="pl-6 border-l-2 space-y-2"
-              style={{ borderColor: `${t.color_accent || '#c19a88'}50` }}
+              className="experience-glass-panel space-y-3 p-5 sm:p-6"
             >
               <div className="flex items-center gap-3">
                 <span
                   className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full border"
                   style={{
-                    borderColor: `${t.color_accent}40`,
-                    backgroundColor: `${t.color_accent}15`,
-                    color: t.color_accent,
+                    borderColor: 'rgba(255,255,255,0.12)',
+                    backgroundColor: 'rgba(255,255,255,0.04)',
+                    color: 'rgba(255,255,255,0.65)',
                   }}
                 >
                   {t.slug.toUpperCase()}
@@ -163,7 +154,6 @@ export default async function DashboardTrackPage() {
       track={serializableTrack}
       team={serializableTeam}
       trackMeta={trackMeta}
-      accentColor={accentColor}
     />
   );
 }

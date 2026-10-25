@@ -18,7 +18,7 @@ export default function PrizesSection({ event }: PrizesProps) {
       badge: 'Silver Rank',
       order: 'order-2 md:order-1',
       spotlight: 'rgba(203, 213, 225, 0.14)',
-      amountClass: 'bg-gradient-to-br from-white via-slate-200 to-slate-400',
+      amountClass: 'bg-gradient-to-br from-white via-neutral-200 to-neutral-400',
     },
     {
       place: '1st Place',
@@ -26,8 +26,8 @@ export default function PrizesSection({ event }: PrizesProps) {
       subtitle: 'National Champion',
       badge: 'Grand Champion',
       order: 'order-1 md:order-2',
-      spotlight: 'rgba(232, 197, 180, 0.25)',
-      amountClass: 'bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948]',
+      spotlight: 'rgba(229,229,229, 0.25)',
+      amountClass: 'bg-gradient-to-r from-[#ffffff] via-[#f5f5f5] to-[#737373]',
       isGrand: true,
     },
     {
@@ -36,29 +36,29 @@ export default function PrizesSection({ event }: PrizesProps) {
       subtitle: 'Second Runner-Up',
       badge: 'Bronze Rank',
       order: 'order-3',
-      spotlight: 'rgba(193, 154, 136, 0.14)',
-      amountClass: 'bg-gradient-to-br from-white via-[#f2d9ce] to-[#805948]',
+      spotlight: 'rgba(255,255,255, 0.14)',
+      amountClass: 'bg-gradient-to-br from-white via-[#f5f5f5] to-[#737373]',
     },
   ];
 
   return (
-    <section id="prizes" className="py-14 sm:py-20 lg:py-28 relative bg-[#0B0B0B] overflow-hidden">
+    <section id="prizes" className="relative scroll-mt-24 overflow-hidden bg-[#0B0B0B] py-14 sm:scroll-mt-28 sm:py-20 lg:py-28">
       {/* Background glow */}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-[75%] rounded-full bg-[#805948]/10 blur-[150px]" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-[75%] rounded-full bg-[#737373]/10 blur-[150px]" />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="mobile-section-heading text-center max-w-2xl mx-auto mb-16 flex flex-col items-center">
+        <div className="mobile-section-heading mx-auto mb-10 flex max-w-2xl flex-col items-center text-center sm:mb-16">
           <div className="inline-flex items-center gap-3 mb-3.5">
-            <span className="h-px w-6 bg-[#c19a88]/70" />
+            <span className="h-px w-6 bg-[#f5f5f5]/70" />
             <p className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-semibold">
               Recognizing Craft • {formatINR(event.prize_pool_inr)} Prize Pool
             </p>
-            <span className="h-px w-6 bg-[#c19a88]/70" />
+            <span className="h-px w-6 bg-[#f5f5f5]/70" />
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-white tracking-tight">
             Rewards for exceptional{' '}
-            <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
+            <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#ffffff] via-[#f5f5f5] to-[#737373] bg-clip-text text-transparent pb-1 inline-block">
               execution
             </span>
             .
@@ -70,22 +70,22 @@ export default function PrizesSection({ event }: PrizesProps) {
         </div>
 
         {/* Podium Grid */}
-        <div className="mobile-card-grid grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6 items-stretch md:items-end max-w-5xl mx-auto mb-10 sm:mb-12">
+        <div className="mx-auto mb-10 grid max-w-5xl grid-cols-2 items-stretch gap-3 sm:gap-6 md:grid-cols-3 md:items-end sm:mb-12">
           {prizes.map((prize, idx) => (
-            <div key={idx} className={`h-full ${prize.order} ${prize.isGrand ? 'mobile-grid-wide md:-translate-y-4 z-10' : ''}`}>
+            <div key={idx} className={`h-full ${prize.order} ${prize.isGrand ? 'col-span-2 md:col-span-1 md:-translate-y-4 z-10' : ''}`}>
               <SpotlightCard
                 enableTilt
                 spotlightColor={prize.spotlight}
                 className={`mobile-card h-full flex flex-col justify-between p-4 sm:p-6 transition-all duration-300 relative ${
                   prize.isGrand
-                    ? 'border-[#c19a88]/70 bg-[linear-gradient(145deg,rgba(193,154,136,0.1),rgba(17,14,13,0.98))] shadow-[0_30px_90px_rgba(128,89,72,0.35)]'
+                    ? 'border-[#f5f5f5]/70 bg-[linear-gradient(145deg,rgba(255,255,255,0.1),rgba(17,17,17,0.98))] shadow-[0_30px_90px_rgba(163,163,163,0.35)]'
                     : 'border-white/[0.08] shadow-[0_20px_50px_rgba(0,0,0,0.5)]'
                 }`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-5">
                     {prize.isGrand ? (
-                      <span className="inline-flex items-center gap-1.5 text-[9px] font-mono font-bold uppercase tracking-[0.18em] px-3 py-1 rounded-full bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4] text-black shadow-sm whitespace-nowrap">
+                      <span className="inline-flex items-center gap-1.5 text-[9px] font-mono font-bold uppercase tracking-[0.18em] px-3 py-1 rounded-full bg-gradient-to-r from-[#737373] via-[#f5f5f5] to-[#ffffff] text-black shadow-sm whitespace-nowrap">
                         <Sparkles className="h-3 w-3 shrink-0" />
                         <span>{prize.badge}</span>
                       </span>
@@ -95,8 +95,8 @@ export default function PrizesSection({ event }: PrizesProps) {
                       </span>
                     )}
                     {prize.isGrand ? (
-                      <div className="p-2 rounded-xl bg-[#c19a88]/20 border border-[#c19a88]/40 text-[#c19a88] shadow-[0_0_15px_rgba(193,154,136,0.4)]">
-                        <Trophy className="h-5 w-5 text-[#e8c5b4]" strokeWidth={2} />
+                      <div className="p-2 rounded-xl bg-[#f5f5f5]/20 border border-[#f5f5f5]/40 text-[#c19a88] shadow-[0_0_15px_rgba(255,255,255,0.4)]">
+                        <Trophy className="h-5 w-5 text-[#ffffff]" strokeWidth={2} />
                       </div>
                     ) : (
                       <Trophy className="h-4 w-4 text-white/30" strokeWidth={1.8} />
@@ -114,9 +114,9 @@ export default function PrizesSection({ event }: PrizesProps) {
                   <p className="text-xs text-white/60 font-light">{prize.subtitle}</p>
                 </div>
 
-                <div className="mt-7 pt-4 border-t border-white/[0.08] flex items-center justify-between text-[11px] text-white/40 font-light">
+                <div className="mt-7 flex items-center justify-between gap-4 border-t border-white/[0.08] pt-4 text-[11px] font-light text-white/40">
                   <span>Official prize grant</span>
-                  <span className="text-[#c19a88] font-mono text-[10px]">+ Certificate</span>
+                  <span className="shrink-0 font-mono text-[10px] text-[#c19a88]">+ Certificate</span>
                 </div>
               </SpotlightCard>
             </div>
@@ -124,12 +124,12 @@ export default function PrizesSection({ event }: PrizesProps) {
         </div>
 
         {/* Additional Rewards Cards: Certificates & Internship */}
-        <div className="mobile-card-grid grid grid-cols-2 gap-2.5 sm:gap-6 max-w-5xl mx-auto">
+        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-6">
           {/* Top 25 Certificates */}
           <div className="h-full">
             <SpotlightCard
-              spotlightColor="rgba(193,154,136,0.18)"
-              className="mobile-card h-full flex flex-col justify-between p-3.5 sm:p-6"
+              spotlightColor="rgba(255,255,255,0.18)"
+              className="h-full flex flex-col justify-between p-5 sm:p-6"
             >
               <div className="flex flex-col sm:flex-row items-start gap-2.5 sm:gap-4">
                 <div className="p-2 sm:p-3 rounded-xl sm:rounded-2xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88] shrink-0">
@@ -158,8 +158,8 @@ export default function PrizesSection({ event }: PrizesProps) {
           {/* Internship Opportunity */}
           <div className="h-full">
             <SpotlightCard
-              spotlightColor="rgba(193,154,136,0.18)"
-              className="mobile-card h-full flex flex-col justify-between p-3.5 sm:p-6"
+              spotlightColor="rgba(255,255,255,0.18)"
+              className="h-full flex flex-col justify-between p-5 sm:p-6"
             >
               <div className="flex flex-col sm:flex-row items-start gap-2.5 sm:gap-4">
                 <div className="p-2 sm:p-3 rounded-xl sm:rounded-2xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88] shrink-0">

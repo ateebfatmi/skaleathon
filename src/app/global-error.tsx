@@ -40,7 +40,7 @@ export default function GlobalError({
                 reset();
               }
             }}
-            className="w-full py-2.5 rounded-full bg-[#c19a88] hover:bg-[#d3a58f] text-black font-semibold text-xs transition-colors cursor-pointer"
+            className="w-full py-2.5 rounded-full bg-[#f5f5f5] hover:bg-[#d4d4d4] text-black font-semibold text-xs transition-colors cursor-pointer"
           >
             Reload Skaleathon
           </button>

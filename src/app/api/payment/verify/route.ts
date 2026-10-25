@@ -3,11 +3,11 @@ import { EventRepository } from '@/lib/db/repository';
 import { verifyPaymentSignature } from '@/lib/razorpay/client';
 import { NotificationService } from '@/lib/notifications/service';
 import { requireTeamLeader } from '@/lib/auth/server-guard';
-import { checkRateLimit } from '@/lib/security/rate-limit';
+import { checkRateLimitDistributed } from '@/lib/security/rate-limit';
 
 export async function POST(req: NextRequest) {
   try {
-    const rateLimit = checkRateLimit(req, 'payment-verify', 15, 60_000);
+    const rateLimit = await checkRateLimitDistributed(req, 'payment-verify', 15, 60_000);
     if (!rateLimit.allowed) {
       return NextResponse.json(
         { error: 'Too many verification attempts. Please try again shortly.' },
@@ -67,14 +67,16 @@ export async function POST(req: NextRequest) {
     const team = await EventRepository.getTeam(order.team_id);
     const leader = team ? await EventRepository.getProfile(team.leader_id) : null;
 
+    let emailDelivered = false;
     if (leader && team) {
-      await NotificationService.sendRegistrationConfirmation({
+      const notification = await NotificationService.sendRegistrationConfirmation({
         recipientEmail: leader.email,
         recipientName: leader.full_name,
         teamName: team.name,
         orderId: completedOrder.id,
         amountInr: completedOrder.amount_inr,
       });
+      emailDelivered = notification.success;
     }
 
     return NextResponse.json({
@@ -82,6 +84,7 @@ export async function POST(req: NextRequest) {
       message: 'Payment verified and registration finalized.',
       order: completedOrder,
       teamId: order.team_id,
+      emailDelivered,
     });
   } catch (err: any) {
     console.error('Payment verification error:', err);

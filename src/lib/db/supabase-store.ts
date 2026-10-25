@@ -793,7 +793,9 @@ export class SupabaseStore {
 
     if (existing) {
       return {
-        isDuplicate: true,
+        // Completed deliveries are idempotent. An earlier delivery that failed
+        // before processed_at was set remains eligible for a provider retry.
+        isDuplicate: existing.processed_at !== null,
         event: {
           id: existing.id,
           event_type: existing.event_type,
@@ -805,17 +807,45 @@ export class SupabaseStore {
       };
     }
 
-    const { data: inserted, error } = await client
+    const newWebhookRow = {
+      id: data.id,
+      event_id: data.id,
+      event_type: data.event_type,
+      payload: data.payload,
+      processed_at: null,
+      error_message: null,
+      created_at: new Date().toISOString(),
+    };
+
+    let insertResult = await client
       .from('payment_webhook_events')
-      .insert({
-        id: data.id,
-        event_id: data.id,
-        event_type: data.event_type,
-        payload: data.payload,
-        created_at: new Date().toISOString(),
-      })
+      .insert(newWebhookRow)
       .select()
       .single();
+
+    // Compatibility for installations that have not applied migration 003 yet.
+    // Their processed_at column is NOT NULL with a default and error_message is
+    // absent. Keep deliveries working while deployment migrations roll forward.
+    if (
+      insertResult.error &&
+      (insertResult.error.code === '23502' ||
+        insertResult.error.message.includes('error_message') ||
+        insertResult.error.message.includes('processed_at'))
+    ) {
+      insertResult = await client
+        .from('payment_webhook_events')
+        .insert({
+          id: data.id,
+          event_id: data.id,
+          event_type: data.event_type,
+          payload: data.payload,
+          created_at: newWebhookRow.created_at,
+        })
+        .select()
+        .single();
+    }
+
+    const { data: inserted, error } = insertResult;
 
     if (error || !inserted) {
       throw new Error(`Failed to log webhook event: ${error?.message}`);
@@ -832,6 +862,34 @@ export class SupabaseStore {
         processed_at: null,
       },
     };
+  }
+
+  static async markWebhookProcessed(eventId: string, errorMessage?: string): Promise<void> {
+    const client = this.getClient();
+    const { error } = await client
+      .from('payment_webhook_events')
+      .update({
+        processed_at: errorMessage ? null : new Date().toISOString(),
+        error_message: errorMessage || null,
+      })
+      .eq('id', eventId);
+
+    if (!error) return;
+
+    if (error.message.includes('error_message')) {
+      // Legacy schema cannot retain failure text. A successful delivery can
+      // still be marked complete; failed legacy deliveries retain their
+      // existing state until migration 003 is applied.
+      if (errorMessage) return;
+      const { error: legacyError } = await client
+        .from('payment_webhook_events')
+        .update({ processed_at: new Date().toISOString() })
+        .eq('id', eventId);
+      if (!legacyError) return;
+      throw new Error(`Failed to update webhook state: ${legacyError.message}`);
+    }
+
+    throw new Error(`Failed to update webhook state: ${error.message}`);
   }
 
   // --- SUBMISSIONS ---
@@ -1517,7 +1575,7 @@ export class SupabaseStore {
       { count: certificatesIssued },
     ] = await Promise.all([
       client.from('teams').select('*', { count: 'exact', head: true }).eq('event_id', eventId),
-      client.from('teams').select('*', { count: 'exact', head: true }).eq('event_id', eventId).eq('status', 'paid'),
+      client.from('teams').select('*', { count: 'exact', head: true }).eq('event_id', eventId).eq('status', 'confirmed'),
       client.from('payment_orders').select('*', { count: 'exact', head: true }).in('status', ['created', 'attempted']),
       client.from('payment_orders').select('*', { count: 'exact', head: true }).eq('status', 'failed'),
       client.from('submissions').select('*', { count: 'exact', head: true }),

@@ -1,20 +1,15 @@
 import React from 'react';
 import Link from 'next/link';
-import { Sparkles, Trophy, ArrowRight, Layers, ShieldCheck } from 'lucide-react';
-import { EventData, EventTrack } from '@/lib/db/types';
-import SquadCalculator from '@/components/home/SquadCalculator';
+import { Sparkles, Trophy, ArrowRight } from 'lucide-react';
+import { EventData } from '@/lib/db/types';
 
 interface HeroProps {
   event: EventData;
-  tracks?: EventTrack[];
 }
 
-export default function HeroSection({ event, tracks }: HeroProps) {
+export default function HeroSection({ event }: HeroProps) {
   const isRegistrationOpen = event.status === 'registration_open';
   const prizePoolFormatted = event.prize_pool_inr.toLocaleString('en-IN');
-  const firstPrizeFormatted = (event.first_prize_inr || 20000).toLocaleString('en-IN');
-  const secondPrizeFormatted = (event.second_prize_inr || 10000).toLocaleString('en-IN');
-  const thirdPrizeFormatted = (event.third_prize_inr || 5000).toLocaleString('en-IN');
 
   return (
     <section id="top" className="relative overflow-hidden pt-8 pb-12 sm:pt-20 sm:pb-20 lg:pt-24 lg:pb-28 bg-[#0B0B0B]">
@@ -22,9 +17,9 @@ export default function HeroSection({ event, tracks }: HeroProps) {
 
       {/* SkaleKraft Ambient Radial Copper and Bronze Halos */}
       <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-full max-w-6xl h-[650px] pointer-events-none z-[1]">
-        <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[320px] sm:w-[650px] h-[260px] sm:h-[380px] bg-[radial-gradient(ellipse_80%_50%_at_50%_20%,rgba(193,154,136,0.18),transparent_70%)] blur-2xl" />
-        <div className="absolute top-24 left-1/4 w-[240px] sm:w-[420px] h-[240px] sm:h-[420px] bg-[#805948]/15 rounded-full blur-[120px] sm:blur-[140px]" />
-        <div className="absolute top-36 right-1/4 w-[220px] sm:w-[380px] h-[220px] sm:h-[380px] bg-[#c19a88]/12 rounded-full blur-[110px] sm:blur-[130px]" />
+        <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[320px] sm:w-[650px] h-[260px] sm:h-[380px] bg-[radial-gradient(ellipse_80%_50%_at_50%_20%,rgba(255,255,255,0.18),transparent_70%)] blur-2xl" />
+        <div className="absolute top-24 left-1/4 w-[240px] sm:w-[420px] h-[240px] sm:h-[420px] bg-[#737373]/15 rounded-full blur-[120px] sm:blur-[140px]" />
+        <div className="absolute top-36 right-1/4 w-[220px] sm:w-[380px] h-[220px] sm:h-[380px] bg-[#f5f5f5]/12 rounded-full blur-[110px] sm:blur-[130px]" />
       </div>
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
@@ -35,7 +30,7 @@ export default function HeroSection({ event, tracks }: HeroProps) {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
           </span>
-          <span className="font-serif italic text-xs sm:text-sm text-[#f5ded3] tracking-wide">SkaleKraft presents</span>
+          <span className="font-serif italic text-xs sm:text-sm text-[#c19a88] tracking-wide">SkaleKraft presents</span>
           <span className="text-white/20">•</span>
           <span className="text-[11px] font-mono uppercase tracking-wider text-[#c19a88] font-semibold">
             {isRegistrationOpen ? 'Registrations Live' : 'National Online Hackathon'}
@@ -62,10 +57,10 @@ export default function HeroSection({ event, tracks }: HeroProps) {
           {isRegistrationOpen ? (
             <Link
               href="/register"
-              className="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full p-[1.5px] focus:outline-none focus:ring-2 focus:ring-[#c19a88]/60 transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] shadow-[0_0_35px_rgba(193,154,136,0.35)]"
+              className="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full p-[1.5px] focus:outline-none focus:ring-2 focus:ring-[#f5f5f5]/60 transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] shadow-[0_0_35px_rgba(255,255,255,0.35)]"
             >
-              <span className="absolute inset-[-1000%] animate-[spin_3.5s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#805948_0%,#ffe5d9_40%,#c19a88_70%,#805948_100%)] opacity-85 group-hover:opacity-100" />
-              <span className="relative flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#1c1614] via-[#14100E] to-[#1c1614] px-6 py-3 sm:px-8 sm:py-3.5 text-xs sm:text-sm font-semibold text-white backdrop-blur-2xl transition-all duration-300 group-hover:from-[#261d1a] group-hover:to-[#261d1a]">
+              <span className="absolute inset-[-1000%] animate-[spin_3.5s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#737373_0%,#fafafa_40%,#f5f5f5_70%,#737373_100%)] opacity-85 group-hover:opacity-100" />
+              <span className="relative flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#171717] via-[#111111] to-[#171717] px-6 py-3 sm:px-8 sm:py-3.5 text-xs sm:text-sm font-semibold text-white backdrop-blur-2xl transition-all duration-300 group-hover:from-[#171717] group-hover:to-[#171717]">
                 <Sparkles className="h-4 w-4 text-[#c19a88] group-hover:rotate-12 transition-transform duration-300" />
                 <span>Register Squad — ₹{event.registration_fee_inr}</span>
                 <ArrowRight className="h-4 w-4 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" />
@@ -82,7 +77,7 @@ export default function HeroSection({ event, tracks }: HeroProps) {
 
           <Link
             href="/prizes"
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 sm:px-6 sm:py-3.5 text-xs sm:text-sm font-medium text-white/80 hover:bg-white/[0.08] hover:text-white hover:border-[#c19a88]/40 transition-all backdrop-blur-xl"
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 sm:px-6 sm:py-3.5 text-xs sm:text-sm font-medium text-white/80 hover:bg-white/[0.08] hover:text-white hover:border-[#f5f5f5]/40 transition-all backdrop-blur-xl"
           >
             <Trophy className="h-4 w-4 text-[#c19a88]" />
             <span>Prize Pool Details (₹{prizePoolFormatted})</span>
@@ -96,13 +91,6 @@ export default function HeroSection({ event, tracks }: HeroProps) {
           <span>100% Online</span>
           <span className="hidden xs:inline">•</span>
           <span>No hidden fees</span>
-        </div>
-
-
-
-        {/* 8. Interactive Squad Investment & Value Calculator */}
-        <div className="mt-8 sm:mt-12">
-          <SquadCalculator event={event} tracks={tracks} />
         </div>
       </div>
     </section>

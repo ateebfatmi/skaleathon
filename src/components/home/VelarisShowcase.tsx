@@ -8,24 +8,24 @@ import { motion } from 'framer-motion';
 
 const PRESETS = [
   {
-    name: 'SkaleKraft Bronze',
-    colors: ['#c19a88', '#805948', '#e8c5b4', '#15101a'],
-    bg: '#08080C',
+    name: 'SkaleKraft Mono',
+    colors: ['#ffffff', '#a3a3a3', '#f5f5f5', '#171717'],
+    bg: '#080808',
   },
   {
-    name: 'Aurora Emerald',
-    colors: ['#86efac', '#4ade80', '#059669', '#000000'],
-    bg: '#040d08',
+    name: 'Graphite',
+    colors: ['#e5e5e5', '#737373', '#d4d4d4', '#050505'],
+    bg: '#050505',
   },
   {
-    name: 'Cyber Indigo',
-    colors: ['#818cf8', '#6366f1', '#4338ca', '#090a18'],
-    bg: '#050714',
+    name: 'Silver',
+    colors: ['#fafafa', '#a3a3a3', '#525252', '#0a0a0a'],
+    bg: '#070707',
   },
   {
-    name: 'Solar Flare',
-    colors: ['#fbbf24', '#f59e0b', '#d97706', '#1c1005'],
-    bg: '#0d0703',
+    name: 'Carbon',
+    colors: ['#d4d4d4', '#525252', '#f5f5f5', '#111111'],
+    bg: '#030303',
   },
 ];
 
@@ -37,18 +37,18 @@ export default function VelarisShowcase() {
   const currentPreset = PRESETS[selectedPresetIndex];
 
   return (
-    <section className="py-20 lg:py-28 bg-[#07090E] relative overflow-hidden border-t border-white/[0.06]">
+    <section className="relative overflow-hidden border-t border-white/[0.06] bg-[#070707] py-20 lg:py-28">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 px-3.5 py-1 text-xs font-medium text-[#e8c5b4] mb-4">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#f5f5f5]/30 bg-[#f5f5f5]/10 px-3.5 py-1 text-xs font-medium text-[#ffffff] mb-4">
             <Cpu className="h-3.5 w-3.5" />
             <span>GPU-Accelerated Shaders</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight text-white">
             Living gradients in{' '}
-            <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
+            <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#ffffff] via-[#f5f5f5] to-[#737373] bg-clip-text text-transparent pb-1 inline-block">
               motion
             </span>
             .
@@ -107,7 +107,7 @@ export default function VelarisShowcase() {
                 <div className="pt-2">
                   <Link
                     href="/register"
-                    className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] px-6 py-3 text-xs sm:text-sm font-bold text-white shadow-[0_4px_25px_rgba(128,89,72,0.4)] hover:scale-105 transition-transform"
+                    className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#737373] via-[#737373] to-[#f5f5f5] px-6 py-3 text-xs sm:text-sm font-bold text-white shadow-[0_4px_25px_rgba(163,163,163,0.4)] hover:scale-105 transition-transform"
                   >
                     <span>Register Team</span>
                     <ArrowRight className="h-4 w-4" />
@@ -132,9 +132,9 @@ export default function VelarisShowcase() {
                     step="0.1"
                     value={speed}
                     onChange={(e) => setSpeed(parseFloat(e.target.value))}
-                    className="w-20 accent-[#c19a88] cursor-pointer"
+                    className="w-20 accent-[#f5f5f5] cursor-pointer"
                   />
-                  <span className="font-mono text-[11px] text-[#e8c5b4]">{speed.toFixed(1)}x</span>
+                  <span className="font-mono text-[11px] text-[#ffffff]">{speed.toFixed(1)}x</span>
                 </div>
                 <div className="h-3 w-px bg-white/10" />
                 <div className="flex items-center gap-2">
@@ -146,9 +146,9 @@ export default function VelarisShowcase() {
                     step="0.05"
                     value={grain}
                     onChange={(e) => setGrain(parseFloat(e.target.value))}
-                    className="w-20 accent-[#c19a88] cursor-pointer"
+                    className="w-20 accent-[#f5f5f5] cursor-pointer"
                   />
-                  <span className="font-mono text-[11px] text-[#e8c5b4]">{grain.toFixed(2)}</span>
+                  <span className="font-mono text-[11px] text-[#ffffff]">{grain.toFixed(2)}</span>
                 </div>
               </div>
 

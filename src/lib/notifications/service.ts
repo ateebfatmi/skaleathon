@@ -6,20 +6,23 @@ export interface EmailMessage {
 }
 
 export class NotificationService {
-  private static outbox: Array<EmailMessage & { timestamp: string; status: 'sent' | 'queued' | 'mocked' }> = [];
+  private static outbox: Array<EmailMessage & { timestamp: string; status: 'sent' | 'queued' | 'mocked' | 'failed' }> = [];
 
   static async sendEmail(message: EmailMessage): Promise<{ success: boolean; provider: string; messageId?: string }> {
     const provider = process.env.EMAIL_PROVIDER || 'console';
     const resendApiKey = process.env.RESEND_API_KEY;
 
-    // Record in local outbox for auditing and verification
-    this.outbox.unshift({
+    const isConfigured = provider === 'resend' && !!resendApiKey && !resendApiKey.includes('placeholder');
+
+    // Record in local outbox for auditing and verification.
+    const outboxEntry: EmailMessage & { timestamp: string; status: 'sent' | 'queued' | 'mocked' | 'failed' } = {
       ...message,
       timestamp: new Date().toISOString(),
-      status: resendApiKey && !resendApiKey.includes('placeholder') ? 'sent' : 'mocked',
-    });
+      status: isConfigured ? 'queued' : process.env.NODE_ENV === 'production' ? 'failed' : 'mocked',
+    };
+    this.outbox.unshift(outboxEntry);
 
-    if (provider === 'resend' && resendApiKey && !resendApiKey.includes('placeholder')) {
+    if (isConfigured) {
       try {
         const res = await fetch('https://api.resend.com/emails', {
           method: 'POST',
@@ -35,14 +38,21 @@ export class NotificationService {
           }),
         });
         const data = await res.json();
+        outboxEntry.status = res.ok ? 'sent' : 'failed';
         return { success: res.ok, provider: 'resend', messageId: data.id };
       } catch (err) {
+        outboxEntry.status = 'failed';
         console.error('Failed to dispatch email via Resend:', err);
         return { success: false, provider: 'resend' };
       }
     }
 
-    // Safe development console logger
+    if (process.env.NODE_ENV === 'production') {
+      console.error(`Notification delivery is not configured for ${message.category}.`);
+      return { success: false, provider: 'unconfigured' };
+    }
+
+    // Safe development console logger.
     console.info(`[NOTIFICATION MOCK][${message.category.toUpperCase()}] To: ${message.to} | Subject: "${message.subject}"`);
     return { success: true, provider: 'dev-console', messageId: 'mock_' + Math.random().toString(36).substring(2, 9) };
   }
@@ -60,7 +70,7 @@ export class NotificationService {
       category: 'registration',
       html: `
         <div style="font-family: sans-serif; background: #0B0B0B; color: #f1f5f9; padding: 24px; border-radius: 8px;">
-          <h2 style="color: #c19a88;">Welcome to Skaleathon!</h2>
+          <h2 style="color: #f5f5f5;">Welcome to Skaleathon!</h2>
           <p>Hi ${params.recipientName},</p>
           <p>Your team <strong>${params.teamName}</strong> has been successfully registered.</p>
           <p>Payment of ₹${params.amountInr} has been authoritatively verified under order <code>${params.orderId}</code>.</p>

@@ -20,8 +20,8 @@ export default function StatsSection({ event }: StatsProps) {
       sublabel: `1st: ₹${firstPrize} • 2nd: ₹${secondPrize} • 3rd: ₹${thirdPrize}`,
       badge: '★ Guaranteed Bounty',
       icon: Trophy,
-      accentColor: '#c19a88',
-      gradientClass: 'from-white via-[#ffe5d9] to-[#c19a88]',
+      accentColor: '#f5f5f5',
+      gradientClass: 'from-white via-[#fafafa] to-[#f5f5f5]',
       isFeatured: true,
     },
     {
@@ -31,8 +31,8 @@ export default function StatsSection({ event }: StatsProps) {
       sublabel: 'Nominal flat fee covering the entire team',
       badge: 'Transparent Entry',
       icon: Tag,
-      accentColor: '#805948',
-      gradientClass: 'from-white via-[#e8cbbf] to-[#805948]',
+      accentColor: '#737373',
+      gradientClass: 'from-white via-[#e5e5e5] to-[#737373]',
       isFeatured: false,
     },
     {
@@ -43,8 +43,8 @@ export default function StatsSection({ event }: StatsProps) {
       sublabel: `Compete solo or collaborate with up to ${event.max_team_size} builders`,
       badge: 'Flexible Roster',
       icon: Users,
-      accentColor: '#c19a88',
-      gradientClass: 'from-white via-[#f2d9ce] to-[#c19a88]',
+      accentColor: '#f5f5f5',
+      gradientClass: 'from-white via-[#f5f5f5] to-[#f5f5f5]',
       isFeatured: false,
     },
     {
@@ -55,8 +55,8 @@ export default function StatsSection({ event }: StatsProps) {
       sublabel: `Merit certificates awarded to the top ${event.certificates_top_n} teams`,
       badge: 'Official',
       icon: Award,
-      accentColor: '#805948',
-      gradientClass: 'from-white via-[#e8cbbf] to-[#805948]',
+      accentColor: '#737373',
+      gradientClass: 'from-white via-[#e5e5e5] to-[#737373]',
       isFeatured: false,
     },
   ];
@@ -64,7 +64,7 @@ export default function StatsSection({ event }: StatsProps) {
   return (
     <section className="relative py-12 sm:py-16 bg-[#0B0B0B]">
       {/* Background glow matching SkaleKraft */}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-56 w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(128,89,72,0.12),transparent_70%)] blur-3xl" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-56 w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(163,163,163,0.12),transparent_70%)] blur-3xl" />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div
@@ -72,14 +72,14 @@ export default function StatsSection({ event }: StatsProps) {
         >
           <div>
             <div className="flex items-center gap-2.5">
-              <span className="h-px w-6 bg-[#c19a88]/70" />
+              <span className="h-px w-6 bg-[#f5f5f5]/70" />
               <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
                 Engineered for Builders
               </p>
             </div>
             <h2 className="mt-2 text-2xl sm:text-3xl font-medium tracking-tight text-white">
               Competition at a{' '}
-              <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
+              <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#ffffff] via-[#f5f5f5] to-[#737373] bg-clip-text text-transparent pb-1 inline-block">
                 glance
               </span>
               .
@@ -99,7 +99,7 @@ export default function StatsSection({ event }: StatsProps) {
                 key={stat.id}
                 className={`group relative flex min-h-[176px] sm:min-h-[190px] flex-col p-4 sm:p-6 transition-all duration-300 ${
                   stat.isFeatured
-                    ? 'bg-[linear-gradient(145deg,rgba(193,154,136,0.14),rgba(12,12,12,0.98))] shadow-[inset_0_0_25px_rgba(193,154,136,0.12)]'
+                    ? 'bg-[linear-gradient(145deg,rgba(255,255,255,0.14),rgba(12,12,12,0.98))] shadow-[inset_0_0_25px_rgba(255,255,255,0.12)]'
                     : 'bg-[linear-gradient(145deg,rgba(255,255,255,0.04),rgba(10,10,10,0.98))] hover:bg-white/[0.04]'
                 }`}
               >
@@ -117,7 +117,7 @@ export default function StatsSection({ event }: StatsProps) {
                     <span
                       className={`flex h-8 w-8 items-center justify-center rounded-xl border transition-all ${
                         stat.isFeatured
-                          ? 'border-[#c19a88]/60 bg-gradient-to-br from-[#ffe5d9] to-[#c19a88] text-black shadow-[0_0_15px_rgba(193,154,136,0.5)]'
+                          ? 'border-[#f5f5f5]/60 bg-gradient-to-br from-[#fafafa] to-[#f5f5f5] text-black shadow-[0_0_15px_rgba(255,255,255,0.5)]'
                           : 'border-white/[0.09] bg-white/[0.025] text-[#c19a88] shadow-[inset_0_1px_0_rgba(255,255,255,.05),0_8px_20px_rgba(0,0,0,.25)]'
                       }`}
                     >
@@ -131,7 +131,7 @@ export default function StatsSection({ event }: StatsProps) {
                   <span
                     className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[8px] font-mono font-bold uppercase tracking-[0.14em] backdrop-blur-xl ${
                       stat.isFeatured
-                        ? 'border border-[#c19a88]/60 bg-[#c19a88]/20 text-[#ffe5d9] shadow-[0_0_10px_rgba(193,154,136,0.3)]'
+                        ? 'border border-[#f5f5f5]/60 bg-[#f5f5f5]/20 text-[#fafafa] shadow-[0_0_10px_rgba(255,255,255,0.3)]'
                         : 'hidden sm:inline-flex border border-white/[0.08] bg-black/30 text-[#c19a88]'
                     }`}
                   >
@@ -144,7 +144,7 @@ export default function StatsSection({ event }: StatsProps) {
                 <div className="relative pb-2 pt-5 sm:pt-6">
                   <span
                     className={`bg-gradient-to-br ${stat.gradientClass} bg-clip-text font-mono text-xl sm:text-3xl lg:text-[2.35rem] font-black leading-none tracking-[-0.03em] text-transparent ${
-                      stat.isFeatured ? 'drop-shadow-[0_2px_15px_rgba(193,154,136,0.5)]' : ''
+                      stat.isFeatured ? 'drop-shadow-[0_2px_15px_rgba(255,255,255,0.5)]' : ''
                     }`}
                   >
                     {stat.value}
@@ -160,14 +160,14 @@ export default function StatsSection({ event }: StatsProps) {
                 <div className="relative mt-auto border-t border-white/[0.07] pt-3">
                   <h3
                     className={`text-[9px] sm:text-[10px] uppercase tracking-[0.12em] sm:tracking-[0.14em] ${
-                      stat.isFeatured ? 'text-[#ffe5d9] font-bold' : 'text-white/85 font-semibold'
+                      stat.isFeatured ? 'text-[#fafafa] font-bold' : 'text-white/85 font-semibold'
                     }`}
                   >
                     {stat.label}
                   </h3>
                   <p
                     className={`mobile-card-copy mt-1 text-[10px] sm:text-[11px] leading-snug ${
-                      stat.isFeatured ? 'text-[#e8c5b4] font-medium' : 'text-white/45 font-light'
+                      stat.isFeatured ? 'text-[#ffffff] font-medium' : 'text-white/45 font-light'
                     }`}
                   >
                     {stat.sublabel}

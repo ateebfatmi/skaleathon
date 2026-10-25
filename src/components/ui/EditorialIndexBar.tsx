@@ -63,23 +63,15 @@ export function EditorialIndexBar({
     const isHashLink = item.href.startsWith('#');
 
     if (isHashLink) {
-      setTimeout(() => {
-        const targetId = item.href.replace('#', '');
-        const el = document.getElementById(targetId);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          window.history.replaceState(null, '', item.href);
-        }
-        setTimeout(() => setTransitioningItem(null), 240);
-      }, 280);
+      const targetId = item.href.replace('#', '');
+      const el = document.getElementById(targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        window.history.replaceState(null, '', item.href);
+      }
+      setTimeout(() => setTransitioningItem(null), 240);
     } else {
-      // Play the spring underline slide, shimmer sweep, and transition pill before navigating
-      setTimeout(() => {
-        router.push(item.href);
-        setTimeout(() => {
-          setTransitioningItem(null);
-        }, 450);
-      }, 340);
+      router.push(item.href);
     }
   };
 
@@ -122,7 +114,7 @@ export function EditorialIndexBar({
                 <motion.div
                   layoutId={`${layoutIdPrefix}-bg`}
                   transition={{ type: 'spring', stiffness: 380, damping: 32 }}
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#805948]/18 via-[#c19a88]/10 to-white/[0.02]"
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#737373]/18 via-[#f5f5f5]/10 to-white/[0.02]"
                 />
               )}
 
@@ -144,7 +136,7 @@ export function EditorialIndexBar({
                     animate={{ x: '100%', opacity: 0 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-[#e8c5b4]/35 to-transparent"
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-[#ffffff]/35 to-transparent"
                   />
                 )}
               </AnimatePresence>
@@ -152,7 +144,7 @@ export function EditorialIndexBar({
               <div className="relative z-10 flex items-center gap-2 sm:gap-2.5 min-w-0 pr-2">
                 <span
                   className={`font-mono text-[10px] font-bold transition-colors duration-300 ${
-                    isActive ? 'text-[#e8c5b4]' : 'text-[#c19a88]'
+                    isActive ? 'text-[#ffffff]' : 'text-[#c19a88]'
                   }`}
                 >
                   {item.num}
@@ -165,16 +157,16 @@ export function EditorialIndexBar({
                   <motion.div
                     initial={{ scale: 0.6, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    className="flex items-center gap-1 text-[10px] font-mono text-[#e8c5b4]"
+                    className="flex items-center gap-1 text-[10px] font-mono text-[#ffffff]"
                   >
-                    <Loader2 className="h-3.5 w-3.5 text-[#e8c5b4] animate-spin" />
+                    <Loader2 className="h-3.5 w-3.5 text-[#ffffff] animate-spin" />
                   </motion.div>
                 ) : (
                   <ArrowUpRight
                     className={`h-3.5 w-3.5 shrink-0 transition-all duration-300 ${
                       isActive
-                        ? 'text-[#e8c5b4] translate-x-0.5 -translate-y-0.5'
-                        : 'text-neutral-600 group-hover:text-[#e8c5b4] group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
+                        ? 'text-[#ffffff] translate-x-0.5 -translate-y-0.5'
+                        : 'text-neutral-600 group-hover:text-[#ffffff] group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
                     }`}
                   />
                 )}
@@ -185,7 +177,7 @@ export function EditorialIndexBar({
                 <motion.span
                   layoutId={`${layoutIdPrefix}-underline`}
                   transition={{ type: 'spring', stiffness: 400, damping: 32 }}
-                  className="pointer-events-none absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4] shadow-[0_0_12px_rgba(232,197,180,0.5)]"
+                  className="pointer-events-none absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#737373] via-[#f5f5f5] to-[#ffffff] shadow-[0_0_12px_rgba(229,229,229,0.5)]"
                 />
               )}
             </button>
@@ -203,7 +195,7 @@ export function EditorialIndexBar({
               animate={{ scaleX: 1, opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed top-0 left-0 right-0 z-[100] h-[2.5px] origin-left bg-gradient-to-r from-[#805948] via-[#e8c5b4] to-[#c19a88] shadow-[0_0_16px_#e8c5b4]"
+              className="fixed top-0 left-0 right-0 z-[100] h-[2.5px] origin-left bg-gradient-to-r from-[#737373] via-[#ffffff] to-[#f5f5f5] shadow-[0_0_16px_#ffffff]"
             />
 
             {/* Editorial Transition Pill & Subtle Backdrop */}
@@ -219,7 +211,7 @@ export function EditorialIndexBar({
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -8, scale: 0.96 }}
                 transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
-                className="flex items-center gap-3 rounded-full border border-[#c19a88]/40 bg-[#120F0D]/95 px-5 py-2.5 shadow-[0_12px_40px_rgba(0,0,0,0.75),0_0_25px_rgba(193,154,136,0.2)] backdrop-blur-2xl"
+                className="flex items-center gap-3 rounded-full border border-[#f5f5f5]/40 bg-[#111111]/95 px-5 py-2.5 shadow-[0_12px_40px_rgba(0,0,0,0.75),0_0_25px_rgba(255,255,255,0.2)] backdrop-blur-2xl"
               >
                 <span className="font-mono text-[10px] font-bold text-[#c19a88]">
                   {transitioningItem.num}
@@ -227,7 +219,7 @@ export function EditorialIndexBar({
                 <span className="h-3 w-px bg-white/15" />
                 <span className="text-xs font-medium text-white tracking-wide">
                   {transitioningItem.href.startsWith('#') ? 'Focusing' : 'Entering'}{' '}
-                  <span className="font-serif italic text-[#e8c5b4]">{transitioningItem.label}</span>
+                  <span className="font-serif italic text-[#ffffff]">{transitioningItem.label}</span>
                 </span>
                 <Loader2 className="h-3.5 w-3.5 text-[#c19a88] animate-spin ml-1" />
               </motion.div>

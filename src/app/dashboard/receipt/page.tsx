@@ -38,7 +38,7 @@ export default async function DashboardReceiptPage({ searchParams }: PageProps) 
         <div className="relative z-10 pt-2">
           <Link
             href="/dashboard"
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-7 py-3 text-xs font-bold text-white shadow-[0_4px_25px_rgba(128,89,72,0.4)] transition-all hover:scale-105"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#737373] via-[#737373] to-[#f5f5f5] hover:from-[#a3a3a3] hover:to-[#d4d4d4] px-7 py-3 text-xs font-bold text-white shadow-[0_4px_25px_rgba(163,163,163,0.4)] transition-all hover:scale-105"
           >
             <span>Return to Dashboard</span>
             <ArrowRight className="h-3.5 w-3.5" />

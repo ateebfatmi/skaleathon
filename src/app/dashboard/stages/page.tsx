@@ -16,7 +16,7 @@ export default async function DashboardStagesPage() {
       title: 'Online Technical Quiz',
       subtitle: 'Foundational Computer Science & Algorithmic Screening',
       category: 'Screening',
-      categoryColor: 'border-[#c19a88]/30 bg-[#c19a88]/10 text-[#c19a88]',
+      categoryColor: 'border-[#f5f5f5]/30 bg-[#f5f5f5]/10 text-[#c19a88]',
       description:
         'A comprehensive online multiple-choice screening assessment evaluating foundational computer science principles, data structures, algorithms, and track-specific problem-solving aptitude. Scores determine tournament seeding and qualification for the blueprint round.',
       format: 'Timed Online Assessment (30–45 mins)',
@@ -36,7 +36,7 @@ export default async function DashboardStagesPage() {
       title: 'Idea & Architecture PPT',
       subtitle: 'System Blueprint, Schema Design & Feasibility Deck',
       category: 'Blueprint',
-      categoryColor: 'border-[#e8c5b4]/30 bg-[#e8c5b4]/10 text-[#e8c5b4]',
+      categoryColor: 'border-[#ffffff]/30 bg-[#ffffff]/10 text-[#ffffff]',
       description:
         'Submit a structured pitch deck (max 10 slides) detailing your proposed problem statement, system architecture, database schema, AI/API integrations, and target user persona. This blueprint serves as the engineering foundation for your live build.',
       format: 'PDF Slide Deck Upload (Max 10 Slides)',
@@ -58,7 +58,7 @@ export default async function DashboardStagesPage() {
       title: 'Codebase & Demo (Build Sprint)',
       subtitle: '10-Day Deep Engineering Sprint & Cloud Deployment',
       category: 'Build Phase',
-      categoryColor: 'border-[#c19a88]/40 bg-[#c19a88]/15 text-[#e8c5b4]',
+      categoryColor: 'border-[#f5f5f5]/40 bg-[#f5f5f5]/15 text-[#ffffff]',
       description:
         'The primary development sprint. Deliver a production-grade codebase in a public GitHub repository and a live deployed URL on cloud hosting. A 2–3 minute video walkthrough is not strictly necessary, but will give your team a distinct evaluation advantage.',
       format: 'GitHub + Live Demo URL (Video Link Optional Advantage)',

@@ -63,13 +63,13 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
   const showRegistrationForm = !registeredTeam || resolvedSearchParams?.new === 'true';
 
   return (
-    <div className="min-h-screen bg-[#0B0B0B] text-white relative overflow-hidden pt-12 pb-24 sm:pt-16 sm:pb-32 selection:bg-[#805948]/30">
+    <div className="min-h-screen bg-[#0B0B0B] text-white relative overflow-hidden pt-12 pb-24 sm:pt-16 sm:pb-32 selection:bg-[#737373]/30">
       {/* Living WebGL Ambient Mesh Canvas */}
       <div className="fixed inset-0 pointer-events-none opacity-30 mix-blend-screen z-0">
         <Velaris
           height="100%"
           bg="#0B0B0B"
-          colors={['#c19a88', '#805948', '#e8c5b4', '#151016']}
+          colors={['#ffffff', '#a3a3a3', '#f5f5f5', '#171717']}
           speed={1.0}
           grain={0.18}
         />
@@ -77,9 +77,9 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
 
       {/* Radial ambient copper & bronze lights */}
       <div className="pointer-events-none fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[700px] z-0">
-        <div className="absolute top-10 left-1/4 w-[520px] h-[520px] bg-[#805948]/20 rounded-full blur-[140px]" />
-        <div className="absolute top-24 right-1/4 w-[420px] h-[420px] bg-[#c19a88]/15 rounded-full blur-[120px]" />
-        <div className="absolute bottom-10 left-1/3 w-[360px] h-[360px] bg-[#e8c5b4]/10 rounded-full blur-[130px]" />
+        <div className="absolute top-10 left-1/4 w-[520px] h-[520px] bg-[#737373]/20 rounded-full blur-[140px]" />
+        <div className="absolute top-24 right-1/4 w-[420px] h-[420px] bg-[#f5f5f5]/15 rounded-full blur-[120px]" />
+        <div className="absolute bottom-10 left-1/3 w-[360px] h-[360px] bg-[#ffffff]/10 rounded-full blur-[130px]" />
       </div>
 
       {/* Micro dot matrix pattern */}
@@ -90,13 +90,13 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
         <div className="mb-8 flex items-center justify-between">
           <Link
             href="/"
-            className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-[11px] font-mono uppercase tracking-[0.18em] text-neutral-400 hover:text-white hover:border-[#c19a88]/40 hover:bg-white/[0.06] backdrop-blur-md transition-all shadow-sm"
+            className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-[11px] font-mono uppercase tracking-[0.18em] text-neutral-400 hover:text-white hover:border-[#f5f5f5]/40 hover:bg-white/[0.06] backdrop-blur-md transition-all shadow-sm"
           >
             <ArrowLeft className="h-3.5 w-3.5 text-[#c19a88] group-hover:-translate-x-0.5 transition-transform" />
             <span>Return to Overview</span>
           </Link>
 
-          <div className="hidden sm:flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-[#c19a88] bg-[#805948]/10 border border-[#c19a88]/20 px-3 py-1 rounded-full">
+          <div className="hidden sm:flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-[#c19a88] bg-[#737373]/10 border border-[#f5f5f5]/20 px-3 py-1 rounded-full">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
             <span>Official Portal • Registration closes {formatDate(event.registration_end_at || REGISTRATION_DEADLINE)}</span>
           </div>
@@ -114,7 +114,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-medium text-white tracking-tight leading-[1.15]">
               Registration{' '}
-              <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
+              <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#ffffff] via-[#f5f5f5] to-[#737373] bg-clip-text text-transparent pb-1 inline-block">
                 confirmed
               </span>
               .
@@ -140,7 +140,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-medium text-white tracking-tight leading-[1.15]">
               Register your{' '}
-              <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
+              <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#ffffff] via-[#f5f5f5] to-[#737373] bg-clip-text text-transparent pb-1 inline-block">
                 squad
               </span>
               .
@@ -153,7 +153,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
             {/* Value Highlights Strip */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 mt-8 pt-6 border-t border-white/[0.08]">
               <div className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-sm text-left">
-                <div className="h-8 w-8 rounded-lg bg-[#805948]/20 border border-[#c19a88]/30 flex items-center justify-center text-[#c19a88] shrink-0">
+                <div className="h-8 w-8 rounded-lg bg-[#737373]/20 border border-[#f5f5f5]/30 flex items-center justify-center text-[#c19a88] shrink-0">
                   <Shield className="h-4 w-4" />
                 </div>
                 <div>
@@ -163,7 +163,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
               </div>
 
               <div className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-sm text-left">
-                <div className="h-8 w-8 rounded-lg bg-[#805948]/20 border border-[#c19a88]/30 flex items-center justify-center text-[#c19a88] shrink-0">
+                <div className="h-8 w-8 rounded-lg bg-[#737373]/20 border border-[#f5f5f5]/30 flex items-center justify-center text-[#c19a88] shrink-0">
                   <Trophy className="h-4 w-4" />
                 </div>
                 <div>
@@ -173,7 +173,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
               </div>
 
               <div className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-sm text-left">
-                <div className="h-8 w-8 rounded-lg bg-[#805948]/20 border border-[#c19a88]/30 flex items-center justify-center text-[#c19a88] shrink-0">
+                <div className="h-8 w-8 rounded-lg bg-[#737373]/20 border border-[#f5f5f5]/30 flex items-center justify-center text-[#c19a88] shrink-0">
                   <Award className="h-4 w-4" />
                 </div>
                 <div>
@@ -183,7 +183,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
               </div>
 
               <div className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-sm text-left">
-                <div className="h-8 w-8 rounded-lg bg-[#805948]/20 border border-[#c19a88]/30 flex items-center justify-center text-[#c19a88] shrink-0">
+                <div className="h-8 w-8 rounded-lg bg-[#737373]/20 border border-[#f5f5f5]/30 flex items-center justify-center text-[#c19a88] shrink-0">
                   <Briefcase className="h-4 w-4" />
                 </div>
                 <div>
@@ -197,11 +197,11 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
 
         {/* If user is registering another team while already having an active team */}
         {resolvedSearchParams?.new === 'true' && registeredTeam && (
-          <div className="max-w-3xl mx-auto mb-8 rounded-2xl border border-[#c19a88]/30 bg-[#c19a88]/10 p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs backdrop-blur-md">
+          <div className="max-w-3xl mx-auto mb-8 rounded-2xl border border-[#f5f5f5]/30 bg-[#f5f5f5]/10 p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs backdrop-blur-md">
             <div className="flex items-center gap-2 text-white">
               <Sparkles className="h-4 w-4 text-[#c19a88] shrink-0" />
               <span>
-                You currently have an active registration for team <strong className="text-[#e8c5b4]">{registeredTeam.name}</strong>.
+                You currently have an active registration for team <strong className="text-[#ffffff]">{registeredTeam.name}</strong>.
               </span>
             </div>
             <Link
@@ -224,7 +224,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
             userEmail={session?.email}
           />
         ) : !session ? (
-          <div className="max-w-xl mx-auto rounded-[28px] border border-[#c19a88]/25 bg-[linear-gradient(145deg,rgba(193,154,136,0.08),rgba(14,14,14,0.95))] p-8 sm:p-10 text-center space-y-5 shadow-[0_20px_50px_rgba(0,0,0,0.4)] backdrop-blur-xl">
+          <div className="max-w-xl mx-auto rounded-[28px] border border-[#f5f5f5]/25 bg-[linear-gradient(145deg,rgba(255,255,255,0.08),rgba(14,14,14,0.95))] p-8 sm:p-10 text-center space-y-5 shadow-[0_20px_50px_rgba(0,0,0,0.4)] backdrop-blur-xl">
             <Lock className="mx-auto h-8 w-8 text-[#c19a88]" aria-hidden="true" />
             <h2 className="text-xl font-medium text-white">Sign in before registering your team</h2>
             <p className="text-sm text-white/55 leading-relaxed font-light">
@@ -232,7 +232,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
             </p>
             <Link
               href="/sign-in?redirect_url=/register"
-              className="inline-flex rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] px-7 py-3 text-xs font-semibold text-white shadow-lg hover:scale-105 transition-all"
+              className="inline-flex rounded-full bg-gradient-to-r from-[#737373] to-[#f5f5f5] px-7 py-3 text-xs font-semibold text-white shadow-lg hover:scale-105 transition-all"
             >
               Sign in to continue
             </Link>
@@ -245,7 +245,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
             </p>
             <Link
               href="/"
-              className="inline-block rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] px-6 py-2.5 text-xs font-semibold text-white shadow-lg hover:scale-105 transition-all"
+              className="inline-block rounded-full bg-gradient-to-r from-[#737373] to-[#f5f5f5] px-6 py-2.5 text-xs font-semibold text-white shadow-lg hover:scale-105 transition-all"
             >
               Return to Homepage
             </Link>

@@ -136,7 +136,7 @@ export default function EvaluateProjectPage() {
 
   if (loading) {
     return (
-      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-12 text-center text-xs text-slate-400">
+      <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-12 text-center text-xs text-neutral-400">
         Loading evaluation matrix...
       </div>
     );
@@ -146,7 +146,7 @@ export default function EvaluateProjectPage() {
     return (
       <div className="rounded-3xl border border-white/10 bg-[#0E0E0E] p-12 text-center space-y-4">
         <h2 className="text-xl font-bold text-white">Submission Not Found</h2>
-        <p className="text-xs text-slate-400">
+        <p className="text-xs text-neutral-400">
           The requested submission ID could not be retrieved from the database.
         </p>
         <Link href="/judge" className="text-xs font-semibold text-brand-400 hover:underline">
@@ -162,7 +162,7 @@ export default function EvaluateProjectPage() {
       <div>
         <Link
           href="/judge"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-400 hover:text-white transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
           <span>Back to Assigned Evaluations</span>
@@ -203,8 +203,8 @@ export default function EvaluateProjectPage() {
             <h1 className="text-2xl sm:text-3xl font-black text-white mt-1">
               {submission.title}
             </h1>
-            <p className="text-xs text-slate-400 mt-1">
-              Submission ID: <code className="font-mono text-slate-300">{submission.id}</code>
+            <p className="text-xs text-neutral-400 mt-1">
+              Submission ID: <code className="font-mono text-neutral-300">{submission.id}</code>
             </p>
           </div>
 
@@ -248,28 +248,28 @@ export default function EvaluateProjectPage() {
         {/* Narrative Details */}
         <div className="space-y-4 text-xs leading-relaxed">
           <div>
-            <h3 className="font-bold text-slate-300 uppercase tracking-wider mb-1 text-[11px]">
+            <h3 className="font-bold text-neutral-300 uppercase tracking-wider mb-1 text-[11px]">
               Problem Statement:
             </h3>
-            <p className="text-slate-200 bg-[#141414] p-4 rounded-xl border border-white/5">
+            <p className="text-neutral-200 bg-[#141414] p-4 rounded-xl border border-white/5">
               {submission.problem_statement}
             </p>
           </div>
 
           <div>
-            <h3 className="font-bold text-slate-300 uppercase tracking-wider mb-1 text-[11px]">
+            <h3 className="font-bold text-neutral-300 uppercase tracking-wider mb-1 text-[11px]">
               Solution Architecture & Implementation:
             </h3>
-            <p className="text-slate-200 bg-[#141414] p-4 rounded-xl border border-white/5">
+            <p className="text-neutral-200 bg-[#141414] p-4 rounded-xl border border-white/5">
               {submission.solution_overview}
             </p>
           </div>
 
           <div>
-            <h3 className="font-bold text-slate-300 uppercase tracking-wider mb-1 text-[11px]">
+            <h3 className="font-bold text-neutral-300 uppercase tracking-wider mb-1 text-[11px]">
               Full Description & Technical Polish:
             </h3>
-            <p className="text-slate-300 bg-[#141414] p-4 rounded-xl border border-white/5 whitespace-pre-wrap">
+            <p className="text-neutral-300 bg-[#141414] p-4 rounded-xl border border-white/5 whitespace-pre-wrap">
               {submission.description}
             </p>
           </div>
@@ -280,7 +280,7 @@ export default function EvaluateProjectPage() {
                 <Sparkles className="h-3.5 w-3.5" />
                 <span>Disclosed Generative AI Tool Usage:</span>
               </h3>
-              <p className="text-slate-300 bg-cyanAccent-950/20 p-3 rounded-xl border border-cyanAccent-500/20">
+              <p className="text-neutral-300 bg-cyanAccent-950/20 p-3 rounded-xl border border-cyanAccent-500/20">
                 {submission.ai_tool_disclosure}
               </p>
             </div>
@@ -296,13 +296,13 @@ export default function EvaluateProjectPage() {
               <Award className="h-5 w-5 text-amber-400" />
               <span>Multi-Criterion Evaluation Rubric</span>
             </h2>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-neutral-400 mt-0.5">
               Score each criterion from 0 to 10. Weighted calculation is performed continuously.
             </p>
           </div>
 
           <div className="p-3 rounded-2xl bg-black/50 border border-white/10 text-right">
-            <span className="text-[10px] text-slate-400 uppercase font-semibold block">Calculated Total</span>
+            <span className="text-[10px] text-neutral-400 uppercase font-semibold block">Calculated Total</span>
             <span className="text-2xl font-black text-cyanAccent-400 font-mono">
               {totalWeightedScore.toFixed(1)} / 100
             </span>
@@ -321,7 +321,7 @@ export default function EvaluateProjectPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-sm font-bold text-white">{crit.name}</h3>
-                    <p className="text-xs text-slate-400 mt-0.5">{crit.description}</p>
+                    <p className="text-xs text-neutral-400 mt-0.5">{crit.description}</p>
                   </div>
                   <div className="text-right">
                     <span className="text-xs font-bold text-brand-300 bg-brand-950/60 px-2 py-0.5 rounded border border-brand-500/30">
@@ -342,7 +342,7 @@ export default function EvaluateProjectPage() {
                     disabled={isLocked}
                     value={currentVal}
                     onChange={(e) => handleScoreChange(crit.id, parseFloat(e.target.value))}
-                    className="flex-1 h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand-500 disabled:opacity-50"
+                    className="flex-1 h-2 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-brand-500 disabled:opacity-50"
                   />
                   <input
                     type="number"
@@ -363,7 +363,7 @@ export default function EvaluateProjectPage() {
         {/* Feedback & Internal Notes */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/10">
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+            <label className="block text-xs font-semibold text-neutral-300 mb-1.5">
               Constructive Feedback (Visible to Team after Results)
             </label>
             <textarea
@@ -377,7 +377,7 @@ export default function EvaluateProjectPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+            <label className="block text-xs font-semibold text-neutral-300 mb-1.5">
               Internal Evaluation Notes (Confidential to Committee)
             </label>
             <textarea
@@ -413,7 +413,7 @@ export default function EvaluateProjectPage() {
               type="button"
               disabled={submitting}
               onClick={() => handleSaveEvaluation(false)}
-              className="w-full sm:w-auto rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-6 py-2.5 text-xs font-semibold text-slate-200 transition-colors"
+              className="w-full sm:w-auto rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-6 py-2.5 text-xs font-semibold text-neutral-200 transition-colors"
             >
               {submitting ? 'Saving...' : 'Save Evaluation Draft'}
             </button>

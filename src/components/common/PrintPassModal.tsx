@@ -58,21 +58,21 @@ export default function PrintPassModal({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-md rounded-[28px] border border-[#c19a88]/35 bg-gradient-to-b from-[#161413] via-[#100F0E] to-[#0A0A0A] p-6 sm:p-7 shadow-[0_25px_80px_rgba(0,0,0,0.9)] overflow-hidden space-y-5 animate-in zoom-in-95 duration-200"
+        className="relative w-full max-w-md rounded-[28px] border border-[#f5f5f5]/35 bg-gradient-to-b from-[#171717] via-[#111111] to-[#0A0A0A] p-6 sm:p-7 shadow-[0_25px_80px_rgba(0,0,0,0.9)] overflow-hidden space-y-5 animate-in zoom-in-95 duration-200"
       >
         {/* Top gold accent line */}
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#c19a88] to-transparent opacity-90" />
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#f5f5f5] to-transparent opacity-90" />
 
         {/* Ambient radial glow */}
-        <div className="pointer-events-none absolute -top-20 -right-20 h-64 w-64 rounded-full bg-[#c19a88]/15 blur-[80px]" />
-        <div className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-[#805948]/15 blur-[80px]" />
+        <div className="pointer-events-none absolute -top-20 -right-20 h-64 w-64 rounded-full bg-[#f5f5f5]/15 blur-[80px]" />
+        <div className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-[#737373]/15 blur-[80px]" />
 
         {/* Header */}
         <div className="flex items-start justify-between gap-3 relative z-10">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#805948] to-[#c19a88] p-[1px] shadow-lg shrink-0">
+            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#737373] to-[#f5f5f5] p-[1px] shadow-lg shrink-0">
               <div className="h-full w-full rounded-[10px] bg-black/85 flex items-center justify-center">
-                <Printer className="h-4 w-4 text-[#e8c5b4]" />
+                <Printer className="h-4 w-4 text-[#ffffff]" />
               </div>
             </div>
             <div>
@@ -105,13 +105,13 @@ export default function PrintPassModal({
               <h3 className="text-base font-bold text-white truncate">
                 {teamName}
               </h3>
-              <p className="text-xs text-[#e8c5b4] truncate mt-0.5">
+              <p className="text-xs text-[#ffffff] truncate mt-0.5">
                 {trackName}
               </p>
             </div>
 
             {qrCode ? (
-              <div className="h-16 w-16 rounded-lg bg-white p-1 shrink-0 border border-[#c19a88]/40 shadow">
+              <div className="h-16 w-16 rounded-lg bg-white p-1 shrink-0 border border-[#f5f5f5]/40 shadow">
                 <Image src={qrCode} alt="QR Pass" width={56} height={56} unoptimized />
               </div>
             ) : null}
@@ -144,7 +144,7 @@ export default function PrintPassModal({
           <button
             type="button"
             onClick={handlePrint}
-            className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#c19a88] to-[#e8c5b4] hover:brightness-110 px-6 py-3 text-xs font-bold text-black shadow-lg shadow-[#805948]/30 hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#737373] via-[#f5f5f5] to-[#ffffff] hover:brightness-110 px-6 py-3 text-xs font-bold text-black shadow-lg shadow-[#737373]/30 hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer"
           >
             <Printer className="h-4 w-4" />
             <span>Print Official Pass Now</span>
@@ -154,7 +154,7 @@ export default function PrintPassModal({
             href={`/api/receipt/download?pass=${encodeURIComponent(teamId)}`}
             download={`Skaleathon_Receipt_${teamId}.pdf`}
             onClick={() => onClose()}
-            className="w-full inline-flex items-center justify-center gap-2 rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 hover:bg-[#c19a88]/20 px-6 py-2.5 text-xs font-semibold text-[#e8c5b4] hover:text-white transition-all cursor-pointer"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-full border border-[#f5f5f5]/30 bg-[#f5f5f5]/10 hover:bg-[#f5f5f5]/20 px-6 py-2.5 text-xs font-semibold text-[#ffffff] hover:text-white transition-all cursor-pointer"
           >
             <Download className="h-3.5 w-3.5" />
             <span>Download High-Resolution PDF</span>

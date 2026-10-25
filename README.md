@@ -3,7 +3,7 @@
 Presented by **SkaleKraft** (`https://skalekraft.in`)  
 **Tagline:** *Build. Innovate. Scale.*
 
-Skaleathon 2027 is a standalone, full-stack, production-ready national online hackathon platform built with Next.js App Router, TypeScript, Tailwind CSS, Supabase PostgreSQL, Clerk authentication, Razorpay payments, and automated verifiable certificate generation.
+Skaleathon 2027 is a standalone, full-stack national online hackathon platform built with Next.js App Router, TypeScript, Tailwind CSS, Supabase PostgreSQL, Clerk authentication, Razorpay payments, and automated verifiable certificate generation.
 
 ---
 
@@ -38,15 +38,15 @@ before starting the development server.
 
 | Component | Technology | Rationale |
 | :--- | :--- | :--- |
-| **Framework** | Next.js 14 (App Router) | High-performance React server components & API route handlers |
+| **Framework** | Next.js 16 (App Router) | High-performance React server components & API route handlers |
 | **Language** | TypeScript (Strict mode) | Type safety across database schemas, APIs, and forms |
-| **Styling** | Tailwind CSS | Custom dark-mode luxury theme (`#060911`, `#0c1220`, cyan & brand violet) |
+| **Styling** | Tailwind CSS | Responsive monochrome editorial theme with warm copper accents |
 | **Database** | PostgreSQL (Supabase / Local) | Relational integrity, foreign keys, unique constraints, audit logs |
 | **Auth** | Clerk / Signed Session Guard | Role-based authorization (`participant`, `team_leader`, `judge`, `admin`) |
 | **Payments** | Razorpay (₹99 INR) | Server-created orders, HMAC SHA-256 signature checks, idempotent webhooks |
 | **Certificates** | jsPDF & QRCode | High-resolution PDF generation with public tamper-evident QR verification |
 | **Validation** | Zod & React Hook Form | Full client & server-side validation schemas |
-| **Testing** | Vitest | Automated unit and integration testing suite |
+| **Testing** | Vitest & Playwright | Unit, integration, mobile-layout, navigation, and browser smoke tests |
 
 ---
 
@@ -140,6 +140,13 @@ npm run dev
 # Run automated test suite
 npm test
 
+# Run browser and responsive-layout checks
+npm run test:e2e
+
+# Run TypeScript and production dependency checks
+npm run typecheck
+npm run audit:production
+
 # Run production build
 npm run build
 ```
@@ -151,9 +158,11 @@ The application will be live at `http://localhost:3000`.
 The shared layout reads event data at request time, so `npm run build` does not
 need a live database to prerender the not-found page. Production requests still
 require Supabase: set `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`
-in the Vercel project's environment variables, apply
-`supabase/migrations/001_initial_schema.sql`, and ensure the `skaleathon-2027`
-event exists. Configure Clerk and payment credentials before using those flows.
+in the Vercel project's environment variables, apply the migrations in
+`supabase/migrations/` in order, and ensure the `skaleathon-2027` event exists.
+All variables marked in `.env.example`, including Clerk, Razorpay webhook,
+Resend, application-secret, admin allowlist, and Upstash Redis credentials,
+are required in production. Startup intentionally fails closed if any are absent.
 Local JSON storage remains disabled in production.
 
 ---
@@ -181,7 +190,8 @@ Local JSON storage remains disabled in production.
 - [x] 100% judging criteria weight validation and score locking active.
 - [x] Public certificate verification with privacy masking operational.
 - [x] Admin console with CSV export, audit logs, and status controls active.
-- [x] All 12 automated unit and integration tests passing.
+- [x] Unit, integration, authorization, migration-contract, and environment tests passing.
+- [x] Playwright mobile overflow, security-header, and navbar navigation checks configured.
 - [x] Production build (`next build`) completed successfully with 0 errors.
 
 ---

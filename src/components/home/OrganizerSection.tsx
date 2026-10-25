@@ -6,13 +6,13 @@ export default function OrganizerSection() {
   return (
     <section className="py-14 sm:py-20 lg:py-28 bg-[#0B0B0B] border-t border-white/10 relative overflow-hidden">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="rounded-[32px] border border-white/[0.09] bg-[linear-gradient(145deg,rgba(255,255,255,0.035),rgba(17,14,13,0.96))] p-8 sm:p-12 lg:p-16 relative overflow-hidden shadow-[0_30px_90px_rgba(0,0,0,0.5)]">
+        <div className="rounded-[32px] border border-white/[0.09] bg-[linear-gradient(145deg,rgba(255,255,255,0.035),rgba(17,17,17,0.96))] p-8 sm:p-12 lg:p-16 relative overflow-hidden shadow-[0_30px_90px_rgba(0,0,0,0.5)]">
           {/* Ambient copper corner glow */}
-          <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#805948]/20 blur-[100px]" />
+          <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#737373]/20 blur-[100px]" />
 
           <div className="max-w-3xl space-y-6 relative z-10">
             <div className="flex items-center gap-2.5">
-              <span className="h-px w-6 bg-[#c19a88]/70" />
+              <span className="h-px w-6 bg-[#f5f5f5]/70" />
               <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
                 About SkaleKraft
               </p>
@@ -20,7 +20,7 @@ export default function OrganizerSection() {
 
             <div className="flex items-center gap-4">
               <div
-                className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-[#1c1b1a] shadow-[0_0_25px_rgba(193,154,136,0.25)]"
+                className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-[#1c1c1c] shadow-[0_0_25px_rgba(255,255,255,0.25)]"
                 style={{ width: 56, height: 56, minWidth: 56, minHeight: 56 }}
               >
                 <Image
@@ -34,7 +34,7 @@ export default function OrganizerSection() {
               </div>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-white tracking-tight leading-tight">
                 Crafted by{' '}
-                <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
+                <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#ffffff] via-[#f5f5f5] to-[#737373] bg-clip-text text-transparent pb-1 inline-block">
                   SkaleKraft
                 </span>
                 .
@@ -54,7 +54,7 @@ export default function OrganizerSection() {
                 href="https://skalekraft.in"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] px-6 py-3 text-xs font-semibold tracking-wide text-white shadow-[0_4px_25px_rgba(128,89,72,0.35)] hover:scale-105 transition-all duration-300"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#737373] to-[#f5f5f5] px-6 py-3 text-xs font-semibold tracking-wide text-white shadow-[0_4px_25px_rgba(163,163,163,0.35)] hover:scale-105 transition-all duration-300"
               >
                 <span>Visit SkaleKraft</span>
                 <ExternalLink className="h-3.5 w-3.5" />
