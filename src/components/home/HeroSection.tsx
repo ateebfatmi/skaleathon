@@ -1,6 +1,8 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { Sparkles, ShieldCheck, Trophy, Layers } from 'lucide-react';
+import { Sparkles, ShieldCheck, Trophy, Layers, ArrowRight, Terminal as TerminalIcon, ChevronDown } from 'lucide-react';
 import { EventData } from '@/lib/db/types';
 import GlassmorphismCta from '@/components/ui/glassmorphism-cta';
 import LazyInteractiveTerminal from '@/components/home/LazyInteractiveTerminal';
@@ -10,6 +12,7 @@ interface HeroProps {
 }
 
 export default function HeroSection({ event }: HeroProps) {
+  const [showTerminal, setShowTerminal] = useState(false);
   const isRegistrationOpen = event.status === 'registration_open';
   const prizePoolFormatted = event.prize_pool_inr.toLocaleString('en-IN');
   const firstPrizeFormatted = (event.first_prize_inr || 20000).toLocaleString('en-IN');
@@ -129,17 +132,15 @@ export default function HeroSection({ event }: HeroProps) {
         </div>
 
         {/* CTA Buttons */}
-        <div
-          className="mt-6 sm:mt-9 flex flex-col items-center justify-center"
-        >
+        <div className="mt-6 sm:mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
           {isRegistrationOpen ? (
             <GlassmorphismCta
               href="/register"
-              label={`Register Your Team — ₹${event.registration_fee_inr}`}
+              label={`Register Squad — ₹${event.registration_fee_inr}`}
               avatarSrc="/images/skalekraft-logo.png"
               avatarAlt="SkaleKraft logo"
               shimmerColor="rgba(193,154,136,0.85)"
-              className="text-xs sm:text-sm py-2.5 px-5 sm:px-6 font-semibold"
+              className="text-xs sm:text-sm py-2.5 px-6 font-semibold shadow-lg"
             />
           ) : (
             <button
@@ -150,11 +151,19 @@ export default function HeroSection({ event }: HeroProps) {
             </button>
           )}
 
-          {/* Cash Incentive Subtext */}
-          <div className="mt-3 flex items-center justify-center gap-2 text-[11px] sm:text-xs text-[#e8c5b4]/90 font-medium">
-            <span className="flex h-1.5 w-1.5 rounded-full bg-[#c19a88] animate-ping" />
-            <span>Nominal ₹{event.registration_fee_inr} team entry fee to compete for ₹{prizePoolFormatted} in direct cash grants (1st: ₹{firstPrizeFormatted})</span>
-          </div>
+          <a
+            href="#how-it-works"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] hover:border-[#c19a88]/40 px-6 py-2.5 text-xs sm:text-sm font-semibold text-neutral-200 hover:text-white transition-all cursor-pointer shadow-sm active:scale-95"
+          >
+            <span>How It Works</span>
+            <ArrowRight className="h-4 w-4 text-[#c19a88]" />
+          </a>
+        </div>
+
+        {/* Cash Incentive Subtext */}
+        <div className="mt-3 flex items-center justify-center gap-2 text-[11px] sm:text-xs text-[#e8c5b4]/90 font-medium">
+          <span className="flex h-1.5 w-1.5 rounded-full bg-[#c19a88] animate-ping" />
+          <span>₹{event.registration_fee_inr} flat fee covers entire squad (1–6 members) • 100% online • ₹{prizePoolFormatted} cash prizes</span>
         </div>
 
         {/* 4 Official Trust Badges - Highlighted Cash Prize Card */}
@@ -249,11 +258,23 @@ export default function HeroSection({ event }: HeroProps) {
           })}
         </div>
 
-        {/* Live Interactive Hacker CLI & Telemetry Playground */}
-        <div
-          className="mt-8 sm:mt-12"
-        >
-          <LazyInteractiveTerminal event={event} />
+        {/* Optional Interactive Hacker CLI Drawer */}
+        <div className="mt-8 sm:mt-12 text-center">
+          <button
+            type="button"
+            onClick={() => setShowTerminal(!showTerminal)}
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] hover:bg-white/[0.07] hover:border-[#c19a88]/40 px-4 py-1.5 text-xs font-mono text-neutral-400 hover:text-white transition-all cursor-pointer"
+          >
+            <TerminalIcon className="h-3.5 w-3.5 text-[#c19a88]" />
+            <span>{showTerminal ? 'Close Terminal CLI' : 'Open Developer CLI Playground (>_)'}</span>
+            <ChevronDown className={`h-3 w-3 transition-transform duration-200 ${showTerminal ? 'rotate-180' : ''}`} />
+          </button>
+
+          {showTerminal && (
+            <div className="mt-4 animate-in fade-in duration-300">
+              <LazyInteractiveTerminal event={event} />
+            </div>
+          )}
         </div>
       </div>
     </section>
