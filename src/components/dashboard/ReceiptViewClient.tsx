@@ -12,6 +12,7 @@ import {
   Copy,
   Check,
   ShieldCheck,
+  Loader2,
 } from 'lucide-react';
 import { Team, TeamMember, EventTrack, PaymentOrder } from '@/lib/db/types';
 
@@ -31,8 +32,55 @@ export default function ReceiptViewClient({
   qrCodeUrl,
 }: ReceiptViewClientProps) {
   const [copiedId, setCopiedId] = useState(false);
+  const [downloading, setDownloading] = useState(false);
+  const [downloadSuccess, setDownloadSuccess] = useState(false);
+  const [printing, setPrinting] = useState(false);
+
   const leaderMember = members.find((m) => m.role === 'leader') || members[0];
   const downloadUrl = `/api/receipt/download?pass=${encodeURIComponent(team.id)}`;
+
+  const handleDownload = async () => {
+    if (downloading) return;
+    setDownloading(true);
+    try {
+      const { generateReceiptPDF } = await import('@/lib/receipt/generator');
+      const pdfBytes = await generateReceiptPDF({
+        team,
+        members,
+        track,
+        paymentOrder,
+        leaderMember,
+      });
+
+      const blob = new Blob([pdfBytes as unknown as BlobPart], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `Skaleathon_Receipt_${team.id}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      setDownloadSuccess(true);
+      setTimeout(() => setDownloadSuccess(false), 2500);
+    } catch (err) {
+      console.error('Client receipt download error, falling back to server route:', err);
+      window.location.href = downloadUrl;
+    } finally {
+      setDownloading(false);
+    }
+  };
+
+  const handlePrint = () => {
+    setPrinting(true);
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        window.print();
+        setPrinting(false);
+      }, 50);
+    });
+  };
 
   const formattedDate = team.created_at
     ? new Date(team.created_at).toLocaleDateString('en-IN', {
@@ -184,7 +232,7 @@ export default function ReceiptViewClient({
       </article>
 
       {/* On-Screen Luxury Editorial Layout */}
-      <div className="relative w-full max-w-4xl mx-auto space-y-8 pb-20 text-neutral-200">
+      <div className="screen-only-content relative w-full max-w-4xl mx-auto space-y-8 pb-20 text-neutral-200">
         {/* Top Navigation & Action Row */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/[0.08] pb-5">
           <Link
@@ -196,21 +244,47 @@ export default function ReceiptViewClient({
           </Link>
 
           <div className="flex items-center gap-3">
-            <a
-              href={downloadUrl}
-              download={`Skaleathon_Receipt_${team.id}.pdf`}
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-4 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/25 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+            <button
+              type="button"
+              onClick={handleDownload}
+              disabled={downloading}
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-4 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/25 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer disabled:opacity-75"
             >
-              <Download className="h-4 w-4" />
-              <span>Download PDF</span>
-            </a>
+              {downloading ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin text-white" />
+                  <span>Preparing PDF...</span>
+                </>
+              ) : downloadSuccess ? (
+                <>
+                  <Check className="h-4 w-4 text-emerald-300" />
+                  <span>Downloaded!</span>
+                </>
+              ) : (
+                <>
+                  <Download className="h-4 w-4" />
+                  <span>Download PDF</span>
+                </>
+              )}
+            </button>
 
             <button
-              onClick={() => window.print()}
-              className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] px-4 py-2.5 text-xs font-semibold text-neutral-200 hover:text-white transition-all cursor-pointer"
+              type="button"
+              onClick={handlePrint}
+              disabled={printing}
+              className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] px-4 py-2.5 text-xs font-semibold text-neutral-200 hover:text-white transition-all cursor-pointer active:scale-[0.98] disabled:opacity-75"
             >
-              <Printer className="h-4 w-4 text-[#c19a88]" />
-              <span>Print Receipt</span>
+              {printing ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin text-[#c19a88]" />
+                  <span>Opening Print...</span>
+                </>
+              ) : (
+                <>
+                  <Printer className="h-4 w-4 text-[#c19a88]" />
+                  <span>Print Receipt</span>
+                </>
+              )}
             </button>
           </div>
         </div>
@@ -363,19 +437,22 @@ export default function ReceiptViewClient({
             </div>
 
             <div className="flex items-center gap-3">
-              <a
-                href={downloadUrl}
-                download={`Skaleathon_Receipt_${team.id}.pdf`}
-                className="text-xs text-[#e8c5b4] hover:text-white underline underline-offset-4 font-medium transition-colors"
+              <button
+                type="button"
+                onClick={handleDownload}
+                disabled={downloading}
+                className="text-xs text-[#e8c5b4] hover:text-white underline underline-offset-4 font-medium transition-colors cursor-pointer disabled:opacity-75"
               >
-                Download PDF Copy
-              </a>
+                {downloading ? 'Preparing PDF...' : 'Download PDF Copy'}
+              </button>
               <span className="text-white/20">•</span>
               <button
-                onClick={() => window.print()}
-                className="text-xs text-neutral-300 hover:text-white transition-colors"
+                type="button"
+                onClick={handlePrint}
+                disabled={printing}
+                className="text-xs text-neutral-300 hover:text-white transition-colors cursor-pointer disabled:opacity-75"
               >
-                Print Voucher
+                {printing ? 'Opening Print...' : 'Print Voucher'}
               </button>
             </div>
           </div>
