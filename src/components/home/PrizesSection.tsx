@@ -47,21 +47,13 @@ export default function PrizesSection({ event }: PrizesProps) {
       <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-[75%] rounded-full bg-[#805948]/10 blur-[150px]" />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="mobile-section-heading text-center max-w-2xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2.5 mb-3">
+        <div className="mobile-section-heading text-center max-w-2xl mx-auto mb-16 flex flex-col items-center">
+          <div className="inline-flex items-center gap-3 mb-3.5">
             <span className="h-px w-6 bg-[#c19a88]/70" />
-            <p className="text-[10px] uppercase tracking-[0.26em] text-[#c19a88]/85 font-medium">
-              Recognizing Craft
+            <p className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-semibold">
+              Recognizing Craft • {formatINR(event.prize_pool_inr)} Prize Pool
             </p>
             <span className="h-px w-6 bg-[#c19a88]/70" />
-          </div>
-
-          {/* Prominent Prize Pool Callout */}
-          <div className="mb-4 inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-[#c19a88]/60 bg-gradient-to-r from-[#c19a88]/20 via-[#805948]/30 to-[#c19a88]/20 shadow-[0_0_25px_rgba(193,154,136,0.35)]">
-            <Trophy className="h-4 w-4 text-[#ffe5d9]" />
-            <span className="text-xs sm:text-sm font-mono font-bold tracking-wider text-[#ffe5d9] uppercase">
-              {formatINR(event.prize_pool_inr)} Total Cash Prize Pool
-            </span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-white tracking-tight">
@@ -71,8 +63,9 @@ export default function PrizesSection({ event }: PrizesProps) {
             </span>
             .
           </h2>
-          <p className="mt-4 text-sm text-white/70 leading-relaxed font-light">
-            <strong className="text-white font-semibold">{formatINR(event.prize_pool_inr)} in direct cash rewards</strong> (1st: {formatINR(event.first_prize_inr || 20000)} • 2nd: {formatINR(event.second_prize_inr || 10000)} • 3rd: {formatINR(event.third_prize_inr || 5000)}), official merit certificates for the top {event.certificates_top_n} teams, and internship opportunities for selected candidates with the SkaleKraft product team.
+
+          <p className="mt-4 text-sm text-white/60 leading-relaxed font-light max-w-xl">
+            <strong className="text-white/90 font-medium">{formatINR(event.prize_pool_inr)} in direct cash grants</strong> across the top three podium positions, official merit certificates for the top {event.certificates_top_n} squads, and fast-track internship interviews with SkaleKraft.
           </p>
         </div>
 
