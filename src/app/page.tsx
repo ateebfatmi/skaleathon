@@ -1,7 +1,6 @@
 import React from 'react';
 import { EventRepository } from '@/lib/db/repository';
 import HeroSection from '@/components/home/HeroSection';
-import HowItWorksSection from '@/components/home/HowItWorksSection';
 import StatsSection from '@/components/home/StatsSection';
 import AboutSection from '@/components/home/AboutSection';
 import TracksSection from '@/components/home/TracksSection';
@@ -23,7 +22,6 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col">
       <HeroSection event={event} />
-      <HowItWorksSection event={event} />
       <StatsSection event={event} />
       <AboutSection />
       <TracksSection tracks={tracks} event={event} />
