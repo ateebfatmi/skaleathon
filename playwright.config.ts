@@ -28,6 +28,7 @@ export default defineConfig({
       ...process.env,
       NODE_ENV: 'development',
       NEXT_TELEMETRY_DISABLED: '1',
+      E2E_AUTH_BYPASS: '1',
     },
   },
 });

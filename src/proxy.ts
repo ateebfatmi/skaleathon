@@ -1,5 +1,6 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
-import { NextResponse } from 'next/server';
+import { NextFetchEvent, NextRequest, NextResponse } from 'next/server';
+import { shouldBypassAuthentication } from '@/lib/auth/e2e-bypass';
 
 const isPublicRoute = createRouteMatcher([
   '/',
@@ -24,7 +25,7 @@ const isPublicRoute = createRouteMatcher([
   '/api/payment/webhook',
 ]);
 
-export default clerkMiddleware(
+const authenticatedProxy = clerkMiddleware(
   async (auth, req) => {
     if (isPublicRoute(req)) return NextResponse.next();
 
@@ -53,6 +54,17 @@ export default clerkMiddleware(
     },
   } as any,
 );
+
+export default function proxy(request: NextRequest, event: NextFetchEvent) {
+  // Browser tests exercise public pages in an isolated CI environment where no
+  // third-party credentials are available. Keep this escape hatch explicit and
+  // impossible to activate in a production runtime.
+  if (shouldBypassAuthentication() && isPublicRoute(request)) {
+    return NextResponse.next();
+  }
+
+  return authenticatedProxy(request, event);
+}
 
 export const config = {
   matcher: [
