@@ -14,7 +14,6 @@ import {
   Zap,
   Users,
   Coins,
-  Check,
 } from 'lucide-react';
 import { EventData, EventTrack } from '@/lib/db/types';
 import { formatINR } from '@/lib/utils';
@@ -269,21 +268,6 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
                     <p className="text-xs text-neutral-300/80 font-light mt-1.5 leading-relaxed">
                       {p.desc}
                     </p>
-                  </div>
-
-                  {/* Perks Checklist */}
-                  <div className="pt-3 border-t border-white/[0.08] space-y-2">
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#c19a88] block font-semibold">
-                      What&apos;s Included
-                    </span>
-                    <ul className="space-y-1.5">
-                      {p.perks.map((perk, pIdx) => (
-                        <li key={pIdx} className="flex items-start gap-2 text-xs text-neutral-200 font-light">
-                          <Check className="h-3.5 w-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                          <span>{perk}</span>
-                        </li>
-                      ))}
-                    </ul>
                   </div>
                 </div>
 
