@@ -384,14 +384,14 @@ export default function SubmissionPortalClient({
                       ? 'https://drive.google.com/file/d/.../view'
                       : 'Accepted when Stage 02 window opens'
                   }
-                  className="w-full border-b border-white/20 bg-transparent py-2.5 pr-8 text-xs sm:text-sm text-white placeholder-neutral-500 focus:border-[#c19a88] focus:outline-none transition-colors disabled:opacity-60 disabled:cursor-not-allowed font-mono"
+                  className="w-full rounded-xl border border-white/15 bg-black/40 py-3 px-4 pr-10 text-xs sm:text-sm text-white placeholder-neutral-500 focus:border-[#c19a88] focus:bg-black/60 focus:outline-none transition-all disabled:opacity-60 disabled:cursor-not-allowed font-mono"
                 />
                 {presentationUrl && stage2WindowOpen && (
                   <a
                     href={presentationUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="absolute right-1 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white"
                     title="Preview link"
                   >
                     <ExternalLink className="h-4 w-4" />
@@ -500,7 +500,7 @@ export default function SubmissionPortalClient({
                     ? 'https://your-project.vercel.app'
                     : 'Stage 03 prototype URL will be accepted during the build sprint'
                 }
-                className="w-full border-b border-white/20 bg-transparent py-2 text-xs sm:text-sm text-white placeholder-neutral-500 focus:border-[#c19a88] focus:outline-none transition-colors disabled:opacity-60 disabled:cursor-not-allowed font-mono"
+                className="w-full rounded-xl border border-white/15 bg-black/40 py-2.5 px-3.5 text-xs sm:text-sm text-white placeholder-neutral-500 focus:border-[#c19a88] focus:bg-black/60 focus:outline-none transition-all disabled:opacity-60 disabled:cursor-not-allowed font-mono"
               />
             </div>
           </div>
@@ -528,7 +528,7 @@ export default function SubmissionPortalClient({
                     ? 'https://github.com/organization/repository'
                     : 'Stage 03 GitHub URL will be accepted during the build sprint'
                 }
-                className="w-full border-b border-white/20 bg-transparent py-2 text-xs sm:text-sm text-white placeholder-neutral-500 focus:border-[#c19a88] focus:outline-none transition-colors disabled:opacity-60 disabled:cursor-not-allowed font-mono"
+                className="w-full rounded-xl border border-white/15 bg-black/40 py-2.5 px-3.5 text-xs sm:text-sm text-white placeholder-neutral-500 focus:border-[#c19a88] focus:bg-black/60 focus:outline-none transition-all disabled:opacity-60 disabled:cursor-not-allowed font-mono"
               />
             </div>
           </div>
@@ -556,7 +556,7 @@ export default function SubmissionPortalClient({
                     ? 'https://youtu.be/... or https://loom.com/share/...'
                     : 'Optional video walkthrough URL accepted during Stage 03'
                 }
-                className="w-full border-b border-white/20 bg-transparent py-2 text-xs sm:text-sm text-white placeholder-neutral-500 focus:border-[#c19a88] focus:outline-none transition-colors disabled:opacity-60 disabled:cursor-not-allowed font-mono"
+                className="w-full rounded-xl border border-white/15 bg-black/40 py-2.5 px-3.5 text-xs sm:text-sm text-white placeholder-neutral-500 focus:border-[#c19a88] focus:bg-black/60 focus:outline-none transition-all disabled:opacity-60 disabled:cursor-not-allowed font-mono"
               />
             </div>
           </div>

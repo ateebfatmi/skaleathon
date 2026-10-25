@@ -389,67 +389,65 @@ export default function TeamWorkspaceClient({
         />
       </header>
 
-      {/* 2. Section 01: Squad Telemetry Pillars */}
-      <section className="space-y-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+      {/* 2. Section 01: Squad Telemetry Cards */}
+      <section className="space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
             <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
               01 // Squad Credentials &amp; Verification
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-              Enrollment &amp;{' '}
-              <span className="font-serif italic font-normal text-[#e8c5b4]">
-                Pass Telemetry
-              </span>
+              Enrollment &amp; <span className="text-[#c19a88]">Pass Status</span>
             </h2>
           </div>
-          <p className="text-xs text-neutral-400 font-light max-w-xs">
-            Official tournament registration record and active milestone schedule.
+          <p className="text-xs text-neutral-300 font-normal max-w-xs">
+            Official hackathon registration record and active milestone schedule.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 pt-2 border-t border-white/[0.08]">
-          {/* Pillar 01 */}
-          <div className="relative pt-4 space-y-2.5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Card 01 */}
+          <div className="rounded-3xl border border-white/10 bg-[#141211] p-6 space-y-4 shadow-[0_12px_40px_rgba(0,0,0,0.4)]">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#c19a88] font-bold">
-                Pillar 01 • Squad Leadership &amp; Payment
+                Pillar 01 • Squad Leadership &amp; Pass
               </span>
-              <span className="font-mono text-2xl font-light text-white/10 select-none">01</span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-bold text-xs">
+                <CheckCircle2 className="h-3.5 w-3.5" />
+                <span>Verified &amp; Paid</span>
+              </span>
             </div>
-            <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-              Led by {leaderMember?.name || userName || 'Team Lead'}
-            </h3>
-            <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-              Primary correspondence and stage updates are dispatched to{' '}
-              <span className="text-white font-mono text-xs">{leaderMember?.email || userEmail}</span>. The flat team registration is verified (Ref:{' '}
-              <span className="font-mono text-[#e8c5b4]">
-                {paymentOrder?.razorpay_payment_id || 'RZP_SETTLED'}
-              </span>
-              ).
-            </p>
+
+            <div>
+              <h3 className="text-lg font-bold text-white">
+                Led by {leaderMember?.name || userName || 'Team Lead'}
+              </h3>
+              <p className="text-xs text-neutral-300 font-normal leading-relaxed mt-1">
+                Primary correspondence and round updates are dispatched to{' '}
+                <span className="text-white font-mono">{leaderMember?.email || userEmail}</span>. Registration reference: <span className="font-mono text-[#e8c5b4]">{paymentOrder?.razorpay_payment_id || 'RZP_SETTLED'}</span>.
+              </p>
+            </div>
 
             <div className="pt-2 flex flex-wrap items-center gap-2.5">
               <button
                 type="button"
                 onClick={handleDownloadReceipt}
                 disabled={downloadingReceipt}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-[#c19a88]/30 bg-[#c19a88]/10 hover:bg-[#c19a88]/20 active:scale-[0.98] px-3 py-1.5 text-xs font-semibold text-[#e8c5b4] hover:text-white transition-all cursor-pointer shadow-sm shadow-[#805948]/20 disabled:opacity-75"
-                title="Download official PDF registration receipt"
+                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-4 py-2 text-xs font-bold text-white shadow-md transition-all cursor-pointer disabled:opacity-75"
               >
                 {downloadingReceipt ? (
                   <>
-                    <Loader2 className="h-3.5 w-3.5 animate-spin text-[#e8c5b4]" />
+                    <Loader2 className="h-3.5 w-3.5 animate-spin text-white" />
                     <span>Preparing PDF...</span>
                   </>
                 ) : downloadSuccess ? (
                   <>
-                    <Check className="h-3.5 w-3.5 text-emerald-400" />
-                    <span className="text-emerald-400">Receipt Downloaded!</span>
+                    <Check className="h-3.5 w-3.5 text-white" />
+                    <span>Downloaded!</span>
                   </>
                 ) : (
                   <>
-                    <Download className="h-3.5 w-3.5 text-[#e8c5b4]" />
+                    <Download className="h-3.5 w-3.5 text-white" />
                     <span>Download Official Receipt (PDF)</span>
                   </>
                 )}
@@ -457,108 +455,127 @@ export default function TeamWorkspaceClient({
 
               <Link
                 href={`/dashboard/receipt?pass=${encodeURIComponent(team.id)}`}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] px-3 py-1.5 text-xs font-medium text-neutral-300 hover:text-white transition-all"
-                title="View full luxury editorial receipt"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] px-3.5 py-2 text-xs font-medium text-neutral-200 hover:text-white transition-all"
               >
                 <FileText className="h-3.5 w-3.5 text-[#c19a88]" />
-                <span>View Receipt</span>
+                <span>View Full Receipt</span>
               </Link>
             </div>
           </div>
 
-          {/* Pillar 02 */}
-          <div className="relative pt-4 md:border-l md:border-white/[0.08] md:pl-8 lg:pl-12 space-y-2.5">
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#e8c5b4] font-bold">
-                Pillar 02 • Up Next: Stage 01 Screening
-              </span>
-              <span className="font-mono text-2xl font-light text-white/10 select-none">02</span>
+          {/* Card 02 */}
+          <div className="rounded-3xl border border-white/10 bg-[#141211] p-6 space-y-4 shadow-[0_12px_40px_rgba(0,0,0,0.4)] flex flex-col justify-between">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-[#e8c5b4] font-bold">
+                  Pillar 02 • Next Active Milestone
+                </span>
+                <span className="text-xs font-mono font-bold text-[#c19a88] bg-[#c19a88]/10 border border-[#c19a88]/25 px-2.5 py-0.5 rounded-full">
+                  Stage 01
+                </span>
+              </div>
+              <h3 className="text-lg font-bold text-white">
+                Online Technical Screening Quiz
+              </h3>
+              <p className="text-xs text-neutral-300 font-normal leading-relaxed">
+                Scheduled for <strong>Friday, January 8, 2027</strong>. Timed 45-minute multiple-choice assessment evaluating CS fundamentals, data structures, and {track?.name || 'track'} domain logic.
+              </p>
             </div>
-            <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-              Friday, January 8, 2027 • 10:00 AM IST
-            </h3>
-            <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-              Timed 45-minute online technical screening assessment evaluating core CS fundamentals and{' '}
-              {track?.name || 'track'} domain logic.
-            </p>
+
+            <div className="pt-2">
+              <Link
+                href="/dashboard/stages"
+                className="inline-flex items-center gap-2 text-xs font-bold text-[#c19a88] hover:text-white transition-colors"
+              >
+                <span>Review Stage 01 Preparation &amp; Syllabus →</span>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 3. Section 02: Confirmed Squad Roster Ledger */}
-      <section id="roster" className="space-y-5 pt-10 border-t border-white/[0.08] scroll-mt-28">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+      {/* 3. Section 02: Confirmed Squad Roster Cards */}
+      <section id="roster" className="space-y-5 pt-4 scroll-mt-28">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
             <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
               02 // Registered Engineers ({members.length} of 6)
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-              Confirmed Squad{' '}
-              <span className="font-serif italic font-normal text-[#e8c5b4]">
-                Roster
-              </span>
+              Confirmed Squad <span className="text-[#c19a88]">Roster</span>
             </h2>
           </div>
-          <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-500">
+          <span className="text-xs font-mono text-neutral-400 bg-white/[0.04] border border-white/10 px-3 py-1 rounded-full">
             1 to 6 Members Policy
           </span>
         </div>
 
-        <div className="divide-y divide-white/[0.06] border-t border-b border-white/[0.06]">
-          {/* Leader Row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Leader Card */}
           {leaderMember && (
-            <div className="flex flex-col gap-2 py-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex items-center gap-3 min-w-0 sm:gap-4">
-                <span className="text-xs font-mono font-bold text-[#c19a88] w-6 shrink-0">
-                  01
-                </span>
+            <div className="rounded-2xl border border-[#c19a88]/40 bg-[#161311] p-5 flex items-center justify-between gap-4 shadow-md">
+              <div className="flex items-center gap-3.5 min-w-0">
+                <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-[#805948] to-[#c19a88] flex items-center justify-center text-white font-bold text-sm shrink-0 shadow-sm">
+                  {leaderMember.name.slice(0, 2).toUpperCase()}
+                </div>
                 <div className="min-w-0 space-y-0.5">
-                  <div className="flex items-center gap-2.5">
+                  <div className="flex items-center gap-2">
                     <p className="text-sm sm:text-base font-bold text-white truncate">
                       {leaderMember.name}
                     </p>
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#e8c5b4]">
-                      • Team Lead
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#c19a88]/20 text-[#e8c5b4] border border-[#c19a88]/40 shrink-0">
+                      Team Lead
                     </span>
                   </div>
-                  <div className="flex flex-wrap items-center gap-x-3 text-xs text-white/45 font-mono truncate">
-                    <span className="truncate">{leaderMember.email}</span>
-                    {leaderMember.phone && <span>• {leaderMember.phone}</span>}
-                  </div>
+                  <p className="text-xs text-neutral-300 font-mono truncate">
+                    {leaderMember.email}
+                  </p>
+                  {leaderMember.phone && (
+                    <p className="text-[11px] text-white/50 font-mono">
+                      {leaderMember.phone}
+                    </p>
+                  )}
                 </div>
               </div>
 
-              <span className="inline-flex items-center gap-1.5 self-start pl-9 text-[11px] font-mono text-emerald-400 shrink-0 sm:self-auto sm:pl-0">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold shrink-0">
                 <CheckCircle2 className="h-3.5 w-3.5" />
                 <span>Verified</span>
               </span>
             </div>
           )}
 
-          {/* Other Members */}
+          {/* Regular Members */}
           {regularMembers.map((member, idx) => (
-            <div key={member.id} className="flex flex-col gap-2 py-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex items-center gap-3 min-w-0 sm:gap-4">
-                <span className="text-xs font-mono text-white/35 w-6 shrink-0">
-                  {String(idx + 2).padStart(2, '0')}
-                </span>
+            <div key={member.id} className="rounded-2xl border border-white/10 bg-[#141211] p-5 flex items-center justify-between gap-4 hover:border-white/20 transition-all">
+              <div className="flex items-center gap-3.5 min-w-0">
+                <div className="h-11 w-11 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white font-bold text-sm shrink-0">
+                  {member.name.slice(0, 2).toUpperCase()}
+                </div>
                 <div className="min-w-0 space-y-0.5">
-                  <div className="flex items-center gap-2.5">
-                    <p className="text-sm sm:text-base font-semibold text-white truncate">
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm sm:text-base font-bold text-white truncate">
                       {member.name}
                     </p>
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-500">
-                      • Member
+                    <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/5 text-neutral-400 border border-white/10 shrink-0">
+                      Member #{idx + 2}
                     </span>
                   </div>
-                  <div className="flex flex-wrap items-center gap-x-3 text-xs text-white/45 font-mono truncate">
-                    <span className="truncate">{member.email}</span>
-                    {member.phone && <span>• {member.phone}</span>}
-                  </div>
+                  <p className="text-xs text-neutral-300 font-mono truncate">
+                    {member.email}
+                  </p>
+                  {member.phone && (
+                    <p className="text-[11px] text-white/50 font-mono">
+                      {member.phone}
+                    </p>
+                  )}
                 </div>
               </div>
 
-              <span className="self-start pl-9 text-[11px] font-mono text-white/40 shrink-0 sm:self-auto sm:pl-0">Active</span>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium shrink-0">
+                <CheckCircle2 className="h-3.5 w-3.5" />
+                <span>Confirmed</span>
+              </span>
             </div>
           ))}
         </div>

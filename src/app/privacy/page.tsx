@@ -16,7 +16,7 @@ export default function PrivacyPage() {
     },
     {
       heading: '2. Use of Information',
-      body: 'Your information is utilized solely to administer event participation, authenticate submissions, distribute official cash awards, and generate digital certificates.',
+      body: 'Your information is utilized solely to administer event participation, authenticate submissions, distribute official prize awards, and generate digital certificates.',
     },
     {
       heading: '3. Data Privacy & Confidentiality',

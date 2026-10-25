@@ -318,10 +318,10 @@ export default function Navbar({ event }: { event: NavbarEvent }) {
                       key={link.name}
                       href={link.href}
                       prefetch={true}
-                      className={`relative flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-medium whitespace-nowrap transition-all duration-200 ${
+                      className={`relative flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs whitespace-nowrap transition-all duration-200 ${
                         isActive
-                          ? 'bg-gradient-to-r from-white/[0.12] to-white/[0.07] text-white border border-[#c19a88]/40 shadow-[0_0_15px_rgba(193,154,136,0.18)] font-semibold'
-                          : 'text-neutral-400 hover:text-white hover:bg-white/[0.05] border border-transparent'
+                          ? 'bg-gradient-to-r from-white/[0.14] to-white/[0.08] text-white border border-[#c19a88]/60 shadow-[0_0_15px_rgba(193,154,136,0.25)] font-bold'
+                          : 'text-neutral-300 font-medium hover:text-white hover:bg-white/[0.08] border border-white/[0.08]'
                       }`}
                     >
                       <Icon

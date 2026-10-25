@@ -147,7 +147,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
             </h1>
 
             <p className="mt-4 text-xs sm:text-sm text-neutral-400 max-w-xl mx-auto leading-relaxed font-light">
-              Form your team of {event.min_team_size}–{event.max_team_size} engineers, choose your technical arena, and finalize the flat {formatINR(event.registration_fee_inr)} entry fee to compete for {formatINR(event.prize_pool_inr)} in cash prizes, certificates for the Top {event.certificates_top_n} teams, and fast-track interviews at SkaleKraft.
+              Form your team of {event.min_team_size}–{event.max_team_size} engineers, choose your technical arena, and finalize the flat {formatINR(event.registration_fee_inr)} entry fee to compete for {formatINR(event.prize_pool_inr)} in prizes, certificates for the Top {event.certificates_top_n} teams, and fast-track interviews at SkaleKraft.
             </p>
 
             {/* Value Highlights Strip */}
@@ -168,7 +168,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
                 </div>
                 <div>
                   <div className="text-[11px] font-bold text-white">{formatINR(event.prize_pool_inr)} Pool</div>
-                  <div className="text-[10px] text-neutral-400">Top 3 Cash Awards</div>
+                  <div className="text-[10px] text-neutral-400">Top 3 prize awards</div>
                 </div>
               </div>
 

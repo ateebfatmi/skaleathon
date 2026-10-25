@@ -15,7 +15,7 @@ export default function StatsSection({ event }: StatsProps) {
   const stats = [
     {
       id: 'prize',
-      label: 'TOTAL CASH PRIZE POOL',
+      label: 'Total Prize Pool',
       value: formatINR(event.prize_pool_inr || 35000),
       sublabel: `1st: ₹${firstPrize} • 2nd: ₹${secondPrize} • 3rd: ₹${thirdPrize}`,
       badge: '★ Guaranteed Bounty',

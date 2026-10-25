@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Prizes & Recognitions | Skaleathon',
-  description: 'Review official cash bounties, merit certificates, and SkaleKraft internship opportunities for Skaleathon.',
+  description: 'Review official prize awards, merit certificates, and SkaleKraft internship opportunities for Skaleathon.',
 };
 
 export const revalidate = 0;

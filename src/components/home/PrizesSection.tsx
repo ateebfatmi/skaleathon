@@ -65,7 +65,7 @@ export default function PrizesSection({ event }: PrizesProps) {
           </h2>
 
           <p className="mt-4 text-sm text-white/60 leading-relaxed font-light max-w-xl">
-            <strong className="text-white/90 font-medium">{formatINR(event.prize_pool_inr)} in direct cash grants</strong> across the top three podium positions, official merit certificates for the top {event.certificates_top_n} squads, and fast-track internship interviews with SkaleKraft.
+            <strong className="text-white/90 font-medium">{formatINR(event.prize_pool_inr)} in direct prize grants</strong> across the top three podium positions, official merit certificates for the top {event.certificates_top_n} squads, and fast-track internship interviews with SkaleKraft.
           </p>
         </div>
 
@@ -115,7 +115,7 @@ export default function PrizesSection({ event }: PrizesProps) {
                 </div>
 
                 <div className="mt-7 pt-4 border-t border-white/[0.08] flex items-center justify-between text-[11px] text-white/40 font-light">
-                  <span>Official Cash Grant</span>
+                  <span>Official prize grant</span>
                   <span className="text-[#c19a88] font-mono text-[10px]">+ Certificate</span>
                 </div>
               </SpotlightCard>
@@ -124,30 +124,30 @@ export default function PrizesSection({ event }: PrizesProps) {
         </div>
 
         {/* Additional Rewards Cards: Certificates & Internship */}
-        <div className="mobile-card-grid grid grid-cols-2 gap-3 sm:gap-6 max-w-5xl mx-auto">
+        <div className="mobile-card-grid grid grid-cols-2 gap-2.5 sm:gap-6 max-w-5xl mx-auto">
           {/* Top 25 Certificates */}
           <div className="h-full">
             <SpotlightCard
               spotlightColor="rgba(193,154,136,0.18)"
-              className="mobile-card h-full flex flex-col justify-between p-4 sm:p-6"
+              className="mobile-card h-full flex flex-col justify-between p-3.5 sm:p-6"
             >
-              <div className="flex items-start gap-4">
-                <div className="p-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88] shrink-0">
-                  <Award className="h-5 w-5" strokeWidth={1.8} />
+              <div className="flex flex-col sm:flex-row items-start gap-2.5 sm:gap-4">
+                <div className="p-2 sm:p-3 rounded-xl sm:rounded-2xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88] shrink-0">
+                  <Award className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.8} />
                 </div>
                 <div>
-                  <h3 className="text-sm sm:text-base font-semibold tracking-wide text-white">
+                  <h3 className="text-xs sm:text-base font-semibold tracking-wide text-white leading-tight">
                     Top {event.certificates_top_n} Teams — Certificates
                   </h3>
-                  <p className="mobile-card-copy mt-1 text-[11px] sm:text-xs text-white/50 leading-relaxed font-light">
+                  <p className="mobile-card-copy mt-1 text-[10px] sm:text-xs text-white/50 leading-relaxed font-light">
                     All confirmed members of top 25 teams receive an official digital certificate of merit.
                   </p>
                 </div>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-white/[0.08] flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-white/[0.08] flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <CertificatePreviewModal event={event} />
-                <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1">
+                <span className="text-[9px] sm:text-[10px] font-mono text-emerald-400 flex items-center gap-1">
                   <CheckCircle2 className="h-3 w-3" />
                   <span>Official</span>
                 </span>
@@ -159,24 +159,24 @@ export default function PrizesSection({ event }: PrizesProps) {
           <div className="h-full">
             <SpotlightCard
               spotlightColor="rgba(193,154,136,0.18)"
-              className="mobile-card h-full flex flex-col justify-between p-4 sm:p-6"
+              className="mobile-card h-full flex flex-col justify-between p-3.5 sm:p-6"
             >
-              <div className="flex items-start gap-4">
-                <div className="p-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88] shrink-0">
-                  <Briefcase className="h-5 w-5" strokeWidth={1.8} />
+              <div className="flex flex-col sm:flex-row items-start gap-2.5 sm:gap-4">
+                <div className="p-2 sm:p-3 rounded-xl sm:rounded-2xl border border-white/[0.08] bg-white/[0.03] text-[#c19a88] shrink-0">
+                  <Briefcase className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.8} />
                 </div>
                 <div>
-                  <h3 className="text-sm sm:text-base font-semibold tracking-wide text-white">
+                  <h3 className="text-xs sm:text-base font-semibold tracking-wide text-white leading-tight">
                     SkaleKraft Internship Gateway
                   </h3>
-                  <p className="mobile-card-copy mt-1 text-[11px] sm:text-xs text-white/50 leading-relaxed font-light">
+                  <p className="mobile-card-copy mt-1 text-[10px] sm:text-xs text-white/50 leading-relaxed font-light">
                     Internship opportunities are available for selected candidates, offering direct fast-track interviews for paid software engineering and AI internships at SkaleKraft.
                   </p>
                 </div>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-white/[0.08] flex items-center justify-end">
-                <span className="text-[10px] font-mono text-[#c19a88]">Selected Candidates</span>
+              <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-white/[0.08] flex items-center justify-end">
+                <span className="text-[9px] sm:text-[10px] font-mono text-[#c19a88]">Selected Candidates</span>
               </div>
             </SpotlightCard>
           </div>

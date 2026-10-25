@@ -17,7 +17,7 @@ export default function ExploreSection() {
     {
       title: 'Prizes & Citations',
       badge: '₹35,000 Pool',
-      desc: 'Cash awards for top 3 teams, merit certificates for Top 25 squads, and internship interviews.',
+      desc: 'prize awards for top 3 teams, merit certificates for Top 25 squads, and internship interviews.',
       href: '/prizes',
       cta: 'View Prize Breakdown',
       icon: Trophy,
@@ -62,35 +62,35 @@ export default function ExploreSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="mobile-card-grid grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
           {cards.map((item) => {
             const Icon = item.icon;
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className="group block rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#c19a88]/40"
+                className="group block rounded-xl sm:rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#c19a88]/40 h-full"
               >
-                <SpotlightCard className="h-full p-5 sm:p-6 rounded-2xl border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-200 flex flex-col justify-between group-hover:border-[#c19a88]/40">
-                  <div className="space-y-3">
+                <SpotlightCard className="mobile-card h-full p-3.5 sm:p-6 rounded-xl sm:rounded-2xl border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-200 flex flex-col justify-between group-hover:border-[#c19a88]/40">
+                  <div className="space-y-2 sm:space-y-3">
                     <div className="flex items-center justify-between">
-                      <div className="h-10 w-10 rounded-xl bg-[#c19a88]/10 border border-[#c19a88]/20 flex items-center justify-center text-[#c19a88] group-hover:scale-110 transition-transform">
-                        <Icon className="h-5 w-5" />
+                      <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-lg sm:rounded-xl bg-[#c19a88]/10 border border-[#c19a88]/20 flex items-center justify-center text-[#c19a88] group-hover:scale-110 transition-transform">
+                        <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
                       </div>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-white/60">
+                      <span className="text-[9px] sm:text-[10px] font-mono px-1.5 sm:px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-white/60">
                         {item.badge}
                       </span>
                     </div>
-                    <h3 className="text-base font-semibold text-white group-hover:text-[#e8c5b4] transition-colors">
+                    <h3 className="text-xs sm:text-base font-semibold text-white group-hover:text-[#e8c5b4] transition-colors leading-tight">
                       {item.title}
                     </h3>
-                    <p className="text-xs text-white/55 font-light leading-relaxed">
+                    <p className="mobile-card-copy text-[10px] sm:text-xs text-white/55 font-light leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
-                  <div className="mt-5 pt-3 border-t border-white/[0.06] flex items-center justify-between text-xs font-medium text-[#c19a88] group-hover:text-white transition-colors">
-                    <span>{item.cta}</span>
-                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                  <div className="mt-3 sm:mt-5 pt-2 sm:pt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] sm:text-xs font-medium text-[#c19a88] group-hover:text-white transition-colors">
+                    <span className="truncate">{item.cta}</span>
+                    <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5 group-hover:translate-x-1 transition-transform shrink-0" />
                   </div>
                 </SpotlightCard>
               </Link>
