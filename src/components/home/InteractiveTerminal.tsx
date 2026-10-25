@@ -55,13 +55,13 @@ export default function InteractiveTerminal({ event }: { event: EventData }) {
           <div className="space-y-3 font-mono text-xs">
             <div className="flex items-center gap-2 text-emerald-400">
               <span>✔</span>
-              <span className="font-bold tracking-wide">STATUS: ₹{prizePoolFormatted} CASH BOUNTY POOL ALLOCATED</span>
+              <span className="font-bold tracking-wide">STATUS: ₹{prizePoolFormatted} prize grant POOL ALLOCATED</span>
             </div>
 
             <div className="overflow-x-auto rounded-lg border border-white/10 bg-black/40 p-2.5 sm:p-3 text-[11px] leading-relaxed">
               <div className="text-[#c19a88] pb-1.5 border-b border-white/10 flex justify-between font-bold">
                 <span>PODIUM TIER</span>
-                <span>DIRECT CASH GRANT</span>
+                <span>DIRECT prize grant</span>
                 <span className="hidden sm:inline">BENEFITS</span>
               </div>
               <div className="divide-y divide-white/[0.06] pt-1">
@@ -256,7 +256,7 @@ export default function InteractiveTerminal({ event }: { event: EventData }) {
           <div className="space-y-2.5 font-mono text-xs">
             <div className="text-[#ffe5d9] font-bold">AVAILABLE CLI COMMANDS</div>
             <div className="grid grid-cols-2 gap-2 text-[11px] text-white/75">
-              <div><span className="text-[#c19a88] font-bold">prizes</span> — Total cash bounty &amp; awards</div>
+              <div><span className="text-[#c19a88] font-bold">prizes</span> — Total prize grant &amp; awards</div>
               <div><span className="text-[#c19a88] font-bold">stages</span> — 4-stage competition timeline</div>
               <div><span className="text-[#c19a88] font-bold">tracks</span> — AI/ML, Web &amp; Mobile arenas</div>
               <div><span className="text-[#c19a88] font-bold">register</span> — Squad entry details &amp; pass</div>
@@ -354,7 +354,7 @@ export default function InteractiveTerminal({ event }: { event: EventData }) {
 
   const copyTerminalOutput = () => {
     const textToCopy = `Skaleathon 2028 | Presented by SkaleKraft
-Cash Prize Pool: ₹${prizePoolFormatted} (1st: ₹${firstPrizeFormatted}, 2nd: ₹${secondPrizeFormatted}, 3rd: ₹${thirdPrizeFormatted})
+Prize Pool: ₹${prizePoolFormatted} (1st: ₹${firstPrizeFormatted}, 2nd: ₹${secondPrizeFormatted}, 3rd: ₹${thirdPrizeFormatted})
 Tracks: AI/ML, Web Development, Mobile App Dev
 Entry Fee: ₹${event.registration_fee_inr} per squad (1-6 members)
 Official Portal: https://skaleathon.skalekraft.in`;
@@ -494,7 +494,7 @@ Official Portal: https://skaleathon.skalekraft.in`;
           <div className="rounded-xl border border-white/[0.08] bg-[#0E0E11]/90 p-3.5 sm:p-4 shadow-inner">
             {isTyping ? (
               <div className="flex items-center gap-2 text-xs font-mono text-white/40 h-24">
-                <span className="animate-pulse">Loading telemetry package...</span>
+                <span className="animate-pulse">Loading telemetry stream...</span>
               </div>
             ) : (
               activeContent

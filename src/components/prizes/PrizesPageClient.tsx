@@ -49,7 +49,7 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
       title: 'First Runner-Up Squad',
       desc: 'Conferred to the second-highest scoring squad for standout system architecture, scalability, and live prototype execution.',
       perks: [
-        `${secondPrizeFormatted} direct cash disbursement`,
+        `${secondPrizeFormatted} direct prize transfer (UPI / Bank)`,
         'Official Runner-Up Certificate for every squad member',
         'Direct fast-track technical interview with SkaleKraft',
         'Featured citation in the official SkaleKraft tech report',
@@ -68,7 +68,7 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
       title: 'National Champion Squad',
       desc: 'Awarded to the highest-scoring squad overall across all tracks for supreme engineering rigor, originality, and domain impact.',
       perks: [
-        `${firstPrizeFormatted} direct cash disbursement`,
+        `${firstPrizeFormatted} direct prize transfer (UPI / Bank)`,
         'Prestigious National Champion Trophy induction',
         'Winner Merit Certificate for every confirmed squad member',
         'Priority interview gateway for paid engineering & AI roles at SkaleKraft',
@@ -89,7 +89,7 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
       title: 'Second Runner-Up Squad',
       desc: 'Conferred to the third-highest scoring squad for exceptional creative problem formulation and robust code quality.',
       perks: [
-        `${thirdPrizeFormatted} direct cash disbursement`,
+        `${thirdPrizeFormatted} direct prize transfer (UPI / Bank)`,
         'Official Finalist Certificate for every squad member',
         'Direct fast-track technical interview with SkaleKraft',
         'Official inclusion in the national talent directory',
@@ -105,8 +105,8 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
 
   const faqs = [
     {
-      q: 'How and when are the cash grants disbursed?',
-      a: 'Cash awards are disbursed directly via UPI or NEFT bank transfer to the winning squad leader within 48 hours following the conclusion and announcement of the Stage 04 Live Defense. Detailed payment receipts and audit records are provided.',
+      q: 'How and when are the prize grants disbursed?',
+      a: 'Prize awards are disbursed directly via UPI or NEFT bank transfer to the winning squad leader within 48 hours following the conclusion and announcement of the Stage 04 Live Defense. Detailed payment receipts and audit records are provided.',
     },
     {
       q: 'Does the nominal fee cover the entire team or per person?',
@@ -129,64 +129,92 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
       <div className="pointer-events-none absolute top-96 -left-32 h-80 w-80 rounded-full bg-[#805948]/15 blur-[140px]" />
       <div className="pointer-events-none absolute top-[800px] -right-32 h-80 w-80 rounded-full bg-[#c19a88]/12 blur-[140px]" />
 
-      {/* 1. Clear, User-Friendly Hero Header */}
-      <header className="relative pt-2 text-center max-w-4xl mx-auto space-y-5">
-        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-xs font-medium text-white/80 backdrop-blur-xl shadow-sm">
-          <Sparkles className="h-3.5 w-3.5 text-[#c19a88]" />
-          <span>Official Bounty &amp; Citation Registry</span>
-          <span className="text-white/20">•</span>
-          <span className="text-[#e8c5b4] font-semibold">{prizePoolFormatted} Total Pool</span>
-        </div>
-
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.08]">
-          Honors, Cash Grants &amp;{' '}
-          <span className="bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent">
-            Recognitions
+      {/* 1. Luxury Editorial Hero Header */}
+      <header className="relative pt-1 space-y-4">
+        {/* Faint Oversized Architectural Watermark in Top Right */}
+        <div className="pointer-events-none select-none absolute right-2 top-8 hidden lg:block overflow-hidden">
+          <span className="font-mono text-[90px] lg:text-[110px] font-black tracking-tighter text-white/[0.03] leading-none uppercase">
+            PRIZES
           </span>
-        </h1>
+        </div>
 
-        <p className="text-sm sm:text-base text-neutral-300 font-light max-w-2xl mx-auto leading-relaxed">
-          SkaleKraft awards <strong className="text-white font-semibold">{prizePoolFormatted}</strong> in guaranteed direct cash grants to the top 3 podium finishers, alongside official merit certificates for the Top {event.certificates_top_n} squads and direct hiring interviews.
-        </p>
-
-        {/* 3 Quick Value Badges */}
-        <div className="pt-2 flex flex-wrap items-center justify-center gap-3 text-xs sm:text-sm">
-          <div className="inline-flex items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3.5 py-2">
-            <Coins className="h-4 w-4 text-[#c19a88]" />
-            <span className="font-medium text-white">{prizePoolFormatted} Cash Pool</span>
-            <span className="text-white/40 text-xs">(1st, 2nd &amp; 3rd)</span>
+        {/* Top Utility & Context Ribbon */}
+        <div className="mobile-utility-row relative z-10 flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/[0.07]">
+          <div className="flex flex-wrap items-center gap-2 text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.22em]">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c19a88] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#c19a88]" />
+            </span>
+            <span className="text-[#c19a88]">Official Rewards // Guaranteed Grants</span>
+            <span className="text-white/20">•</span>
+            <span className="text-neutral-400">
+              Prize Pool: <strong className="text-white font-semibold">{prizePoolFormatted} Total Cash</strong>
+            </span>
+            <span className="text-white/20">•</span>
+            <span className="text-[#e8c5b4] font-semibold">[TOP {event.certificates_top_n} CITATIONS]</span>
           </div>
 
-          <div className="inline-flex items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3.5 py-2">
-            <Award className="h-4 w-4 text-[#e8c5b4]" />
-            <span className="font-medium text-white">Top {event.certificates_top_n} Certificates</span>
-            <span className="text-white/40 text-xs">(Verifiable with QR)</span>
-          </div>
-
-          <div className="inline-flex items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3.5 py-2">
-            <Briefcase className="h-4 w-4 text-emerald-400" />
-            <span className="font-medium text-white">SkaleKraft Fast-Track</span>
-            <span className="text-white/40 text-xs">(Paid Internships)</span>
+          <div className="flex items-center gap-4 text-xs">
+            <Link
+              href="/tracks"
+              className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors font-medium text-[11px]"
+            >
+              <span>Explore Arenas</span>
+            </Link>
+            <span className="text-white/15">|</span>
+            <Link
+              href="/rules"
+              className="group inline-flex items-center gap-1.5 text-[#e8c5b4] hover:text-white transition-colors font-semibold text-[11px]"
+            >
+              <span>Tournament Rules</span>
+              <ArrowRight className="h-3 w-3 text-[#c19a88] group-hover:translate-x-0.5 transition-transform" />
+            </Link>
           </div>
         </div>
 
-        {/* Quick Action Buttons */}
-        <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
-          <button
-            type="button"
-            onClick={() => setIsRegModalOpen(true)}
-            className="group relative inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-7 py-3 text-sm font-bold text-white shadow-lg shadow-[#805948]/30 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
-          >
-            <span>Register Squad — {feeFormatted}</span>
-            <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-          </button>
+        {/* Editorial Headline & Value Manifesto */}
+        <div className="relative z-10 max-w-3xl space-y-3 pb-2">
+          <h1 className="text-3xl sm:text-5xl lg:text-[52px] font-extrabold text-white tracking-tight leading-[1.08]">
+            Tournament <span className="font-serif italic font-normal text-[#e8c5b4]">Prizes</span> &amp; Honors
+          </h1>
 
-          <Link
-            href="/tracks"
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] px-6 py-3 text-sm font-semibold text-neutral-200 hover:text-white transition-all backdrop-blur-xl"
-          >
-            <span>Explore 3 Arenas</span>
-          </Link>
+          <p className="border-l-2 border-[#c19a88]/45 pl-3 text-xs sm:text-[14px] text-neutral-300/85 leading-relaxed font-light">
+            SkaleKraft awards <strong className="text-white font-semibold">{prizePoolFormatted}</strong> in guaranteed direct cash grants to the top 3 podium squads, along with official verifiable merit certificates for the Top {event.certificates_top_n} finalists and fast-track hiring interviews.
+          </p>
+        </div>
+
+        {/* 3 Quick Value Badges & Actions Strip */}
+        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2 border-t border-white/[0.06]">
+          <div className="flex flex-wrap items-center gap-2.5 text-xs sm:text-sm">
+            <div className="inline-flex items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3.5 py-2">
+              <Coins className="h-4 w-4 text-[#c19a88]" />
+              <span className="font-semibold text-white">{prizePoolFormatted} Cash Pool</span>
+              <span className="text-white/40 text-[11px]">(1st, 2nd &amp; 3rd)</span>
+            </div>
+
+            <div className="inline-flex items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3.5 py-2">
+              <Award className="h-4 w-4 text-[#e8c5b4]" />
+              <span className="font-semibold text-white">Top {event.certificates_top_n} Certificates</span>
+              <span className="text-white/40 text-[11px]">(QR Verifiable)</span>
+            </div>
+
+            <div className="inline-flex items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3.5 py-2">
+              <Briefcase className="h-4 w-4 text-emerald-400" />
+              <span className="font-semibold text-white">SkaleKraft Fast-Track</span>
+              <span className="text-white/40 text-[11px]">(Paid Roles)</span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setIsRegModalOpen(true)}
+              className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#805948] via-[#a37560] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#805948]/30 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+            >
+              <span>Register Squad ({feeFormatted})</span>
+              <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+            </button>
+          </div>
         </div>
       </header>
 
@@ -223,10 +251,10 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
                     </div>
                   </div>
 
-                  {/* Cash Amount */}
+                  {/* prize Amount */}
                   <div>
                     <span className="text-[11px] font-mono uppercase tracking-wider text-white/50 block">
-                      Cash Award
+                      Prize Award
                     </span>
                     <div className={`text-3xl sm:text-4xl font-mono font-black tracking-tight mt-1 ${p.amountColor}`}>
                       {p.amount}
@@ -246,7 +274,7 @@ export default function PrizesPageClient({ event, tracks }: PrizesPageClientProp
                   {/* Perks Checklist */}
                   <div className="pt-3 border-t border-white/[0.08] space-y-2">
                     <span className="text-[10px] font-mono uppercase tracking-widest text-[#c19a88] block font-semibold">
-                      Included Package
+                      What&apos;s Included
                     </span>
                     <ul className="space-y-1.5">
                       {p.perks.map((perk, pIdx) => (
