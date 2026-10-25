@@ -118,14 +118,31 @@ export default function TracksPageClient({ tracks, event }: TracksPageClientProp
             items={tracks.map((t, idx) => ({
               id: t.id,
               num: `0${idx + 1}`,
-              label: t.name,
+              label: `${t.name} Arena`,
               href: `#${t.id}`,
             }))}
           />
         </header>
 
-        {/* 2. Standalone Distinct Track Cards */}
+        {/* 2. Standalone Distinct Arena Cards */}
         <div className="space-y-6 sm:space-y-8">
+          {/* Section Indicator below the underline */}
+          <div className="flex items-center justify-between pt-1 pb-1">
+            <div className="flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] animate-pulse" />
+              <span className="text-[11px] font-mono uppercase tracking-[0.22em] text-[#c19a88] font-bold">
+                Competition Arena Specifications
+              </span>
+              <span className="hidden sm:inline text-white/20">•</span>
+              <span className="hidden sm:inline text-xs text-neutral-400 font-light">
+                Explore guidelines, deliverables, and tech stack
+              </span>
+            </div>
+            <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-500">
+              3 Curated Arenas
+            </span>
+          </div>
+
           {tracks.map((track, idx) => {
             const Icon = iconMap[track.id] || Bot;
             const extra = details[track.id] || { deliverables: [], recommendedTech: [] };
@@ -140,12 +157,19 @@ export default function TracksPageClient({ tracks, event }: TracksPageClientProp
                 {/* Subtle top corner ambient glow */}
                 <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#c19a88]/10 blur-[70px]" />
 
+                {/* Faint Architectural Arena Watermark inside the card */}
+                <div className="pointer-events-none select-none absolute right-4 top-2 hidden sm:block overflow-hidden">
+                  <span className="font-mono text-[72px] font-black tracking-tighter text-white/[0.02] leading-none uppercase">
+                    ARENA {num}
+                  </span>
+                </div>
+
                 {/* Card Header: Distinct Number Badge, Title, and Action */}
                 <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
                   <div className="space-y-2">
                     <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#c19a88]/15 border border-[#c19a88]/30 text-[#e8c5b4] text-[10px] font-mono uppercase tracking-[0.2em] font-semibold">
                       <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] animate-pulse" />
-                      <span>Track {num} of 03</span>
+                      <span>Arena {num} of 03</span>
                       <span className="text-white/30">•</span>
                       <span className="text-white font-bold">[{track.slug.toUpperCase()}]</span>
                     </div>
@@ -156,7 +180,7 @@ export default function TracksPageClient({ tracks, event }: TracksPageClientProp
                       </div>
                       <div>
                         <h2 className="text-lg sm:text-2xl font-bold text-white tracking-tight">
-                          {track.name}
+                          {track.name} <span className="font-serif italic font-normal text-[#e8c5b4]">Arena</span>
                         </h2>
                         <p className="mt-0.5 text-[11px] sm:text-xs text-[#e8c5b4]/80 font-mono">
                           Open Innovation Arena • Self-Defined Problem Statement
