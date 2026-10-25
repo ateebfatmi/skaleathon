@@ -160,10 +160,13 @@ need a live database to prerender the not-found page. Production requests still
 require Supabase: set `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`
 in the Vercel project's environment variables, apply the migrations in
 `supabase/migrations/` in order, and ensure the `skaleathon-2027` event exists.
-All variables marked in `.env.example`, including Clerk, Razorpay webhook,
-Resend, application-secret, admin allowlist, and Upstash Redis credentials,
-are required in production. Startup intentionally fails closed if any are absent.
-Local JSON storage remains disabled in production.
+Clerk, Razorpay (including the webhook secret), the application secret, and the
+admin allowlist are required in production. Email delivery is optional; when
+`EMAIL_PROVIDER=resend` is selected, both `RESEND_API_KEY` and `EMAIL_FROM` are
+validated. Rate limits use the Supabase `check_rate_limit` function by default;
+Upstash can be configured as an optional primary backend. Startup intentionally
+fails closed when any required value is absent. Local JSON storage remains
+disabled in production.
 
 ---
 

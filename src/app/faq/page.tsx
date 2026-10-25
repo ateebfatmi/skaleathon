@@ -11,6 +11,11 @@ export const metadata: Metadata = {
   description: 'Answers about Skaleathon registration, teams, tracks, judging, prizes, and certificates.',
 };
 
+// Event content comes from Supabase at request time. Keeping this route dynamic
+// makes production builds deterministic and prevents CI from requiring database
+// credentials merely to compile the application.
+export const dynamic = 'force-dynamic';
+
 export default async function FaqPage() {
   const event = await EventRepository.getEvent();
 

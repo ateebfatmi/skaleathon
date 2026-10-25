@@ -5,10 +5,10 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import type { EventData } from '@/lib/db/types';
 
-const FALLBACK_DEADLINE = '2027-01-07T18:29:59.000Z';
+const FALLBACK_DEADLINE = '2026-12-31T18:29:59.000Z';
 
 const STAGES = [
-  { label: 'Register', date: 'Till 7 Jan' },
+  { label: 'Register', date: 'Till 31 Dec' },
   { label: 'Tech Quiz', date: '8 Jan' },
   { label: 'Idea PPT', date: '10–14 Jan' },
   { label: 'Build & Demo', date: '16–25 Jan' },

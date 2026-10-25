@@ -65,7 +65,7 @@ const INITIAL_STATE: DatabaseState = {
       third_prize_inr: 5000.0,
       certificates_top_n: 25,
       registration_start_at: '2026-10-01T00:00:00.000Z',
-      registration_end_at: '2027-01-07T18:29:59.000Z',
+      registration_end_at: '2026-12-31T18:29:59.000Z',
       submission_deadline: '2027-01-25T18:29:59.000Z',
       results_announced_at: '2027-01-30T13:30:00.000Z',
       created_at: new Date().toISOString(),

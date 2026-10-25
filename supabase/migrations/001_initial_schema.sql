@@ -296,7 +296,7 @@ INSERT INTO events (
     'skaleathon-2027', 'Skaleathon 2027', 'Build. Innovate. Scale.',
     'SkaleKraft', 'https://skalekraft.in', 'registration_open',
     99.00, 1, 6, 35000.00, 20000.00, 10000.00, 5000.00, 25,
-    '2027-01-01T00:00:00.000Z', '2027-12-31T18:29:59.000Z',
+    '2026-10-01T00:00:00.000Z', '2026-12-31T18:29:59.000Z',
     '2027-01-26T18:29:59.000Z', '2027-01-30T13:30:00.000Z'
 ) ON CONFLICT (id) DO NOTHING;
 

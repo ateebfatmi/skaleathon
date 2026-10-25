@@ -91,38 +91,69 @@ export async function checkRateLimitDistributed(
   const redisUrl = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
   const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
 
-  if (!redisUrl || !redisToken) {
-    return checkRateLimit(req, scope, limit, windowMs);
+  if (redisUrl && redisToken) {
+    try {
+      const key = `ratelimit:${scope}:${getRequestIdentity(req)}`;
+      const ttlSeconds = Math.max(1, Math.ceil(windowMs / 1000));
+
+      // Atomic pipeline: INCR key, EXPIRE key ttl NX
+      const res = await fetch(`${redisUrl}/pipeline`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${redisToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify([
+          ['INCR', key],
+          ['EXPIRE', key, ttlSeconds, 'NX'],
+        ]),
+        cache: 'no-store',
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        const count = Number(data?.[0]?.result ?? 1);
+        if (count > limit) {
+          return { allowed: false, retryAfterSeconds: ttlSeconds };
+        }
+        return { allowed: true, retryAfterSeconds: 0 };
+      }
+    } catch (err) {
+      console.warn('Upstash rate limit check failed; trying Supabase:', err);
+    }
   }
 
-  try {
-    const key = `ratelimit:${scope}:${getRequestIdentity(req)}`;
-    const ttlSeconds = Math.max(1, Math.ceil(windowMs / 1000));
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (supabaseUrl && serviceRoleKey) {
+    try {
+      const key = `ratelimit:${scope}:${getRequestIdentity(req)}`;
+      const res = await fetch(`${supabaseUrl}/rest/v1/rpc/check_rate_limit`, {
+        method: 'POST',
+        headers: {
+          apikey: serviceRoleKey,
+          Authorization: `Bearer ${serviceRoleKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          p_key: key,
+          p_limit: limit,
+          p_window_seconds: Math.max(1, Math.ceil(windowMs / 1000)),
+        }),
+        cache: 'no-store',
+      });
 
-    // Atomic pipeline: INCR key, EXPIRE key ttl NX
-    const res = await fetch(`${redisUrl}/pipeline`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${redisToken}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify([
-        ['INCR', key],
-        ['EXPIRE', key, ttlSeconds, 'NX'],
-      ]),
-      cache: 'no-store',
-    });
-
-    if (res.ok) {
-      const data = await res.json();
-      const count = Number(data?.[0]?.result ?? 1);
-      if (count > limit) {
-        return { allowed: false, retryAfterSeconds: ttlSeconds };
+      if (res.ok) {
+        const payload = await res.json();
+        const result = Array.isArray(payload) ? payload[0] : payload;
+        return {
+          allowed: Boolean(result?.allowed),
+          retryAfterSeconds: Number(result?.retry_after_seconds ?? 0),
+        };
       }
-      return { allowed: true, retryAfterSeconds: 0 };
+    } catch (err) {
+      console.warn('Supabase rate limit check failed, falling back to local memory:', err);
     }
-  } catch (err) {
-    console.warn('Distributed rate limit check failed, falling back to local memory:', err);
   }
 
   return checkRateLimit(req, scope, limit, windowMs);

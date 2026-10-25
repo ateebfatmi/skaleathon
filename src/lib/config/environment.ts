@@ -11,11 +11,6 @@ const REQUIRED_PRODUCTION_VARIABLES = [
   'ADMIN_EMAILS',
   'APP_SECRET',
   'NEXT_PUBLIC_SITE_URL',
-  'EMAIL_PROVIDER',
-  'RESEND_API_KEY',
-  'EMAIL_FROM',
-  'UPSTASH_REDIS_REST_URL',
-  'UPSTASH_REDIS_REST_TOKEN',
 ] as const;
 
 function isPlaceholder(value: string): boolean {
@@ -42,6 +37,20 @@ export function getProductionEnvironmentIssues(
 
   if (env.EMAIL_PROVIDER && env.EMAIL_PROVIDER !== 'resend') {
     issues.push('EMAIL_PROVIDER must be set to "resend" in production');
+  }
+
+  if (env.EMAIL_PROVIDER === 'resend') {
+    for (const key of ['RESEND_API_KEY', 'EMAIL_FROM'] as const) {
+      const value = env[key]?.trim();
+      if (!value) issues.push(`${key} is missing`);
+      else if (isPlaceholder(value)) issues.push(`${key} still contains a placeholder value`);
+    }
+  }
+
+  const upstashUrl = env.UPSTASH_REDIS_REST_URL?.trim();
+  const upstashToken = env.UPSTASH_REDIS_REST_TOKEN?.trim();
+  if (!!upstashUrl !== !!upstashToken) {
+    issues.push('UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN must be configured together');
   }
 
   for (const key of ['NEXT_PUBLIC_SITE_URL', 'NEXT_PUBLIC_SUPABASE_URL', 'UPSTASH_REDIS_REST_URL'] as const) {

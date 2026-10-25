@@ -42,4 +42,15 @@ describe('production environment validation', () => {
     expect(issues).toContain('RAZORPAY_WEBHOOK_SECRET still contains a placeholder value');
     expect(issues).toContain('RESEND_API_KEY is missing');
   });
+
+  it('allows optional email and Upstash providers when Supabase is configured', () => {
+    const environment = { ...validEnvironment };
+    delete environment.EMAIL_PROVIDER;
+    delete environment.RESEND_API_KEY;
+    delete environment.EMAIL_FROM;
+    delete environment.UPSTASH_REDIS_REST_URL;
+    delete environment.UPSTASH_REDIS_REST_TOKEN;
+
+    expect(getProductionEnvironmentIssues(environment)).toEqual([]);
+  });
 });
