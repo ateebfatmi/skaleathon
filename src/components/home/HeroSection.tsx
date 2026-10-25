@@ -1,14 +1,15 @@
 import React from 'react';
 import Link from 'next/link';
 import { Sparkles, Trophy, ArrowRight, Layers, ShieldCheck } from 'lucide-react';
-import { EventData } from '@/lib/db/types';
-import LazyInteractiveTerminal from '@/components/home/LazyInteractiveTerminal';
+import { EventData, EventTrack } from '@/lib/db/types';
+import SquadCalculator from '@/components/home/SquadCalculator';
 
 interface HeroProps {
   event: EventData;
+  tracks?: EventTrack[];
 }
 
-export default function HeroSection({ event }: HeroProps) {
+export default function HeroSection({ event, tracks }: HeroProps) {
   const isRegistrationOpen = event.status === 'registration_open';
   const prizePoolFormatted = event.prize_pool_inr.toLocaleString('en-IN');
   const firstPrizeFormatted = (event.first_prize_inr || 20000).toLocaleString('en-IN');
@@ -99,9 +100,9 @@ export default function HeroSection({ event }: HeroProps) {
 
 
 
-        {/* 8. Live Interactive Hacker CLI & Telemetry Playground */}
+        {/* 8. Interactive Squad Investment & Value Calculator */}
         <div className="mt-8 sm:mt-12">
-          <LazyInteractiveTerminal event={event} />
+          <SquadCalculator event={event} tracks={tracks} />
         </div>
       </div>
     </section>

@@ -9,11 +9,14 @@ import OrganizerSection from '@/components/home/OrganizerSection';
 export const revalidate = 0; // Ensure live database values are served
 
 export default async function HomePage() {
-  const event = await EventRepository.getEvent();
+  const [event, tracks] = await Promise.all([
+    EventRepository.getEvent(),
+    EventRepository.getTracks(),
+  ]);
 
   return (
     <div className="flex flex-col">
-      <HeroSection event={event} />
+      <HeroSection event={event} tracks={tracks} />
       <PrizesSection event={event} />
       <StatsSection event={event} />
       <ExploreSection />
