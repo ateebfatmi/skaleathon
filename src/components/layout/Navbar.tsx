@@ -304,6 +304,49 @@ export default function Navbar({ event }: { event: NavbarEvent }) {
           </div>
         </div>
 
+        {/* Dashboard Sub-Navigation Bar */}
+        {isDashboard && (
+          <div className="border-t border-white/[0.08] bg-[#07090E]/95 backdrop-blur-2xl">
+            <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <nav
+                aria-label="Dashboard Navigation"
+                className="flex items-center space-x-1 sm:space-x-2 py-2 overflow-x-auto scrollbar-none"
+              >
+                {dashboardNavLinks.map((link) => {
+                  const Icon = link.icon;
+                  const isActive =
+                    link.href === '/dashboard'
+                      ? pathname === '/dashboard'
+                      : pathname.startsWith(link.href);
+
+                  return (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      prefetch={true}
+                      className={`relative flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-medium whitespace-nowrap transition-all duration-200 ${
+                        isActive
+                          ? 'bg-gradient-to-r from-white/[0.12] to-white/[0.07] text-white border border-[#c19a88]/40 shadow-[0_0_15px_rgba(193,154,136,0.18)] font-semibold'
+                          : 'text-neutral-400 hover:text-white hover:bg-white/[0.05] border border-transparent'
+                      }`}
+                    >
+                      <Icon
+                        className={`h-3.5 w-3.5 ${
+                          isActive ? 'text-[#c19a88]' : 'text-neutral-400'
+                        }`}
+                      />
+                      <span>{link.name}</span>
+                      {isActive && (
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] shadow-[0_0_8px_#c19a88] animate-pulse" />
+                      )}
+                    </Link>
+                  );
+                })}
+              </nav>
+            </div>
+          </div>
+        )}
+
         {/* Mobile Menu Dropdown */}
         <AnimatePresence initial={false}>
           {mobileMenuOpen && (
