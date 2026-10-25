@@ -155,25 +155,25 @@ export default async function RulesPage() {
                 {
                   num: '01',
                   title: 'Online Technical Screening Quiz',
-                  date: '8 Jan 2028',
+                  date: '8 Jan 2027',
                   desc: 'Timed 30–45 minute assessment evaluating CS fundamentals, algorithmic reasoning, and track domain aptitude.',
                 },
                 {
                   num: '02',
                   title: 'Idea & Architecture PPT (PDF)',
-                  date: '10–14 Jan 2028',
+                  date: '10–14 Jan 2027',
                   desc: 'Shortlisted squads submit a 10-slide PDF deck detailing their self-defined problem statement, architecture diagram, and schema.',
                 },
                 {
                   num: '03',
                   title: 'Engineering Sprint & Codebase',
-                  date: '16/17–25/26 Jan 2028',
+                  date: '16/17–25/26 Jan 2027',
                   desc: 'Squads build and submit a public GitHub repository and live deployed cloud URL (plus an optional 2–3 min demo walkthrough).',
                 },
                 {
                   num: '04',
                   title: 'Grand Finale Live Jury Defense',
-                  date: '29–30 Jan 2028',
+                  date: '29–30 Jan 2027',
                   desc: 'Top finalist squads defend their system architecture and live prototype before the SkaleKraft jury panel.',
                 },
               ].map((st) => (

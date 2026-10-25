@@ -46,7 +46,7 @@ export async function generateCertificatePDF(cert: Certificate, siteUrl: string 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(26);
   doc.setTextColor(255, 255, 255);
-  doc.text('SKALEATHON 2028', pageWidth / 2, 36, { align: 'center' });
+  doc.text('SKALEATHON 2027', pageWidth / 2, 36, { align: 'center' });
 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(10);

@@ -328,7 +328,7 @@ export default function SubmissionPage() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div>
             <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
-              01 // Stage 02 Blueprint • Jan 10–14, 2028
+              01 // Stage 02 Blueprint • Jan 10–14, 2027
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
               Idea &amp; Architecture{' '}
@@ -480,7 +480,7 @@ export default function SubmissionPage() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div>
             <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-[#c19a88] font-bold block mb-1">
-              02 // Stage 03 Build Sprint • Jan 16/17–25/26, 2028
+              02 // Stage 03 Build Sprint • Jan 16/17–25/26, 2027
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
               Working Prototype &amp;{' '}

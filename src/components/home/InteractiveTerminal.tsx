@@ -1,431 +1,433 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
-import { Terminal, Play, RotateCcw, CornerDownLeft, Sparkles, Shield, Cpu, ExternalLink } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import {
+  Terminal as TerminalIcon,
+  Trophy,
+  Layers,
+  Code2,
+  Sparkles,
+  ArrowRight,
+  CornerDownLeft,
+  RotateCcw,
+  CheckCircle2,
+} from 'lucide-react';
 import { cyberAudio } from '@/lib/cyber-sound';
 import type { EventData } from '@/lib/db/types';
-import { formatDate, formatINR, REGISTRATION_DEADLINE } from '@/lib/utils';
+import { formatINR } from '@/lib/utils';
 
-interface CommandLog {
-  id: string;
-  command: string;
-  output: React.ReactNode;
-  time: string;
+type CommandKey = 'prizes' | 'stages' | 'tracks' | 'register';
+
+interface InteractiveTerminalProps {
+  event: EventData;
 }
 
 export default function InteractiveTerminal({ event }: { event: EventData }) {
+  const [activeCmd, setActiveCmd] = useState<CommandKey>('prizes');
+  const [typedText, setTypedText] = useState('skaleathon prizes');
+  const [isTyping, setIsTyping] = useState(false);
   const [inputVal, setInputVal] = useState('');
-  const [activeTab, setActiveTab] = useState<'cli' | 'telemetry'>('cli');
-  const [logs, setLogs] = useState<CommandLog[]>([
-    {
-      id: 'init-1',
-      command: 'skaleathon --version',
-      output: (
-        <div className="text-neutral-300 space-y-1">
-          <div className="text-[#c19a88] font-bold">
-            SKALEATHON ARCHITECTURE KERNEL v2.0 [RELEASE]
-          </div>
-          <div>Organized by <span className="text-white font-medium">SkaleKraft</span> • National Online Hackathon</div>
-          <div className="text-white/50 text-[11px]">Type <span className="text-[#e8c5b4] font-mono">help</span> or click quick actions below to explore commands.</div>
-        </div>
-      ),
-      time: '00:01',
-    },
-  ]);
+  const [customView, setCustomView] = useState<{
+    cmd: string;
+    content: React.ReactNode;
+  } | null>(null);
 
-  const logsContainerRef = useRef<HTMLDivElement>(null);
+  const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const handleCommand = (cmd: string) => {
-    const cleaned = cmd.trim().toLowerCase();
-    cyberAudio.playSuccess();
-    const now = new Date().toLocaleTimeString([], { hour12: false });
+  const commands: {
+    key: CommandKey;
+    label: string;
+    icon: React.ComponentType<{ className?: string }>;
+    tag: string;
+  }[] = [
+    { key: 'prizes', label: 'prizes', icon: Trophy, tag: `₹${event.prize_pool_inr.toLocaleString('en-IN')}` },
+    { key: 'stages', label: 'stages', icon: Layers, tag: '4 Rounds' },
+    { key: 'tracks', label: 'tracks', icon: Code2, tag: '3 Arenas' },
+    { key: 'register', label: 'register', icon: Sparkles, tag: `₹${event.registration_fee_inr}` },
+  ];
 
-    let output: React.ReactNode;
+  const runCommand = (cmdKey: CommandKey) => {
+    cyberAudio.playBlip(720, 'sine', 0.04, 0.03);
+    setCustomView(null);
+    setActiveCmd(cmdKey);
 
-    switch (cleaned) {
-      case 'help':
-        output = (
-          <div className="space-y-1.5 text-xs text-neutral-300">
-            <div className="text-[#c19a88] font-semibold">Available Command Instructions:</div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
-              <div><span className="text-[#e8c5b4] font-mono font-bold">schedule</span> — Current operational dates & milestones</div>
-              <div><span className="text-[#e8c5b4] font-mono font-bold">stages</span> — The 4 competition stages (Quiz, PPT, Build, Q&A)</div>
-              <div><span className="text-[#e8c5b4] font-mono font-bold">tracks</span> — Inspect AI/ML, Web & Mobile arenas</div>
-              <div><span className="text-[#e8c5b4] font-mono font-bold">prizes</span> — View {formatINR(event.prize_pool_inr)} cash & interview tiers</div>
-              <div><span className="text-[#e8c5b4] font-mono font-bold">register</span> — Fast-track team registration link ({formatINR(event.registration_fee_inr)})</div>
-              <div><span className="text-[#e8c5b4] font-mono font-bold">certificates</span> — View top {event.certificates_top_n} merit certificate policy</div>
-              <div><span className="text-[#e8c5b4] font-mono font-bold">rules</span> — Review team size & submission policies</div>
-            </div>
-          </div>
-        );
-        break;
+    const fullText = `skaleathon ${cmdKey}`;
+    if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
 
-      case 'schedule':
-      case 'timeline':
-        output = (
-          <div className="space-y-2 text-xs">
-            <div className="text-[#c19a88] font-bold">📅 Current Master Schedule:</div>
-            <div className="space-y-1.5 text-[11px] font-mono">
-              <div className="flex flex-wrap items-center justify-between gap-1 border-b border-white/10 pb-1">
-                <span className="text-white/70">Registration Closes:</span>
-                <span className="text-emerald-400 font-bold">{formatDate(event.registration_end_at || REGISTRATION_DEADLINE)}</span>
-              </div>
-              <div className="flex flex-wrap items-center justify-between gap-1 border-b border-white/10 pb-1">
-                <span className="text-white/70">Stage 1 — Technical Quiz:</span>
-                <span className="text-emerald-400 font-bold">8 Jan 2028</span>
-              </div>
-              <div className="flex flex-wrap items-center justify-between gap-1 border-b border-white/10 pb-1">
-                <span className="text-white/70">Stage 2 — Architecture PPT:</span>
-                <span className="text-[#c19a88] font-bold">10–14 Jan 2028</span>
-              </div>
-              <div className="flex flex-wrap items-center justify-between gap-1 border-b border-white/10 pb-1">
-                <span className="text-white/70">Stage 3 — Build Sprint:</span>
-                <span className="text-[#e8c5b4] font-bold">16/17–25/26 Jan 2028</span>
-              </div>
-              <div className="flex flex-wrap items-center justify-between gap-1 border-b border-white/10 pb-1">
-                <span className="text-white/70">Stage 4 — Grand Finale Live Q&A:</span>
-                <span className="text-amber-400 font-bold">29–30 Jan 2028</span>
-              </div>
-              <div className="flex flex-wrap items-center justify-between gap-1">
-                <span className="text-white/70">Award Ceremony & Certificates:</span>
-                <span className="text-amber-300 font-bold">30 Jan 2028</span>
-              </div>
-            </div>
-          </div>
-        );
-        break;
+    setIsTyping(true);
+    setTypedText('');
 
-      case 'stages':
-        output = (
-          <div className="space-y-2 text-xs">
-            <div className="text-[#c19a88] font-bold">🎯 The 4 Competition Stages:</div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
-              <div className="p-2 rounded-lg border border-emerald-500/20 bg-emerald-500/10">
-                <div className="flex items-center justify-between mb-0.5">
-                  <span className="text-emerald-400 font-bold block">Stage 1: Online Quiz</span>
-                  <span className="text-[9px] font-mono text-emerald-400 bg-emerald-500/20 px-1 rounded">Jan 8</span>
-                </div>
-                <span className="text-white/60 text-[10px]">Timed screening round covering core CS logic and track concepts.</span>
-              </div>
-              <div className="p-2 rounded-lg border border-[#c19a88]/30 bg-[#c19a88]/10">
-                <div className="flex items-center justify-between mb-0.5">
-                  <span className="text-[#c19a88] font-bold block">Stage 2: Architecture PPT</span>
-                  <span className="text-[9px] font-mono text-[#c19a88] bg-[#c19a88]/20 px-1 rounded">Jan 10–14</span>
-                </div>
-                <span className="text-white/60 text-[10px]">Blueprint round submitting problem statement, schema, and tech stack.</span>
-              </div>
-              <div className="p-2 rounded-lg border border-[#c19a88]/30 bg-[#c19a88]/10">
-                <div className="flex items-center justify-between mb-0.5">
-                  <span className="text-[#e8c5b4] font-bold block">Stage 3: Build Sprint</span>
-                  <span className="text-[9px] font-mono text-[#e8c5b4] bg-[#c19a88]/20 px-1 rounded">Jan 16/17–25/26</span>
-                </div>
-                <span className="text-white/60 text-[10px]">Core build phase with public GitHub repo, live deployed URL, and video.</span>
-              </div>
-              <div className="p-2 rounded-lg border border-amber-500/20 bg-amber-500/10">
-                <div className="flex items-center justify-between mb-0.5">
-                  <span className="text-amber-400 font-bold block">Stage 4: Grand Finale Q&A</span>
-                  <span className="text-[9px] font-mono text-amber-400 bg-amber-500/20 px-1 rounded">Jan 29–30</span>
-                </div>
-                <span className="text-white/60 text-[10px]">Live defense with judges determining top 3 cash awards and interviews.</span>
-              </div>
-            </div>
-          </div>
-        );
-        break;
-
-      case 'tracks':
-        output = (
-          <div className="space-y-2 text-xs">
-            <div className="text-[#c19a88] font-bold">⚡ Active Competition Tracks:</div>
-            <div className="space-y-1 text-neutral-300 text-[11px]">
-              <div><span className="text-emerald-400 font-mono font-bold">[01] AI & Machine Learning:</span> Neural agents, LLM pipelines, autonomous computer vision.</div>
-              <div><span className="text-[#c19a88] font-mono font-bold">[02] Web Architecture:</span> High-throughput distributed services, Next.js, WebSockets, edge infra.</div>
-              <div><span className="text-amber-400 font-mono font-bold">[03] Mobile Systems:</span> Cross-platform native apps, on-device ML, offline-first sync.</div>
-            </div>
-            <div className="pt-1">
-              <Link href="/tracks" className="inline-flex items-center gap-1.5 text-[#c19a88] hover:text-white underline text-[11px]">
-                Explore full track specs <ExternalLink className="h-3 w-3" />
-              </Link>
-            </div>
-          </div>
-        );
-        break;
-
-      case 'prizes':
-        output = (
-          <div className="space-y-1.5 text-xs text-neutral-300">
-            <div className="text-[#c19a88] font-bold">🏆 Authorized Prize Structure:</div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px] pt-1">
-              <div className="p-2 rounded-lg border border-amber-500/20 bg-amber-500/10">
-                <span className="text-amber-300 font-bold block">1st Place Champion</span>
-                <span className="text-white font-mono text-sm font-bold">{formatINR(event.first_prize_inr)}</span>
-                <span className="block text-white/50 text-[10px] mt-0.5">Top Grant + Interviews</span>
-              </div>
-              <div className="p-2 rounded-lg border border-slate-400/20 bg-slate-400/10">
-                <span className="text-slate-200 font-bold block">2nd Place Runner-Up</span>
-                <span className="text-white font-mono text-sm font-bold">{formatINR(event.second_prize_inr)}</span>
-                <span className="block text-white/50 text-[10px] mt-0.5">Excellence Grant</span>
-              </div>
-              <div className="p-2 rounded-lg border border-[#c19a88]/20 bg-[#c19a88]/10">
-                <span className="text-[#e8c5b4] font-bold block">3rd Place Runner-Up</span>
-                <span className="text-white font-mono text-sm font-bold">{formatINR(event.third_prize_inr)}</span>
-                <span className="block text-white/50 text-[10px] mt-0.5">Innovation Grant</span>
-              </div>
-            </div>
-            <div className="text-[11px] text-white/60 pt-1">
-              • Top {event.certificates_top_n} Teams: Official certificates of merit.
-              <br />• Selected Candidates: Internship opportunities & fast-track interview evaluation at SkaleKraft.
-            </div>
-          </div>
-        );
-        break;
-
-      case 'register':
-        output = (
-          <div className="p-3 rounded-xl border border-[#c19a88]/30 bg-[#c19a88]/10 space-y-2 text-xs">
-            <div className="text-white font-semibold flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-[#c19a88]" />
-              <span>Registration Gateway Initialized</span>
-            </div>
-            <div className="text-white/70 text-[11px]">
-              • Fee: <span className="text-[#e8c5b4] font-mono font-bold">{formatINR(event.registration_fee_inr)} flat</span> per team (not per member)
-              <br />• Team Size: {event.min_team_size} to {event.max_team_size} members
-              <br />• Payment: Razorpay Instant UPI, Cards, NetBanking
-            </div>
-            <div className="pt-1">
-              <Link
-                href="/register"
-                className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] px-3.5 py-1 text-xs font-semibold text-white shadow-sm hover:scale-105 transition-all"
-              >
-                Proceed to Secure Registration Page
-                <ExternalLink className="h-3 w-3" />
-              </Link>
-            </div>
-          </div>
-        );
-        break;
-
-      case 'verify':
-      case 'certificates':
-        output = (
-          <div className="space-y-1.5 text-xs text-neutral-300 font-mono text-[11px]">
-            <div className="text-emerald-400">✓ Certificate status: ACTIVE</div>
-            <div className="text-white/60">Eligibility: Confirmed members of the top {event.certificates_top_n} finalist teams</div>
-            <div className="text-[#c19a88]">Official digital certificates issued directly in participant dashboard.</div>
-          </div>
-        );
-        break;
-
-      case 'rules':
-        output = (
-          <div className="space-y-1 text-xs text-neutral-300 text-[11px]">
-            <div className="text-[#c19a88] font-semibold">Official Skaleathon Guidelines:</div>
-            <div>• Open across India for undergraduate, postgraduate, and independent developers.</div>
-            <div>• Team size: {event.min_team_size}–{event.max_team_size} members. Teams compete in one track.</div>
-            <div>• GenAI tooling allowed with transparent disclosure in submission README.</div>
-            <div>• Final review conducted via verified GitHub repo, demo video, and live deployment.</div>
-          </div>
-        );
-        break;
-
-      case 'clear':
-        setLogs([]);
-        return;
-
-      default:
-        output = (
-          <div className="text-red-400 text-xs">
-            Unknown instruction &apos;{cmd}&apos;. Type <span className="text-[#e8c5b4] font-bold">help</span> or click the buttons below.
-          </div>
-        );
-        break;
-    }
-
-    setLogs((prev) => [
-      ...prev,
-      {
-        id: `cmd-${Date.now()}`,
-        command: cmd,
-        output,
-        time: now,
-      },
-    ]);
+    let charIdx = 0;
+    const interval = setInterval(() => {
+      charIdx++;
+      setTypedText(fullText.slice(0, charIdx));
+      if (charIdx >= fullText.length) {
+        clearInterval(interval);
+        setIsTyping(false);
+      }
+    }, 22);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleInputSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!inputVal.trim()) return;
-    handleCommand(inputVal);
+    const cleaned = inputVal.trim().toLowerCase();
+    if (!cleaned) return;
     setInputVal('');
+
+    if (cleaned === 'prizes' || cleaned === 'stages' || cleaned === 'tracks' || cleaned === 'register') {
+      runCommand(cleaned as CommandKey);
+      return;
+    }
+
+    cyberAudio.playSuccess();
+    setTypedText(`skaleathon ${cleaned}`);
+
+    if (cleaned === 'help') {
+      setCustomView({
+        cmd: cleaned,
+        content: (
+          <div className="space-y-2 text-xs font-mono">
+            <div className="text-[#ffe5d9] font-bold">Available Core Commands:</div>
+            <div className="grid grid-cols-2 gap-2 text-white/70">
+              <div><span className="text-[#c19a88] font-bold">prizes</span> — Total cash bounty & grants</div>
+              <div><span className="text-[#c19a88] font-bold">stages</span> — 4-stage tournament roadmap</div>
+              <div><span className="text-[#c19a88] font-bold">tracks</span> — AI/ML, Web & Mobile arenas</div>
+              <div><span className="text-[#c19a88] font-bold">register</span> — Squad entry details</div>
+            </div>
+            <div className="text-white/40 text-[11px] pt-1">
+              Click any button above for instant evaluation.
+            </div>
+          </div>
+        ),
+      });
+      return;
+    }
+
+    if (cleaned === 'clear') {
+      setCustomView(null);
+      runCommand('prizes');
+      return;
+    }
+
+    if (cleaned === 'rules') {
+      setCustomView({
+        cmd: cleaned,
+        content: (
+          <div className="space-y-2 text-xs font-mono">
+            <div className="text-[#ffe5d9] font-bold">Official Competition Guidelines:</div>
+            <div className="space-y-1 text-white/70 text-[11px]">
+              <div>• Team size: {event.min_team_size} to {event.max_team_size} members. Solo entries permitted.</div>
+              <div>• Screening Quiz (Jan 8) → Architecture PPT (Jan 10–14) → Build (Jan 16–26) → Finale (Jan 29–30).</div>
+              <div>• Evaluation based on architecture, code quality, deployment, and live presentation.</div>
+            </div>
+            <Link href="/rules" className="inline-flex items-center gap-1 text-[#c19a88] hover:text-white pt-1 text-[11px]">
+              Review full rulebook <ArrowRight className="h-3 w-3" />
+            </Link>
+          </div>
+        ),
+      });
+      return;
+    }
+
+    setCustomView({
+      cmd: cleaned,
+      content: (
+        <div className="space-y-1.5 text-xs font-mono">
+          <div className="text-amber-400/90 font-medium">Command not recognized: &quot;{cleaned}&quot;</div>
+          <div className="text-white/50 text-[11px]">
+            Try clicking one of the buttons above or enter: <span className="text-[#c19a88]">prizes</span>, <span className="text-[#c19a88]">stages</span>, <span className="text-[#c19a88]">tracks</span>, or <span className="text-[#c19a88]">register</span>.
+          </div>
+        </div>
+      ),
+    });
   };
 
   useEffect(() => {
-    // Only scroll the internal terminal container when user actually executes a new command (length > 1)
-    // NEVER scroll the browser window!
-    if (logs.length > 1 && logsContainerRef.current) {
-      logsContainerRef.current.scrollTop = logsContainerRef.current.scrollHeight;
-    }
-  }, [logs]);
-
-  const quickButtons = ['help', 'schedule', 'stages', 'tracks', 'prizes', 'register', 'verify', 'rules'];
+    return () => {
+      if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+    };
+  }, []);
 
   return (
-    <div className="relative mx-auto max-w-4xl w-full rounded-[24px] border border-white/10 bg-[#07090E]/95 shadow-[0_30px_90px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.08)] backdrop-blur-2xl overflow-hidden">
-      {/* Terminal Top Bar */}
-      <div className="flex items-center justify-between px-4 sm:px-6 py-3 border-b border-white/[0.08] bg-white/[0.02]">
+    <div className="relative mx-auto max-w-3xl w-full rounded-2xl sm:rounded-3xl border border-white/10 bg-[#0A0909]/95 shadow-[0_25px_80px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.08)] backdrop-blur-2xl overflow-hidden text-left transition-all duration-300 hover:border-[#c19a88]/30">
+      {/* Top Chrome Bar */}
+      <div className="flex items-center justify-between px-3.5 sm:px-5 py-2.5 sm:py-3 border-b border-white/[0.07] bg-white/[0.015]">
         <div className="flex items-center gap-2">
+          {/* macOS Window Controls */}
           <div className="flex items-center gap-1.5">
-            <span className="h-3 w-3 rounded-full bg-[#ff5f56]/80 shadow-[0_0_8px_rgba(255,95,86,0.5)]" />
-            <span className="h-3 w-3 rounded-full bg-[#ffbd2e]/80 shadow-[0_0_8px_rgba(255,189,46,0.5)]" />
-            <span className="h-3 w-3 rounded-full bg-[#27c93f]/80 shadow-[0_0_8px_rgba(39,201,63,0.5)]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]/80 shadow-[0_0_6px_rgba(255,95,86,0.5)]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]/80 shadow-[0_0_6px_rgba(255,189,46,0.5)]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]/80 shadow-[0_0_6px_rgba(39,201,63,0.5)]" />
           </div>
-          <span className="ml-3 font-mono text-[11px] text-white/50 hidden sm:inline-block">
-            skaleathon-cli ~ interactive sandbox
+          <div className="h-3.5 w-px bg-white/10 mx-1 hidden sm:block" />
+          <span className="font-mono text-[11px] text-white/50 items-center gap-1.5 hidden sm:flex">
+            <TerminalIcon className="h-3 w-3 text-[#c19a88]" />
+            <span>skaleathon.cli</span>
           </span>
         </div>
 
-        {/* Telemetry Tabs */}
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => {
-              setActiveTab('cli');
-              cyberAudio.playHover();
-            }}
-            className={`px-3 py-1 rounded-md text-[10px] font-mono font-medium tracking-wider transition-all ${
-              activeTab === 'cli'
-                ? 'bg-[#c19a88]/20 text-[#e8c5b4] border border-[#c19a88]/30 shadow-sm'
-                : 'text-white/40 hover:text-white'
-            }`}
-          >
-            TERMINAL
-          </button>
-          <button
-            onClick={() => {
-              setActiveTab('telemetry');
-              cyberAudio.playHover();
-            }}
-            className={`px-3 py-1 rounded-md text-[10px] font-mono font-medium tracking-wider transition-all ${
-              activeTab === 'telemetry'
-                ? 'bg-[#c19a88]/20 text-[#e8c5b4] border border-[#c19a88]/30 shadow-sm'
-                : 'text-white/40 hover:text-white'
-            }`}
-          >
-            TELEMETRY
-          </button>
+        {/* 4 Interactive Command Pills */}
+        <div className="flex items-center gap-1 sm:gap-1.5">
+          {commands.map((c) => {
+            const Icon = c.icon;
+            const isActive = activeCmd === c.key && !customView;
+            return (
+              <button
+                key={c.key}
+                type="button"
+                onClick={() => runCommand(c.key)}
+                className={`group flex items-center gap-1 sm:gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-[11px] font-mono transition-all duration-200 cursor-pointer ${
+                  isActive
+                    ? 'bg-gradient-to-r from-[#c19a88]/30 via-[#805948]/35 to-[#c19a88]/25 text-white font-bold border border-[#c19a88]/70 shadow-[0_0_15px_rgba(193,154,136,0.3)]'
+                    : 'bg-white/[0.03] text-white/60 hover:text-white border border-white/[0.08] hover:border-[#c19a88]/40 hover:bg-white/[0.06]'
+                }`}
+              >
+                <Icon className={`h-2.5 w-2.5 sm:h-3 sm:w-3 ${isActive ? 'text-[#ffe5d9]' : 'text-[#c19a88] group-hover:text-white'}`} />
+                <span className="capitalize">{c.label}</span>
+                <span className="hidden md:inline text-[9px] opacity-60 ml-0.5">
+                  ({c.tag})
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Live Indicator */}
+        <div className="hidden xs:flex items-center gap-1.5 font-mono text-[10px] text-emerald-400 font-medium">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+          </span>
+          <span className="hidden sm:inline">LIVE</span>
         </div>
       </div>
 
-      {activeTab === 'cli' ? (
-        <div className="p-4 sm:p-6 space-y-4 font-mono">
-          {/* Scrollable logs area */}
-          <div
-            ref={logsContainerRef}
-            className="max-h-72 overflow-y-auto space-y-3.5 pr-2 custom-scrollbar text-xs"
-          >
-            {logs.map((log) => (
-              <div key={log.id} className="space-y-1.5">
-                <div className="flex items-center gap-2 text-white/40 text-[11px]">
-                  <span className="text-[#c19a88]">guest@skaleathon</span>
-                  <span>:</span>
-                  <span className="text-white/30">~</span>
-                  <span className="text-[#c19a88]">$</span>
-                  <span className="text-white font-semibold">{log.command}</span>
-                  <span className="ml-auto text-[10px] text-white/20">{log.time}</span>
+      {/* Terminal Viewport */}
+      <div className="p-4 sm:p-5 space-y-3.5">
+        {/* Active Command Prompt Line */}
+        <div className="flex items-center gap-2 text-xs font-mono">
+          <span className="text-[#c19a88] font-bold">visitor@skaleathon</span>
+          <span className="text-white/30">:</span>
+          <span className="text-[#e8c5b4]/80">~</span>
+          <span className="text-[#c19a88] font-bold">$</span>
+          <span className="text-white font-medium tracking-wide">
+            {typedText}
+          </span>
+          <span className="inline-block w-1.5 h-3.5 bg-[#c19a88] animate-pulse align-middle" />
+        </div>
+
+        {/* Output Screen */}
+        <div className="min-h-[148px] rounded-xl border border-white/[0.06] bg-black/40 p-3 sm:p-4 backdrop-blur-sm transition-all">
+          {customView ? (
+            customView.content
+          ) : isTyping ? (
+            <div className="flex items-center gap-2 text-xs font-mono text-white/40 h-28">
+              <span className="animate-pulse">Executing command...</span>
+            </div>
+          ) : activeCmd === 'prizes' ? (
+            <div className="space-y-3 animate-in fade-in duration-200">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.08] pb-2">
+                <div className="flex items-center gap-2">
+                  <span className="p-1 rounded-md bg-[#c19a88]/20 text-[#ffe5d9]">
+                    <Trophy className="h-3.5 w-3.5 text-[#ffe5d9]" />
+                  </span>
+                  <span className="text-white font-bold text-xs sm:text-sm tracking-tight">
+                    ₹{event.prize_pool_inr.toLocaleString('en-IN')} Total Cash Bounty
+                  </span>
                 </div>
-                <div className="pl-4 border-l border-white/10">{log.output}</div>
+                <span className="text-[10px] font-mono text-[#ffe5d9] bg-[#c19a88]/20 px-2 py-0.5 rounded-full border border-[#c19a88]/40">
+                  Direct Bank Disbursal
+                </span>
               </div>
-            ))}
-          </div>
 
-          {/* Quick-action pills */}
-          <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-white/[0.06]">
-            <span className="text-[10px] text-white/30 uppercase tracking-widest mr-1">Quick:</span>
-            {quickButtons.map((btn) => (
-              <button
-                key={btn}
-                onClick={() => handleCommand(btn)}
-                className="px-2.5 py-1 rounded-full border border-white/10 bg-white/[0.03] text-[11px] text-[#e8c5b4] hover:bg-[#c19a88]/20 hover:border-[#c19a88]/40 hover:text-white transition-all flex items-center gap-1"
-              >
-                <Play className="h-2.5 w-2.5 opacity-60" />
-                <span>{btn}</span>
-              </button>
-            ))}
-            <button
-              onClick={() => handleCommand('clear')}
-              className="px-2.5 py-1 rounded-full border border-white/10 bg-white/[0.03] text-[11px] text-white/40 hover:text-white transition-colors ml-auto flex items-center gap-1"
-              title="Clear terminal"
-            >
-              <RotateCcw className="h-2.5 w-2.5" />
-              <span>clear</span>
-            </button>
-          </div>
+              <div className="grid grid-cols-3 gap-2 text-center font-mono">
+                <div className="p-2 sm:p-2.5 rounded-xl border border-[#c19a88]/40 bg-gradient-to-b from-[#c19a88]/15 to-transparent shadow-sm">
+                  <div className="text-[9px] sm:text-[10px] text-[#ffe5d9] uppercase tracking-wider font-bold">1ST CHAMPION</div>
+                  <div className="text-sm sm:text-base font-black text-white mt-0.5">
+                    ₹{(event.first_prize_inr || 20000).toLocaleString('en-IN')}
+                  </div>
+                  <div className="text-[9px] text-[#c19a88] truncate mt-0.5">+ Interview Call</div>
+                </div>
+                <div className="p-2 sm:p-2.5 rounded-xl border border-white/10 bg-white/[0.02]">
+                  <div className="text-[9px] sm:text-[10px] text-white/50 uppercase tracking-wider">2ND RUNNER-UP</div>
+                  <div className="text-sm sm:text-base font-bold text-white mt-0.5">
+                    ₹{(event.second_prize_inr || 10000).toLocaleString('en-IN')}
+                  </div>
+                  <div className="text-[9px] text-white/40 truncate mt-0.5">+ Certificate</div>
+                </div>
+                <div className="p-2 sm:p-2.5 rounded-xl border border-white/10 bg-white/[0.02]">
+                  <div className="text-[9px] sm:text-[10px] text-white/50 uppercase tracking-wider">3RD PLACE</div>
+                  <div className="text-sm sm:text-base font-bold text-white mt-0.5">
+                    ₹{(event.third_prize_inr || 5000).toLocaleString('en-IN')}
+                  </div>
+                  <div className="text-[9px] text-white/40 truncate mt-0.5">+ Certificate</div>
+                </div>
+              </div>
 
-          {/* Prompt Input Form */}
-          <form onSubmit={handleSubmit} className="flex items-center gap-2 pt-2">
-            <div className="flex items-center gap-1.5 text-xs text-[#c19a88] shrink-0 font-bold">
-              <span>$</span>
+              <div className="flex items-center justify-between text-[11px] text-white/50 pt-0.5">
+                <span>Top {event.certificates_top_n} teams receive verified merit certificates</span>
+                <Link href="/prizes" className="text-[#c19a88] hover:text-white flex items-center gap-1 font-mono text-[10px] font-medium transition-colors">
+                  Details <ArrowRight className="h-3 w-3" />
+                </Link>
+              </div>
             </div>
-            <input
-              aria-label="Terminal command"
-              type="text"
-              value={inputVal}
-              onChange={(e) => setInputVal(e.target.value)}
-              placeholder="Type command ('help', 'tracks', 'register') and press Enter..."
-              className="w-full bg-transparent text-xs text-white placeholder-white/25 focus:outline-none font-mono"
-            />
-            <button
-              type="submit"
-              aria-label="Run terminal command"
-              className="p-1.5 rounded-lg border border-white/10 bg-white/[0.04] text-neutral-300 hover:text-white hover:bg-[#c19a88]/20 transition-all shrink-0"
-            >
-              <CornerDownLeft className="h-3.5 w-3.5" />
-            </button>
-          </form>
-        </div>
-      ) : (
-        /* Telemetry Status Grid */
-        <div className="p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 text-xs font-mono">
-          <div className="p-3.5 sm:p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
-            <div className="flex items-center justify-between text-white/50 text-[10px]">
-              <span>NODE STATUS</span>
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
+          ) : activeCmd === 'stages' ? (
+            <div className="space-y-2.5 animate-in fade-in duration-200">
+              <div className="flex items-center justify-between border-b border-white/[0.08] pb-2">
+                <span className="text-xs sm:text-sm font-semibold text-white">4 Progressive Tournament Stages</span>
+                <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">100% Online</span>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono">
+                <div className="p-2 rounded-xl border border-white/10 bg-white/[0.02]">
+                  <div className="text-[9px] text-emerald-400 font-bold">STAGE 01</div>
+                  <div className="text-xs font-semibold text-white mt-0.5">Quiz Screening</div>
+                  <div className="text-[10px] text-white/40 mt-1">Jan 8, 2027</div>
+                </div>
+                <div className="p-2 rounded-xl border border-white/10 bg-white/[0.02]">
+                  <div className="text-[9px] text-[#c19a88] font-bold">STAGE 02</div>
+                  <div className="text-xs font-semibold text-white mt-0.5">Architecture PPT</div>
+                  <div className="text-[10px] text-white/40 mt-1">Jan 10–14, 2027</div>
+                </div>
+                <div className="p-2 rounded-xl border border-white/10 bg-white/[0.02]">
+                  <div className="text-[9px] text-[#e8c5b4] font-bold">STAGE 03</div>
+                  <div className="text-xs font-semibold text-white mt-0.5">Build Sprint</div>
+                  <div className="text-[10px] text-white/40 mt-1">Jan 16–26, 2027</div>
+                </div>
+                <div className="p-2 rounded-xl border border-white/10 bg-white/[0.02]">
+                  <div className="text-[9px] text-amber-400 font-bold">STAGE 04</div>
+                  <div className="text-xs font-semibold text-white mt-0.5">Live Defense</div>
+                  <div className="text-[10px] text-white/40 mt-1">Jan 29–30, 2027</div>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between text-[11px] text-white/50 pt-0.5">
+                <span>Screening → Blueprint → GitHub Codebase → Live Defense</span>
+                <Link href="/rules" className="text-[#c19a88] hover:text-white flex items-center gap-1 font-mono text-[10px] font-medium transition-colors">
+                  Full Rules <ArrowRight className="h-3 w-3" />
+                </Link>
+              </div>
             </div>
-            <div className="text-white font-bold text-sm">ONLINE • ACTIVE</div>
-            <p className="text-white/40 text-[10px]">National registration pipeline enabled</p>
-          </div>
+          ) : activeCmd === 'tracks' ? (
+            <div className="space-y-2.5 animate-in fade-in duration-200">
+              <div className="flex items-center justify-between border-b border-white/[0.08] pb-2">
+                <span className="text-xs sm:text-sm font-semibold text-white">3 Dedicated Technical Arenas</span>
+                <span className="text-[10px] font-mono text-[#c19a88] bg-[#c19a88]/10 px-2 py-0.5 rounded-full border border-[#c19a88]/30">Pick 1 Arena</span>
+              </div>
 
-          <div className="p-3.5 sm:p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
-            <div className="text-white/50 text-[10px]">TOTAL PRIZE ALLOCATION</div>
-            <div className="text-[#c19a88] font-bold text-sm">{formatINR(event.prize_pool_inr)}</div>
-            <p className="text-white/40 text-[10px]">1st: {formatINR(event.first_prize_inr)} | 2nd: {formatINR(event.second_prize_inr)} | 3rd: {formatINR(event.third_prize_inr)}</p>
-          </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <div className="p-2.5 rounded-xl border border-white/10 bg-white/[0.02]">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-[#a78bfa]">AI & Machine Learning</span>
+                    <span className="text-[9px] font-mono text-white/30">01</span>
+                  </div>
+                  <p className="text-[10px] text-white/50 mt-1 leading-relaxed">
+                    Agentic workflows, neural pipelines, autonomous vision & intelligent tools.
+                  </p>
+                </div>
+                <div className="p-2.5 rounded-xl border border-white/10 bg-white/[0.02]">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-[#38bdf8]">Web Development</span>
+                    <span className="text-[9px] font-mono text-white/30">02</span>
+                  </div>
+                  <p className="text-[10px] text-white/50 mt-1 leading-relaxed">
+                    High-throughput distributed systems, WebSockets, edge infra & full-stack apps.
+                  </p>
+                </div>
+                <div className="p-2.5 rounded-xl border border-white/10 bg-white/[0.02]">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-[#e8c5b4]">App Development</span>
+                    <span className="text-[9px] font-mono text-white/30">03</span>
+                  </div>
+                  <p className="text-[10px] text-white/50 mt-1 leading-relaxed">
+                    Cross-platform mobile apps, on-device ML, rich 60FPS UI & offline sync.
+                  </p>
+                </div>
+              </div>
 
-          <div className="p-3.5 sm:p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
-            <div className="text-white/50 text-[10px]">ENTRY STIPULATION</div>
-            <div className="text-white font-bold text-sm">{formatINR(event.registration_fee_inr)} FLAT / TEAM</div>
-            <p className="text-white/40 text-[10px]">{event.min_team_size} to {event.max_team_size} members inclusive</p>
-          </div>
+              <div className="flex items-center justify-between text-[11px] text-white/50 pt-0.5">
+                <span>Standardized evaluation rubrics across all technical domains</span>
+                <Link href="/tracks" className="text-[#c19a88] hover:text-white flex items-center gap-1 font-mono text-[10px] font-medium transition-colors">
+                  Explore Tracks <ArrowRight className="h-3 w-3" />
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-3 animate-in fade-in duration-200">
+              <div className="flex items-center justify-between border-b border-white/[0.08] pb-2">
+                <div className="flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                  </span>
+                  <span className="text-xs sm:text-sm font-semibold text-white">Squad Registration Protocol</span>
+                </div>
+                <span className="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/25">
+                  REGISTRATIONS LIVE
+                </span>
+              </div>
 
-          <div className="p-3.5 sm:p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
-            <div className="text-white/50 text-[10px]">MERIT CERTIFICATES</div>
-            <div className="text-emerald-400 font-bold text-sm">TOP {event.certificates_top_n} TEAMS</div>
-            <p className="text-white/40 text-[10px]">Official digital certificates</p>
-          </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 font-mono">
+                <div className="p-2.5 rounded-xl border border-white/10 bg-white/[0.02]">
+                  <div className="text-[9px] text-white/50 uppercase">FLAT SQUAD FEE</div>
+                  <div className="text-base font-bold text-[#ffe5d9] mt-0.5">
+                    ₹{event.registration_fee_inr} <span className="text-[11px] font-normal text-white/40 font-sans">/ team</span>
+                  </div>
+                  <div className="text-[10px] text-white/40 mt-0.5">One fee covers all members</div>
+                </div>
 
-          <div className="p-3.5 sm:p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
-            <div className="text-white/50 text-[10px]">CAREER ACCELERATION</div>
-            <div className="text-[#e8c5b4] font-bold text-sm">SELECTED CANDIDATES</div>
-            <p className="text-white/40 text-[10px]">SkaleKraft internship opportunities</p>
-          </div>
+                <div className="p-2.5 rounded-xl border border-white/10 bg-white/[0.02]">
+                  <div className="text-[9px] text-white/50 uppercase">ROSTER LIMITS</div>
+                  <div className="text-base font-bold text-white mt-0.5">
+                    {event.min_team_size}–{event.max_team_size} <span className="text-[11px] font-normal text-white/40 font-sans">Members</span>
+                  </div>
+                  <div className="text-[10px] text-white/40 mt-0.5">Solo developers welcome</div>
+                </div>
 
-          <div className="p-3.5 sm:p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-1">
-            <div className="text-white/50 text-[10px]">ORGANIZER ECOSYSTEM</div>
-            <div className="text-white font-bold text-sm">SKALEKRAFT</div>
-            <p className="text-white/40 text-[10px]">Official portal: skalekraft.in</p>
-          </div>
+                <div className="p-2.5 rounded-xl border border-[#c19a88]/40 bg-gradient-to-br from-[#c19a88]/20 to-black/60 flex flex-col justify-between">
+                  <div>
+                    <div className="text-[9px] text-[#ffe5d9] font-bold">READY TO BUILD?</div>
+                    <div className="text-[11px] text-white/70 mt-0.5 font-sans">Instant dashboard access</div>
+                  </div>
+                  <Link
+                    href="/register"
+                    className="mt-2 inline-flex items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-[#805948] to-[#c19a88] px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-all"
+                  >
+                    <span>Register Team</span>
+                    <ArrowRight className="h-3 w-3" />
+                  </Link>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between text-[10px] text-white/40 pt-0.5 font-mono">
+                <span>Instant verification via Razorpay UPI & Cards</span>
+                <span className="text-[#c19a88]">Direct Entry</span>
+              </div>
+            </div>
+          )}
         </div>
-      )}
+
+        {/* Minimal Bottom CLI Prompt Input */}
+        <form onSubmit={handleInputSubmit} className="flex items-center gap-2 pt-1 border-t border-white/[0.05]">
+          <span className="text-xs text-[#c19a88] font-mono font-bold shrink-0">$</span>
+          <input
+            type="text"
+            value={inputVal}
+            onChange={(e) => setInputVal(e.target.value)}
+            placeholder="Type 'prizes', 'stages', 'tracks', or 'register'..."
+            className="w-full bg-transparent text-xs text-white placeholder-white/25 focus:outline-none font-mono"
+            aria-label="Interactive terminal command input"
+          />
+          <button
+            type="submit"
+            aria-label="Execute command"
+            className="p-1 rounded-md border border-white/10 bg-white/[0.03] text-white/40 hover:text-white hover:border-[#c19a88]/40 hover:bg-[#c19a88]/20 transition-all shrink-0 cursor-pointer"
+          >
+            <CornerDownLeft className="h-3 w-3" />
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

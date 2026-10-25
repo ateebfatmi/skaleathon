@@ -73,7 +73,7 @@ export default function Navbar({ event }: { event: EventData }) {
     { name: 'Home', href: '/' },
     { name: 'Dashboard', href: '/dashboard' },
     { name: 'Tracks', href: '/tracks' },
-    { name: 'Prizes', href: '/prizes' },
+    { name: 'Prizes', href: '/prizes', badge: `₹${Math.round((event.prize_pool_inr || 35000) / 1000)}K` },
     { name: 'Rules', href: '/rules' },
     { name: 'FAQ', href: '/faq' },
   ];
@@ -189,6 +189,11 @@ export default function Navbar({ event }: { event: EventData }) {
                       }`}
                     />
                     <span className="truncate">{item.name}</span>
+                    {item.badge && (
+                      <span className="ml-1.5 px-1.5 py-0.2 rounded-full text-[9px] font-mono font-bold bg-[#c19a88]/25 text-[#ffe5d9] border border-[#c19a88]/40 shadow-[0_0_8px_rgba(193,154,136,0.25)] shrink-0">
+                        {item.badge}
+                      </span>
+                    )}
                   </span>
                 </Link>
               );
@@ -349,7 +354,14 @@ export default function Navbar({ event }: { event: EventData }) {
                         : 'text-neutral-400 hover:bg-white/[0.04] hover:text-white'
                     }`}
                   >
-                    <span>{link.name}</span>
+                    <span className="flex items-center gap-2">
+                      <span>{link.name}</span>
+                      {link.badge && (
+                        <span className="px-1.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#c19a88]/25 text-[#ffe5d9] border border-[#c19a88]/40">
+                          {link.badge}
+                        </span>
+                      )}
+                    </span>
                     {active && (
                       <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88]" />
                     )}

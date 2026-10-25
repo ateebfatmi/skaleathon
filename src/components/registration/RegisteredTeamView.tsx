@@ -225,7 +225,7 @@ export default function RegisteredTeamView({
               </span>
             </div>
             <p className="text-xs font-semibold text-white">
-              Saturday, January 8, 2028 • 10:00 AM – 8:00 PM IST
+              Saturday, January 8, 2027 • 10:00 AM – 8:00 PM IST
             </p>
             <p className="text-[11px] text-white/60 font-light">
               Timed 45-minute screening assessment covering core CS fundamentals, logic, and {track?.name || 'track'} topics.

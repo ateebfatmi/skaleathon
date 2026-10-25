@@ -306,8 +306,8 @@ INSERT INTO events (
     99.00, 1, 6, 35000.00,
     20000.00, 10000.00, 5000.00, 25,
     '2027-12-31T18:29:59.000Z',
-    '2028-01-26T18:29:59.000Z',
-    '2028-01-30T13:30:00.000Z'
+    '2027-01-26T18:29:59.000Z',
+    '2027-01-30T13:30:00.000Z'
 ) ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO event_tracks (id, event_id, name, slug, description, color_accent) VALUES

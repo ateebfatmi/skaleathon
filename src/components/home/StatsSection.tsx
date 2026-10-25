@@ -8,16 +8,21 @@ interface StatsProps {
 }
 
 export default function StatsSection({ event }: StatsProps) {
+  const firstPrize = (event.first_prize_inr || 20000).toLocaleString('en-IN');
+  const secondPrize = (event.second_prize_inr || 10000).toLocaleString('en-IN');
+  const thirdPrize = (event.third_prize_inr || 5000).toLocaleString('en-IN');
+
   const stats = [
     {
       id: 'prize',
-      label: 'TOTAL PRIZE POOL',
+      label: 'TOTAL CASH PRIZE POOL',
       value: formatINR(event.prize_pool_inr || 35000),
-      sublabel: 'Cash rewards for 1st, 2nd, and 3rd rank holders',
-      badge: 'Authorized Pool',
+      sublabel: `1st: ₹${firstPrize} • 2nd: ₹${secondPrize} • 3rd: ₹${thirdPrize}`,
+      badge: '★ Guaranteed Bounty',
       icon: Trophy,
       accentColor: '#c19a88',
-      gradientClass: 'from-white via-[#f2d9ce] to-[#c19a88]',
+      gradientClass: 'from-white via-[#ffe5d9] to-[#c19a88]',
+      isFeatured: true,
     },
     {
       id: 'fee',
@@ -28,6 +33,7 @@ export default function StatsSection({ event }: StatsProps) {
       icon: Tag,
       accentColor: '#805948',
       gradientClass: 'from-white via-[#e8cbbf] to-[#805948]',
+      isFeatured: false,
     },
     {
       id: 'teams',
@@ -39,6 +45,7 @@ export default function StatsSection({ event }: StatsProps) {
       icon: Users,
       accentColor: '#c19a88',
       gradientClass: 'from-white via-[#f2d9ce] to-[#c19a88]',
+      isFeatured: false,
     },
     {
       id: 'certs',
@@ -50,6 +57,7 @@ export default function StatsSection({ event }: StatsProps) {
       icon: Award,
       accentColor: '#805948',
       gradientClass: 'from-white via-[#e8cbbf] to-[#805948]',
+      isFeatured: false,
     },
   ];
 
@@ -89,26 +97,44 @@ export default function StatsSection({ event }: StatsProps) {
             return (
               <div
                 key={stat.id}
-                className="group relative flex min-h-[176px] flex-col bg-[linear-gradient(145deg,rgba(255,255,255,0.04),rgba(10,10,10,0.98))] p-4 sm:min-h-[190px] sm:p-6 transition-all duration-300 hover:bg-white/[0.04]"
+                className={`group relative flex min-h-[176px] sm:min-h-[190px] flex-col p-4 sm:p-6 transition-all duration-300 ${
+                  stat.isFeatured
+                    ? 'bg-[linear-gradient(145deg,rgba(193,154,136,0.14),rgba(12,12,12,0.98))] shadow-[inset_0_0_25px_rgba(193,154,136,0.12)]'
+                    : 'bg-[linear-gradient(145deg,rgba(255,255,255,0.04),rgba(10,10,10,0.98))] hover:bg-white/[0.04]'
+                }`}
               >
                 {/* Ambient hover light */}
                 <div
-                  className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full blur-[35px] opacity-[0.08] transition duration-700 group-hover:opacity-25"
+                  className={`pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full blur-[35px] transition duration-700 ${
+                    stat.isFeatured ? 'opacity-30' : 'opacity-[0.08] group-hover:opacity-25'
+                  }`}
                   style={{ backgroundColor: stat.accentColor }}
                 />
 
                 {/* Top header row */}
                 <div className="relative flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/[0.09] bg-white/[0.025] text-[#c19a88] shadow-[inset_0_1px_0_rgba(255,255,255,.05),0_8px_20px_rgba(0,0,0,.25)]">
-                      <Icon className="h-4 w-4" strokeWidth={1.8} />
+                    <span
+                      className={`flex h-8 w-8 items-center justify-center rounded-xl border transition-all ${
+                        stat.isFeatured
+                          ? 'border-[#c19a88]/60 bg-gradient-to-br from-[#ffe5d9] to-[#c19a88] text-black shadow-[0_0_15px_rgba(193,154,136,0.5)]'
+                          : 'border-white/[0.09] bg-white/[0.025] text-[#c19a88] shadow-[inset_0_1px_0_rgba(255,255,255,.05),0_8px_20px_rgba(0,0,0,.25)]'
+                      }`}
+                    >
+                      <Icon className="h-4 w-4" strokeWidth={stat.isFeatured ? 2.2 : 1.8} />
                     </span>
                     <span className="font-mono text-[9px] tracking-[0.2em] text-white/30">
                       0{idx + 1}
                     </span>
                   </div>
 
-                  <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-black/30 px-2.5 py-1 text-[8px] font-medium uppercase tracking-[0.14em] text-[#c19a88] backdrop-blur-xl">
+                  <span
+                    className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[8px] font-mono font-bold uppercase tracking-[0.14em] backdrop-blur-xl ${
+                      stat.isFeatured
+                        ? 'border border-[#c19a88]/60 bg-[#c19a88]/20 text-[#ffe5d9] shadow-[0_0_10px_rgba(193,154,136,0.3)]'
+                        : 'hidden sm:inline-flex border border-white/[0.08] bg-black/30 text-[#c19a88]'
+                    }`}
+                  >
                     <CheckCircle2 className="h-2.5 w-2.5 text-[#c19a88]" strokeWidth={2} />
                     {stat.badge}
                   </span>
@@ -117,7 +143,9 @@ export default function StatsSection({ event }: StatsProps) {
                 {/* Metric Value */}
                 <div className="relative pb-2 pt-5 sm:pt-6">
                   <span
-                    className={`bg-gradient-to-br ${stat.gradientClass} bg-clip-text font-mono text-xl sm:text-3xl lg:text-[2.35rem] font-bold leading-none tracking-[-0.03em] text-transparent`}
+                    className={`bg-gradient-to-br ${stat.gradientClass} bg-clip-text font-mono text-xl sm:text-3xl lg:text-[2.35rem] font-black leading-none tracking-[-0.03em] text-transparent ${
+                      stat.isFeatured ? 'drop-shadow-[0_2px_15px_rgba(193,154,136,0.5)]' : ''
+                    }`}
                   >
                     {stat.value}
                     {stat.suffix && (
@@ -130,10 +158,18 @@ export default function StatsSection({ event }: StatsProps) {
 
                 {/* Footer labels */}
                 <div className="relative mt-auto border-t border-white/[0.07] pt-3">
-                  <h3 className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.12em] sm:tracking-[0.14em] text-white/85">
+                  <h3
+                    className={`text-[9px] sm:text-[10px] uppercase tracking-[0.12em] sm:tracking-[0.14em] ${
+                      stat.isFeatured ? 'text-[#ffe5d9] font-bold' : 'text-white/85 font-semibold'
+                    }`}
+                  >
                     {stat.label}
                   </h3>
-                  <p className="mobile-card-copy mt-1 text-[10px] sm:text-[11px] font-light leading-snug text-white/45">
+                  <p
+                    className={`mobile-card-copy mt-1 text-[10px] sm:text-[11px] leading-snug ${
+                      stat.isFeatured ? 'text-[#e8c5b4] font-medium' : 'text-white/45 font-light'
+                    }`}
+                  >
                     {stat.sublabel}
                   </p>
                 </div>

@@ -55,6 +55,15 @@ export default function PrizesSection({ event }: PrizesProps) {
             </p>
             <span className="h-px w-6 bg-[#c19a88]/70" />
           </div>
+
+          {/* Prominent Prize Pool Callout */}
+          <div className="mb-4 inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-[#c19a88]/60 bg-gradient-to-r from-[#c19a88]/20 via-[#805948]/30 to-[#c19a88]/20 shadow-[0_0_25px_rgba(193,154,136,0.35)]">
+            <Trophy className="h-4 w-4 text-[#ffe5d9]" />
+            <span className="text-xs sm:text-sm font-mono font-bold tracking-wider text-[#ffe5d9] uppercase">
+              {formatINR(event.prize_pool_inr)} Total Cash Prize Pool
+            </span>
+          </div>
+
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-white tracking-tight">
             Rewards for exceptional{' '}
             <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
@@ -62,8 +71,8 @@ export default function PrizesSection({ event }: PrizesProps) {
             </span>
             .
           </h2>
-          <p className="mt-4 text-sm text-white/55 leading-relaxed font-light">
-            {formatINR(event.prize_pool_inr)} in cash rewards, certificates for the top {event.certificates_top_n} teams, and internship opportunities for selected candidates with the SkaleKraft product team.
+          <p className="mt-4 text-sm text-white/70 leading-relaxed font-light">
+            <strong className="text-white font-semibold">{formatINR(event.prize_pool_inr)} in direct cash rewards</strong> (1st: {formatINR(event.first_prize_inr || 20000)} • 2nd: {formatINR(event.second_prize_inr || 10000)} • 3rd: {formatINR(event.third_prize_inr || 5000)}), official merit certificates for the top {event.certificates_top_n} teams, and internship opportunities for selected candidates with the SkaleKraft product team.
           </p>
         </div>
 

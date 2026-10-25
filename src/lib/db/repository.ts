@@ -740,7 +740,7 @@ export class EventRepository {
     const event = await this.getEvent();
     if (event.submission_deadline) {
       if (new Date() > new Date(event.submission_deadline)) {
-        throw new Error('Project submissions have officially closed for Skaleathon 2028.');
+        throw new Error('Project submissions have officially closed for Skaleathon 2027.');
       }
     }
 

@@ -421,7 +421,7 @@ export default function TeamWorkspaceClient({
               <span className="font-mono text-2xl font-light text-white/10 select-none">02</span>
             </div>
             <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-              Saturday, January 8, 2028 • 10:00 AM IST
+              Saturday, January 8, 2027 • 10:00 AM IST
             </h3>
             <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
               Timed 45-minute online technical screening assessment evaluating core CS fundamentals and{' '}

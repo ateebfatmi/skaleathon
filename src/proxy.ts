@@ -45,7 +45,7 @@ export default clerkMiddleware(
     frontendApiProxy: {
       enabled: true,
     },
-  },
+  } as any,
 );
 
 export const config = {
