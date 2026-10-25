@@ -347,6 +347,7 @@ export class EventRepository {
       updated_at: now,
     };
 
+    const leaderPhone = params.leader_phone?.trim() || 'N/A';
     const teamMembers: TeamMember[] = [
       {
         id: 'mem_' + Math.random().toString(36).substring(2, 10),
@@ -354,7 +355,7 @@ export class EventRepository {
         user_id: params.leader_id,
         name: params.leader_name.trim(),
         email: params.leader_email.toLowerCase().trim(),
-        phone: params.leader_phone || null,
+        phone: leaderPhone,
         role: 'leader',
         college_or_org: params.college_or_org || null,
         created_at: now,
@@ -366,7 +367,7 @@ export class EventRepository {
         user_id: null,
         name: m.name.trim(),
         email: m.email.toLowerCase().trim(),
-        phone: m.phone || null,
+        phone: m.phone?.trim() || leaderPhone,
         role: 'member' as const,
         college_or_org: m.college_or_org || null,
         created_at: now,

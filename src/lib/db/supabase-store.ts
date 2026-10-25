@@ -353,14 +353,15 @@ export class SupabaseStore {
 
     // 3. Insert team members
     const defaultCollege = params.college_or_org?.trim() || 'Independent';
+    const leaderPhone = params.leader_phone?.trim() || 'N/A';
     const membersToInsert = [
       {
         id: crypto.randomUUID(),
         team_id: teamId,
         profile_id: effectiveLeaderId,
-        name: params.leader_name,
-        email: params.leader_email.toLowerCase(),
-        phone: params.leader_phone || null,
+        name: params.leader_name.trim(),
+        email: params.leader_email.toLowerCase().trim(),
+        phone: leaderPhone,
         college_name: defaultCollege,
         is_leader: true,
         created_at: new Date().toISOString(),
@@ -369,9 +370,9 @@ export class SupabaseStore {
         id: crypto.randomUUID(),
         team_id: teamId,
         profile_id: null,
-        name: m.name,
-        email: m.email.toLowerCase(),
-        phone: m.phone || null,
+        name: m.name.trim(),
+        email: m.email.toLowerCase().trim(),
+        phone: m.phone?.trim() || leaderPhone,
         college_name: m.college_or_org?.trim() || defaultCollege,
         is_leader: false,
         created_at: new Date().toISOString(),

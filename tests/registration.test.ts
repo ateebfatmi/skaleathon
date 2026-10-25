@@ -94,4 +94,29 @@ describe('Team Registration & Validation', () => {
       })
     ).rejects.toThrow(/already registered in another team/);
   });
+
+  it('assigns leader phone as fallback when member phone is empty or omitted', async () => {
+    const leaderPhone = '9876543210';
+    const { team, members } = await EventRepository.createTeam({
+      name: `Team With Optional Phone ${Date.now()}`,
+      track_id: 'track-web-dev',
+      leader_id: `leader_${Date.now()}`,
+      leader_name: 'Contact Lead',
+      leader_email: `lead_${Date.now()}@example.com`,
+      leader_phone: leaderPhone,
+      city: 'Ranchi',
+      state: 'Jharkhand',
+      members: [
+        {
+          name: 'Member Without Phone',
+          email: `mem_nophone_${Date.now()}@example.com`,
+          phone: '',
+        },
+      ],
+    });
+
+    expect(members).toHaveLength(2);
+    expect(members[0].phone).toBe(leaderPhone);
+    expect(members[1].phone).toBe(leaderPhone);
+  });
 });
