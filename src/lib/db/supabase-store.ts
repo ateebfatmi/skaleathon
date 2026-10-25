@@ -312,7 +312,7 @@ export class SupabaseStore {
     const client = this.getClient();
 
     // 1. Ensure leader profile exists
-    await this.upsertProfile({
+    const leaderProfile = await this.upsertProfile({
       id: params.leader_id,
       email: params.leader_email,
       full_name: params.leader_name,
@@ -323,6 +323,8 @@ export class SupabaseStore {
       role: 'participant',
     });
 
+    const effectiveLeaderId = leaderProfile?.id || params.leader_id;
+
     // 2. Insert team into teams table
     const teamId = crypto.randomUUID();
     const dbTeam = {
@@ -330,7 +332,7 @@ export class SupabaseStore {
       event_id: 'skaleathon-2027',
       team_name: params.name,
       track_id: params.track_id,
-      leader_id: params.leader_id,
+      leader_id: effectiveLeaderId,
       status: 'registered',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
@@ -343,7 +345,10 @@ export class SupabaseStore {
       .single();
 
     if (teamErr || !teamRes) {
-      throw new Error(`Failed to create team in Supabase: ${teamErr?.message}`);
+      if (teamErr?.code === '23505') {
+        throw new Error(`A team named "${params.name}" already exists. Please choose a different team name.`);
+      }
+      throw new Error(`Failed to create team in Supabase: ${teamErr?.message || 'Unknown error'}`);
     }
 
     // 3. Insert team members
@@ -352,7 +357,7 @@ export class SupabaseStore {
       {
         id: crypto.randomUUID(),
         team_id: teamId,
-        profile_id: params.leader_id,
+        profile_id: effectiveLeaderId,
         name: params.leader_name,
         email: params.leader_email.toLowerCase(),
         phone: params.leader_phone || null,
@@ -379,26 +384,36 @@ export class SupabaseStore {
       .select();
 
     if (membersErr || !membersRes) {
+      // Rollback team on member failure so no orphaned team name is locked
+      await client.from('teams').delete().eq('id', teamId);
       throw new Error(`Failed to insert team members in Supabase: ${membersErr?.message}`);
     }
 
     // 4. Record policy consent
-    await client.from('policy_consents').insert({
-      id: crypto.randomUUID(),
-      user_id: params.leader_id,
-      policy_type: 'terms_and_rules',
-      version: '1.0',
-      consented_at: new Date().toISOString(),
-    });
+    try {
+      await client.from('policy_consents').insert({
+        id: crypto.randomUUID(),
+        user_id: effectiveLeaderId,
+        policy_type: 'terms',
+        version: '1.0',
+        consented_at: new Date().toISOString(),
+      });
+    } catch (policyErr) {
+      console.warn('Non-fatal: Failed to record policy consent:', policyErr);
+    }
 
     // 5. Audit log
-    await this.logAudit({
-      actor_id: params.leader_id,
-      action: 'CREATE_TEAM',
-      target_entity: 'teams',
-      target_id: teamId,
-      details: { team_name: params.name, track_id: params.track_id, member_count: membersToInsert.length },
-    });
+    try {
+      await this.logAudit({
+        actor_id: effectiveLeaderId,
+        action: 'CREATE_TEAM',
+        target_entity: 'teams',
+        target_id: teamId,
+        details: { team_name: params.name, track_id: params.track_id, member_count: membersToInsert.length },
+      });
+    } catch (auditErr) {
+      console.warn('Non-fatal: Failed to log audit for CREATE_TEAM:', auditErr);
+    }
 
     const mappedTeam: Team = {
       id: teamRes.id,

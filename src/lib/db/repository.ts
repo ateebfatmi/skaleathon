@@ -62,7 +62,8 @@ export class EventRepository {
   private static handleSupabaseError(operation: string, error: unknown): void {
     if (process.env.NODE_ENV === 'production') {
       console.error(`Supabase ${operation} failed. Refusing local fallback in production.`, error);
-      throw new Error(`Database operation failed: ${operation}`);
+      const message = error instanceof Error ? error.message : undefined;
+      throw new Error(message || `Database operation failed: ${operation}`);
     }
     console.warn(`Supabase ${operation} error, using local development fallback:`, error);
   }
