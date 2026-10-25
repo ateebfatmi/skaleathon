@@ -13,6 +13,7 @@ import {
   Trophy,
   Mail,
   CheckCircle2,
+  Download,
 } from 'lucide-react';
 
 export const revalidate = 0;
@@ -88,6 +89,22 @@ export default async function DashboardPage() {
 
           {/* Right Quick Actions */}
           <div className="flex items-center gap-4 sm:gap-5 text-xs">
+            {team && isPaid && (
+              <>
+                <a
+                  href={`/api/receipt/download?pass=${encodeURIComponent(team.id)}`}
+                  download={`Skaleathon_Receipt_${team.id}.pdf`}
+                  className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors font-medium"
+                  title="Download Official Registration Receipt (PDF)"
+                >
+                  <Download className="h-3.5 w-3.5 text-[#c19a88]" />
+                  <span>Download Receipt</span>
+                </a>
+
+                <span className="text-white/15">|</span>
+              </>
+            )}
+
             <Link
               href="/dashboard/team"
               className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors font-medium"

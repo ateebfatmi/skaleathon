@@ -9,6 +9,8 @@ import {
   Copy,
   Check,
   Printer,
+  Download,
+  FileText,
   MapPin,
   Building,
   Calendar,
@@ -132,7 +134,7 @@ export default function TeamWorkspaceClient({
             </div>
             <div className="print-pass-document-label">
               <span>Official document</span>
-              <strong>Squad Credential</strong>
+              <strong>Registration Receipt</strong>
               <small>National Engineering Tournament</small>
             </div>
           </header>
@@ -142,12 +144,12 @@ export default function TeamWorkspaceClient({
               <div className="print-pass-status">
                 <span className="print-pass-status-dot" />
                 <div>
-                  <small>Registration status</small>
-                  <strong>Verified &amp; Paid</strong>
+                  <small>Registration &amp; Payment Status</small>
+                  <strong>Verified &amp; Paid ({paymentOrder?.amount_inr ? `₹${Number(paymentOrder.amount_inr).toFixed(2)}` : '₹500.00'})</strong>
                 </div>
               </div>
               <div className="print-pass-id">
-                <small>Credential ID</small>
+                <small>Registration Credential ID</small>
                 <strong>{team.id.toUpperCase()}</strong>
               </div>
             </div>
@@ -295,11 +297,21 @@ export default function TeamWorkspaceClient({
           </div>
 
           {/* Right Quick Actions */}
-          <div className="grid w-full grid-cols-2 gap-2 text-xs sm:flex sm:w-auto sm:items-center sm:gap-5">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3.5 text-xs">
+            <a
+              href={`/api/receipt/download?pass=${encodeURIComponent(team.id)}`}
+              download={`Skaleathon_Receipt_${team.id}.pdf`}
+              className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-[#c19a88]/30 bg-[#c19a88]/10 hover:bg-[#c19a88]/20 px-3 py-1.5 font-semibold text-[#e8c5b4] hover:text-white transition-all cursor-pointer shadow-sm shadow-[#805948]/20"
+              title="Download official PDF registration receipt"
+            >
+              <Download className="h-3.5 w-3.5 text-[#e8c5b4]" />
+              <span>Download Receipt</span>
+            </a>
+
             <button
               onClick={() => window.print()}
-              className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 font-medium text-neutral-300 transition-colors hover:text-white sm:min-h-0 sm:justify-start sm:rounded-none sm:border-0 sm:bg-transparent sm:px-0 sm:text-neutral-400"
-              title="Print official team credentials"
+              className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 font-medium text-neutral-300 transition-colors hover:text-white hover:bg-white/[0.07] cursor-pointer"
+              title="Print official team credentials & receipt"
             >
               <Printer className="h-3.5 w-3.5 text-[#c19a88]" />
               <span>Print Pass</span>
@@ -309,7 +321,7 @@ export default function TeamWorkspaceClient({
 
             <button
               onClick={shareSquadPass}
-              className="group inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl border border-[#c19a88]/20 bg-[#c19a88]/[0.07] px-3 font-semibold text-[#e8c5b4] transition-colors hover:text-white sm:min-h-0 sm:justify-start sm:rounded-none sm:border-0 sm:bg-transparent sm:px-0"
+              className="group inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-[#c19a88]/20 bg-[#c19a88]/[0.07] px-3 py-1.5 font-semibold text-[#e8c5b4] transition-colors hover:text-white cursor-pointer"
               title="Share squad credentials"
             >
               {copiedInvite ? (
@@ -414,6 +426,27 @@ export default function TeamWorkspaceClient({
               </span>
               ).
             </p>
+
+            <div className="pt-2 flex flex-wrap items-center gap-2.5">
+              <a
+                href={`/api/receipt/download?pass=${encodeURIComponent(team.id)}`}
+                download={`Skaleathon_Receipt_${team.id}.pdf`}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-[#c19a88]/30 bg-[#c19a88]/10 hover:bg-[#c19a88]/20 px-3 py-1.5 text-xs font-semibold text-[#e8c5b4] hover:text-white transition-all cursor-pointer shadow-sm shadow-[#805948]/20"
+                title="Download official PDF registration receipt"
+              >
+                <Download className="h-3.5 w-3.5 text-[#e8c5b4]" />
+                <span>Download Official Receipt (PDF)</span>
+              </a>
+
+              <Link
+                href={`/dashboard/receipt?pass=${encodeURIComponent(team.id)}`}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] px-3 py-1.5 text-xs font-medium text-neutral-300 hover:text-white transition-all"
+                title="View full luxury editorial receipt"
+              >
+                <FileText className="h-3.5 w-3.5 text-[#c19a88]" />
+                <span>View Receipt</span>
+              </Link>
+            </div>
           </div>
 
           {/* Pillar 02 */}

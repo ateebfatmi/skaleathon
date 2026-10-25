@@ -20,6 +20,7 @@ import {
   PlusCircle,
   HelpCircle,
   Printer,
+  Download,
 } from 'lucide-react';
 import { Team, TeamMember, EventTrack, PaymentOrder } from '@/lib/db/types';
 
@@ -102,7 +103,7 @@ export default function RegisteredTeamView({
             </div>
             <div className="print-pass-document-label">
               <span>Official document</span>
-              <strong>Squad Credential</strong>
+              <strong>Registration Receipt</strong>
               <small>National Engineering Tournament</small>
             </div>
           </header>
@@ -256,14 +257,26 @@ export default function RegisteredTeamView({
                 {team.name}
               </h2>
             </div>
-            <button
-              onClick={() => window.print()}
-              className="w-fit inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2 text-xs font-medium text-neutral-300 hover:text-white hover:bg-white/[0.08] transition-all"
-              title="Print official pass"
-            >
-              <Printer className="h-3.5 w-3.5 text-[#c19a88]" />
-              <span>Print Pass</span>
-            </button>
+            <div className="flex flex-wrap items-center gap-2">
+              <a
+                href={`/api/receipt/download?pass=${encodeURIComponent(team.id)}`}
+                download={`Skaleathon_Receipt_${team.id}.pdf`}
+                className="w-fit inline-flex items-center gap-2 rounded-xl border border-[#c19a88]/30 bg-[#c19a88]/10 hover:bg-[#c19a88]/20 px-3.5 py-2 text-xs font-semibold text-[#e8c5b4] hover:text-white transition-all cursor-pointer shadow-sm shadow-[#805948]/20"
+                title="Download official PDF registration receipt"
+              >
+                <Download className="h-3.5 w-3.5 text-[#e8c5b4]" />
+                <span>Download Receipt</span>
+              </a>
+
+              <button
+                onClick={() => window.print()}
+                className="w-fit inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2 text-xs font-medium text-neutral-300 hover:text-white hover:bg-white/[0.08] transition-all cursor-pointer"
+                title="Print official pass"
+              >
+                <Printer className="h-3.5 w-3.5 text-[#c19a88]" />
+                <span>Print Pass</span>
+              </button>
+            </div>
           </div>
           <p className="text-xs text-white/55 font-light">
             {team.college_or_org ? `${team.college_or_org} • ` : ''}
