@@ -29,7 +29,6 @@ import {
   Clock,
   Shield,
   UserCheck,
-  Printer,
   Copy,
 } from 'lucide-react';
 import { EventData, EventTrack } from '@/lib/db/types';
@@ -1596,15 +1595,6 @@ export default function MultiStepRegistration({
                 <Download className="h-4 w-4 text-[#e8c5b4]" />
                 <span>Download Receipt</span>
               </a>
-
-              <button
-                type="button"
-                onClick={() => window.print()}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] px-7 py-3.5 text-xs font-semibold text-neutral-300 hover:text-white transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <Printer className="h-4 w-4 text-[#c19a88]" />
-                <span>Print Receipt</span>
-              </button>
             </div>
           </div>
         </>
