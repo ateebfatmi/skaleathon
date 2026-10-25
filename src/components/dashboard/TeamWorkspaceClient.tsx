@@ -44,12 +44,10 @@ export default function TeamWorkspaceClient({
   userEmail,
 }: TeamWorkspaceClientProps) {
   const [copiedPassId, setCopiedPassId] = useState(false);
-  const [copiedInvite, setCopiedInvite] = useState(false);
   const [passQrCode, setPassQrCode] = useState('');
 
   const leaderMember = members.find((m) => m.role === 'leader') || members[0];
   const regularMembers = members.filter((m) => m.id !== leaderMember?.id);
-  const openSlotsCount = Math.max(0, 6 - members.length);
 
   useEffect(() => {
     const verificationUrl = `https://skaleathon.skalekraft.in/dashboard/team?pass=${encodeURIComponent(team.id)}`;
@@ -84,31 +82,11 @@ export default function TeamWorkspaceClient({
       })()
     : 'Active';
 
-  const copyToClipboard = (text: string, type: 'pass' | 'invite' = 'pass') => {
+  const copyToClipboard = (text: string) => {
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
       navigator.clipboard.writeText(text);
-      if (type === 'pass') {
-        setCopiedPassId(true);
-        setTimeout(() => setCopiedPassId(false), 2000);
-      } else {
-        setCopiedInvite(true);
-        setTimeout(() => setCopiedInvite(false), 2000);
-      }
-    }
-  };
-
-  const shareSquadPass = () => {
-    const inviteText = `Join my Skaleathon squad "${team.name}" (${track?.name || 'Technical Arena'}). Official Pass ID: ${team.id}`;
-    if (typeof navigator !== 'undefined' && navigator.share) {
-      navigator
-        .share({
-          title: `Skaleathon Squad: ${team.name}`,
-          text: inviteText,
-          url: window.location.href,
-        })
-        .catch(() => copyToClipboard(inviteText, 'invite'));
-    } else {
-      copyToClipboard(inviteText, 'invite');
+      setCopiedPassId(true);
+      setTimeout(() => setCopiedPassId(false), 2000);
     }
   };
 

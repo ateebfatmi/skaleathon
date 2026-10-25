@@ -1319,7 +1319,7 @@ export default function MultiStepRegistration({
                       <small>Confirmed Squad Roster</small>
                       <h3>Registered Participants</h3>
                     </div>
-                    <strong>{1 + members.length} / 6 Seats Enrolled</strong>
+                    <strong>{1 + members.length} Innovator{1 + members.length > 1 ? 's' : ''} Confirmed</strong>
                   </div>
 
                   <div className="print-pass-roster-grid">
@@ -1342,18 +1342,6 @@ export default function MultiStepRegistration({
                           <small>{member.email}{member.phone ? ` • ${member.phone}` : ''}</small>
                         </div>
                         <em>Member</em>
-                      </div>
-                    ))}
-
-                    {/* Open slots */}
-                    {Array.from({ length: Math.max(0, 6 - (1 + members.length)) }).map((_, index) => (
-                      <div className="print-pass-member print-pass-member-open" key={`open-${index}`}>
-                        <span>{String(1 + members.length + index + 1).padStart(2, '0')}</span>
-                        <div>
-                          <strong>Open Team Position</strong>
-                          <small>Can be invited from Squad Dashboard</small>
-                        </div>
-                        <em>Available</em>
                       </div>
                     ))}
                   </div>

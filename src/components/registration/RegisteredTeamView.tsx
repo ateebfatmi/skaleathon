@@ -62,7 +62,6 @@ export default function RegisteredTeamView({
 
   const leaderMember = members.find((m) => m.role === 'leader') || members[0];
   const regularMembers = members.filter((m) => m.id !== leaderMember?.id);
-  const openSlotsCount = Math.max(0, 6 - members.length);
 
   const formattedDate = team.created_at
     ? (() => {
@@ -154,7 +153,7 @@ export default function RegisteredTeamView({
                   <small>Authorized participants</small>
                   <h3>Confirmed Squad Roster</h3>
                 </div>
-                <strong>{members.length} / 6 seats confirmed</strong>
+                <strong>{members.length} {members.length === 1 ? 'member' : 'members'} confirmed</strong>
               </div>
 
               <div className="print-pass-roster-grid">
@@ -166,16 +165,6 @@ export default function RegisteredTeamView({
                       <small>{member.email}</small>
                     </div>
                     <em>{member.id === leaderMember?.id ? 'Team Lead' : 'Member'}</em>
-                  </div>
-                ))}
-                {Array.from({ length: openSlotsCount }).map((_, index) => (
-                  <div className="print-pass-member print-pass-member-open" key={`open-${index}`}>
-                    <span>{String(members.length + index + 1).padStart(2, '0')}</span>
-                    <div>
-                      <strong>Open team position</strong>
-                      <small>Not yet assigned</small>
-                    </div>
-                    <em>Available</em>
                   </div>
                 ))}
               </div>
