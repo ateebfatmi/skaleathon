@@ -194,12 +194,6 @@ export default function Navbar({ event }: { event: NavbarEvent }) {
                     />
                   )}
                   <span className="relative z-10 flex items-center justify-center">
-                    {active && (
-                      <span
-                        aria-hidden="true"
-                        className="mr-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[#c19a88] shadow-[0_0_8px_#c19a88]"
-                      />
-                    )}
                     <span>{item.name}</span>
                     {item.badge && (
                       <span className="ml-1.5 px-1.5 py-0.2 rounded-full text-[9px] font-mono font-bold bg-[#c19a88]/25 text-[#ffe5d9] border border-[#c19a88]/40 shadow-[0_0_8px_rgba(193,154,136,0.25)] shrink-0">
@@ -336,9 +330,6 @@ export default function Navbar({ event }: { event: NavbarEvent }) {
                         }`}
                       />
                       <span>{link.name}</span>
-                      {isActive && (
-                        <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] shadow-[0_0_8px_#c19a88] animate-pulse" />
-                      )}
                     </Link>
                   );
                 })}
