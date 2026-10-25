@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Sparkles, ShieldCheck, Trophy, Layers, ArrowRight } from 'lucide-react';
+import { Sparkles, Trophy, ArrowRight, Layers, ShieldCheck } from 'lucide-react';
 import { EventData } from '@/lib/db/types';
 import LazyInteractiveTerminal from '@/components/home/LazyInteractiveTerminal';
 
@@ -97,95 +97,7 @@ export default function HeroSection({ event }: HeroProps) {
           <span>No hidden fees</span>
         </div>
 
-        {/* 7. Key Highlights Grid (Cash Prize, Rounds, Merit, Internship) */}
-        <div className="mt-9 sm:mt-12 pt-6 sm:pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4 max-w-5xl mx-auto">
-          {[
-            {
-              icon: Trophy,
-              title: `₹${prizePoolFormatted} Prize Pool`,
-              subtitle: `1st ₹${firstPrizeFormatted} • 2nd ₹${secondPrizeFormatted} • 3rd ₹${thirdPrizeFormatted}`,
-              isPrimary: true,
-              href: '#prizes',
-              badge: '★ CASH PRIZES',
-            },
-            {
-              icon: Layers,
-              title: '4 Progressive Rounds',
-              subtitle: 'Quiz to Grand Finale',
-              isPrimary: false,
-            },
-            {
-              icon: ShieldCheck,
-              title: `Top ${event.certificates_top_n} Merit Awards`,
-              subtitle: 'Official Certificates',
-              isPrimary: false,
-            },
-            {
-              icon: Sparkles,
-              title: 'Internship Fast-Track',
-              subtitle: 'SkaleKraft Interviews',
-              isPrimary: false,
-            },
-          ].map((badge) => {
-            const Icon = badge.icon;
-            const content = (
-              <div
-                key={badge.title}
-                className={`group relative flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3.5 rounded-xl transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.25)] backdrop-blur-sm ${
-                  badge.isPrimary
-                    ? 'border-2 border-[#c19a88] bg-gradient-to-br from-[#c19a88]/25 via-[#805948]/20 to-black/80 shadow-[0_0_30px_rgba(193,154,136,0.35)] ring-1 ring-[#c19a88]/60 hover:shadow-[0_0_40px_rgba(193,154,136,0.55)] hover:scale-[1.02]'
-                    : 'border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05] hover:border-[#c19a88]/40'
-                }`}
-              >
-                {badge.badge && (
-                  <span className="absolute -top-2.5 left-3 sm:left-4 px-2 py-0.5 rounded-full bg-gradient-to-r from-[#ffe5d9] via-[#e8c5b4] to-[#c19a88] text-[8px] sm:text-[9px] font-mono font-black text-black uppercase tracking-wider shadow-md flex items-center gap-1">
-                    <Sparkles className="h-2.5 w-2.5 text-black" />
-                    <span>{badge.badge}</span>
-                  </span>
-                )}
-                <div
-                  className={`w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center shrink-0 transition-all ${
-                    badge.isPrimary
-                      ? 'bg-gradient-to-br from-[#ffe5d9] to-[#c19a88] text-black shadow-[0_0_15px_rgba(193,154,136,0.6)] group-hover:scale-105'
-                      : 'bg-[#c19a88]/10 border border-[#c19a88]/20 text-[#c19a88] group-hover:scale-105 group-hover:bg-[#c19a88]/20 group-hover:border-[#c19a88]/40'
-                  }`}
-                >
-                  <Icon className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${badge.isPrimary ? 'stroke-[2.5]' : ''}`} />
-                </div>
-                <div className="flex flex-col text-left min-w-0">
-                  <span
-                    className={`font-semibold text-[11px] sm:text-[13px] tracking-tight leading-tight truncate ${
-                      badge.isPrimary
-                        ? 'font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-[#ffe5d9] to-[#c19a88]'
-                        : 'text-white/95 group-hover:text-white transition-colors'
-                    }`}
-                  >
-                    {badge.title}
-                  </span>
-                  <span
-                    className={`text-[10px] sm:text-[11px] truncate mt-0.5 ${
-                      badge.isPrimary
-                        ? 'text-[#ffe5d9] font-medium'
-                        : 'text-white/50 group-hover:text-[#c19a88] transition-colors'
-                    }`}
-                  >
-                    {badge.subtitle}
-                  </span>
-                </div>
-              </div>
-            );
 
-            if (badge.href) {
-              return (
-                <Link key={badge.title} href={badge.href} className="block">
-                  {content}
-                </Link>
-              );
-            }
-
-            return content;
-          })}
-        </div>
 
         {/* 8. Live Interactive Hacker CLI & Telemetry Playground */}
         <div className="mt-8 sm:mt-12">
