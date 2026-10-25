@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import QRCode from 'qrcode';
-import PrintPassModal from '@/components/common/PrintPassModal';
 import {
   CheckCircle2,
   ShieldCheck,
@@ -20,8 +19,9 @@ import {
   Send,
   PlusCircle,
   HelpCircle,
-  Printer,
   Download,
+  Loader2,
+  Check,
 } from 'lucide-react';
 import { Team, TeamMember, EventTrack, PaymentOrder } from '@/lib/db/types';
 
@@ -43,7 +43,41 @@ export default function RegisteredTeamView({
   userEmail,
 }: RegisteredTeamViewProps) {
   const [passQrCode, setPassQrCode] = useState<string>('');
-  const [isPrintModalOpen, setIsPrintModalOpen] = useState<boolean>(false);
+  const [downloading, setDownloading] = useState<boolean>(false);
+  const [downloadSuccess, setDownloadSuccess] = useState<boolean>(false);
+
+  const handleDownloadReceipt = async () => {
+    if (downloading) return;
+    setDownloading(true);
+    try {
+      const { generateReceiptPDF } = await import('@/lib/receipt/generator');
+      const pdfBytes = await generateReceiptPDF({
+        team,
+        members,
+        track,
+        paymentOrder,
+        leaderMember,
+      });
+
+      const blob = new Blob([pdfBytes as unknown as BlobPart], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `Skaleathon_Receipt_${team.id}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      setDownloadSuccess(true);
+      setTimeout(() => setDownloadSuccess(false), 2500);
+    } catch (err) {
+      console.error('Client receipt download error, falling back to server route:', err);
+      window.location.href = `/api/receipt/download?pass=${encodeURIComponent(team.id)}`;
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   useEffect(() => {
     if (team?.id) {
@@ -205,7 +239,7 @@ export default function RegisteredTeamView({
         </div>
       </article>
 
-      <div className="space-y-8 max-w-4xl mx-auto">
+      <div className="screen-only-content space-y-8 max-w-4xl mx-auto">
       {/* Official Digital Team Pass Card */}
       <div className="rounded-[28px] border border-[#c19a88]/40 bg-[linear-gradient(145deg,rgba(193,154,136,0.06),rgba(14,14,14,0.98))] p-6 sm:p-9 shadow-[0_25px_60px_rgba(0,0,0,0.6)] backdrop-blur-2xl relative overflow-hidden">
         {/* Subtle radial ambient glow */}
@@ -249,39 +283,32 @@ export default function RegisteredTeamView({
               </h2>
             </div>
             <div className="flex flex-wrap items-center gap-2">
-              <a
-                href={`/api/receipt/download?pass=${encodeURIComponent(team.id)}`}
-                download={`Skaleathon_Receipt_${team.id}.pdf`}
-                className="w-fit inline-flex items-center gap-2 rounded-xl border border-[#c19a88]/30 bg-[#c19a88]/10 hover:bg-[#c19a88]/20 px-3.5 py-2 text-xs font-semibold text-[#e8c5b4] hover:text-white transition-all cursor-pointer shadow-sm shadow-[#805948]/20"
+              <button
+                type="button"
+                onClick={handleDownloadReceipt}
+                disabled={downloading}
+                className="w-fit inline-flex items-center gap-2 rounded-xl border border-[#c19a88]/30 bg-[#c19a88]/10 hover:bg-[#c19a88]/20 px-4 py-2 text-xs font-semibold text-[#e8c5b4] hover:text-white transition-all cursor-pointer shadow-sm shadow-[#805948]/20 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-75"
                 title="Download official PDF registration receipt"
               >
-                <Download className="h-3.5 w-3.5 text-[#e8c5b4]" />
-                <span>Download Receipt</span>
-              </a>
-
-              <button
-                onClick={() => setIsPrintModalOpen(true)}
-                className="w-fit inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2 text-xs font-medium text-neutral-300 hover:text-white hover:bg-white/[0.08] transition-all cursor-pointer"
-                title="Print official pass"
-              >
-                <Printer className="h-3.5 w-3.5 text-[#c19a88]" />
-                <span>Print Pass</span>
+                {downloading ? (
+                  <>
+                    <Loader2 className="h-3.5 w-3.5 animate-spin text-[#e8c5b4]" />
+                    <span>Preparing PDF...</span>
+                  </>
+                ) : downloadSuccess ? (
+                  <>
+                    <Check className="h-3.5 w-3.5 text-emerald-400" />
+                    <span className="text-emerald-400">Downloaded!</span>
+                  </>
+                ) : (
+                  <>
+                    <Download className="h-3.5 w-3.5 text-[#e8c5b4]" />
+                    <span>Download Receipt</span>
+                  </>
+                )}
               </button>
             </div>
           </div>
-
-          <PrintPassModal
-            isOpen={isPrintModalOpen}
-            onClose={() => setIsPrintModalOpen(false)}
-            teamId={team.id}
-            teamName={team.name}
-            trackName={track?.name}
-            leaderName={leaderMember?.name || userName}
-            leaderEmail={leaderMember?.email || userEmail}
-            membersCount={members.length}
-            paymentRef={paymentOrder?.razorpay_payment_id || 'RZP_SETTLED'}
-            qrCode={passQrCode}
-          />
           <p className="text-xs text-white/55 font-light">
             {team.college_or_org ? `${team.college_or_org} • ` : ''}
             {team.city ? `${team.city}, ` : ''}

@@ -318,7 +318,7 @@ export default function TeamWorkspaceClient({
               type="button"
               onClick={handleDownloadReceipt}
               disabled={downloadingReceipt}
-              className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-[#c19a88]/30 bg-[#c19a88]/10 hover:bg-[#c19a88]/20 active:scale-[0.98] px-3.5 py-1.5 font-semibold text-[#e8c5b4] hover:text-white transition-all cursor-pointer shadow-sm shadow-[#805948]/20 disabled:opacity-75"
+              className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-[#c19a88]/30 bg-[#c19a88]/10 hover:bg-[#c19a88]/20 active:scale-[0.98] px-4 py-2 font-semibold text-[#e8c5b4] hover:text-white transition-all cursor-pointer shadow-sm shadow-[#805948]/20 disabled:opacity-75"
               title="Download official PDF registration receipt"
             >
               {downloadingReceipt ? (
@@ -335,26 +335,6 @@ export default function TeamWorkspaceClient({
                 <>
                   <Download className="h-3.5 w-3.5 text-[#e8c5b4]" />
                   <span>Download Receipt</span>
-                </>
-              )}
-            </button>
-
-            <button
-              type="button"
-              onClick={handlePrintPass}
-              disabled={printingPass}
-              className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.07] active:scale-[0.98] px-3.5 py-1.5 font-medium text-neutral-300 transition-colors hover:text-white cursor-pointer disabled:opacity-75"
-              title="Print official team credentials & receipt"
-            >
-              {printingPass ? (
-                <>
-                  <Loader2 className="h-3.5 w-3.5 animate-spin text-[#c19a88]" />
-                  <span>Opening Print...</span>
-                </>
-              ) : (
-                <>
-                  <Printer className="h-3.5 w-3.5 text-[#c19a88]" />
-                  <span>Print Pass</span>
                 </>
               )}
             </button>

@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import QRCode from 'qrcode';
-import PrintPassModal from '@/components/common/PrintPassModal';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
   Users,
@@ -162,7 +161,6 @@ export default function MultiStepRegistration({
   const [paymentResult, setPaymentResult] = useState<{ paymentId?: string; orderId?: string } | null>(null);
   const [copiedPassId, setCopiedPassId] = useState(false);
   const [passQrCode, setPassQrCode] = useState<string>('');
-  const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
 
   useEffect(() => {
     if (step === 5 && (createdTeam?.id || teamName)) {
@@ -1383,7 +1381,7 @@ export default function MultiStepRegistration({
           </article>
 
           {/* On-Screen Luxury Dark Editorial Receipt Card */}
-          <div className="space-y-6 animate-in fade-in-50 duration-500">
+          <div className="screen-only-content space-y-6 animate-in fade-in-50 duration-500">
             {/* Confirmation Banner */}
             <div className="text-center space-y-2">
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
@@ -1590,28 +1588,24 @@ export default function MultiStepRegistration({
                 <ArrowRight className="h-4 w-4" />
               </button>
 
-              <button
-                type="button"
-                onClick={() => setIsPrintModalOpen(true)}
+              <a
+                href={`/api/receipt/download?pass=${encodeURIComponent(createdTeam?.id || '')}`}
+                download={`Skaleathon_Receipt_${createdTeam?.id || 'Pass'}.pdf`}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 hover:bg-[#c19a88]/20 px-7 py-3.5 text-xs font-semibold text-[#e8c5b4] hover:text-white transition-all cursor-pointer shadow-sm hover:scale-[1.02] active:scale-[0.98]"
               >
+                <Download className="h-4 w-4 text-[#e8c5b4]" />
+                <span>Download Receipt</span>
+              </a>
+
+              <button
+                type="button"
+                onClick={() => window.print()}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] px-7 py-3.5 text-xs font-semibold text-neutral-300 hover:text-white transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+              >
                 <Printer className="h-4 w-4 text-[#c19a88]" />
-                <span>Print Registration Receipt</span>
+                <span>Print Receipt</span>
               </button>
             </div>
-
-            <PrintPassModal
-              isOpen={isPrintModalOpen}
-              onClose={() => setIsPrintModalOpen(false)}
-              teamId={createdTeam?.id || 'SK27-TEAM'}
-              teamName={teamName}
-              trackName={currentTrackObj?.name}
-              leaderName={leaderName}
-              leaderEmail={leaderEmail}
-              membersCount={1 + members.length}
-              paymentRef={paymentResult?.paymentId || paymentOrder?.orderId || 'SETTLED_RZP'}
-              qrCode={passQrCode}
-            />
           </div>
         </>
       )}
