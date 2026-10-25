@@ -50,8 +50,12 @@ export default function FaqSection({ event }: { event: EventData }) {
             </p>
             <span className="h-px w-6 bg-[#c19a88]/70" />
           </div>
-          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
-            Frequently asked <span className="text-[#c19a88]">questions</span>.
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-medium text-white tracking-tight">
+            Frequently asked{' '}
+            <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
+              questions
+            </span>
+            .
           </h2>
           <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-white/55 leading-relaxed font-light">
             Clear, authoritative answers to ensure your team experiences a seamless competition.

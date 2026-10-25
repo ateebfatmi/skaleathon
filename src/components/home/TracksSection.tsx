@@ -39,8 +39,12 @@ export default function TracksSection({ tracks, event }: TracksProps) {
             </p>
             <span className="h-px w-6 bg-[#c19a88]/70" />
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
-            Three engineering <span className="text-[#c19a88]">disciplines</span>.
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-white tracking-tight">
+            Three engineering{' '}
+            <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
+              disciplines
+            </span>
+            .
           </h2>
           <p className="mt-4 text-sm text-white/55 leading-relaxed font-light">
             Choose your arena. Build focused, production-grade solutions evaluated by domain experts according to uncompromising engineering criteria.

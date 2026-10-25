@@ -46,8 +46,12 @@ export default function VelarisShowcase() {
             <Cpu className="h-3.5 w-3.5" />
             <span>GPU-Accelerated Shaders</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
-            Living gradients in <span className="text-[#c19a88]">motion</span>.
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight text-white">
+            Living gradients in{' '}
+            <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
+              motion
+            </span>
+            .
           </h2>
           <p className="mt-4 text-sm sm:text-base text-white/60 font-light leading-relaxed">
             Experience the real-time WebGL simplex-noise shader with organic color blending, vignette illumination, and analog film grain.

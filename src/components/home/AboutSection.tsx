@@ -47,8 +47,12 @@ export default function AboutSection() {
               </p>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-[1.12]">
-              A platform engineered for builders who <span className="text-[#c19a88]">ship real software</span>.
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight text-white leading-[1.12]">
+              A platform engineered for builders who{' '}
+              <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#e8c5b4] via-[#c19a88] to-[#805948] bg-clip-text text-transparent pb-1 inline-block">
+                ship real software
+              </span>
+              .
             </h2>
 
             <p className="text-base text-white/70 leading-relaxed font-light">
