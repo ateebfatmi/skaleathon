@@ -7,11 +7,14 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
   try {
-    const session = await getCurrentSession();
     const searchParams = req.nextUrl.searchParams;
     const requestedPass = searchParams.get('pass') || searchParams.get('teamId');
 
-    const teamId = requestedPass || session?.teamId;
+    let teamId = requestedPass;
+    if (!teamId) {
+      const session = await getCurrentSession();
+      teamId = session?.teamId || null;
+    }
 
     if (!teamId) {
       return NextResponse.json(

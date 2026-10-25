@@ -83,7 +83,7 @@ export default function HeroSection({ event }: HeroProps) {
         <p
           className="mt-3.5 sm:mt-5 text-xs sm:text-base lg:text-lg text-white/70 max-w-xl sm:max-w-2xl mx-auto font-normal leading-relaxed px-1"
         >
-          India&apos;s definitive 4-stage national engineering tournament. Architect, build, and deploy production-grade software across AI/ML, Web, and Mobile arenas — competing for a{' '}
+          India&apos;s premier 4-stage hackathon conducted by SkaleKraft as SKALEATHON. Architect, build, and deploy production-grade software across AI/ML, Web, and Mobile arenas — competing for a{' '}
           <Link
             href="#prizes"
             className="inline-flex items-center gap-1.5 font-bold text-white bg-gradient-to-r from-[#c19a88]/30 via-[#805948]/35 to-[#c19a88]/30 border border-[#c19a88]/60 px-2.5 py-0.5 rounded-lg shadow-[0_0_20px_rgba(193,154,136,0.35)] hover:border-[#e8c5b4] hover:shadow-[0_0_30px_rgba(193,154,136,0.5)] transition-all"

@@ -1271,7 +1271,7 @@ export default function MultiStepRegistration({
                 <div className="print-pass-document-label">
                   <span>Official document</span>
                   <strong>Registration Receipt</strong>
-                  <small>National Engineering Tournament</small>
+                  <small>National Hackathon by SkaleKraft</small>
                 </div>
               </header>
 
@@ -1291,7 +1291,7 @@ export default function MultiStepRegistration({
                 </div>
 
                 <section className="print-pass-intro">
-                  <p>Official tournament entry for</p>
+                  <p>Official hackathon entry for</p>
                   <h2>{teamName}</h2>
                   <span>Authorized Engineering Squad</span>
                 </section>
@@ -1358,10 +1358,10 @@ export default function MultiStepRegistration({
                     )}
                   </div>
                   <div className="print-pass-verification-copy">
-                    <small>Official Tournament Record</small>
+                    <small>Official Hackathon Record</small>
                     <h3>Scan to verify authorized squad credential</h3>
                     <p>
-                      Official registration and payment receipt for SKALEATHON. Present this pass or your digital record with photo ID at tournament checkpoints.
+                      Official registration and payment receipt for SKALEATHON. Present this pass or your digital record with photo ID at hackathon checkpoints.
                     </p>
                     <div>
                       <span>Issued Date <strong>{new Date().toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}</strong></span>
@@ -1388,7 +1388,7 @@ export default function MultiStepRegistration({
             <div className="text-center space-y-2">
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span>Verified Entry // Tournament Pass Issued</span>
+                <span>Verified Entry // Hackathon Pass Issued</span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
                 Registration Confirmed!
@@ -1567,7 +1567,7 @@ export default function MultiStepRegistration({
                 </div>
                 <div className="space-y-1 text-center sm:text-left min-w-0">
                   <span className="text-[10px] font-mono uppercase tracking-widest text-[#c19a88] block font-bold">
-                    Official Tournament Credential
+                    Official Hackathon Credential
                   </span>
                   <p className="text-neutral-300 font-medium text-xs leading-relaxed">
                     Present this verified digital receipt or printed pass at hackathon checkpoints.

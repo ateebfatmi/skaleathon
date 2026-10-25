@@ -80,7 +80,7 @@ export default function PrintPassModal({
                 SkaleKraft Official Credential
               </span>
               <h2 className="text-base sm:text-lg font-bold text-white tracking-tight">
-                Print Tournament Pass
+                Print Hackathon Pass
               </h2>
             </div>
           </div>

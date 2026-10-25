@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import PrintPassModal from '@/components/common/PrintPassModal';
 import {
   Users,
   CheckCircle2,
@@ -12,6 +11,7 @@ import {
   Printer,
   Download,
   FileText,
+  Loader2,
   MapPin,
   Building,
   Calendar,
@@ -26,6 +26,7 @@ import { Team, TeamMember, EventTrack, PaymentOrder } from '@/lib/db/types';
 import { motion } from 'framer-motion';
 import { EditorialIndexBar } from '@/components/ui/EditorialIndexBar';
 import QRCode from 'qrcode';
+import PrintPassModal from '@/components/common/PrintPassModal';
 
 interface TeamWorkspaceClientProps {
   team: Team;
@@ -46,10 +47,56 @@ export default function TeamWorkspaceClient({
 }: TeamWorkspaceClientProps) {
   const [copiedPassId, setCopiedPassId] = useState(false);
   const [passQrCode, setPassQrCode] = useState('');
+  const [downloadingReceipt, setDownloadingReceipt] = useState(false);
+  const [downloadSuccess, setDownloadSuccess] = useState(false);
+  const [printingPass, setPrintingPass] = useState(false);
   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
 
   const leaderMember = members.find((m) => m.role === 'leader') || members[0];
   const regularMembers = members.filter((m) => m.id !== leaderMember?.id);
+
+  const handleDownloadReceipt = async () => {
+    if (downloadingReceipt) return;
+    setDownloadingReceipt(true);
+    try {
+      const { generateReceiptPDF } = await import('@/lib/receipt/generator');
+      const pdfBytes = await generateReceiptPDF({
+        team,
+        members,
+        track,
+        paymentOrder,
+        leaderMember,
+      });
+
+      const blob = new Blob([pdfBytes as unknown as BlobPart], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `Skaleathon_Receipt_${team.id}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      setDownloadSuccess(true);
+      setTimeout(() => setDownloadSuccess(false), 2500);
+    } catch (err) {
+      console.error('Client receipt download error, falling back to server route:', err);
+      window.location.href = `/api/receipt/download?pass=${encodeURIComponent(team.id)}`;
+    } finally {
+      setDownloadingReceipt(false);
+    }
+  };
+
+  const handlePrintPass = () => {
+    setPrintingPass(true);
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        window.print();
+        setPrintingPass(false);
+      }, 50);
+    });
+  };
 
   useEffect(() => {
     const verificationUrl = `https://skaleathon.skalekraft.in/dashboard/team?pass=${encodeURIComponent(team.id)}`;
@@ -114,7 +161,7 @@ export default function TeamWorkspaceClient({
             <div className="print-pass-document-label">
               <span>Official document</span>
               <strong>Registration Receipt</strong>
-              <small>National Engineering Tournament</small>
+              <small>National Hackathon by SkaleKraft</small>
             </div>
           </header>
 
@@ -218,7 +265,7 @@ export default function TeamWorkspaceClient({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="relative w-full space-y-14 pb-24 text-neutral-200"
+        className="screen-only-content relative w-full space-y-14 pb-24 text-neutral-200"
       >
       {/* Subtle Background Ambient Glows (Blended into background) */}
       <div className="pointer-events-none absolute -top-20 right-10 h-96 w-96 rounded-full bg-[#c19a88]/15 blur-[160px]" />
@@ -266,40 +313,53 @@ export default function TeamWorkspaceClient({
           </div>
 
           {/* Right Quick Actions */}
-          <div className="flex flex-wrap items-center gap-2 sm:gap-3.5 text-xs">
-            <a
-              href={`/api/receipt/download?pass=${encodeURIComponent(team.id)}`}
-              download={`Skaleathon_Receipt_${team.id}.pdf`}
-              className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-[#c19a88]/30 bg-[#c19a88]/10 hover:bg-[#c19a88]/20 px-3 py-1.5 font-semibold text-[#e8c5b4] hover:text-white transition-all cursor-pointer shadow-sm shadow-[#805948]/20"
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs">
+            <button
+              type="button"
+              onClick={handleDownloadReceipt}
+              disabled={downloadingReceipt}
+              className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-[#c19a88]/30 bg-[#c19a88]/10 hover:bg-[#c19a88]/20 active:scale-[0.98] px-3.5 py-1.5 font-semibold text-[#e8c5b4] hover:text-white transition-all cursor-pointer shadow-sm shadow-[#805948]/20 disabled:opacity-75"
               title="Download official PDF registration receipt"
             >
-              <Download className="h-3.5 w-3.5 text-[#e8c5b4]" />
-              <span>Download Receipt</span>
-            </a>
+              {downloadingReceipt ? (
+                <>
+                  <Loader2 className="h-3.5 w-3.5 animate-spin text-[#e8c5b4]" />
+                  <span>Preparing PDF...</span>
+                </>
+              ) : downloadSuccess ? (
+                <>
+                  <Check className="h-3.5 w-3.5 text-emerald-400" />
+                  <span className="text-emerald-400">Downloaded!</span>
+                </>
+              ) : (
+                <>
+                  <Download className="h-3.5 w-3.5 text-[#e8c5b4]" />
+                  <span>Download Receipt</span>
+                </>
+              )}
+            </button>
 
             <button
-              onClick={() => setIsPrintModalOpen(true)}
-              className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 font-medium text-neutral-300 transition-colors hover:text-white hover:bg-white/[0.07] cursor-pointer"
+              type="button"
+              onClick={handlePrintPass}
+              disabled={printingPass}
+              className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.07] active:scale-[0.98] px-3.5 py-1.5 font-medium text-neutral-300 transition-colors hover:text-white cursor-pointer disabled:opacity-75"
               title="Print official team credentials & receipt"
             >
-              <Printer className="h-3.5 w-3.5 text-[#c19a88]" />
-              <span>Print Pass</span>
+              {printingPass ? (
+                <>
+                  <Loader2 className="h-3.5 w-3.5 animate-spin text-[#c19a88]" />
+                  <span>Opening Print...</span>
+                </>
+              ) : (
+                <>
+                  <Printer className="h-3.5 w-3.5 text-[#c19a88]" />
+                  <span>Print Pass</span>
+                </>
+              )}
             </button>
           </div>
         </div>
-
-        <PrintPassModal
-          isOpen={isPrintModalOpen}
-          onClose={() => setIsPrintModalOpen(false)}
-          teamId={team.id}
-          teamName={team.name}
-          trackName={track?.name}
-          leaderName={leaderMember?.name || userName}
-          leaderEmail={leaderMember?.email || userEmail}
-          membersCount={members.length}
-          paymentRef={paymentOrder?.razorpay_payment_id || 'RZP_SETTLED'}
-          qrCode={passQrCode}
-        />
 
         {/* Editorial Headline & Manifesto */}
         <div className="relative z-10 max-w-3xl space-y-4 pb-6 sm:space-y-5 sm:pb-9">
@@ -390,15 +450,30 @@ export default function TeamWorkspaceClient({
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-2.5">
-              <a
-                href={`/api/receipt/download?pass=${encodeURIComponent(team.id)}`}
-                download={`Skaleathon_Receipt_${team.id}.pdf`}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-[#c19a88]/30 bg-[#c19a88]/10 hover:bg-[#c19a88]/20 px-3 py-1.5 text-xs font-semibold text-[#e8c5b4] hover:text-white transition-all cursor-pointer shadow-sm shadow-[#805948]/20"
+              <button
+                type="button"
+                onClick={handleDownloadReceipt}
+                disabled={downloadingReceipt}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-[#c19a88]/30 bg-[#c19a88]/10 hover:bg-[#c19a88]/20 active:scale-[0.98] px-3 py-1.5 text-xs font-semibold text-[#e8c5b4] hover:text-white transition-all cursor-pointer shadow-sm shadow-[#805948]/20 disabled:opacity-75"
                 title="Download official PDF registration receipt"
               >
-                <Download className="h-3.5 w-3.5 text-[#e8c5b4]" />
-                <span>Download Official Receipt (PDF)</span>
-              </a>
+                {downloadingReceipt ? (
+                  <>
+                    <Loader2 className="h-3.5 w-3.5 animate-spin text-[#e8c5b4]" />
+                    <span>Preparing PDF...</span>
+                  </>
+                ) : downloadSuccess ? (
+                  <>
+                    <Check className="h-3.5 w-3.5 text-emerald-400" />
+                    <span className="text-emerald-400">Receipt Downloaded!</span>
+                  </>
+                ) : (
+                  <>
+                    <Download className="h-3.5 w-3.5 text-[#e8c5b4]" />
+                    <span>Download Official Receipt (PDF)</span>
+                  </>
+                )}
+              </button>
 
               <Link
                 href={`/dashboard/receipt?pass=${encodeURIComponent(team.id)}`}

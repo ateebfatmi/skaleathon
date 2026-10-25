@@ -56,7 +56,7 @@ export async function generateReceiptPDF(data: ReceiptData): Promise<Uint8Array>
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(7.5);
   doc.setTextColor(160, 150, 140);
-  doc.text('Official Tournament Document', pageWidth - 18, 19, { align: 'right' });
+  doc.text('Official Hackathon Document', pageWidth - 18, 19, { align: 'right' });
 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(11);
@@ -66,7 +66,7 @@ export async function generateReceiptPDF(data: ReceiptData): Promise<Uint8Array>
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(7.5);
   doc.setTextColor(193, 154, 136);
-  doc.text('National Engineering Tournament', pageWidth - 18, 30, { align: 'right' });
+  doc.text('National Hackathon by SkaleKraft', pageWidth - 18, 30, { align: 'right' });
 
   // Key Status & Credentials Ribbon
   let y = 43;
@@ -131,7 +131,7 @@ export async function generateReceiptPDF(data: ReceiptData): Promise<Uint8Array>
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8);
   doc.setTextColor(193, 154, 136);
-  doc.text('OFFICIAL TOURNAMENT ENTRY FOR', 16, y);
+  doc.text('OFFICIAL HACKATHON ENTRY FOR', 16, y);
 
   y += 6;
   doc.setFont('helvetica', 'bold');
@@ -143,7 +143,7 @@ export async function generateReceiptPDF(data: ReceiptData): Promise<Uint8Array>
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8.5);
   doc.setTextColor(100, 95, 90);
-  doc.text(`Authorized Engineering Squad // ${track?.name || 'Tournament Track'}`, 16, y);
+  doc.text(`Authorized Engineering Squad // ${track?.name || 'Hackathon Track'}`, 16, y);
 
   // Particulars 4-Box Grid
   y += 8;
@@ -239,12 +239,12 @@ export async function generateReceiptPDF(data: ReceiptData): Promise<Uint8Array>
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(8.5);
   doc.setTextColor(18, 17, 16);
-  doc.text('Official Tournament Verification Record', 54, y + 8);
+  doc.text('Official Hackathon Verification Record', 54, y + 8);
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(7);
   doc.setTextColor(90, 85, 80);
-  const desc = 'Scan this QR code to verify this official tournament credential against the SkaleKraft registry. Present this receipt or your digital credential record with photo ID at tournament checkpoints.';
+  const desc = 'Scan this QR code to verify this official hackathon credential against the SkaleKraft registry. Present this receipt or your digital credential record with photo ID at hackathon checkpoints.';
   doc.text(doc.splitTextToSize(desc, pageWidth - 32 - 42), 54, y + 14);
 
   const paymentRef = paymentOrder?.razorpay_payment_id || 'RZP_SETTLED_TEST';
@@ -252,7 +252,7 @@ export async function generateReceiptPDF(data: ReceiptData): Promise<Uint8Array>
   doc.setFontSize(7);
   doc.setTextColor(110, 105, 100);
   doc.text(`Payment Reference: ${paymentRef}`, 54, y + 26);
-  doc.text(`Official Tournament Portal: ${siteUrl}`, 54, y + 31);
+  doc.text(`Official Hackathon Portal: ${siteUrl}`, 54, y + 31);
 
   // Footer
   doc.setFont('helvetica', 'bold');

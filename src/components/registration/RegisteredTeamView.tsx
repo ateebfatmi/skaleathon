@@ -105,7 +105,7 @@ export default function RegisteredTeamView({
             <div className="print-pass-document-label">
               <span>Official document</span>
               <strong>Registration Receipt</strong>
-              <small>National Engineering Tournament</small>
+              <small>National Hackathon by SkaleKraft</small>
             </div>
           </header>
 

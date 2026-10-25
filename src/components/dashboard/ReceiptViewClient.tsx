@@ -72,7 +72,7 @@ export default function ReceiptViewClient({
             <div className="print-pass-document-label">
               <span>Official document</span>
               <strong>Registration Receipt</strong>
-              <small>National Engineering Tournament</small>
+              <small>National Hackathon by SkaleKraft</small>
             </div>
           </header>
 
@@ -92,7 +92,7 @@ export default function ReceiptViewClient({
             </div>
 
             <section className="print-pass-intro">
-              <p>Official tournament entry for</p>
+              <p>Official hackathon entry for</p>
               <h2>{team.name}</h2>
               <span>Authorized Engineering Squad</span>
             </section>
@@ -159,10 +159,10 @@ export default function ReceiptViewClient({
                 )}
               </div>
               <div className="print-pass-verification-copy">
-                <small>Official Tournament Record</small>
+                <small>Official Hackathon Record</small>
                 <h3>Scan to verify authorized squad credential</h3>
                 <p>
-                  Official registration and payment receipt for SKALEATHON. Present this pass or your digital record with photo ID at tournament checkpoints.
+                  Official registration and payment receipt for SKALEATHON. Present this pass or your digital record with photo ID at hackathon checkpoints.
                 </p>
                 <div>
                   <span>Issued Date <strong>{formattedDate}</strong></span>
@@ -359,7 +359,7 @@ export default function ReceiptViewClient({
           <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-neutral-400 relative z-10">
             <div className="flex items-center gap-2">
               <ShieldCheck className="h-4 w-4 text-emerald-400" />
-              <span>Cryptographically verified entry seal registered in tournament ledger.</span>
+              <span>Cryptographically verified entry seal registered in hackathon ledger.</span>
             </div>
 
             <div className="flex items-center gap-3">

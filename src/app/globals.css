@@ -357,10 +357,15 @@ main > div > div.flex.flex-col > section:not(:first-child) {
     -webkit-print-color-adjust: exact !important;
   }
 
+  .screen-only-content,
+  .no-print,
+  .print-hide,
   nav,
   header:not(.print-pass-header),
   footer:not(.print-pass-footer),
-  [role="navigation"] {
+  aside,
+  [role="navigation"],
+  .pointer-events-none {
     display: none !important;
   }
 
