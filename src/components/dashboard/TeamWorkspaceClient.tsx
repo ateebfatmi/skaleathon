@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import PrintPassModal from '@/components/common/PrintPassModal';
 import {
   Users,
   CheckCircle2,
@@ -45,6 +46,7 @@ export default function TeamWorkspaceClient({
 }: TeamWorkspaceClientProps) {
   const [copiedPassId, setCopiedPassId] = useState(false);
   const [passQrCode, setPassQrCode] = useState('');
+  const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
 
   const leaderMember = members.find((m) => m.role === 'leader') || members[0];
   const regularMembers = members.filter((m) => m.id !== leaderMember?.id);
@@ -276,7 +278,7 @@ export default function TeamWorkspaceClient({
             </a>
 
             <button
-              onClick={() => window.print()}
+              onClick={() => setIsPrintModalOpen(true)}
               className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 font-medium text-neutral-300 transition-colors hover:text-white hover:bg-white/[0.07] cursor-pointer"
               title="Print official team credentials & receipt"
             >
@@ -285,6 +287,19 @@ export default function TeamWorkspaceClient({
             </button>
           </div>
         </div>
+
+        <PrintPassModal
+          isOpen={isPrintModalOpen}
+          onClose={() => setIsPrintModalOpen(false)}
+          teamId={team.id}
+          teamName={team.name}
+          trackName={track?.name}
+          leaderName={leaderMember?.name || userName}
+          leaderEmail={leaderMember?.email || userEmail}
+          membersCount={members.length}
+          paymentRef={paymentOrder?.razorpay_payment_id || 'RZP_SETTLED'}
+          qrCode={passQrCode}
+        />
 
         {/* Editorial Headline & Manifesto */}
         <div className="relative z-10 max-w-3xl space-y-4 pb-6 sm:space-y-5 sm:pb-9">

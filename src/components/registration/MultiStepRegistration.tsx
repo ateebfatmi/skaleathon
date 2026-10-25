@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import QRCode from 'qrcode';
+import PrintPassModal from '@/components/common/PrintPassModal';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
   Users,
@@ -161,6 +162,7 @@ export default function MultiStepRegistration({
   const [paymentResult, setPaymentResult] = useState<{ paymentId?: string; orderId?: string } | null>(null);
   const [copiedPassId, setCopiedPassId] = useState(false);
   const [passQrCode, setPassQrCode] = useState<string>('');
+  const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
 
   useEffect(() => {
     if (step === 5 && (createdTeam?.id || teamName)) {
@@ -1590,13 +1592,26 @@ export default function MultiStepRegistration({
 
               <button
                 type="button"
-                onClick={() => window.print()}
+                onClick={() => setIsPrintModalOpen(true)}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-[#c19a88]/30 bg-[#c19a88]/10 hover:bg-[#c19a88]/20 px-7 py-3.5 text-xs font-semibold text-[#e8c5b4] hover:text-white transition-all cursor-pointer shadow-sm hover:scale-[1.02] active:scale-[0.98]"
               >
                 <Printer className="h-4 w-4 text-[#c19a88]" />
                 <span>Print Registration Receipt</span>
               </button>
             </div>
+
+            <PrintPassModal
+              isOpen={isPrintModalOpen}
+              onClose={() => setIsPrintModalOpen(false)}
+              teamId={createdTeam?.id || 'SK27-TEAM'}
+              teamName={teamName}
+              trackName={currentTrackObj?.name}
+              leaderName={leaderName}
+              leaderEmail={leaderEmail}
+              membersCount={1 + members.length}
+              paymentRef={paymentResult?.paymentId || paymentOrder?.orderId || 'SETTLED_RZP'}
+              qrCode={passQrCode}
+            />
           </div>
         </>
       )}

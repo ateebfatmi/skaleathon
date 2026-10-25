@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import QRCode from 'qrcode';
+import PrintPassModal from '@/components/common/PrintPassModal';
 import {
   CheckCircle2,
   ShieldCheck,
@@ -42,6 +43,7 @@ export default function RegisteredTeamView({
   userEmail,
 }: RegisteredTeamViewProps) {
   const [passQrCode, setPassQrCode] = useState<string>('');
+  const [isPrintModalOpen, setIsPrintModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (team?.id) {
@@ -258,7 +260,7 @@ export default function RegisteredTeamView({
               </a>
 
               <button
-                onClick={() => window.print()}
+                onClick={() => setIsPrintModalOpen(true)}
                 className="w-fit inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2 text-xs font-medium text-neutral-300 hover:text-white hover:bg-white/[0.08] transition-all cursor-pointer"
                 title="Print official pass"
               >
@@ -267,6 +269,19 @@ export default function RegisteredTeamView({
               </button>
             </div>
           </div>
+
+          <PrintPassModal
+            isOpen={isPrintModalOpen}
+            onClose={() => setIsPrintModalOpen(false)}
+            teamId={team.id}
+            teamName={team.name}
+            trackName={track?.name}
+            leaderName={leaderMember?.name || userName}
+            leaderEmail={leaderMember?.email || userEmail}
+            membersCount={members.length}
+            paymentRef={paymentOrder?.razorpay_payment_id || 'RZP_SETTLED'}
+            qrCode={passQrCode}
+          />
           <p className="text-xs text-white/55 font-light">
             {team.college_or_org ? `${team.college_or_org} • ` : ''}
             {team.city ? `${team.city}, ` : ''}
