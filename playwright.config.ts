@@ -20,9 +20,14 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run dev -- --hostname 127.0.0.1 --port 3001',
+    command: 'npm run dev -- --webpack --hostname 127.0.0.1 --port 3001',
     url: 'http://127.0.0.1:3001',
-    reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
+    reuseExistingServer: true,
+    timeout: 180_000,
+    env: {
+      ...process.env,
+      NODE_ENV: 'development',
+      NEXT_TELEMETRY_DISABLED: '1',
+    },
   },
 });
