@@ -2,10 +2,11 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Bot, Globe, Smartphone, ArrowRight, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Bot, Globe, Smartphone, ArrowRight, Sparkles, CheckCircle2, ChevronRight, ChevronLeft, Layers } from 'lucide-react';
 import { EventData, EventTrack } from '@/lib/db/types';
 import { EditorialIndexBar } from '@/components/ui/EditorialIndexBar';
 import RegistrationModal from '@/components/registration/RegistrationModal';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface TracksPageClientProps {
   tracks: EventTrack[];
@@ -53,6 +54,25 @@ export default function TracksPageClient({ tracks, event }: TracksPageClientProp
     'track-app-dev': Smartphone,
   };
 
+  const indexItems = [
+    ...tracks.map((t, idx) => ({
+      id: t.id,
+      num: `0${idx + 1}`,
+      label: `${t.name} Arena`,
+      href: `#${t.id}`,
+    })),
+    {
+      id: 'all',
+      num: '04',
+      label: 'All Arenas View',
+      href: '#all',
+    },
+  ];
+
+  const displayedTracks = activeTab === 'all' 
+    ? tracks 
+    : tracks.filter((t) => t.id === activeTab);
+
   return (
     <>
       <div className="relative w-full space-y-7 pb-16 text-neutral-200">
@@ -75,7 +95,7 @@ export default function TracksPageClient({ tracks, event }: TracksPageClientProp
                 Scope: <strong className="text-white font-semibold">100% Self-Defined Problem Statement</strong>
               </span>
               <span className="text-white/20">•</span>
-              <span className="text-[#e8c5b4] font-semibold">[3 DISTINCT TRACKS]</span>
+              <span className="text-[#e8c5b4] font-semibold">[3 ARENAS]</span>
             </div>
 
             <div className="flex items-center gap-4 text-xs">
@@ -103,167 +123,224 @@ export default function TracksPageClient({ tracks, event }: TracksPageClientProp
             </h1>
 
             <p className="border-l-2 border-[#c19a88]/45 pl-3 text-xs sm:text-[13px] text-neutral-300/85 leading-relaxed font-light">
-              Skaleathon features three specialized engineering disciplines. Each arena is evaluated independently by domain experts. Choose your track below to view expectations and recommended technologies.
+              Select an arena below to view evaluation benchmarks, expected deliverables, and recommended stacks.
             </p>
           </div>
 
-          {/* Full-Width 3-Column Editorial Track Index Bar */}
+          {/* Full-Width 4-Column Track Index Bar (Synchronized with Active Tab) */}
           <EditorialIndexBar
             layoutIdPrefix="publicTracksIndex"
-            columns={3}
+            columns={4}
             activeId={activeTab}
             onSelectItem={(item) => {
               if (item.id) setActiveTab(item.id);
             }}
-            items={tracks.map((t, idx) => ({
-              id: t.id,
-              num: `0${idx + 1}`,
-              label: `${t.name} Arena`,
-              href: `#${t.id}`,
-            }))}
+            items={indexItems}
           />
         </header>
 
         {/* 2. Standalone Distinct Arena Cards */}
         <div className="space-y-6 sm:space-y-8">
-          {/* Section Indicator below the underline */}
+          {/* Section Indicator */}
           <div className="flex items-center justify-between pt-1 pb-1">
             <div className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] animate-pulse" />
               <span className="text-[11px] font-mono uppercase tracking-[0.22em] text-[#c19a88] font-bold">
-                Competition Arena Specifications
+                {activeTab === 'all' ? 'All Competition Arenas' : 'Selected Arena Specification'}
               </span>
               <span className="hidden sm:inline text-white/20">•</span>
               <span className="hidden sm:inline text-xs text-neutral-400 font-light">
-                Explore guidelines, deliverables, and tech stack
+                {activeTab === 'all' ? 'Viewing all 3 tracks' : 'Filtered to active arena'}
               </span>
             </div>
-            <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-500">
-              3 Curated Arenas
-            </span>
+            <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-neutral-500">
+              {activeTab !== 'all' && (
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('all')}
+                  className="text-[#c19a88] hover:underline cursor-pointer"
+                >
+                  View All Arenas
+                </button>
+              )}
+            </div>
           </div>
 
-          {tracks.map((track, idx) => {
-            const Icon = iconMap[track.id] || Bot;
-            const extra = details[track.id] || { deliverables: [], recommendedTech: [] };
-            const num = String(idx + 1).padStart(2, '0');
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.22, ease: 'easeOut' }}
+              className="space-y-6 sm:space-y-8"
+            >
+              {displayedTracks.map((track) => {
+                const trackIdx = tracks.findIndex((t) => t.id === track.id);
+                const Icon = iconMap[track.id] || Bot;
+                const extra = details[track.id] || { deliverables: [], recommendedTech: [] };
+                const num = String(trackIdx + 1).padStart(2, '0');
 
-            return (
-              <article
-                id={track.id}
-                key={track.id}
-                className="relative rounded-2xl sm:rounded-3xl border border-white/[0.12] bg-[linear-gradient(145deg,rgba(255,255,255,0.035),rgba(17,14,13,0.96))] p-4 sm:p-6 lg:p-7 shadow-[0_15px_40px_rgba(0,0,0,0.5)] backdrop-blur-2xl transition-all duration-300 hover:border-[#c19a88]/60 hover:shadow-[0_0_30px_rgba(193,154,136,0.12)] scroll-mt-24 overflow-hidden"
-              >
-                {/* Subtle top corner ambient glow */}
-                <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#c19a88]/10 blur-[70px]" />
+                // Next/Previous track helpers
+                const prevTrack = trackIdx > 0 ? tracks[trackIdx - 1] : null;
+                const nextTrack = trackIdx < tracks.length - 1 ? tracks[trackIdx + 1] : null;
 
-                {/* Faint Architectural Arena Watermark inside the card */}
-                <div className="pointer-events-none select-none absolute right-4 top-2 hidden sm:block overflow-hidden">
-                  <span className="font-mono text-[72px] font-black tracking-tighter text-white/[0.02] leading-none uppercase">
-                    ARENA {num}
-                  </span>
-                </div>
+                return (
+                  <article
+                    id={track.id}
+                    key={track.id}
+                    className="relative rounded-2xl sm:rounded-3xl border border-white/[0.12] bg-[linear-gradient(145deg,rgba(255,255,255,0.035),rgba(17,14,13,0.96))] p-4 sm:p-6 lg:p-7 shadow-[0_15px_40px_rgba(0,0,0,0.5)] backdrop-blur-2xl transition-all duration-300 hover:border-[#c19a88]/60 hover:shadow-[0_0_30px_rgba(193,154,136,0.12)] scroll-mt-24 overflow-hidden"
+                  >
+                    {/* Subtle top corner ambient glow */}
+                    <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#c19a88]/10 blur-[70px]" />
 
-                {/* Card Header: Distinct Number Badge, Title, and Action */}
-                <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
-                  <div className="space-y-2">
-                    <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#c19a88]/15 border border-[#c19a88]/30 text-[#e8c5b4] text-[10px] font-mono uppercase tracking-[0.2em] font-semibold">
-                      <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] animate-pulse" />
-                      <span>Arena {num} of 03</span>
-                      <span className="text-white/30">•</span>
-                      <span className="text-white font-bold">[{track.slug.toUpperCase()}]</span>
+                    {/* Faint Architectural Arena Watermark inside the card */}
+                    <div className="pointer-events-none select-none absolute right-4 top-2 hidden sm:block overflow-hidden">
+                      <span className="font-mono text-[72px] font-black tracking-tighter text-white/[0.02] leading-none uppercase">
+                        ARENA {num}
+                      </span>
                     </div>
 
-                    <div className="flex items-center gap-3">
-                      <div className="h-9 w-9 sm:h-11 sm:w-11 rounded-xl bg-gradient-to-br from-[#c19a88]/20 to-[#805948]/10 border border-[#c19a88]/30 flex items-center justify-center text-[#c19a88] shrink-0 shadow-inner">
-                        <Icon className="h-5 w-5 sm:h-5.5 sm:w-5.5" />
-                      </div>
-                      <div>
-                        <h2 className="text-lg sm:text-2xl font-bold text-white tracking-tight">
-                          {track.name} <span className="font-serif italic font-normal text-[#e8c5b4]">Arena</span>
-                        </h2>
-                        <p className="mt-0.5 text-[11px] sm:text-xs text-[#e8c5b4]/80 font-mono">
-                          Open Innovation Arena • Self-Defined Problem Statement
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 shrink-0">
-                    <button
-                      type="button"
-                      onClick={() => handleOpenRegistration(track.id)}
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-4.5 py-2 sm:px-5 sm:py-2.5 text-xs font-semibold text-white shadow-[0_3px_18px_rgba(128,89,72,0.3)] hover:scale-[1.02] active:scale-98 transition-all cursor-pointer"
-                    >
-                      <span>Register for this Arena (₹{event.registration_fee_inr})</span>
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Mission Directive */}
-                <div className="relative z-10 py-3">
-                  <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-3 sm:p-3.5 text-xs sm:text-[13px] text-neutral-200/90 font-light leading-relaxed">
-                    <span className="text-[#c19a88] font-mono text-[10px] uppercase tracking-wider block mb-0.5 font-semibold">
-                      Mission Directive:
-                    </span>
-                    {track.description}
-                  </div>
-                </div>
-
-                {/* Side-by-Side Architectural Sub-Panels */}
-                <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4 pt-0.5">
-                  {/* Sub-Card 1: Expected Deliverables */}
-                  <div className="rounded-xl border border-white/[0.08] bg-black/40 p-3.5 sm:p-4 space-y-2.5">
-                    <div className="flex items-center justify-between pb-2 border-b border-white/[0.06]">
-                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-[#c19a88]" />
-                        <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#c19a88] font-bold">
-                          Expected Deliverables
-                        </span>
-                      </div>
-                      <span className="text-[9px] font-mono text-white/40">Evaluation Requirements</span>
-                    </div>
-                    <div className="space-y-2">
-                      {extra.deliverables.map((item, dIdx) => (
-                        <div key={dIdx} className="flex items-start gap-2 text-xs text-neutral-300 font-light leading-relaxed">
-                          <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] shrink-0 mt-1.5" />
-                          <span>{item}</span>
+                    {/* Card Header: Distinct Number Badge, Title, and Action */}
+                    <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
+                      <div className="space-y-2">
+                        <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#c19a88]/15 border border-[#c19a88]/30 text-[#e8c5b4] text-[10px] font-mono uppercase tracking-[0.2em] font-semibold">
+                          <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] animate-pulse" />
+                          <span>Arena {num} of 03</span>
+                          <span className="text-white/30">•</span>
+                          <span className="text-white font-bold">[{track.slug.toUpperCase()}]</span>
                         </div>
-                      ))}
-                    </div>
-                  </div>
 
-                  {/* Sub-Card 2: Recommended Tech Stack */}
-                  <div className="rounded-xl border border-white/[0.08] bg-black/40 p-3.5 sm:p-4 space-y-2.5">
-                    <div className="flex items-center justify-between pb-2 border-b border-white/[0.06]">
-                      <div className="flex items-center gap-2">
-                        <Sparkles className="h-3.5 w-3.5 text-[#e8c5b4]" />
-                        <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#e8c5b4] font-bold">
-                          Recommended Stack
-                        </span>
+                        <div className="flex items-center gap-3">
+                          <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-gradient-to-br from-[#c19a88]/20 to-[#805948]/10 border border-[#c19a88]/30 flex items-center justify-center text-[#c19a88] shrink-0 shadow-inner">
+                            <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
+                          </div>
+                          <div>
+                            <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
+                              {track.name} <span className="font-serif italic font-normal text-[#e8c5b4] text-lg sm:text-xl lg:text-2xl">Arena</span>
+                            </h2>
+                            <p className="mt-0.5 text-[11px] sm:text-xs text-[#e8c5b4]/80 font-mono">
+                              Open Innovation Arena • Self-Defined Problem Statement
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                      <span className="text-[9px] font-mono text-white/40">100% Stack-Agnostic</span>
-                    </div>
-                    <p className="text-[11px] text-neutral-400 font-light">
-                      Use any framework or library of your choice. Popular choices for this arena include:
-                    </p>
-                    <div className="flex flex-wrap gap-1.5 pt-0.5">
-                      {extra.recommendedTech.map((tech, tIdx) => (
-                        <span
-                          key={tIdx}
-                          className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-white/[0.05] border border-white/10 text-[11px] font-mono text-neutral-200 hover:border-[#c19a88]/40 transition-colors"
+
+                      <div className="flex items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() => handleOpenRegistration(track.id)}
+                          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#805948] to-[#c19a88] hover:from-[#9c6d58] hover:to-[#d3a58f] px-5 py-2.5 text-xs font-bold text-white shadow-[0_4px_20px_rgba(128,89,72,0.35)] hover:scale-105 active:scale-95 transition-all cursor-pointer"
                         >
-                          <span className="h-1 w-1 rounded-full bg-[#c19a88]" />
-                          <span>{tech}</span>
-                        </span>
-                      ))}
+                          <span>Register for this Arena (₹{event.registration_fee_inr})</span>
+                          <ArrowRight className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </article>
-            );
-          })}
+
+                    {/* Mission Directive */}
+                    <div className="relative z-10 py-3.5">
+                      <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-3.5 sm:p-4 text-xs sm:text-sm text-neutral-200/90 font-light leading-relaxed">
+                        <span className="text-[#c19a88] font-mono text-[10px] uppercase tracking-wider block mb-0.5 font-semibold">
+                          Mission Directive:
+                        </span>
+                        {track.description}
+                      </div>
+                    </div>
+
+                    {/* Side-by-Side Architectural Sub-Panels */}
+                    <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+                      {/* Sub-Card 1: Expected Deliverables */}
+                      <div className="rounded-xl border border-white/[0.08] bg-black/40 p-3.5 sm:p-4 space-y-2.5">
+                        <div className="flex items-center justify-between pb-2 border-b border-white/[0.06]">
+                          <div className="flex items-center gap-1.5">
+                            <CheckCircle2 className="h-3.5 w-3.5 text-[#c19a88]" />
+                            <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#c19a88] font-bold">
+                              Expected Deliverables
+                            </span>
+                          </div>
+                          <span className="text-[9px] font-mono text-white/40">Evaluation Requirements</span>
+                        </div>
+                        <div className="space-y-2">
+                          {extra.deliverables.map((item, dIdx) => (
+                            <div key={dIdx} className="flex items-start gap-2 text-xs text-neutral-300 font-light leading-relaxed">
+                              <span className="h-1.5 w-1.5 rounded-full bg-[#c19a88] shrink-0 mt-1.5" />
+                              <span>{item}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Sub-Card 2: Recommended Tech Stack */}
+                      <div className="rounded-xl border border-white/[0.08] bg-black/40 p-3.5 sm:p-4 space-y-2.5">
+                        <div className="flex items-center justify-between pb-2 border-b border-white/[0.06]">
+                          <div className="flex items-center gap-1.5">
+                            <Sparkles className="h-3.5 w-3.5 text-[#e8c5b4]" />
+                            <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#e8c5b4] font-bold">
+                              Recommended Stack
+                            </span>
+                          </div>
+                          <span className="text-[9px] font-mono text-white/40">100% Stack-Agnostic</span>
+                        </div>
+                        <p className="text-[11px] text-neutral-400 font-light">
+                          Use any framework or library of your choice. Popular choices for this arena include:
+                        </p>
+                        <div className="flex flex-wrap gap-1.5 pt-0.5">
+                          {extra.recommendedTech.map((tech, tIdx) => (
+                            <span
+                              key={tIdx}
+                              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-white/[0.05] border border-white/10 text-[11px] font-mono text-neutral-200 hover:border-[#c19a88]/40 transition-colors"
+                            >
+                              <span className="h-1 w-1 rounded-full bg-[#c19a88]" />
+                              <span>{tech}</span>
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Arena Step Switcher Controls at Bottom of Card */}
+                    {activeTab !== 'all' && (
+                      <div className="relative z-10 mt-5 pt-3 border-t border-white/[0.06] flex items-center justify-between text-xs">
+                        {prevTrack ? (
+                          <button
+                            type="button"
+                            onClick={() => setActiveTab(prevTrack.id)}
+                            className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors cursor-pointer"
+                          >
+                            <ChevronLeft className="h-3.5 w-3.5 text-[#c19a88]" />
+                            <span>Previous: {prevTrack.name}</span>
+                          </button>
+                        ) : (
+                          <span />
+                        )}
+
+                        {nextTrack ? (
+                          <button
+                            type="button"
+                            onClick={() => setActiveTab(nextTrack.id)}
+                            className="inline-flex items-center gap-1.5 text-[#e8c5b4] hover:text-white transition-colors font-semibold cursor-pointer"
+                          >
+                            <span>Next: {nextTrack.name} Arena</span>
+                            <ChevronRight className="h-3.5 w-3.5 text-[#c19a88]" />
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => setActiveTab('all')}
+                            className="inline-flex items-center gap-1.5 text-[#e8c5b4] hover:text-white transition-colors font-semibold cursor-pointer"
+                          >
+                            <Layers className="h-3.5 w-3.5 text-[#c19a88]" />
+                            <span>Compare All 3 Arenas</span>
+                          </button>
+                        )}
+                      </div>
+                    )}
+                  </article>
+                );
+              })}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
 
