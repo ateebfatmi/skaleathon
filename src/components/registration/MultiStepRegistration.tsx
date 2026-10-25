@@ -1459,7 +1459,7 @@ export default function MultiStepRegistration({
                   </span>
                   <div className="flex items-center justify-between gap-2">
                     <span className="font-mono font-bold text-white truncate text-xs" title={createdTeam?.id}>
-                      {createdTeam?.id ? `${createdTeam.id.substring(0, 14)}...` : 'PENDING'}
+                      {createdTeam?.id ? (createdTeam.id.length > 18 ? `${createdTeam.id.substring(0, 14)}...` : createdTeam.id) : 'PENDING'}
                     </span>
                     <button
                       type="button"

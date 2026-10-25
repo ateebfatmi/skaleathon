@@ -284,7 +284,7 @@ export default function TeamWorkspaceClient({
             >
               <span>ID:</span>
               <span className="text-[#e8c5b4] font-semibold">
-                [{team.id.slice(0, 10).toUpperCase()}]
+                [{team.id.toUpperCase()}]
               </span>
               {copiedPassId ? (
                 <Check className="h-3 w-3 text-emerald-400" />

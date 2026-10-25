@@ -1,5 +1,6 @@
 import { FileStore } from './file-store';
 import { SupabaseStore } from './supabase-store';
+import { generateNextRegistrationId } from './id-generator';
 import {
   EventData,
   EventTrack,
@@ -329,7 +330,8 @@ export class EventRepository {
       }
     }
 
-    const teamId = 'team_' + Math.random().toString(36).substring(2, 10);
+    const existingIds = state.teams.map((t) => t.id);
+    const teamId = generateNextRegistrationId(params.track_id, existingIds);
     const now = new Date().toISOString();
 
     const team: Team = {

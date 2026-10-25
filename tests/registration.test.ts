@@ -119,4 +119,20 @@ describe('Team Registration & Validation', () => {
     expect(members[0].phone).toBe(leaderPhone);
     expect(members[1].phone).toBe(leaderPhone);
   });
+
+  it('generates registration ID following the SK27-[TRACK]-[XXXX] pattern series', async () => {
+    const { team } = await EventRepository.createTeam({
+      name: `Pattern Team ${Date.now()}`,
+      track_id: 'track-ai-ml',
+      leader_id: `leader_pattern_${Date.now()}`,
+      leader_name: 'Pattern Leader',
+      leader_email: `pattern_lead_${Date.now()}@example.com`,
+      leader_phone: '9876543210',
+      city: 'Delhi',
+      state: 'Delhi',
+      members: [],
+    });
+
+    expect(team.id).toMatch(/^SK27-AIML-\d{4}$/);
+  });
 });

@@ -20,6 +20,11 @@ import {
   AuditLog,
 } from './types';
 import crypto from 'crypto';
+import {
+  generateNextRegistrationId,
+  formatRegistrationId,
+  parseRegistrationSequence,
+} from './id-generator';
 
 export class SupabaseStore {
   private static getClient() {
@@ -325,24 +330,58 @@ export class SupabaseStore {
 
     const effectiveLeaderId = leaderProfile?.id || params.leader_id;
 
-    // 2. Insert team into teams table
-    const teamId = crypto.randomUUID();
-    const dbTeam = {
-      id: teamId,
-      event_id: 'skaleathon-2027',
-      team_name: params.name,
-      track_id: params.track_id,
-      leader_id: effectiveLeaderId,
-      status: 'registered',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    };
-
-    const { data: teamRes, error: teamErr } = await client
+    // 2. Determine sequential registration ID and insert team into teams table
+    const { data: existingTeams } = await client
       .from('teams')
-      .insert(dbTeam)
-      .select()
-      .single();
+      .select('id');
+    const existingIds = (existingTeams || []).map((t: any) => t.id as string);
+    let teamId = generateNextRegistrationId(params.track_id, existingIds);
+
+    const now = new Date().toISOString();
+    let teamRes = null;
+    let teamErr = null;
+
+    for (let attempt = 0; attempt < 5; attempt++) {
+      const dbTeam = {
+        id: teamId,
+        event_id: 'skaleathon-2027',
+        team_name: params.name,
+        track_id: params.track_id,
+        leader_id: effectiveLeaderId,
+        status: 'registered',
+        created_at: now,
+        updated_at: now,
+      };
+
+      const result = await client
+        .from('teams')
+        .insert(dbTeam)
+        .select()
+        .single();
+
+      if (!result.error) {
+        teamRes = result.data;
+        teamErr = null;
+        break;
+      }
+
+      // If team name duplicate, break immediately
+      if (result.error.code === '23505' && (result.error.message?.includes('team_name') || result.error.details?.includes('team_name'))) {
+        teamErr = result.error;
+        break;
+      }
+
+      // If id collision (e.g. concurrent registration), increment sequence and retry
+      if (result.error.code === '23505') {
+        const currentSeq = parseRegistrationSequence(teamId) || (existingIds.length + 1 + attempt);
+        teamId = formatRegistrationId(params.track_id, currentSeq + 1);
+        teamErr = result.error;
+        continue;
+      }
+
+      teamErr = result.error;
+      break;
+    }
 
     if (teamErr || !teamRes) {
       if (teamErr?.code === '23505') {
